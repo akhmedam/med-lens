@@ -1,0 +1,10 @@
+{
+  "purpose": "Reduced random-weight architecture probe; NOT the pretrained 9B model",
+  "status": "passed",
+  "output_shape": [
+    1,
+    8
+  ],
+  "seconds": 2.288416958000198,
+  "notes": "One-off reduced model probe, not a benchmark of the pretrained checkpoint."
+}

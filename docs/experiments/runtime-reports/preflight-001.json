@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-10-18T13:56:03.725094+00:00",
+  "mode": "preflight",
+  "model_id": "Qwen/Qwen3.5-9B",
+  "requested_revision": "main",
+  "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.7.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "quantization": {
+    "method": "metal",
+    "bits": 4,
+    "group_size": 64
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 128,
+    "enable_thinking": false
+  },
+  "status": "preflight_passed",
+  "stage": "mps_preflight",
+  "packages": {
+    "torch": "2.14.1",
+    "transformers": "5.20.1",
+    "accelerate": "1.15.0",
+    "kernels": "0.17.2",
+    "psutil": "7.2.2",
+    "huggingface-hub": "2.2.0"
+  },
+  "cases": [],
+  "mps_built": true,
+  "mps_available": true,
+  "mps_cpu_fallback_env": "unset",
+  "memory_total_bytes": 38654705664,
+  "memory_available_before_bytes": 22610427904,
+  "metal_config_available": true,
+  "elapsed_seconds": 9.09786495800006,
+  "process_peak_rss_bytes": 465436672,
+  "finished_at": "2026-10-18T13:56:12.841046+00:00"
+}
