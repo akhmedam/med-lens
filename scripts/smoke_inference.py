@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.metadata
+import hashlib
 import json
 import os
 import platform
@@ -50,6 +51,7 @@ def main() -> int:
         parser.error("Output already exists; use a new report path")
     report = {
         "started_at": datetime.now(timezone.utc).isoformat(),
+        "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "mode": "inference" if args.run else "preflight",
         "model_id": "Qwen/Qwen3.5-9B",
         "requested_revision": args.revision,
@@ -158,7 +160,11 @@ def main() -> int:
             ]
             rerank_prompt = (
                 "Rank these synthetic candidates for the query: psychotherapy for adult depression. "
-                "Return only a JSON array of all ten IDs, most relevant first, each exactly once.\n"
+                "Return only a JSON array containing exactly TEN strings, most relevant first. "
+                "Include ALL TEN candidates, even irrelevant ones; reorder, do not filter. "
+                "Every allowed ID must appear exactly once. "
+                "Copy IDs exactly, including the D prefix; do not return integer positions. "
+                f"Allowed IDs: {json.dumps(ids)}.\n"
                 + "\n".join(f"{key}: {text}" for key, text in candidates)
             )
             cases = [("short_generation", "Write one short sentence explaining what a literature search does."),

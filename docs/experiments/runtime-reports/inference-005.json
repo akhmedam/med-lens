@@ -1,0 +1,77 @@
+{
+  "started_at": "2026-10-18T14:47:05.167405+00:00",
+  "script_sha256": "6589903f3703ee9a7f9487abe232361b109616a4b14bc39f5cbc9130c3f60b46",
+  "mode": "inference",
+  "model_id": "Qwen/Qwen3.5-9B",
+  "requested_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.7.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "quantization": {
+    "method": "metal",
+    "bits": 4,
+    "group_size": 64
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 128,
+    "enable_thinking": false
+  },
+  "status": "passed",
+  "stage": "listwise_ten",
+  "packages": {
+    "torch": "2.14.1",
+    "transformers": "5.20.1",
+    "accelerate": "1.15.0",
+    "kernels": "0.17.2",
+    "psutil": "7.2.2",
+    "huggingface-hub": "2.2.0"
+  },
+  "cases": [
+    {
+      "name": "short_generation",
+      "prompt": "Write one short sentence explaining what a literature search does.",
+      "output": "A literature search systematically locates and retrieves relevant documents and sources to inform research or decision-making.",
+      "input_tokens": 23,
+      "new_tokens": 22,
+      "wall_seconds": 3.0578162080000766,
+      "tokens_per_second_including_prefill": 7.194677018992192,
+      "hit_output_limit": false
+    },
+    {
+      "name": "listwise_ten",
+      "prompt": "Rank these synthetic candidates for the query: psychotherapy for adult depression. Return only a JSON array containing exactly TEN strings, most relevant first. Include ALL TEN candidates, even irrelevant ones; reorder, do not filter. Every allowed ID must appear exactly once. Copy IDs exactly, including the D prefix; do not return integer positions. Allowed IDs: [\"D1\", \"D2\", \"D3\", \"D4\", \"D5\", \"D6\", \"D7\", \"D8\", \"D9\", \"D10\"].\nD1: A study of walking speed in healthy adults.\nD2: A randomized trial of cognitive behavioral therapy for adult depression.\nD3: An experiment on plant growth under artificial light.\nD4: A review of psychotherapies for adult depressive disorders.\nD5: A study of pediatric anxiety, excluding depression.\nD6: A report on computer network congestion.\nD7: A trial of exercise for adult depressive symptoms.\nD8: A study of chronic pain without mental health outcomes.\nD9: An observational study of psychotherapy use in adults with depression.\nD10: A study of ocean temperatures.",
+      "output": "[\"D2\", \"D4\", \"D9\", \"D7\", \"D1\", \"D5\", \"D8\", \"D3\", \"D6\", \"D10\"]",
+      "input_tokens": 257,
+      "new_tokens": 44,
+      "wall_seconds": 7.042224833000091,
+      "tokens_per_second_including_prefill": 6.248025452668678,
+      "hit_output_limit": false,
+      "valid_permutation": true
+    }
+  ],
+  "mps_built": true,
+  "mps_available": true,
+  "mps_cpu_fallback_env": "unset",
+  "memory_total_bytes": 38654705664,
+  "memory_available_before_bytes": 31084888064,
+  "metal_config_available": true,
+  "http_workaround": "Strip trailing User-Agent whitespace (kernels 0.17.2 / hub 2.2.0)",
+  "metal_kernel_probe_passed": true,
+  "resolved_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "load_seconds_including_download": 19.8484953330003,
+  "parameter_devices": [
+    "mps:0"
+  ],
+  "module_types": [
+    "transformers.integrations.metal_quantization.MetalLinear"
+  ],
+  "memory_samples": {
+    "sampled_process_rss_bytes": 14630289408,
+    "sampled_mps_allocated_bytes": 8158205440,
+    "sampled_mps_driver_bytes": 28587032576
+  },
+  "elapsed_seconds": 34.10443954199991,
+  "process_peak_rss_bytes": 15025864704,
+  "finished_at": "2026-10-18T14:47:39.284566+00:00"
+}

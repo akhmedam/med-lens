@@ -1,0 +1,76 @@
+{
+  "started_at": "2026-10-18T13:58:56.674923+00:00",
+  "mode": "inference",
+  "model_id": "Qwen/Qwen3.5-9B",
+  "requested_revision": "main",
+  "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.7.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "quantization": {
+    "method": "metal",
+    "bits": 4,
+    "group_size": 64
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 128,
+    "enable_thinking": false
+  },
+  "status": "inference_ran_output_validation_failed",
+  "stage": "listwise_ten",
+  "packages": {
+    "torch": "2.14.1",
+    "transformers": "5.20.1",
+    "accelerate": "1.15.0",
+    "kernels": "0.17.2",
+    "psutil": "7.2.2",
+    "huggingface-hub": "2.2.0"
+  },
+  "cases": [
+    {
+      "name": "short_generation",
+      "prompt": "Write one short sentence explaining what a literature search does.",
+      "output": "A literature search systematically locates and retrieves relevant documents and sources to inform research or decision-making.",
+      "input_tokens": 23,
+      "new_tokens": 22,
+      "wall_seconds": 4.288760874999753,
+      "tokens_per_second_including_prefill": 5.12968678861147,
+      "hit_output_limit": false
+    },
+    {
+      "name": "listwise_ten",
+      "prompt": "Rank these synthetic candidates for the query: psychotherapy for adult depression. Return only a JSON array of all ten IDs, most relevant first, each exactly once.\nD1: A study of walking speed in healthy adults.\nD2: A randomized trial of cognitive behavioral therapy for adult depression.\nD3: An experiment on plant growth under artificial light.\nD4: A review of psychotherapies for adult depressive disorders.\nD5: A study of pediatric anxiety, excluding depression.\nD6: A report on computer network congestion.\nD7: A trial of exercise for adult depressive symptoms.\nD8: A study of chronic pain without mental health outcomes.\nD9: An observational study of psychotherapy use in adults with depression.\nD10: A study of ocean temperatures.",
+      "output": "[2, 4, 9, 7, 1, 5, 8, 3, 6, 10]",
+      "input_tokens": 179,
+      "new_tokens": 34,
+      "wall_seconds": 5.336422583000058,
+      "tokens_per_second_including_prefill": 6.37130951891102,
+      "hit_output_limit": false,
+      "valid_permutation": false
+    }
+  ],
+  "mps_built": true,
+  "mps_available": true,
+  "mps_cpu_fallback_env": "unset",
+  "memory_total_bytes": 38654705664,
+  "memory_available_before_bytes": 22597746688,
+  "metal_config_available": true,
+  "http_workaround": "Strip trailing User-Agent whitespace (kernels 0.17.2 / hub 2.2.0)",
+  "metal_kernel_probe_passed": true,
+  "resolved_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "load_seconds_including_download": 2762.548575875,
+  "parameter_devices": [
+    "mps:0"
+  ],
+  "module_types": [
+    "transformers.integrations.metal_quantization.MetalLinear"
+  ],
+  "memory_samples": {
+    "sampled_process_rss_bytes": 8162869248,
+    "sampled_mps_allocated_bytes": 8107489280,
+    "sampled_mps_driver_bytes": 28587032576
+  },
+  "elapsed_seconds": 2786.4192657920003,
+  "process_peak_rss_bytes": 9156689920,
+  "finished_at": "2026-10-18T14:45:23.128621+00:00"
+}

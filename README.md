@@ -8,8 +8,12 @@ fragments. This is a literature search tool, not a diagnostic system.
 
 ## Status
 
-Day 1: checking local inference on an M3 Pro with 36 GB unified memory.
-Retrieval and answer generation are not implemented yet.
+Local Qwen3.5-9B inference works through Transformers and 4-bit Metal linear layers
+on an M3 Pro with 36 GB unified memory. The final synthetic smoke test took
+3.06 s for a short response and 7.04 s for ten-item reranking.
+Two earlier reranking outputs failed validation; see the runtime notes.
+
+Retrieval and evidence-grounded answers are not implemented yet.
 
 ## Setup
 
@@ -26,7 +30,9 @@ python -m pip install --no-deps -e .
 
 ```sh
 python scripts/smoke_inference.py --output results/preflight.json
-python scripts/smoke_inference.py --run --output results/inference.json
+python scripts/smoke_inference.py --run \
+  --revision c202236235762e1c871ad0ccb60c8ee5ba337b9a \
+  --output results/inference.json
 ```
 
 Run the lightweight output-validation tests with:

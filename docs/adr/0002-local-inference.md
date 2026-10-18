@@ -1,6 +1,6 @@
 # Local inference
 
-Status: selected; runtime verification pending
+Status: accepted for initial experiments; short-input smoke test passed
 
 ## Context
 
@@ -29,3 +29,7 @@ Revisit the runtime after a recorded failure, rather than changing it implicitly
 The smoke test measures compatibility and cost, not biomedical answer quality.
 Keep model revision, package versions, prompt, output, and memory measurement
 scope in its report. Do not label a sampled memory maximum a true device peak.
+
+The [Day 1 report](../experiments/runtime-smoke.md) records the successful run,
+two invalid reranking outputs, and the HTTP header workaround. Real context-sized
+latency and retrieval quality remain unmeasured.
