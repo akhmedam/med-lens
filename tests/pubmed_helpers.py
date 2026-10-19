@@ -71,5 +71,3 @@ def http_error(status, retry_after=None):
         headers["Retry-After"] = retry_after
     return HTTPError("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
         status, "fixture", headers, io.BytesIO(b"error"))
-
-

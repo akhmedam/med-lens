@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "snapshot_id": "7d35375e-3e1d-417c-bcc4-4848dc7e9f78",
+  "status": "complete",
+  "started_at": "2026-10-19T05:46:18.891492+00:00",
+  "finished_at": "2026-10-19T05:46:23.832203+00:00",
+  "source": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+  "database": "pubmed",
+  "query": "depression AND cognitive behavioral therapy",
+  "limit": 30,
+  "sort": "relevance",
+  "batch_size": 10,
+  "client_config": {
+    "timeout": 20,
+    "requests_per_second": 2.5,
+    "max_attempts": 3,
+    "backoff_seconds": 1.0,
+    "max_retry_wait": 60.0
+  },
+  "responses": [
+    {
+      "file": "search.json",
+      "endpoint": "esearch.fcgi",
+      "parameters": {
+        "db": "pubmed",
+        "term": "depression AND cognitive behavioral therapy",
+        "retmax": "30",
+        "retstart": "0",
+        "retmode": "json",
+        "sort": "relevance",
+        "tool": "medlens"
+      },
+      "retrieved_at": "2026-10-19T05:46:20.079083+00:00",
+      "attempts": 1,
+      "content_type": "application/json; charset=UTF-8",
+      "bytes": 1932,
+      "sha256": "a64c5e8869a8bc56def5b0854ed35fc70d89ac728c6a4fcbb31da1dbccfea9bf"
+    },
+    {
+      "file": "fetch-0001.xml",
+      "endpoint": "efetch.fcgi",
+      "parameters": {
+        "db": "pubmed",
+        "id": "38724122,20655801,34728290,35061137,28199710,38365951,30658278,38713748,27461440,28475503",
+        "retmode": "xml",
+        "rettype": "abstract",
+        "tool": "medlens"
+      },
+      "retrieved_at": "2026-10-19T05:46:21.014757+00:00",
+      "attempts": 1,
+      "content_type": "text/xml; charset=UTF-8",
+      "bytes": 211106,
+      "sha256": "6a69804cdb2ab2b877d86901d2161b723701d8006e3f114687d1ffa8469fc9ba"
+    },
+    {
+      "file": "fetch-0002.xml",
+      "endpoint": "efetch.fcgi",
+      "parameters": {
+        "db": "pubmed",
+        "id": "25370281,40861245,34456305,30088834,34166038,31760505,29704854,38226714,30179986,33973857",
+        "retmode": "xml",
+        "rettype": "abstract",
+        "tool": "medlens"
+      },
+      "retrieved_at": "2026-10-19T05:46:22.141263+00:00",
+      "attempts": 1,
+      "content_type": "text/xml; charset=UTF-8",
+      "bytes": 214692,
+      "sha256": "f2a0d91132d42d6137b036611a0968d86f69bdd8a54949b2ceaa88f586e34cd4"
+    },
+    {
+      "file": "fetch-0003.xml",
+      "endpoint": "efetch.fcgi",
+      "parameters": {
+        "db": "pubmed",
+        "id": "30479159,36632826,27870579,32553392,26096347,31179960,40054534,32238507,30201116,25743368",
+        "retmode": "xml",
+        "rettype": "abstract",
+        "tool": "medlens"
+      },
+      "retrieved_at": "2026-10-19T05:46:23.827637+00:00",
+      "attempts": 1,
+      "content_type": "text/xml; charset=UTF-8",
+      "bytes": 161555,
+      "sha256": "624ab36952c8cf577bf5f9939dfc8ccb76b2aedf4a0adfe95071b280b146118c"
+    }
+  ],
+  "total_count": 23364,
+  "pmids": [
+    "38724122",
+    "20655801",
+    "34728290",
+    "35061137",
+    "28199710",
+    "38365951",
+    "30658278",
+    "38713748",
+    "27461440",
+    "28475503",
+    "25370281",
+    "40861245",
+    "34456305",
+    "30088834",
+    "34166038",
+    "31760505",
+    "29704854",
+    "38226714",
+    "30179986",
+    "33973857",
+    "30479159",
+    "36632826",
+    "27870579",
+    "32553392",
+    "26096347",
+    "31179960",
+    "40054534",
+    "32238507",
+    "30201116",
+    "25743368"
+  ],
+  "query_translation": "(\"depressed\"[All Fields] OR \"depression\"[MeSH Terms] OR \"depression\"[All Fields] OR \"depressions\"[All Fields] OR \"depression s\"[All Fields] OR \"depressive disorder\"[MeSH Terms] OR (\"depressive\"[All Fields] AND \"disorder\"[All Fields]) OR \"depressive disorder\"[All Fields] OR \"depressivity\"[All Fields] OR \"depressive\"[All Fields] OR \"depressively\"[All Fields] OR \"depressiveness\"[All Fields] OR \"depressives\"[All Fields]) AND (\"cognitive behavioural therapy\"[All Fields] OR \"cognitive behavioral therapy\"[MeSH Terms] OR (\"cognitive\"[All Fields] AND \"behavioral\"[All Fields] AND \"therapy\"[All Fields]) OR \"cognitive behavioral therapy\"[All Fields])"
+}

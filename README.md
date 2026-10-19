@@ -8,23 +8,42 @@ fragments. This is a literature search tool, not a diagnostic system.
 
 ## Status
 
-Local Qwen3.5-9B inference works through Transformers and 4-bit Metal linear layers
-on an M3 Pro with 36 GB unified memory. The final synthetic smoke test took
-3.06 s for a short response and 7.04 s for ten-item reranking.
-Two earlier reranking outputs failed validation; see the runtime notes.
-
-Retrieval and evidence-grounded answers are not implemented yet.
+PubMed downloads and verified offline snapshot replay work. Local Qwen3.5-9B
+inference runs through Transformers/MPS with 4-bit Metal linear layers.
+BM25, dense retrieval, and evidence-grounded answers are next.
 
 ## Setup
 
-Python 3.11 on Apple Silicon:
+Python 3.11:
 
 ```sh
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements-macos-arm64.lock
-python -m pip install --no-deps -e .
+python -m pip install -e .
 ```
+
+PubMed ingestion uses the standard library. For the local model on Apple Silicon:
+
+```sh
+python -m pip install -r requirements-macos-arm64.lock
+```
+
+## Download papers
+
+```sh
+python scripts/pubmed_snapshot.py fetch \
+  --query 'depression AND cognitive behavioral therapy' \
+  --limit 30 --batch-size 10 \
+  --output data/snapshots/depression-cbt
+python scripts/pubmed_snapshot.py inspect data/snapshots/depression-cbt
+```
+
+`fetch` saves the raw ESearch JSON, EFetch XML batches, and a manifest with ordered
+PMIDs, timestamps, request parameters, and hashes. Choose a new output directory
+for each live search. `inspect` verifies a saved snapshot without contacting NCBI.
+Batch size defaults to 200; the example uses 10 to exercise batching.
+
+See the [ingestion check](docs/experiments/pubmed-ingestion.md) for a real run.
 
 ## Runtime check
 
@@ -35,18 +54,17 @@ python scripts/smoke_inference.py --run \
   --output results/inference.json
 ```
 
-Run the lightweight output-validation tests with:
+Run the offline tests with:
 
 ```sh
 python -m unittest discover -s tests -v
 ```
 
-The first runtime command checks MPS and the installed loading APIs without downloading
-weights. The second first probes the Metal kernel, then downloads the official Qwen3.5-9B checkpoint, quantizes
-supported linear layers to 4 bits, and runs two synthetic prompts on the same
-model. It records versions, timings, output, and memory observations.
+The first runtime command checks MPS without downloading weights. The second
+probes the Metal kernel, loads Qwen3.5-9B, quantizes supported linear layers to
+4 bits, and runs two synthetic prompts on the same model. It records versions, timings, output, and memory observations.
 
-Model files stay in `.cache/` and are excluded from Git. Loading-time quantization
+Model files stay in `.cache/`; snapshots stay in `data/`. Both are excluded from Git. Loading-time quantization
 still downloads the original checkpoint. First-run timing includes downloads.
 
 See [runtime notes](docs/experiments/runtime-smoke.md) for measured results and
