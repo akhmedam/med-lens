@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PubmedArticleSet SYSTEM "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_250101.dtd">
+<!-- Synthetic records, not actual publications. -->
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="2">101</PMID>
+      <DateRevised><Year>2025</Year><Month>04</Month><Day>02</Day></DateRevised>
+      <Article PubModel="Print-Electronic">
+        <Journal>
+          <ISSN IssnType="Electronic">0000-0000</ISSN>
+          <JournalIssue><Volume>8</Volume><Issue>2</Issue>
+            <PubDate><Year>2024</Year><Month>Feb</Month><Day>29</Day></PubDate>
+          </JournalIssue>
+          <Title>Example Journal</Title><ISOAbbreviation>Example J</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Treating <i>depression</i> without <b>sedation</b>.</ArticleTitle>
+        <VernacularTitle>Une étude fictive.</VernacularTitle>
+        <ELocationID EIdType="doi" ValidYN="N">10.0000/invalid-fixture</ELocationID>
+        <Abstract>
+          <AbstractText Label="OBJECTIVE" NlmCategory="OBJECTIVE">An anti<i>depressant</i> trial &amp; follow-up.</AbstractText>
+          <AbstractText Label="RESULTS" NlmCategory="RESULTS">No benefit
+            was observed at 12 weeks.</AbstractText>
+          <CopyrightInformation>Example copyright statement; not a reuse license.</CopyrightInformation>
+        </Abstract>
+        <AuthorList CompleteYN="N">
+          <Author ValidYN="Y"><LastName>Smith</LastName><ForeName>Alex</ForeName>
+            <Initials>A</Initials><Suffix>Jr</Suffix>
+            <Identifier Source="ORCID">fixture-orcid</Identifier>
+            <AffiliationInfo><Affiliation>Example <i>University</i>.</Affiliation></AffiliationInfo>
+          </Author>
+          <Author><CollectiveName>Example Research Group</CollectiveName></Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016449">Randomized Controlled Trial</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <ArticleDate DateType="Electronic"><Year>2024</Year><Month>01</Month><Day>15</Day></ArticleDate>
+      </Article>
+      <MedlineJournalInfo><MedlineTA>Example Medline Abbr</MedlineTA></MedlineJournalInfo>
+      <MeshHeadingList><MeshHeading>
+        <DescriptorName UI="D003865" MajorTopicYN="Y">Depression</DescriptorName>
+        <QualifierName UI="Q000188" MajorTopicYN="N">drug therapy</QualifierName>
+      </MeshHeading></MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="received"><Year>2023</Year><Month>10</Month><Day>01</Day></PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez"><Year>2024</Year><Month>03</Month><Day>01</Day><Hour>6</Hour><Minute>30</Minute></PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList><ArticleId IdType="pubmed">101</ArticleId>
+        <ArticleId IdType="doi">10.0000/main-fixture</ArticleId>
+        <ArticleId IdType="pmc">PMC000001</ArticleId>
+      </ArticleIdList>
+      <ReferenceList><Reference><ArticleIdList>
+        <ArticleId IdType="pubmed">999</ArticleId><ArticleId IdType="doi">10.0000/reference</ArticleId>
+      </ArticleIdList></Reference></ReferenceList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedBookArticle>
+    <BookDocument>
+      <PMID>202</PMID>
+      <ArticleIdList><ArticleId IdType="bookaccession">NBK000001</ArticleId></ArticleIdList>
+      <Book>
+        <BookTitle>Example Handbook</BookTitle>
+        <PubDate><MedlineDate>2020 Dec-2021 Jan</MedlineDate></PubDate>
+        <AuthorList Type="editors"><Author><LastName>Editor</LastName><Initials>B</Initials></Author></AuthorList>
+      </Book>
+      <ArticleTitle>Chapter <i>overview</i></ArticleTitle>
+      <AuthorList Type="authors"><Author><LastName>Writer</LastName><Initials>C</Initials></Author></AuthorList>
+      <Language>eng</Language><PublicationType UI="D016454">Review</PublicationType>
+      <Abstract><AbstractText>Example chapter summary.</AbstractText></Abstract>
+      <Sections><Section><SectionTitle>Full chapter</SectionTitle></Section></Sections>
+    </BookDocument>
+    <PubmedBookData><PublicationStatus>ppublish</PublicationStatus></PubmedBookData>
+  </PubmedBookArticle>
+  <PubmedArticle>
+    <MedlineCitation>
+      <PMID>303</PMID>
+      <Article>
+        <Journal><JournalIssue><PubDate><Year>1999</Year></PubDate></JournalIssue><Title>Example Journal</Title></Journal>
+        <ArticleTitle>Record without a primary abstract</ArticleTitle>
+      </Article>
+      <OtherAbstract Type="Publisher" Language="fre"><AbstractText>Résumé conservé.</AbstractText></OtherAbstract>
+    </MedlineCitation>
+  </PubmedArticle>
+</PubmedArticleSet>
