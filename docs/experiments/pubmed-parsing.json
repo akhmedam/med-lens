@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-20",
+  "source_snapshot_id": "7d35375e-3e1d-417c-bcc4-4848dc7e9f78",
+  "source_snapshot": "2026-10-19-depression-cbt-001",
+  "dataset_manifest": {
+    "article_count": 30,
+    "articles_sha256": "94d9c88e8eae398dce9797610fc4ffc79a858c12c8dabb2bad6714dd92b809e6",
+    "created_at": "2026-10-20T05:25:25.911423+00:00",
+    "dataset_id": "b94f155f088cfc7472a4be56dd2d2b6696a69486d4dec282d1db7f1da9cdee4b",
+    "output_file": "articles.jsonl",
+    "parser_code_sha256": "42cd51b5bad9e849ccab19f9a7b1b183d88f33deb53f9b152305b9b2fa05b3de",
+    "parser_version": "pubmed-xml-v1",
+    "pmids": [
+      "38724122",
+      "20655801",
+      "34728290",
+      "35061137",
+      "28199710",
+      "38365951",
+      "30658278",
+      "38713748",
+      "27461440",
+      "28475503",
+      "25370281",
+      "40861245",
+      "34456305",
+      "30088834",
+      "34166038",
+      "31760505",
+      "29704854",
+      "38226714",
+      "30179986",
+      "33973857",
+      "30479159",
+      "36632826",
+      "27870579",
+      "32553392",
+      "26096347",
+      "31179960",
+      "40054534",
+      "32238507",
+      "30201116",
+      "25743368"
+    ],
+    "schema_version": 1,
+    "source_manifest_file": "source-manifest.json",
+    "source_manifest_sha256": "1d8a6215818622565211214f2192c1b1edc81bb790f50ec07579f8af2cdb7f54",
+    "source_snapshot_id": "7d35375e-3e1d-417c-bcc4-4848dc7e9f78",
+    "status": "complete"
+  },
+  "counts": {
+    "records": 30,
+    "record_types": {
+      "PubmedArticle": 30
+    },
+    "titles": 30,
+    "abstract_status": {
+      "present": 30
+    },
+    "abstracts_with_multiple_sections": 17,
+    "records_with_author_lists": 30,
+    "records_with_publication_types": 30,
+    "journal_date_precision": {
+      "month": 14,
+      "day": 12,
+      "season": 3,
+      "year": 1
+    },
+    "warnings": {}
+  },
+  "checks": {
+    "record_order_matches_source": true,
+    "all_source_response_hashes_match": true,
+    "parsed_dataset_loaded_and_verified": true,
+    "offline_unit_tests_passed": 46
+  },
+  "limitations": [
+    "Only one real 30-record snapshot; not a broad corpus audit.",
+    "No relevance or retrieval metrics measured.",
+    "The JSONL and raw article XML remain local, outside Git."
+  ]
+}

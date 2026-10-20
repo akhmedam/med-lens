@@ -8,9 +8,9 @@ fragments. This is a literature search tool, not a diagnostic system.
 
 ## Status
 
-PubMed downloads and verified offline snapshot replay work. Local Qwen3.5-9B
-inference runs through Transformers/MPS with 4-bit Metal linear layers.
-BM25, dense retrieval, and evidence-grounded answers are next.
+PubMed downloads, verified snapshot replay, and structured XML-to-JSONL parsing
+work. Local Qwen3.5-9B inference runs through Transformers/MPS with 4-bit Metal
+linear layers. BM25, dense retrieval, and evidence-grounded answers are next.
 
 ## Setup
 
@@ -44,6 +44,17 @@ for each live search. `inspect` verifies a saved snapshot without contacting NCB
 Batch size defaults to 200; the example uses 10 to exercise batching.
 
 See the [ingestion check](docs/experiments/pubmed-ingestion.md) for a real run.
+
+## Parse a snapshot
+
+```sh
+python scripts/parse_pubmed_snapshot.py build data/snapshots/depression-cbt \
+  --output data/parsed/depression-cbt
+python scripts/parse_pubmed_snapshot.py inspect data/parsed/depression-cbt
+```
+
+Parsing preserves abstract sections, contributors, date precision, publication
+types, identifiers, and source provenance. See [record format and checks](docs/parsing.md).
 
 ## Runtime check
 
