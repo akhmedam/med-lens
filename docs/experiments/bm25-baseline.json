@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "run_id": "4073904a06db0ef3e005bdacff2723188694bf2740bd8616a0dbdb8e3f15b8e9",
+  "dataset_id": "b94f155f088cfc7472a4be56dd2d2b6696a69486d4dec282d1db7f1da9cdee4b",
+  "articles_sha256": "94d9c88e8eae398dce9797610fc4ffc79a858c12c8dabb2bad6714dd92b809e6",
+  "implementation_sha256": "26a0dd09f20735892b598f4f18b14902e4eb954c5b9d14f33f274252aaf5e4e2",
+  "bm25s_version": "0.3.14",
+  "numpy_version": "2.4.6",
+  "method": "lucene",
+  "idf_method": "lucene",
+  "dtype": "float64",
+  "parameters": {
+    "k1": 1.5,
+    "b": 0.75
+  },
+  "preprocessing": "unicode-nfc-casefold-words-v1",
+  "token_pattern": "(?u)\\b\\w+\\b",
+  "stopwords": false,
+  "stemming": false,
+  "fields": [
+    "title",
+    "abstract.sections.text"
+  ],
+  "field_weighting": "concatenate-once",
+  "ties": "source-candidate-order",
+  "zero_scores": "omit",
+  "query": "cognitive behavioral therapy depression",
+  "normalized_query": "cognitive behavioral therapy depression",
+  "query_tokens": [
+    "cognitive",
+    "behavioral",
+    "therapy",
+    "depression"
+  ],
+  "top_k": 10,
+  "candidate_count": 30,
+  "token_count": 7797,
+  "empty_document_count": 0,
+  "index_seconds": 0.008470624990877695,
+  "search_seconds": 0.00014599999121855944,
+  "results": [
+    {
+      "rank": 1,
+      "pmid": "38724122",
+      "score": 0.39151218752695804,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38724122/",
+      "text_version_id": "pubmed:38724122:8f561ef8a35acea835dfaf24594e154f1eaed2ab7e81307876a5670f6b30525c"
+    },
+    {
+      "rank": 2,
+      "pmid": "35061137",
+      "score": 0.36118923627865923,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35061137/",
+      "text_version_id": "pubmed:35061137:24543adfed005b1a20cfe86b70456481d4b78b49fb01496c58b27f72621321e1"
+    },
+    {
+      "rank": 3,
+      "pmid": "33973857",
+      "score": 0.3567607051787003,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33973857/",
+      "text_version_id": "pubmed:33973857:885f1105ba3dd31e35ecf7656e6f0b94790a9ed371ccc0468e805ac0ec32d053"
+    },
+    {
+      "rank": 4,
+      "pmid": "28475503",
+      "score": 0.3560159549898585,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28475503/",
+      "text_version_id": "pubmed:28475503:18df14812412de6182a194e0aadd0cebbf36940d6bec52c86689a989455e9df1"
+    },
+    {
+      "rank": 5,
+      "pmid": "40054534",
+      "score": 0.349941349755869,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40054534/",
+      "text_version_id": "pubmed:40054534:bb75421be5c0adf83ce7ef54f2093c242ae6d4b650ea53b2fd6af84b612b779e"
+    },
+    {
+      "rank": 6,
+      "pmid": "34166038",
+      "score": 0.3438910848998499,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34166038/",
+      "text_version_id": "pubmed:34166038:2145544d70ea1225c4c62d028a046d45a48209e846c5e69c54f4f7cd96b67648"
+    },
+    {
+      "rank": 7,
+      "pmid": "30658278",
+      "score": 0.3376386036332353,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30658278/",
+      "text_version_id": "pubmed:30658278:6bbd203fe883ae029b3be0c3be725cbe4a383a88a30f64bde457ab10230c81b2"
+    },
+    {
+      "rank": 8,
+      "pmid": "30479159",
+      "score": 0.31655409920222255,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30479159/",
+      "text_version_id": "pubmed:30479159:6b387fa7f49cb795fcbc8ae477d62463e609f3f5fb9a92630a24124a1b74eed9"
+    },
+    {
+      "rank": 9,
+      "pmid": "32553392",
+      "score": 0.3064587839270515,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32553392/",
+      "text_version_id": "pubmed:32553392:1103240025a32559db1508b0d52bfc2d9eb1932792251cf6c396c9ca53dfff1b"
+    },
+    {
+      "rank": 10,
+      "pmid": "25743368",
+      "score": 0.30196957555667686,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25743368/",
+      "text_version_id": "pubmed:25743368:2982363ff0fb09dfa6338ca9afc53f535def9316d409248b6952972828115e69"
+    }
+  ],
+  "observed_on": "2026-10-21",
+  "hardware": "MacBook M3 Pro, 36 GB unified memory",
+  "measurement_scope": "Single in-process index build and search; excludes imports, dataset verification, and output serialization.",
+  "relevance_judgments": null
+}
