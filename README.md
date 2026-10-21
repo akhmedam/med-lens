@@ -8,9 +8,9 @@ fragments. This is a literature search tool, not a diagnostic system.
 
 ## Status
 
-PubMed downloads, verified snapshot replay, and structured XML-to-JSONL parsing
-work. Local Qwen3.5-9B inference runs through Transformers/MPS with 4-bit Metal
-linear layers. BM25, dense retrieval, and evidence-grounded answers are next.
+PubMed downloads, verified snapshot replay, structured XML-to-JSONL parsing, and
+article-level BM25 search work. Local Qwen3.5-9B inference runs through
+Transformers/MPS with 4-bit Metal linear layers. Dense retrieval and evidence-grounded answers are next.
 
 ## Setup
 
@@ -55,6 +55,18 @@ python scripts/parse_pubmed_snapshot.py inspect data/parsed/depression-cbt
 
 Parsing preserves abstract sections, contributors, date precision, publication
 types, identifiers, and source provenance. See [record format and checks](docs/parsing.md).
+
+## Search with BM25
+
+```sh
+python -m pip install -e '.[retrieval]'
+python scripts/bm25_search.py data/parsed/depression-cbt \
+  --query 'cognitive behavioral therapy depression' \
+  --top-k 10 --output results/bm25/depression-cbt.json
+```
+
+Search runs offline over the selected dataset. Results include PMIDs, scores,
+titles, and PubMed links. See [BM25 settings and checks](docs/bm25.md).
 
 ## Runtime check
 
