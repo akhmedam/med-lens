@@ -1,0 +1,198 @@
+{
+  "observed_on": "2026-10-22",
+  "test_count": 69,
+  "fixture_source": "tests/test_evaluation.py:synthetic_inputs",
+  "runs": [
+    {
+      "run_id": "1e0d72b3a694fc35e69625d18170ae50743362258a0ae1b2cb9ee8e075ab0426",
+      "queries_sha256": "da7b5e05ffa919ebb3601f61e1110a86a0fe57d0b91c50a414f6ebcd77893f38",
+      "qrels_sha256": "0f2f608fe213d42e7add3256b4ccca8f66d0337e3613c2d525c693a709e59eb3",
+      "evaluation_code_sha256": "2532ee65b0238b7eca806fe2daaaf360cdd5f66ecbafc4d519731bb1c60cb4ff",
+      "split": "pilot",
+      "k": 10,
+      "query_count": 2,
+      "macro": {
+        "pubmed": {
+          "ndcg@10": {
+            "mean": 0.6975721329493578,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "precision@10": {
+            "mean": 0.15000000000000002,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "recall@10": {
+            "mean": 0.8333333333333333,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "mrr@10": {
+            "mean": 0.75,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "judged_coverage@10": {
+            "mean": 1.0,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "candidate_coverage": {
+            "mean": 0.8333333333333333,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "candidate_judged_coverage": {
+            "mean": 1.0,
+            "defined_queries": 2,
+            "total_queries": 2
+          }
+        },
+        "bm25": {
+          "ndcg@10": {
+            "mean": 0.8366467312214677,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "precision@10": {
+            "mean": 0.15000000000000002,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "recall@10": {
+            "mean": 0.8333333333333333,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "mrr@10": {
+            "mean": 1.0,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "judged_coverage@10": {
+            "mean": 1.0,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "candidate_coverage": {
+            "mean": 0.8333333333333333,
+            "defined_queries": 2,
+            "total_queries": 2
+          },
+          "candidate_judged_coverage": {
+            "mean": 1.0,
+            "defined_queries": 2,
+            "total_queries": 2
+          }
+        }
+      },
+      "description": "Fictional test records and synthetic labels; not a biomedical benchmark.",
+      "datasets": [
+        {
+          "query_id": "q1",
+          "dataset_id": "b3a1b732474a6112a5ef2edad22b17c490cc39c7086cec95dc25a3736deefa3c",
+          "candidate_count": 3
+        },
+        {
+          "query_id": "q2",
+          "dataset_id": "b3a1b732474a6112a5ef2edad22b17c490cc39c7086cec95dc25a3736deefa3c",
+          "candidate_count": 3
+        }
+      ]
+    },
+    {
+      "run_id": "5f947bb366defdb8dc9b92b7318be8c5a2479b086ca687426af63be484388e18",
+      "queries_sha256": "d4affec1d29f201ae121e7c21c2aa5ca87dbda510d8a39b78c5e86482c8651f7",
+      "qrels_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation_code_sha256": "2532ee65b0238b7eca806fe2daaaf360cdd5f66ecbafc4d519731bb1c60cb4ff",
+      "split": "pilot",
+      "k": 10,
+      "query_count": 1,
+      "macro": {
+        "pubmed": {
+          "ndcg@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "precision@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "recall@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "mrr@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "judged_coverage@10": {
+            "mean": 0.0,
+            "defined_queries": 1,
+            "total_queries": 1
+          },
+          "candidate_coverage": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "candidate_judged_coverage": {
+            "mean": 0.0,
+            "defined_queries": 1,
+            "total_queries": 1
+          }
+        },
+        "bm25": {
+          "ndcg@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "precision@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "recall@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "mrr@10": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "judged_coverage@10": {
+            "mean": 0.0,
+            "defined_queries": 1,
+            "total_queries": 1
+          },
+          "candidate_coverage": {
+            "mean": null,
+            "defined_queries": 0,
+            "total_queries": 1
+          },
+          "candidate_judged_coverage": {
+            "mean": 0.0,
+            "defined_queries": 1,
+            "total_queries": 1
+          }
+        }
+      },
+      "description": "Saved 30-paper PubMed dataset with no relevance labels; quality must remain undefined.",
+      "datasets": [
+        {
+          "query_id": "smoke-cbt",
+          "dataset_id": "b94f155f088cfc7472a4be56dd2d2b6696a69486d4dec282d1db7f1da9cdee4b",
+          "candidate_count": 30
+        }
+      ]
+    }
+  ]
+}

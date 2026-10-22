@@ -68,6 +68,19 @@ python scripts/bm25_search.py data/parsed/depression-cbt \
 Search runs offline over the selected dataset. Results include PMIDs, scores,
 titles, and PubMed links. See [BM25 settings and checks](docs/bm25.md).
 
+## Evaluate retrieval
+
+```sh
+python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
+  --qrels data/evaluation/qrels.jsonl --split pilot \
+  --output results/evaluation/pilot-001.json
+```
+
+The runner compares PubMed order and BM25 on the same candidates. Prepare query
+and judgment files using the [evaluation format](docs/evaluation.md). Reports
+include nDCG@10, binary metrics, and coverage; unjudged papers remain distinct
+from irrelevant papers. Real relevance judgments are not collected yet.
+
 ## Runtime check
 
 ```sh
