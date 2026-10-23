@@ -1,0 +1,132 @@
+{
+  "observed_on": "2026-10-23",
+  "status": "awaiting-human-judgments",
+  "pool_id": "69b766238832d12357b81124174a8414dafe6a643314338a9368153d5749fd82",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "plan_sha256": "a4fcb280ec6098eb354d0e2d80545acfb7529713db2a91d1996c0374e776ab9c",
+  "pool_sha256": "b76cb8e582a63799f19e75edba840eecc25ae9d3232af336d1250c34814ad9cd",
+  "query_count": 10,
+  "candidate_memberships": 300,
+  "unique_candidate_pmids": 275,
+  "annotation_pairs": 161,
+  "methods": [
+    "pubmed",
+    "bm25"
+  ],
+  "pool_depth": 10,
+  "human_judgment_count": 0,
+  "quality_metrics": null,
+  "unjudged_evaluation_run_id": "ee80a43ba0fcce7f42be2fbd8d8df98e65ba0ba2de0c58975229c887c9e0ef9a",
+  "per_query": [
+    {
+      "query_id": "p01",
+      "snapshot_id": "9f0fc9d6-18c5-46c5-be66-de3afad54c55",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "total_pubmed_matches": 3281,
+      "candidate_count": 30,
+      "pool_count": 16,
+      "top10_overlap": 4,
+      "missing_primary_abstracts": 2,
+      "parser_warning_count": 2
+    },
+    {
+      "query_id": "p02",
+      "snapshot_id": "599b0089-1bf7-4aea-ab91-0e4a9f12c5bb",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "total_pubmed_matches": 2460,
+      "candidate_count": 30,
+      "pool_count": 15,
+      "top10_overlap": 5,
+      "missing_primary_abstracts": 0,
+      "parser_warning_count": 0
+    },
+    {
+      "query_id": "p03",
+      "snapshot_id": "d7231fbe-5764-4abc-a923-212cf3289f00",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "total_pubmed_matches": 33033,
+      "candidate_count": 30,
+      "pool_count": 17,
+      "top10_overlap": 3,
+      "missing_primary_abstracts": 0,
+      "parser_warning_count": 0
+    },
+    {
+      "query_id": "p04",
+      "snapshot_id": "a1a28790-9919-4770-949b-26e116b782be",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "total_pubmed_matches": 218,
+      "candidate_count": 30,
+      "pool_count": 18,
+      "top10_overlap": 2,
+      "missing_primary_abstracts": 1,
+      "parser_warning_count": 3
+    },
+    {
+      "query_id": "p05",
+      "snapshot_id": "1779661b-c3a2-4074-8d16-420aae86edea",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "total_pubmed_matches": 4534,
+      "candidate_count": 30,
+      "pool_count": 17,
+      "top10_overlap": 3,
+      "missing_primary_abstracts": 1,
+      "parser_warning_count": 1
+    },
+    {
+      "query_id": "p06",
+      "snapshot_id": "ab153ae8-f727-4dfa-84c6-bb43e167dd65",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "total_pubmed_matches": 1657,
+      "candidate_count": 30,
+      "pool_count": 15,
+      "top10_overlap": 5,
+      "missing_primary_abstracts": 0,
+      "parser_warning_count": 0
+    },
+    {
+      "query_id": "p07",
+      "snapshot_id": "1cb7392c-8621-45c6-81bd-fde8c5347b72",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "total_pubmed_matches": 755,
+      "candidate_count": 30,
+      "pool_count": 13,
+      "top10_overlap": 7,
+      "missing_primary_abstracts": 1,
+      "parser_warning_count": 2
+    },
+    {
+      "query_id": "p08",
+      "snapshot_id": "b48edf4c-de11-4c99-a502-0f09373290e1",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "total_pubmed_matches": 249,
+      "candidate_count": 30,
+      "pool_count": 16,
+      "top10_overlap": 4,
+      "missing_primary_abstracts": 1,
+      "parser_warning_count": 2
+    },
+    {
+      "query_id": "p09",
+      "snapshot_id": "cb894cd6-4cfe-4da0-960f-d00b2a0e5484",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "total_pubmed_matches": 3036,
+      "candidate_count": 30,
+      "pool_count": 17,
+      "top10_overlap": 3,
+      "missing_primary_abstracts": 0,
+      "parser_warning_count": 0
+    },
+    {
+      "query_id": "p10",
+      "snapshot_id": "92c1747d-507e-445d-9d77-3e9b41b5c5bb",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "total_pubmed_matches": 3124,
+      "candidate_count": 30,
+      "pool_count": 17,
+      "top10_overlap": 3,
+      "missing_primary_abstracts": 1,
+      "parser_warning_count": 1
+    }
+  ]
+}

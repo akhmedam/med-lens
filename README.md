@@ -81,6 +81,13 @@ and judgment files using the [evaluation format](docs/evaluation.md). Reports
 include nDCG@10, binary metrics, and coverage; unjudged papers remain distinct
 from irrelevant papers. Real relevance judgments are not collected yet.
 
+## Annotate the pilot
+
+Ten questions and their PubMed search plan are saved in `benchmarks/pilot-v1/`.
+The local annotation page combines PubMed/BM25 top-10 without showing method
+names or ranks. See the [pilot workflow](docs/pilot.md) for data preparation,
+annotation, export, and evaluation. Human relevance labels are still pending.
+
 ## Runtime check
 
 ```sh
