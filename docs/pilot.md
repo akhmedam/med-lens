@@ -4,7 +4,7 @@ The [query set](../benchmarks/pilot-v1/queries.jsonl) contains five depression a
 five anxiety questions. The [plan](../benchmarks/pilot-v1/plan.json) fixes the
 PubMed queries and per-question relevance intent before examining results.
 These are authoring suggestions for the pilot, not a representative clinical
-benchmark. Human judgments are still pending.
+benchmark. All 161 pairs have now been judged; see the [baseline review](pilot-baseline.md).
 
 ## Saved candidates
 
@@ -87,9 +87,7 @@ Keep that receipt with the qrels. The general evaluator also accepts standalone
 qrels and does not enforce this receipt automatically.
 
 No human labels have been created by the preparation code. A full unjudged run
-was exercised through export and evaluation; quality metrics remain null. The
-next step is human annotation, then a baseline review of misses, relevance,
-candidate limitations, and annotation disagreements. Use pilot groups for
+was exercised through export and evaluation; quality metrics remain null. The preparation run was followed by human annotation and the [baseline review](pilot-baseline.md). Use pilot groups for
 development; keep their paraphrases out of the held-out test set.
 
 ## Checks

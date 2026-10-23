@@ -79,14 +79,14 @@ python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
 The runner compares PubMed order and BM25 on the same candidates. Prepare query
 and judgment files using the [evaluation format](docs/evaluation.md). Reports
 include nDCG@10, binary metrics, and coverage; unjudged papers remain distinct
-from irrelevant papers. Real relevance judgments are not collected yet.
+from irrelevant papers. The ten-query pilot now has [human-judged baseline results](docs/pilot-baseline.md).
 
 ## Annotate the pilot
 
 Ten questions and their PubMed search plan are saved in `benchmarks/pilot-v1/`.
 The local annotation page combines PubMed/BM25 top-10 without showing method
 names or ranks. See the [pilot workflow](docs/pilot.md) for data preparation,
-annotation, export, and evaluation. Human relevance labels are still pending.
+annotation, export, and evaluation. The first [human-judged baseline](docs/pilot-baseline.md) is complete.
 
 ## Runtime check
 
