@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedLens — пилотная разметка</title>
+<style>
+body{font:17px/1.6 system-ui,sans-serif;background:#f5f6f8;color:#18212b;margin:0}
+main{max-width:900px;margin:32px auto;padding:0 20px}h1{font-size:28px;margin-bottom:4px}
+.muted{color:#526170;font-size:14px}.panel{background:white;padding:24px;border:1px solid #d9e0e6;border-radius:12px;margin:20px 0}
+h2{font-size:21px;line-height:1.4}button,select,label.file{font:inherit;padding:9px 15px;border:1px solid #a9b6c1;border-radius:7px;background:white;cursor:pointer}
+button[aria-pressed=true]{background:#174e6b;color:white;border-color:#174e6b}button:disabled{opacity:.45;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}#abstract p{white-space:pre-wrap}#status{min-height:26px;color:#174e6b}
+summary{cursor:pointer}input[type=file]{max-width:260px}a{color:#174e6b}
+</style>
+<main>
+<h1>MedLens · пилот</h1>
+<p class="muted">Оцени релевантность статьи вопросу по заголовку и аннотации. Порядок карточек перемешан.</p>
+<details><summary>Как ставить оценки</summary>
+<p><b>2 — прямо отвечает:</b> подходят вопрос, популяция, вмешательство и нужный исход.<br>
+<b>1 — частично полезна:</b> даёт часть ответа или полезный фон.<br>
+<b>0 — нерелевантна:</b> не даёт нужных сведений.<br>
+<b>Без оценки:</b> пока не прочитана или данных недостаточно для решения. Отсутствие аннотации само по себе не означает 0.</p>
+<p>Оценка не зависит от того, положительный или отрицательный результат исследования. Полный и частичный прогресс можно скачать одним файлом и затем импортировать.</p>
+</details>
+<div class="row"><label>Вопрос <select id="querySelect" aria-label="Перейти к вопросу"></select></label><span id="progress" class="muted"></span></div>
+<section class="panel"><p id="questionId" class="muted"></p><h2 id="question"></h2><p id="intent"></p></section>
+<section class="panel"><p id="position" class="muted"></p><h2 id="title"></h2><a id="source" target="_blank" rel="noopener noreferrer"></a><div id="abstract"></div></section>
+<div class="row" id="grades"><button data-grade="0">0 · Нерелевантна</button><button data-grade="1">1 · Частично</button><button data-grade="2">2 · Прямо отвечает</button><button id="clear">Без оценки</button></div>
+<p id="status" role="status"></p>
+<div class="row"><button id="previous">← Назад</button><button id="next">Дальше →</button><button id="nextUnjudged">К неоценённой</button></div>
+<hr><div class="row"><button id="download">Скачать разметку</button><label class="file">Импорт <input id="import" type="file" accept=".json,application/json"></label></div>
+<p class="muted">Оценки сохраняются в этом браузере для этого набора. Скачай файл перед очисткой браузера или переходом на другое устройство. Тексты статей и оценки никуда не отправляются.</p>
+</main>
+<script type="application/json" id="packet">__PACKET_JSON__</script>
+<script>
+const packet=JSON.parse(document.getElementById('packet').textContent);
+const items=packet.items, key='medlens-pilot:'+packet.pool_id;
+const $=id=>document.getElementById(id);
+const pair=item=>JSON.stringify([item.query_id,item.pmid]);
+const expected=new Set(items.map(pair));
+let labels={}, position=0;
+function validate(data){
+  if(data.schema_version!==1 || data.pool_id!==packet.pool_id || !Array.isArray(data.judgments)) throw Error('Файл относится к другому набору.');
+  const result={}, seen=new Set();
+  for(const row of data.judgments){
+    const id=pair(row);
+    if(Object.keys(row).sort().join(',')!=='pmid,query_id,relevance' || !expected.has(id) || seen.has(id) || ![null,0,1,2].includes(row.relevance)) throw Error('Некорректные или повторные оценки.');
+    seen.add(id); result[id]=row.relevance;
+  }
+  if(seen.size!==expected.size) throw Error('В файле отсутствуют карточки этого набора.');
+  return result;
+}
+function envelope(){return {schema_version:1,pool_id:packet.pool_id,judgments:items.map(item=>({query_id:item.query_id,pmid:item.pmid,relevance:labels[pair(item)]??null}))};}
+function persist(){try{localStorage.setItem(key,JSON.stringify(envelope()));}catch(error){$('status').textContent='Браузер не сохранил прогресс. Скачай файл разметки.';}}
+try{const saved=localStorage.getItem(key); if(saved) labels=validate(JSON.parse(saved));}catch(error){$('status').textContent='Не удалось восстановить прогресс: '+error.message;}
+const groups=[...new Set(items.map(item=>item.query_id))];
+for(const qid of groups){const option=document.createElement('option');option.value=qid;option.textContent=qid;$('querySelect').append(option);}
+function render(){
+  const item=items[position];
+  if(!item){$('question').textContent='В наборе нет карточек.';document.querySelectorAll('button').forEach(button=>button.disabled=true);return;}
+  const judged=items.filter(row=>labels[pair(row)]!=null).length;
+  const group=items.filter(row=>row.query_id===item.query_id), done=group.filter(row=>labels[pair(row)]!=null).length;
+  $('progress').textContent=`Всего оценено ${judged}/${items.length} · этот вопрос ${done}/${group.length}`;
+  $('querySelect').value=item.query_id;$('questionId').textContent=item.query_id;
+  $('question').textContent=item.query;$('intent').textContent=item.intent;
+  $('position').textContent=`Карточка ${position+1} из ${items.length}`;
+  $('title').textContent=item.title||'Без заголовка';
+  $('source').textContent='PMID '+item.pmid;$('source').href='https://pubmed.ncbi.nlm.nih.gov/'+encodeURIComponent(item.pmid)+'/';
+  $('abstract').replaceChildren();
+  const sections=item.abstract?.sections||[];
+  if(!sections.some(section=>section.text)){const p=document.createElement('p');p.textContent='Аннотация отсутствует или пуста.';$('abstract').append(p);}
+  for(const section of sections){if(section.label){const h=document.createElement('h3');h.textContent=section.label;$('abstract').append(h);}const p=document.createElement('p');p.textContent=section.text;$('abstract').append(p);}
+  document.querySelectorAll('[data-grade]').forEach(button=>button.setAttribute('aria-pressed',String(labels[pair(item)]===Number(button.dataset.grade))));
+  $('previous').disabled=position===0;$('next').disabled=position===items.length-1;
+}
+function navigate(next){position=next;render();window.scrollTo(0,0);}
+function grade(value){labels[pair(items[position])]=value;$('status').textContent=value===null?'Оценка снята.':'Оценка сохранена: '+value;persist();render();}
+document.querySelectorAll('[data-grade]').forEach(button=>button.onclick=()=>grade(Number(button.dataset.grade)));
+$('clear').onclick=()=>grade(null);
+$('previous').onclick=()=>navigate(position-1);$('next').onclick=()=>navigate(position+1);
+$('querySelect').onchange=()=>navigate(items.findIndex(item=>item.query_id===$('querySelect').value));
+$('nextUnjudged').onclick=()=>{for(let offset=1;offset<=items.length;offset++){const next=(position+offset)%items.length;if(labels[pair(items[next])]==null){navigate(next);return;}}$('status').textContent='Все карточки оценены. Скачай разметку.';};
+$('download').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(envelope(),null,2)+'\n'],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='medlens-annotations-'+packet.pool_id.slice(0,12)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('import').onchange=async event=>{try{const file=event.target.files[0];if(!file)return;const incoming=validate(JSON.parse(await file.text()));labels=incoming;$('status').textContent='Разметка импортирована.';persist();render();}catch(error){$('status').textContent='Импорт не выполнен: '+error.message;}event.target.value='';};
+render();
+</script>
+</html>
