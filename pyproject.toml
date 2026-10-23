@@ -21,3 +21,6 @@ inference = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"medlens.evaluation" = ["annotation.html"]
