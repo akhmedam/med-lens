@@ -88,6 +88,21 @@ The local annotation page combines PubMed/BM25 top-10 without showing method
 names or ranks. See the [pilot workflow](docs/pilot.md) for data preparation,
 annotation, export, and evaluation. The first [human-judged baseline](docs/pilot-baseline.md) is complete.
 
+## Prepare BGE windows
+
+```sh
+python -m pip install -e '.[tokenization]'
+python scripts/prepare_windows.py tokenizer \
+  --output .cache/tokenizers/bge-base-en-v1.5
+python scripts/prepare_windows.py build data/parsed/pilot-v1/p01 \
+  --tokenizer .cache/tokenizers/bge-base-en-v1.5 \
+  --output data/windows/pilot-v1-002/p01
+```
+
+Section-bounded windows preserve source spans and fit BGE's input limit, including
+the title. See [window format and checks](docs/embedding-windows.md). This prepares
+inputs; embedding inference and dense search are next.
+
 ## Runtime check
 
 ```sh
