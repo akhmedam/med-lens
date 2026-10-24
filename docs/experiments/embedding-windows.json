@@ -1,0 +1,146 @@
+{
+  "observed_on": "2026-10-24",
+  "tokenizer": {
+    "model_id": "BAAI/bge-base-en-v1.5",
+    "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "files": {
+      "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+      "tokenizer_config.json": "649e41f8cf1cb1b67acc193795ccaef07bcaa3c4e0fc7d286ba8255fab79cffa"
+    },
+    "backend_sha256": "9114256b104cca80e04367526f03f46aa3c443c2ed174904142a73bbf13b9fbb",
+    "transformers_version": "5.20.1",
+    "tokenizers_version": "0.23.3"
+  },
+  "config": {
+    "body_tokens": 384,
+    "max_input_tokens": 512,
+    "overlap": 64
+  },
+  "implementation_sha256": "9d593df503c82a0f83a47c4b46ddcfcb0c452dffa0094b1ca94701e884e2725e",
+  "article_memberships": 300,
+  "window_count": 975,
+  "empty_article_memberships": 0,
+  "title_only_windows": 7,
+  "max_input_token_count": 418,
+  "multi_window_sections": 24,
+  "checks": {
+    "source_token_coverage": "complete",
+    "source_text_spans": "exact",
+    "section_overlap_tokens": 64,
+    "model_input_limit": 512,
+    "network_during_build": false,
+    "model_weights_requested": false
+  },
+  "per_query": [
+    {
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "artifact_id": "0b286fce328b332df9fce353c9c1f66c8f1331b96584194b0145b9d18e108fd6",
+      "article_count": 30,
+      "window_count": 78,
+      "empty_pmids": [],
+      "title_only_windows": 2,
+      "max_input_token_count": 412,
+      "query_id": "p01",
+      "multi_window_sections": 3
+    },
+    {
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "artifact_id": "cdf0d493cde4b9b5f05aa4de6be6c9c5bd91d42264e67860c71e6890c5ddf557",
+      "article_count": 30,
+      "window_count": 123,
+      "empty_pmids": [],
+      "title_only_windows": 0,
+      "max_input_token_count": 405,
+      "query_id": "p02",
+      "multi_window_sections": 1
+    },
+    {
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "artifact_id": "27ba50858e1c215eb25125c745036a8f40ccd317c97edc2212c2c4a8fbf6bc5b",
+      "article_count": 30,
+      "window_count": 107,
+      "empty_pmids": [],
+      "title_only_windows": 0,
+      "max_input_token_count": 413,
+      "query_id": "p03",
+      "multi_window_sections": 5
+    },
+    {
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "artifact_id": "f24a5b13be81baa7d69e0a972470690f87c10a62467f0270efdf3f8466f278bd",
+      "article_count": 30,
+      "window_count": 160,
+      "empty_pmids": [],
+      "title_only_windows": 1,
+      "max_input_token_count": 415,
+      "query_id": "p04",
+      "multi_window_sections": 2
+    },
+    {
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "artifact_id": "9ff9a3ac31551cdbc649f1b93fca12b0f27ebb0e1edd0e40c8cd7d4cfe66937a",
+      "article_count": 30,
+      "window_count": 85,
+      "empty_pmids": [],
+      "title_only_windows": 1,
+      "max_input_token_count": 415,
+      "query_id": "p05",
+      "multi_window_sections": 2
+    },
+    {
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "artifact_id": "1dd98e67a1cab005b0d2713f93e9923a5a15323769ac3f426f63b415f0d190b0",
+      "article_count": 30,
+      "window_count": 85,
+      "empty_pmids": [],
+      "title_only_windows": 0,
+      "max_input_token_count": 404,
+      "query_id": "p06",
+      "multi_window_sections": 3
+    },
+    {
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "artifact_id": "8fb16819a091b34eb15a965d987f283e58f693ec309e9f14b0b0355a4f0b7119",
+      "article_count": 30,
+      "window_count": 90,
+      "empty_pmids": [],
+      "title_only_windows": 1,
+      "max_input_token_count": 408,
+      "query_id": "p07",
+      "multi_window_sections": 4
+    },
+    {
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "artifact_id": "2b0265320fa9b4cceb74d45a66f94046c1babfc99d2b91cb045ff5c8ca308ce8",
+      "article_count": 30,
+      "window_count": 70,
+      "empty_pmids": [],
+      "title_only_windows": 1,
+      "max_input_token_count": 411,
+      "query_id": "p08",
+      "multi_window_sections": 3
+    },
+    {
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "artifact_id": "e552c2aec79a71925d0529a353b73bf036514112f1ae8f6dc00b9dff94a92561",
+      "article_count": 30,
+      "window_count": 92,
+      "empty_pmids": [],
+      "title_only_windows": 0,
+      "max_input_token_count": 418,
+      "query_id": "p09",
+      "multi_window_sections": 1
+    },
+    {
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "artifact_id": "cdfe70608872d6a42e639db61e22eaeb2250f097583e890dcb70abfa574573f9",
+      "article_count": 30,
+      "window_count": 85,
+      "empty_pmids": [],
+      "title_only_windows": 1,
+      "max_input_token_count": 363,
+      "query_id": "p10",
+      "multi_window_sections": 0
+    }
+  ]
+}
