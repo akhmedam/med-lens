@@ -1,0 +1,198 @@
+{
+  "observed_on": "2026-10-25",
+  "hardware": "MacBook M3 Pro, 36 GB unified memory",
+  "encoder": {
+    "model": {
+      "model_id": "BAAI/bge-base-en-v1.5",
+      "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+      "files": {
+        "config.json": "bc00af31a4a31b74040d73370aa83b62da34c90b75eb77bfa7db039d90abd591",
+        "model.safetensors": "c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7"
+      }
+    },
+    "device": "mps",
+    "dtype": "float32",
+    "pooling": "last_hidden_state[:,0,:]",
+    "normalization": "L2",
+    "dimension": 768,
+    "attention": "eager",
+    "batch_size": 16,
+    "pad_token_id": 0,
+    "padding_side": "right",
+    "query_instruction": "Represent this sentence for searching relevant passages: ",
+    "passage_instruction": null,
+    "torch_version": "2.14.1",
+    "transformers_version": "5.20.1",
+    "numpy_version": "2.4.6"
+  },
+  "load_seconds": 0.36989091699979326,
+  "window_count": 975,
+  "dimension": 768,
+  "dtype": "float32",
+  "total_vector_bytes": 2995200,
+  "query_count": 10,
+  "query_encode_measurements": {
+    "encode_seconds": 0.13992050000069867,
+    "sampled_max_mps_tensor_bytes": 439533568,
+    "sampled_max_mps_driver_bytes": 2164998144
+  },
+  "window_encode_seconds": 21.610416376000103,
+  "process_peak_rss_bytes": 1418559488,
+  "checks": {
+    "probe_token_lengths": [
+      6,
+      418
+    ],
+    "padding_batch_max_abs_difference": 1.7508864402770996e-07,
+    "repeat_max_abs_difference": 0.0,
+    "cpu_mps_max_abs_difference": 2.477318048477173e-07,
+    "cpu_mps_cosines": [
+      1.0,
+      1.0
+    ],
+    "query_max_norm_error": 1.1920928955078125e-07
+  },
+  "per_query": [
+    {
+      "query_id": "p01",
+      "artifact_id": "9523b9fa1c9a80cd27cfa2d0d9a60e42a31d669ecda0a2d00cd3285f1db70215",
+      "source_window_artifact_id": "0b286fce328b332df9fce353c9c1f66c8f1331b96584194b0145b9d18e108fd6",
+      "row_count": 78,
+      "measurements": {
+        "encode_seconds": 2.987343542000417,
+        "sampled_max_mps_tensor_bytes": 459147264,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "aa8b773588094d180f78fa50ba43226f447b726bdfe95f43ff03e8e4ac0d8a06"
+    },
+    {
+      "query_id": "p02",
+      "artifact_id": "88fd7ff3620b6977f81328cd373ec518aa15ce27d9072090418ec44cc081c0b2",
+      "source_window_artifact_id": "cdf0d493cde4b9b5f05aa4de6be6c9c5bd91d42264e67860c71e6890c5ddf557",
+      "row_count": 123,
+      "measurements": {
+        "encode_seconds": 2.4917842089998885,
+        "sampled_max_mps_tensor_bytes": 458621440,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "f912ba22f3407e307c00cad1a9197542fbe3d8b5b933374c206dad767c3b70a8"
+    },
+    {
+      "query_id": "p03",
+      "artifact_id": "156bee8ea037e772bed665d3ca0eac6dd9fcdd6cfe557e3c3491beda94c9d972",
+      "source_window_artifact_id": "27ba50858e1c215eb25125c745036a8f40ccd317c97edc2212c2c4a8fbf6bc5b",
+      "row_count": 107,
+      "measurements": {
+        "encode_seconds": 2.5738684580001063,
+        "sampled_max_mps_tensor_bytes": 459147776,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "be4ba90ef15474d2384f8cc6a7cddc8728ae56caca56a6e43f2fa36acf72e060"
+    },
+    {
+      "query_id": "p04",
+      "artifact_id": "5cd3ee8638fd019979e7334a3ceddb2a4f08deef76702d3d1eb10e3d17e8d9a4",
+      "source_window_artifact_id": "f24a5b13be81baa7d69e0a972470690f87c10a62467f0270efdf3f8466f278bd",
+      "row_count": 160,
+      "measurements": {
+        "encode_seconds": 3.260707249999541,
+        "sampled_max_mps_tensor_bytes": 459148288,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "61863a47da856d15fed61fba3d395c02a8b3769091c29b507bc1bc8849c637bc"
+    },
+    {
+      "query_id": "p05",
+      "artifact_id": "4d6458a414afcb83dadcdc2ff7396874131182e03f3bc7ef197f4d426e56ac2a",
+      "source_window_artifact_id": "9ff9a3ac31551cdbc649f1b93fca12b0f27ebb0e1edd0e40c8cd7d4cfe66937a",
+      "row_count": 85,
+      "measurements": {
+        "encode_seconds": 1.465818874999968,
+        "sampled_max_mps_tensor_bytes": 459148288,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "3bf29842ccc87214b2dc494f27880aa657d83399b72787883c95b5a031541d9a"
+    },
+    {
+      "query_id": "p06",
+      "artifact_id": "e93dbf35b62a81e374db62da3c5fd2fcc6a2ed64f877811eb0e37237c0d104bb",
+      "source_window_artifact_id": "1dd98e67a1cab005b0d2713f93e9923a5a15323769ac3f426f63b415f0d190b0",
+      "row_count": 85,
+      "measurements": {
+        "encode_seconds": 1.8619586669992714,
+        "sampled_max_mps_tensor_bytes": 459145216,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "530e916b4ffbe8af63a5d9ab6934e1ca9645092a0a93aaf9a9a0df397b3bec57"
+    },
+    {
+      "query_id": "p07",
+      "artifact_id": "046079afa66d25e3721873af5f48324333b5eeffd678334db1ac0d5db592b5b2",
+      "source_window_artifact_id": "8fb16819a091b34eb15a965d987f283e58f693ec309e9f14b0b0355a4f0b7119",
+      "row_count": 90,
+      "measurements": {
+        "encode_seconds": 2.025781750000533,
+        "sampled_max_mps_tensor_bytes": 459146240,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "102ecfd966f747df35f4096588481af76833bddecba65817a1f867835c222b34"
+    },
+    {
+      "query_id": "p08",
+      "artifact_id": "ceb824a95e5fc588bb98f3b1d6bec42661e9c0feffa3c77ea1ec5251281ccbc3",
+      "source_window_artifact_id": "2b0265320fa9b4cceb74d45a66f94046c1babfc99d2b91cb045ff5c8ca308ce8",
+      "row_count": 70,
+      "measurements": {
+        "encode_seconds": 1.660278625000501,
+        "sampled_max_mps_tensor_bytes": 459147264,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "bea0874312d52849672bb692d58ef7fb2ec246bef9582fb483ccbd39558dc104"
+    },
+    {
+      "query_id": "p09",
+      "artifact_id": "84cab713f4aae8cff53baf503007f98ef82216496ccd1c89d8d9a7f9c0f8fa7c",
+      "source_window_artifact_id": "e552c2aec79a71925d0529a353b73bf036514112f1ae8f6dc00b9dff94a92561",
+      "row_count": 92,
+      "measurements": {
+        "encode_seconds": 2.0028603330001715,
+        "sampled_max_mps_tensor_bytes": 459673088,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "d313a93a42631b493bb0ad6c96d5a304e3efd1a22f79a46176d7c9bb8ffcb7bd"
+    },
+    {
+      "query_id": "p10",
+      "artifact_id": "7554763d3d08733bf23fc4baa7f12887497538c6d51f0dae75e364b813c19961",
+      "source_window_artifact_id": "cdfe70608872d6a42e639db61e22eaeb2250f097583e890dcb70abfa574573f9",
+      "row_count": 85,
+      "measurements": {
+        "encode_seconds": 1.2800146669997048,
+        "sampled_max_mps_tensor_bytes": 457037824,
+        "sampled_max_mps_driver_bytes": 2156609536
+      },
+      "vectors_sha256": "d3260c0edd519841873e0b65dc6a0bb8101ec96d556269b399fb5eb56a38ef88"
+    }
+  ],
+  "limitations": [
+    "Timings exclude first-time model download and artifact I/O.",
+    "RSS is process lifetime peak including CPU reference validation.",
+    "MPS counters are sampled allocations, overlap with RSS, and must not be added to it.",
+    "Numerical equivalence was checked on two probe sequences, not all windows.",
+    "No relevance comparison or dense ranking is implemented in this step."
+  ],
+  "query_source_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "query_ids": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10"
+  ],
+  "query_probe_vectors_sha256": "3eee3a48b7bfb0832e410a446dada3ee30339bfa044a5b555afa0df18b2116b6"
+}
