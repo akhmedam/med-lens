@@ -101,7 +101,22 @@ python scripts/prepare_windows.py build data/parsed/pilot-v1/p01 \
 
 Section-bounded windows preserve source spans and fit BGE's input limit, including
 the title. See [window format and checks](docs/embedding-windows.md). This prepares
-inputs; embedding inference and dense search are next.
+inputs for the encoder below.
+
+## Encode BGE windows
+
+```sh
+python -m pip install -e '.[embeddings]'
+python scripts/embed_windows.py model --output .cache/models/bge-base-en-v1.5
+python scripts/embed_windows.py build data/windows/pilot-v1-002/p01 \
+  --model .cache/models/bge-base-en-v1.5 \
+  --tokenizer .cache/tokenizers/bge-base-en-v1.5 \
+  --output data/embeddings/pilot-v1/p01
+```
+
+The encoder saves normalized 768-dimensional vectors with their source-window
+mapping. See [BGE settings and MPS checks](docs/bge-embeddings.md). Exact cosine
+search and its ranking evaluation are next.
 
 ## Runtime check
 
