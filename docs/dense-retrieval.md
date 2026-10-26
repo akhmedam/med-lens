@@ -59,14 +59,18 @@ had vectors. Ten exact searches took 2.36 ms total, excluding artifact validatio
 model loading, and query encoding. The ten separately encoded queries took
 0.44 seconds on MPS in that run. These are observations, not end-to-end benchmarks.
 
-Only **62 of the 100 dense top-10 positions** have prior human labels. The
-remaining **38 query/PMID pairs** are new to the annotation pool. The existing
+In the initial run, only **62 of the 100 dense top-10 positions** had prior human labels. The
+remaining **38 query/PMID pairs** were new to the annotation pool. The existing
 161 judgments fully cover PubMed/BM25 top-10 but do not permit a complete dense
 comparison. The [aggregate report](experiments/dense-retrieval.json) is explicitly
 marked provisional. Its numeric pooled scores treat unjudged as zero contribution;
 they must not be interpreted as proof that dense retrieval is better or worse.
 They are not guaranteed lower bounds either: additional positive labels also
 change ideal DCG and the known-relevant denominator for all methods.
+
+The supplement is now complete: all 199 pairs are judged. See the
+[completed baseline review](dense-baseline.md) for the updated comparison. The
+initial provisional report above is retained as a historical artifact.
 
 ## Additional annotation
 

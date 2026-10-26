@@ -116,7 +116,7 @@ python scripts/embed_windows.py build data/windows/pilot-v1-002/p01 \
 
 The encoder saves normalized 768-dimensional vectors with their source-window
 mapping. See [BGE settings and MPS checks](docs/bge-embeddings.md). Exact cosine
-search is available below; the expanded relevance pool still needs judgments.
+search is available below; the expanded pilot now has [human-judged results](docs/dense-baseline.md).
 
 ## Search with dense retrieval
 
@@ -130,7 +130,8 @@ python scripts/dense_search.py data/parsed/pilot-v1/p10 \
 
 Exact cosine search scores articles by their best window and returns that source
 fragment. See [dense retrieval and pool expansion](docs/dense-retrieval.md) for
-scoring, evaluation, and the 38 additional pilot judgments needed.
+scoring and evaluation. All 199 pilot pairs are now judged; see the
+[three-method baseline](docs/dense-baseline.md).
 
 ## Runtime check
 
