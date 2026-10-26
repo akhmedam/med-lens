@@ -1,0 +1,359 @@
+{
+  "observed_on": "2026-10-26",
+  "comparison_status": "provisional-incomplete-judgments",
+  "run_id": "64fded70d670fdd7eb281de808ed69cd0464201285c14138d63fc46849795c6e",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "qrels_sha256": "f3ed40e8c63e1b76eb6a3d74892d4fbf6982c320d133b70b4eca2b8a227b69bb",
+  "dense_evaluation_code_sha256": "65b6ef821fc9e365f88b7d0c161f5517bb019835e1ce47788fd5f75ae1e21d04",
+  "query_count": 10,
+  "macro_provisional": {
+    "pubmed": {
+      "ndcg@10": {
+        "mean": 0.670216834810123,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.93,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.629185520361991,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.5366666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "bm25": {
+      "ndcg@10": {
+        "mean": 0.708330062584371,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.9199999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.6297775263951733,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.5366666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "dense": {
+      "ndcg@10": {
+        "mean": 0.6319091469773129,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.6200000000000001,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.41701923076923075,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.775,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 0.6200000000000001,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.5366666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    }
+  },
+  "new_judgments_needed": 38,
+  "supplement_pool_id": "fe5a5d5db0049ffe520e5159ab390fcf5d7783b19030e97d5f74321e6bdd114a",
+  "total_query_encode_seconds": 0.4419620010048675,
+  "total_exact_search_seconds": 0.0023626240035810042,
+  "per_query": [
+    {
+      "query_id": "p01",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "dense_run_id": "aac098478ca3cca7e3e63c48fd2928a4aa1e82b86a2f586a6cb19e838a93806d",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.8727809433935759,
+        "precision@10": 0.7,
+        "recall@10": 0.5833333333333334,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.7,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5333333333333333,
+        "returned_count": 10,
+        "judged_returned_count": 7,
+        "unjudged_returned_count": 3,
+        "judged_count": 16,
+        "known_relevant_count": 12,
+        "known_relevant_in_candidates": 12
+      }
+    },
+    {
+      "query_id": "p02",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "dense_run_id": "d5f42771b5adb10ae9921a410361b8891186e97806a47454788003634c972058",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.7133825930331331,
+        "precision@10": 0.7,
+        "recall@10": 0.4666666666666667,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.7,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5,
+        "returned_count": 10,
+        "judged_returned_count": 7,
+        "unjudged_returned_count": 3,
+        "judged_count": 15,
+        "known_relevant_count": 15,
+        "known_relevant_in_candidates": 15
+      }
+    },
+    {
+      "query_id": "p03",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "dense_run_id": "2aadf50dd0f1b0d4a76432752d563052dc847b0a538478085fdd91b2cde2f634",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.8603818544462509,
+        "precision@10": 0.8,
+        "recall@10": 0.5,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.8,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5666666666666667,
+        "returned_count": 10,
+        "judged_returned_count": 8,
+        "unjudged_returned_count": 2,
+        "judged_count": 17,
+        "known_relevant_count": 16,
+        "known_relevant_in_candidates": 16
+      }
+    },
+    {
+      "query_id": "p04",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "dense_run_id": "0a7380578c0161dc85ab19e8165fc1f2531ed1cdbfee053256c095702e4b2349",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.8030118016223006,
+        "precision@10": 0.8,
+        "recall@10": 0.47058823529411764,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.8,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.6,
+        "returned_count": 10,
+        "judged_returned_count": 8,
+        "unjudged_returned_count": 2,
+        "judged_count": 18,
+        "known_relevant_count": 17,
+        "known_relevant_in_candidates": 17
+      }
+    },
+    {
+      "query_id": "p05",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "dense_run_id": "ab4169ca8e8c192632164ac464a5a064eb5d6fd2bf4c520c3bdcd12fd358ced2",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.6122496142821665,
+        "precision@10": 0.5,
+        "recall@10": 0.3125,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.5,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5666666666666667,
+        "returned_count": 10,
+        "judged_returned_count": 5,
+        "unjudged_returned_count": 5,
+        "judged_count": 17,
+        "known_relevant_count": 16,
+        "known_relevant_in_candidates": 16
+      }
+    },
+    {
+      "query_id": "p06",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "dense_run_id": "a8894c3e14c7d73684632c55010e580554cee9acb6557aa575f3bb3dd353b9fd",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.848081671911789,
+        "precision@10": 0.6,
+        "recall@10": 0.4,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.6,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5,
+        "returned_count": 10,
+        "judged_returned_count": 6,
+        "unjudged_returned_count": 4,
+        "judged_count": 15,
+        "known_relevant_count": 15,
+        "known_relevant_in_candidates": 15
+      }
+    },
+    {
+      "query_id": "p07",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "dense_run_id": "4d941b1206846864c33e204c5c87affee7d9dd295e4b0f80fe1c499a605e2033",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.2875644945707654,
+        "precision@10": 0.4,
+        "recall@10": 0.3333333333333333,
+        "mrr@10": 0.16666666666666666,
+        "judged_coverage@10": 0.4,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.43333333333333335,
+        "returned_count": 10,
+        "judged_returned_count": 4,
+        "unjudged_returned_count": 6,
+        "judged_count": 13,
+        "known_relevant_count": 12,
+        "known_relevant_in_candidates": 12
+      }
+    },
+    {
+      "query_id": "p08",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "dense_run_id": "b8bd8ef03e8b56ccb3bc8d4844d45954f8f1f5a23cae6de0310c87b22e6a84c8",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.35855616163924603,
+        "precision@10": 0.4,
+        "recall@10": 0.26666666666666666,
+        "mrr@10": 0.3333333333333333,
+        "judged_coverage@10": 0.4,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5333333333333333,
+        "returned_count": 10,
+        "judged_returned_count": 4,
+        "unjudged_returned_count": 6,
+        "judged_count": 16,
+        "known_relevant_count": 15,
+        "known_relevant_in_candidates": 15
+      }
+    },
+    {
+      "query_id": "p09",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "dense_run_id": "d5c6958d77b3e903288a4ed9199d7da6073ff3d45f4acbb47cf4d05852497433",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.7024045188325289,
+        "precision@10": 0.9,
+        "recall@10": 0.5294117647058824,
+        "mrr@10": 1.0,
+        "judged_coverage@10": 0.9,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5666666666666667,
+        "returned_count": 10,
+        "judged_returned_count": 9,
+        "unjudged_returned_count": 1,
+        "judged_count": 17,
+        "known_relevant_count": 17,
+        "known_relevant_in_candidates": 17
+      }
+    },
+    {
+      "query_id": "p10",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "dense_run_id": "2cd4423b0e62630cdc0982f1b0d66e8c332a859a43f9e8b138096bec34eded0b",
+      "dense_implementation_sha256": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+      "searchable_article_count": 30,
+      "missing_vector_pmids": [],
+      "dense_metrics_provisional": {
+        "ndcg@10": 0.2606778160413727,
+        "precision@10": 0.4,
+        "recall@10": 0.3076923076923077,
+        "mrr@10": 0.25,
+        "judged_coverage@10": 0.4,
+        "candidate_coverage": 1.0,
+        "candidate_judged_coverage": 0.5666666666666667,
+        "returned_count": 10,
+        "judged_returned_count": 4,
+        "unjudged_returned_count": 6,
+        "judged_count": 17,
+        "known_relevant_count": 13,
+        "known_relevant_in_candidates": 13
+      }
+    }
+  ],
+  "interpretation": "No quality winner can be inferred before the 38 new dense top-10 pairs are human-judged. Additional labels change denominators for all methods."
+}
