@@ -116,7 +116,22 @@ python scripts/embed_windows.py build data/windows/pilot-v1-002/p01 \
 
 The encoder saves normalized 768-dimensional vectors with their source-window
 mapping. See [BGE settings and MPS checks](docs/bge-embeddings.md). Exact cosine
-search and its ranking evaluation are next.
+search is available below; the expanded pilot now has [human-judged results](docs/dense-baseline.md).
+
+## Search with dense retrieval
+
+```sh
+python scripts/dense_search.py data/parsed/pilot-v1/p10 \
+  --windows data/windows/pilot-v1-002/p10 \
+  --embeddings data/embeddings/pilot-v1/p10 \
+  --query 'Does cognitive behavioral therapy reduce anxiety symptoms in children with anxiety disorders?' \
+  --output results/dense/p10-001.json
+```
+
+Exact cosine search scores articles by their best window and returns that source
+fragment. See [dense retrieval and pool expansion](docs/dense-retrieval.md) for
+scoring and evaluation. All 199 pilot pairs are now judged; see the
+[three-method baseline](docs/dense-baseline.md).
 
 ## Runtime check
 
