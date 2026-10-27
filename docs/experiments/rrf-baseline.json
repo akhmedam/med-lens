@@ -1,0 +1,414 @@
+{
+  "observed_on": "2026-10-27",
+  "comparison_status": "fully-judged-top-k",
+  "run_id": "e1467ec39e599aca2535a0b0a555a10198ad2549f77dd772e32b778ea3ca1dd0",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "qrels_sha256": "f410b657a8abcdd833686813b6e05eb312f0c528e44196296df0b29e33ea7003",
+  "configuration": {
+    "c": 60.0,
+    "depth": 30,
+    "k": 10,
+    "weights": {
+      "bm25": 1,
+      "dense": 1
+    },
+    "tuned_on_pilot": false
+  },
+  "judgment_count": 200,
+  "previous_labels_preserved": 199,
+  "supplement_pool_id": "89ebb6cc682c1faec503e33fc2516f2b08618fb37db6a4a24bc9796f2fd3bcdd",
+  "base_qrels_sha256": "020f38ef2a75ba6ba28a35c9259a62fd3251e6840a1a7f543edfec13d2bcca08",
+  "supplement_qrels_sha256": "4e5863c3a43136a942a5130a4664fc169780c9c4360425fe7427baa474335287",
+  "rankings_unchanged_from_provisional_run": true,
+  "unjudged_rrf_pairs": 0,
+  "macro": {
+    "pubmed": {
+      "ndcg@10": {
+        "mean": 0.5777191181142887,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.93,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.4971086807928913,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6666666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "bm25": {
+      "ndcg@10": {
+        "mean": 0.6104854266206636,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.9199999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.4983861168071694,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6666666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "dense": {
+      "ndcg@10": {
+        "mean": 0.9084699322860971,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5398572188045871,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6666666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "rrf": {
+      "ndcg@10": {
+        "mean": 0.7696543930720973,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.99,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5345940609098504,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6666666666666666,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    }
+  },
+  "rrf_ndcg_wins_against_dense": 0,
+  "dense_ndcg_wins_against_rrf": 10,
+  "per_query": [
+    {
+      "query_id": "p01",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "rrf_run_id": "f1b99d5290a0684473bbdd304ff2c5c5d589b76976268b6b7ebb31cc97f89183",
+      "ndcg@10": {
+        "pubmed": 0.3978232077013697,
+        "bm25": 0.7282137249324032,
+        "dense": 0.9904025836274859,
+        "rrf": 0.8492941162085115
+      },
+      "precision@10": {
+        "pubmed": 0.6,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p02",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "rrf_run_id": "3d1daf612e7c82495127cdafe2459cf8a52935f8969bf24462ba44178a283259",
+      "ndcg@10": {
+        "pubmed": 0.6882894719344056,
+        "bm25": 0.6680217975986688,
+        "dense": 0.8199281507293015,
+        "rrf": 0.6902955529858598
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p03",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "rrf_run_id": "4cdf19a7a90cfe34b4a5d6056ee8c52ac45acf9755d7e1956a4b6ba3495777ea",
+      "ndcg@10": {
+        "pubmed": 0.8039369346935541,
+        "bm25": 0.7255870798859023,
+        "dense": 1.0,
+        "rrf": 0.8525377246567917
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 0.9,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p04",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "rrf_run_id": "0f83da9977f07ec47910984f5dd523a434e71eddb58fd25f218199adacc6c098",
+      "ndcg@10": {
+        "pubmed": 0.6230865717288507,
+        "bm25": 0.8114725730466774,
+        "dense": 0.9575861412006988,
+        "rrf": 0.9008240627729516
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 0.9,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p05",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "rrf_run_id": "54fe02efcb649f0d7e8fab0f0d4b47dffbdebf88bd2b7e2c28df018b225380a4",
+      "ndcg@10": {
+        "pubmed": 0.8335573141981405,
+        "bm25": 0.7475575341362041,
+        "dense": 0.9477344873475498,
+        "rrf": 0.8311363972596454
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 0.9,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p06",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "rrf_run_id": "ce821bc9a6e4830d946206c2d5cad47c489f1010cc455a5d595ac9a30563576f",
+      "ndcg@10": {
+        "pubmed": 0.4686691563184977,
+        "bm25": 0.5591556363218171,
+        "dense": 0.9981666155888351,
+        "rrf": 0.8310225179650538
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p07",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "rrf_run_id": "2b91ed80d19da36a3fa87c0a9821a7962a84404cd7e09eec328a41a44069205d",
+      "ndcg@10": {
+        "pubmed": 0.38147007348586015,
+        "bm25": 0.4266845355885305,
+        "dense": 0.957013424727574,
+        "rrf": 0.6868719893140842
+      },
+      "precision@10": {
+        "pubmed": 0.9,
+        "bm25": 0.9,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p08",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "rrf_run_id": "c0a3456bdf7071fdc7a3566f9ac92d7a0af111c7883a52b85b9383a9858b83a5",
+      "ndcg@10": {
+        "pubmed": 0.5859240426513556,
+        "bm25": 0.5007524247163964,
+        "dense": 0.7761153842439924,
+        "rrf": 0.7588388865753796
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 0.9,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p09",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "rrf_run_id": "88e813a8ccc8eb7e5ea6b0e7427e5d68e533aab261059619c2159f75dcd93b68",
+      "ndcg@10": {
+        "pubmed": 0.5488880389170671,
+        "bm25": 0.6543326831843076,
+        "dense": 0.7471997994204103,
+        "rrf": 0.703660642713437
+      },
+      "precision@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    },
+    {
+      "query_id": "p10",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "rrf_run_id": "9e6ca8e5085c27c96e3c29b6b028b1391c809cb560f9f360e97a0cf9b53880ba",
+      "ndcg@10": {
+        "pubmed": 0.445546369513786,
+        "bm25": 0.2830762767957293,
+        "dense": 0.8905527359751219,
+        "rrf": 0.5920620402692575
+      },
+      "precision@10": {
+        "pubmed": 0.8,
+        "bm25": 0.7,
+        "dense": 1.0,
+        "rrf": 0.9
+      },
+      "judged_coverage@10": {
+        "pubmed": 1.0,
+        "bm25": 1.0,
+        "dense": 1.0,
+        "rrf": 1.0
+      }
+    }
+  ],
+  "interpretation": "The initial equal-weight RRF setting is below dense on all ten fully judged pilot questions. Keep RRF experimental and dense as the quality reference.",
+  "limitations": [
+    "Ten development questions, one annotator, no held-out or statistical significance claim.",
+    "Full coverage refers to the four top-10 lists, not all candidates or all PubMed literature.",
+    "RRF c=60 and source depth 30 were fixed before viewing this run; no alternative setting was tuned."
+  ]
+}

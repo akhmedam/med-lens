@@ -93,7 +93,11 @@ The ten fusion calls took about 0.40 ms total, excluding the source retrieval,
 query embedding, and report assembly. This is an observed component time, not
 end-to-end latency or evidence of relevance quality.
 
-## One additional judgment
+The final supplemental judgment is now collected: all 200 pairs are judged.
+See the [completed four-method baseline](rrf-baseline.md). The provisional
+report above is retained as a historical result.
+
+## Additional annotation workflow
 
 ```sh
 python scripts/annotate_pilot.py build benchmarks/pilot-v1/queries.jsonl \

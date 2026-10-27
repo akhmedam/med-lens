@@ -145,7 +145,8 @@ python scripts/hybrid_search.py data/parsed/pilot-v1/p08 \
 
 The initial hybrid combines BM25/dense ranks with equal weights, c=60, and depth
 30. It is an experiment: [pilot results and fusion policy](docs/hybrid-retrieval.md)
-show no gain over dense, with one additional judgment still needed.
+show no gain over dense. The [completed four-method baseline](docs/rrf-baseline.md)
+covers all 200 judged pairs.
 
 ## Runtime check
 
