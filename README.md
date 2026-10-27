@@ -133,6 +133,20 @@ fragment. See [dense retrieval and pool expansion](docs/dense-retrieval.md) for
 scoring and evaluation. All 199 pilot pairs are now judged; see the
 [three-method baseline](docs/dense-baseline.md).
 
+## Search with RRF
+
+```sh
+python scripts/hybrid_search.py data/parsed/pilot-v1/p08 \
+  --windows data/windows/pilot-v1-002/p08 \
+  --embeddings data/embeddings/pilot-v1/p08 \
+  --query 'Does exposure-based cognitive behavioral therapy reduce panic symptoms in adults with panic disorder?' \
+  --output results/hybrid/p08-001.json
+```
+
+The initial hybrid combines BM25/dense ranks with equal weights, c=60, and depth
+30. It is an experiment: [pilot results and fusion policy](docs/hybrid-retrieval.md)
+show no gain over dense, with one additional judgment still needed.
+
 ## Runtime check
 
 ```sh
