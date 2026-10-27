@@ -20,9 +20,12 @@ def _sha(body: bytes) -> str:
 
 
 def build_packet(queries_path: Path, plan_path: Path, output: Path, *, depth: int = 10,
-                 dense_report: Path | None = None, qrels_path: Path | None = None) -> dict:
+                 dense_report: Path | None = None, qrels_path: Path | None = None,
+                 supplement_method: str = "dense") -> dict:
     if type(depth) is not int or depth <= 0:
         raise EvaluationError("depth must be a positive integer")
+    if supplement_method not in {"dense", "rrf"}:
+        raise EvaluationError("Supplement method must be dense or rrf")
     output = Path(output)
     if output.exists():
         raise FileExistsError(output)
@@ -58,13 +61,13 @@ def build_packet(queries_path: Path, plan_path: Path, output: Path, *, depth: in
         pooled = set(methods["pubmed"]) | set(methods["bm25"])
         dense_id = None
         if report is not None:
-            dense = report_rows[query.query_id]["dense_run"]
+            dense = report_rows[query.query_id][supplement_method + "_run"]
             if dense["dataset_id"] != dataset.manifest["dataset_id"] or dense["query"] != query.text:
                 raise EvaluationError("Dense report candidate identity or query changed")
-            methods["dense"] = [hit["pmid"] for hit in dense["results"][:depth]]
-            if len(set(methods["dense"])) != len(methods["dense"]) or not set(methods["dense"]) <= set(by_id):
+            methods[supplement_method] = [hit["pmid"] for hit in dense["results"][:depth]]
+            if len(set(methods[supplement_method])) != len(methods[supplement_method]) or not set(methods[supplement_method]) <= set(by_id):
                 raise EvaluationError("Invalid dense candidate ranking")
-            pooled = {pmid for pmid in methods["dense"] if judgments[query.query_id].get(pmid) is None}
+            pooled = {pmid for pmid in methods[supplement_method] if judgments[query.query_id].get(pmid) is None}
             dense_id = dense["run_id"]
         order = sorted(pooled, key=lambda pmid: _sha(f"pilot-blind-v1:{query.query_id}:{pmid}".encode()))
         for pmid in order:
@@ -74,7 +77,8 @@ def build_packet(queries_path: Path, plan_path: Path, output: Path, *, depth: in
                 "abstract": row["abstract"], "abstract_status": row["abstract_status"],
                 "text_version_id": row["text_version"]["text_version_id"]})
         sources.append({"query_id": query.query_id, "dataset_id": dataset.manifest["dataset_id"],
-            "bm25_run_id": run["run_id"], "dense_run_id": dense_id, "methods": methods, "pool_count": len(order)})
+            "bm25_run_id": run["run_id"], "supplement_method": supplement_method if report else None,
+            "supplement_run_id": dense_id, "methods": methods, "pool_count": len(order)})
     if not items:
         raise EvaluationError("No candidates available for annotation")
     template = Path(__file__).with_name("annotation.html").read_text()
@@ -83,7 +87,8 @@ def build_packet(queries_path: Path, plan_path: Path, output: Path, *, depth: in
         "items_sha256": _sha(_json(items)), "builder_sha256": _sha(Path(__file__).read_bytes()),
         "template_sha256": _sha(template.encode())}
     if report is not None:
-        identity.update(supplement_to_qrels_sha256=base_hash, dense_evaluation_run_id=report["run_id"])
+        identity.update(supplement_to_qrels_sha256=base_hash, retrieval_evaluation_run_id=report["run_id"],
+            supplement_method=supplement_method)
     pool_id = _sha(_json(identity))
     packet = {"schema_version": 1, "pool_id": pool_id, "items": items}
     # Source text is untrusted: it must not be able to close the JSON script tag.

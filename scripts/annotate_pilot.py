@@ -17,7 +17,8 @@ def main():
     build.add_argument("--plan", type=Path, required=True)
     build.add_argument("--depth", type=int, default=10)
     build.add_argument("--output", type=Path, required=True)
-    build.add_argument("--dense-report", type=Path)
+    build.add_argument("--dense-report", "--retrieval-report", dest="dense_report", type=Path)
+    build.add_argument("--method", choices=("dense", "rrf"), default="dense")
     build.add_argument("--qrels", type=Path)
     export = commands.add_parser("export")
     export.add_argument("pool", type=Path)
@@ -34,7 +35,7 @@ def main():
     try:
         if args.command == "build":
             result = build_packet(args.queries, args.plan, args.output, depth=args.depth,
-                dense_report=args.dense_report, qrels_path=args.qrels)
+                dense_report=args.dense_report, qrels_path=args.qrels, supplement_method=args.method)
             result = {key: result[key] for key in ("pool_id", "item_count", "query_count", "status")}
         elif args.command == "export":
             result = export_qrels(args.pool, args.annotations, args.output, allow_partial=args.allow_partial)
