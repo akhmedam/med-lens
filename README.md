@@ -8,9 +8,10 @@ fragments. This is a literature search tool, not a diagnostic system.
 
 ## Status
 
-PubMed downloads, verified snapshot replay, structured XML-to-JSONL parsing, and
-article-level BM25 search work. Local Qwen3.5-9B inference runs through
-Transformers/MPS with 4-bit Metal linear layers. Dense retrieval and evidence-grounded answers are next.
+PubMed ingestion, verified snapshot replay, and structured XML parsing work.
+Search supports BM25, exact dense retrieval, and RRF. The ten-question pilot has 200 judged
+query/article pairs. Local Qwen3.5-9B can rerank frozen top-10 lists through
+Transformers/MPS with 4-bit Metal linear layers. Evidence-grounded answers are next.
 
 ## Setup
 
@@ -147,6 +148,19 @@ The initial hybrid combines BM25/dense ranks with equal weights, c=60, and depth
 30. It is an experiment: [pilot results and fusion policy](docs/hybrid-retrieval.md)
 show no gain over dense. The [completed four-method baseline](docs/rrf-baseline.md)
 covers all 200 judged pairs.
+
+## Rerank with Qwen
+
+```sh
+python scripts/evaluate_reranking.py benchmarks/pilot-v1/queries.jsonl \
+  --qrels data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl \
+  --baseline results/evaluation/pilot-v1-rrf-complete-001.json \
+  --output results/evaluation/pilot-v1-qwen-rerank-003.json
+```
+
+The runner uses one cached model to reorder dense and RRF top-10 lists separately.
+Invalid output preserves the source order. See the [prompt and runtime policy](docs/llm-reranking.md)
+and [measured pilot comparison](docs/qwen-reranking-baseline.md).
 
 ## Runtime check
 
