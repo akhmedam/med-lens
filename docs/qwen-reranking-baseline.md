@@ -1,5 +1,8 @@
 # Qwen reranking on the pilot
 
+Historical result on the original human judgments. The active evaluation is
+[pilot-qrels-v2](pilot-qrels-v2.md); the metrics below retain their original inputs.
+
 Qwen improves mean nDCG@10 when reordering either frozen source top-10. Dense
 plus Qwen is the strongest measured variant, but the gain over dense alone is
 small and costs about 26 seconds per question on the M3 Pro. Keep this stage

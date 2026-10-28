@@ -1,0 +1,1216 @@
+{
+  "schema_version": 1,
+  "run_id": "875da919e97ebd8cd991719ee98dc9a9aa6e5794a535e1680403b963ae904e68",
+  "profile_sha256": "0111be43c821afc36498813caac7051ee1c3038660e187587af9b849b8a7fe72",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "qrels_sha256": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41",
+  "source_retrieval_sha256": "9b7bc9a0f24c91ae5a94392ddf0c43615d9b85f6e174c6e350aecba6a9262127",
+  "source_reranking_sha256": "8787f31c807dcc60a3bfd9f748379bd7e7e995725c7c6bb8f441742616e8f823",
+  "rescore_code_sha256": "38f9af5966d67cce1f0dc5e6ba8b3e021416786f40c8071eac0c7d08d3e147e0",
+  "metric_code_sha256": "bf0ef3e4145b5b2c4ec8888961b3f0d0f7ac68ec8fd92ca19ac46c9468984c24",
+  "evaluation_version": "pilot-qrels-v2",
+  "annotation": {
+    "method": "AI-assisted title-and-abstract relevance assessment by Codex",
+    "expert_human_verified": false,
+    "pair_count": 200,
+    "judged_count": 198,
+    "unjudged_count": 2,
+    "grade_counts": {
+      "0": 27,
+      "1": 71,
+      "2": 100
+    },
+    "pool_id": "951590eb90eb4f40a881c9fba89dbe23fd65b2a9ff84aaaa0a33b91971fd874a",
+    "notes": "One rationale per pair; prior conversation context was available; not an independent blinded or held-out evaluation."
+  },
+  "split": "pilot",
+  "k": 10,
+  "query_count": 10,
+  "comparison_status": "provisional-incomplete-judgments",
+  "macro": {
+    "pubmed": {
+      "ndcg@10": {
+        "mean": 0.6319227254843651,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.82,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.4822924736082631,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 0.99,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "bm25": {
+      "ndcg@10": {
+        "mean": 0.6336357341812738,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.8400000000000001,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5018667881825776,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.9333333333333332,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "dense": {
+      "ndcg@10": {
+        "mean": 0.871332961607461,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5655374231032125,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 0.99,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "rrf": {
+      "ndcg@10": {
+        "mean": 0.7956423634466879,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.9199999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5471445659603554,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "dense_qwen": {
+      "ndcg@10": {
+        "mean": 0.8919414770692958,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.95,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5655374231032125,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 0.99,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    },
+    "rrf_qwen": {
+      "ndcg@10": {
+        "mean": 0.8424109629520645,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "precision@10": {
+        "mean": 0.9199999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "recall@10": {
+        "mean": 0.5471445659603554,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "mrr@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "judged_coverage@10": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_coverage": {
+        "mean": 1.0,
+        "defined_queries": 10,
+        "total_queries": 10
+      },
+      "candidate_judged_coverage": {
+        "mean": 0.6599999999999999,
+        "defined_queries": 10,
+        "total_queries": 10
+      }
+    }
+  },
+  "per_query": [
+    {
+      "query_id": "p01",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.3822068409721077,
+          "precision@10": 0.5,
+          "recall@10": 0.45454545454545453,
+          "mrr@10": 0.5,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        },
+        "bm25": {
+          "ndcg@10": 0.812843321779698,
+          "precision@10": 0.8,
+          "recall@10": 0.7272727272727273,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        },
+        "dense": {
+          "ndcg@10": 0.9106364207072822,
+          "precision@10": 0.8,
+          "recall@10": 0.7272727272727273,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 0.9,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 9,
+          "unjudged_returned_count": 1,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        },
+        "rrf": {
+          "ndcg@10": 0.9293164617616919,
+          "precision@10": 0.8,
+          "recall@10": 0.7272727272727273,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.8925620931212669,
+          "precision@10": 0.8,
+          "recall@10": 0.7272727272727273,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 0.9,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 9,
+          "unjudged_returned_count": 1,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.8846892771717847,
+          "precision@10": 0.8,
+          "recall@10": 0.7272727272727273,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 11,
+          "known_relevant_in_candidates": 11
+        }
+      }
+    },
+    {
+      "query_id": "p02",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.8392456378643482,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "bm25": {
+          "ndcg@10": 0.7254017679213347,
+          "precision@10": 0.8,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "dense": {
+          "ndcg@10": 0.6410457898283652,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "rrf": {
+          "ndcg@10": 0.6576350302029863,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 0.5,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.8378262178574133,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.8302010829452637,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        }
+      }
+    },
+    {
+      "query_id": "p03",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.8039369346935541,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        },
+        "bm25": {
+          "ndcg@10": 0.8254612838486163,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        },
+        "dense": {
+          "ndcg@10": 1.0,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        },
+        "rrf": {
+          "ndcg@10": 0.9048032373092418,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        },
+        "dense_qwen": {
+          "ndcg@10": 1.0,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.9134166588977729,
+          "precision@10": 1.0,
+          "recall@10": 0.5263157894736842,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 19,
+          "known_relevant_in_candidates": 19
+        }
+      }
+    },
+    {
+      "query_id": "p04",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.6370729169405709,
+          "precision@10": 0.7,
+          "recall@10": 0.4375,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 0.9,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 9,
+          "unjudged_returned_count": 1,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "bm25": {
+          "ndcg@10": 0.723825689433857,
+          "precision@10": 0.8,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "dense": {
+          "ndcg@10": 0.9134166588977729,
+          "precision@10": 1.0,
+          "recall@10": 0.625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "rrf": {
+          "ndcg@10": 0.8273516207208508,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.9134166588977729,
+          "precision@10": 1.0,
+          "recall@10": 0.625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.8399442168456721,
+          "precision@10": 0.9,
+          "recall@10": 0.5625,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 16,
+          "known_relevant_in_candidates": 16
+        }
+      }
+    },
+    {
+      "query_id": "p05",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.6192798500781228,
+          "precision@10": 0.7,
+          "recall@10": 0.3888888888888889,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "bm25": {
+          "ndcg@10": 0.6478642056701487,
+          "precision@10": 0.9,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense": {
+          "ndcg@10": 0.9575861412006988,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf": {
+          "ndcg@10": 0.8013151345851656,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.9510907186004267,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.8038716765785685,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 22,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        }
+      }
+    },
+    {
+      "query_id": "p06",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.7459740512724831,
+          "precision@10": 0.9,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "bm25": {
+          "ndcg@10": 0.6719958531284242,
+          "precision@10": 0.9,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense": {
+          "ndcg@10": 0.9575861412006988,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf": {
+          "ndcg@10": 0.9432379215722527,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.9575861412006988,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.9537125187088151,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        }
+      }
+    },
+    {
+      "query_id": "p07",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.5149452230382229,
+          "precision@10": 0.8,
+          "recall@10": 0.5714285714285714,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        },
+        "bm25": {
+          "ndcg@10": 0.46207827946900437,
+          "precision@10": 0.6,
+          "recall@10": 0.42857142857142855,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        },
+        "dense": {
+          "ndcg@10": 0.795463449573513,
+          "precision@10": 0.8,
+          "recall@10": 0.5714285714285714,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        },
+        "rrf": {
+          "ndcg@10": 0.6792932866206375,
+          "precision@10": 0.7,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.8194186046194707,
+          "precision@10": 0.8,
+          "recall@10": 0.5714285714285714,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.8190146609084071,
+          "precision@10": 0.7,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6333333333333333,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 19,
+          "known_relevant_count": 14,
+          "known_relevant_in_candidates": 14
+        }
+      }
+    },
+    {
+      "query_id": "p08",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.3933926865474676,
+          "precision@10": 0.7,
+          "recall@10": 0.35,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        },
+        "bm25": {
+          "ndcg@10": 0.4033148307639477,
+          "precision@10": 0.8,
+          "recall@10": 0.4,
+          "mrr@10": 0.3333333333333333,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        },
+        "dense": {
+          "ndcg@10": 0.7430580004525728,
+          "precision@10": 1.0,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        },
+        "rrf": {
+          "ndcg@10": 0.6991944040082172,
+          "precision@10": 0.9,
+          "recall@10": 0.45,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.7430580004525728,
+          "precision@10": 1.0,
+          "recall@10": 0.5,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.6944546049115699,
+          "precision@10": 0.9,
+          "recall@10": 0.45,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 20,
+          "known_relevant_in_candidates": 20
+        }
+      }
+    },
+    {
+      "query_id": "p09",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.5935843983716683,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "bm25": {
+          "ndcg@10": 0.7262797488927949,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense": {
+          "ndcg@10": 0.8849939778078166,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf": {
+          "ndcg@10": 0.8693571253655851,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.89577947614221,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.89577947614221,
+          "precision@10": 1.0,
+          "recall@10": 0.5555555555555556,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.6,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 18,
+          "known_relevant_count": 18,
+          "known_relevant_in_candidates": 18
+        }
+      }
+    },
+    {
+      "query_id": "p10",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "metrics": {
+        "pubmed": {
+          "ndcg@10": 0.7895887150651079,
+          "precision@10": 1.0,
+          "recall@10": 0.47619047619047616,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        },
+        "bm25": {
+          "ndcg@10": 0.33729236090491316,
+          "precision@10": 0.8,
+          "recall@10": 0.38095238095238093,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        },
+        "dense": {
+          "ndcg@10": 0.9095430364058891,
+          "precision@10": 1.0,
+          "recall@10": 0.47619047619047616,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        },
+        "rrf": {
+          "ndcg@10": 0.6449194123202491,
+          "precision@10": 1.0,
+          "recall@10": 0.47619047619047616,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        },
+        "dense_qwen": {
+          "ndcg@10": 0.9086768598011256,
+          "precision@10": 1.0,
+          "recall@10": 0.47619047619047616,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        },
+        "rrf_qwen": {
+          "ndcg@10": 0.7890254564105805,
+          "precision@10": 1.0,
+          "recall@10": 0.47619047619047616,
+          "mrr@10": 1.0,
+          "judged_coverage@10": 1.0,
+          "candidate_coverage": 1.0,
+          "candidate_judged_coverage": 0.7666666666666667,
+          "returned_count": 10,
+          "judged_returned_count": 10,
+          "unjudged_returned_count": 0,
+          "judged_count": 23,
+          "known_relevant_count": 21,
+          "known_relevant_in_candidates": 21
+        }
+      }
+    }
+  ]
+}

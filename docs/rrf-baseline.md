@@ -1,5 +1,8 @@
 # Completed four-method retrieval baseline
 
+Historical result on the original human judgments. The active evaluation is
+[pilot-qrels-v2](pilot-qrels-v2.md); the metrics below retain their original inputs.
+
 The final supplemental annotation passed export and pool-binding validation. The common qrels now contain 200 judged query/article pairs. All previous 199 grades and all four top-10 rankings were preserved exactly. There are no remaining unjudged top-10 results.
 
 Equal-weight RRF with c=60 and source depth 30 is below dense on all ten pilot questions. Keep it as an explicit experiment; dense remains the strongest measured quality reference.

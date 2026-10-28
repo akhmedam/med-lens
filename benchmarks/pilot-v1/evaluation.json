@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "pilot-qrels-v2",
+  "split": "pilot",
+  "annotation": {
+    "method": "AI-assisted title-and-abstract relevance assessment by Codex",
+    "expert_human_verified": false,
+    "pair_count": 200,
+    "judged_count": 198,
+    "unjudged_count": 2,
+    "grade_counts": {
+      "0": 27,
+      "1": 71,
+      "2": 100
+    },
+    "pool_id": "951590eb90eb4f40a881c9fba89dbe23fd65b2a9ff84aaaa0a33b91971fd874a",
+    "notes": "One rationale per pair; prior conversation context was available; not an independent blinded or held-out evaluation."
+  },
+  "queries": {
+    "path": "benchmarks/pilot-v1/queries.jsonl",
+    "sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44"
+  },
+  "qrels": {
+    "path": "data/evaluation/pilot-v1/pilot-qrels-v2.jsonl",
+    "sha256": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41"
+  },
+  "source_qrels": {
+    "path": "data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl",
+    "sha256": "f410b657a8abcdd833686813b6e05eb312f0c528e44196296df0b29e33ea7003"
+  },
+  "frozen_retrieval": {
+    "path": "results/evaluation/pilot-v1-rrf-complete-001.json",
+    "sha256": "9b7bc9a0f24c91ae5a94392ddf0c43615d9b85f6e174c6e350aecba6a9262127"
+  },
+  "frozen_reranking": {
+    "path": "results/evaluation/pilot-v1-qwen-rerank-003.json",
+    "sha256": "8787f31c807dcc60a3bfd9f748379bd7e7e995725c7c6bb8f441742616e8f823"
+  }
+}

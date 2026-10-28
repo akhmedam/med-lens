@@ -1,5 +1,8 @@
 # Dense baseline on the expanded human-judged pool
 
+Historical result on the original human judgments. The active evaluation is
+[pilot-qrels-v2](pilot-qrels-v2.md); the metrics below retain their original inputs.
+
 The 38 supplemental cards are complete: 31 direct (2), seven partial (1), no missing grades. Export and pool binding validation passed. The merge retained all 161 earlier labels exactly, giving 199 judged query/article pairs. The three top-10 rankings are unchanged from the provisional run. No ranking parameters or human labels were modified during this review.
 
 On this pilot, dense retrieval has higher nDCG@10 than PubMed and BM25 on all ten questions. This supports continuing with the planned hybrid retrieval experiment; it does not establish general superiority outside the pilot.

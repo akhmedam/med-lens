@@ -31,8 +31,9 @@ def prepare(queries_path, qrels_path, baseline_path):
     baseline = json.loads(baseline_bytes)
     if baseline["queries_sha256"] != sha(query_bytes) or baseline["qrels_sha256"] != sha(qrel_bytes):
         raise ValueError("Baseline queries/qrels hashes do not match")
-    if baseline["k"] != 10 or baseline["comparison_status"] != "fully-judged-top-k":
-        raise ValueError("Require a fully judged top-10 baseline")
+    if baseline["k"] != 10 or baseline["comparison_status"] not in {
+            "fully-judged-top-k", "provisional-incomplete-judgments"}:
+        raise ValueError("Require a supported top-10 baseline")
     queries = parse_queries(query_bytes, queries_path.parent)
     qrels = parse_qrels(qrel_bytes, queries)
     selected = [q for q in queries if q.split == baseline["split"]]
@@ -51,7 +52,9 @@ def prepare(queries_path, qrels_path, baseline_path):
                 raise ValueError("Baseline metrics or top-10 size differs")
             jobs.append((query, method, ranking, articles, metrics, dataset.manifest["dataset_id"]))
     return jobs, qrels, {"baseline_sha256": sha(baseline_bytes), "baseline_run_id": baseline["run_id"],
-        "queries_sha256": sha(query_bytes), "qrels_sha256": sha(qrel_bytes), "split": baseline["split"]}
+        "queries_sha256": sha(query_bytes), "qrels_sha256": sha(qrel_bytes), "split": baseline["split"],
+        "comparison_status": baseline["comparison_status"],
+        "annotation": baseline.get("annotation"), "evaluation_version": baseline.get("evaluation_version")}
 
 
 def main():
