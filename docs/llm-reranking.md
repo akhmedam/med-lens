@@ -41,18 +41,20 @@ its Metal kernel version and perform the publisher trust check, so do not force
 
 ```sh
 python scripts/evaluate_reranking.py benchmarks/pilot-v1/queries.jsonl \
-  --qrels data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl \
-  --baseline results/evaluation/pilot-v1-rrf-complete-001.json \
-  --output results/evaluation/pilot-v1-qwen-rerank-003.json
+  --qrels data/evaluation/pilot-v1/pilot-qrels-v2.jsonl \
+  --baseline results/evaluation/pilot-v1-v2-retrieval-001.json \
+  --output results/evaluation/pilot-v1-v2-qwen-new-run-001.json
 ```
 
-Choose a fresh output path. Before model loading, the runner checks query/qrels
+Prepare the retrieval baseline with the [v2 replay command](pilot-qrels-v2.md#replay-the-current-evaluation),
+then choose a fresh output path. This command starts a new model run; rescoring
+existing outputs needs no inference. Incomplete judgments remain provisional. Before model loading, the runner checks query/qrels
 hashes, dataset identities, query order/text and the baseline metrics. It uses
 all ten questions in the baseline's split. Each completed call is checkpointed
 atomically. Local reports include raw prompts/responses, rankings, input
 truncation, timings and environment/source hashes. Raw article text and individual
 labels are excluded from Git.
 
-The [pilot results](qwen-reranking-baseline.md) compare the added stage against
+The [current pilot results](pilot-qrels-v2.md) compare the added stage against
 both source rankings and the strongest dense baseline. This development pilot
 has ten questions and one annotator; it does not replace held-out evaluation.

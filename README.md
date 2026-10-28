@@ -9,9 +9,11 @@ fragments. This is a literature search tool, not a diagnostic system.
 ## Status
 
 PubMed ingestion, verified snapshot replay, and structured XML parsing work.
-Search supports BM25, exact dense retrieval, and RRF. The ten-question pilot has 200 judged
-query/article pairs. Local Qwen3.5-9B can rerank frozen top-10 lists through
-Transformers/MPS with 4-bit Metal linear layers. Evidence-grounded answers are next.
+Search supports BM25, exact dense retrieval, and RRF. The active pilot uses
+`pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
+rerank frozen top-10 lists through
+Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
+for metrics and annotation provenance. Evidence-grounded answers are next.
 
 ## Setup
 
@@ -80,14 +82,15 @@ python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
 The runner compares PubMed order and BM25 on the same candidates. Prepare query
 and judgment files using the [evaluation format](docs/evaluation.md). Reports
 include nDCG@10, binary metrics, and coverage; unjudged papers remain distinct
-from irrelevant papers. The ten-query pilot now has [human-judged baseline results](docs/pilot-baseline.md).
+from irrelevant papers. The ten-query pilot uses the [v2 evaluation profile](docs/pilot-qrels-v2.md).
 
 ## Annotate the pilot
 
 Ten questions and their PubMed search plan are saved in `benchmarks/pilot-v1/`.
 The local annotation page combines PubMed/BM25 top-10 without showing method
 names or ranks. See the [pilot workflow](docs/pilot.md) for data preparation,
-annotation, export, and evaluation. The first [human-judged baseline](docs/pilot-baseline.md) is complete.
+annotation, export, and evaluation. The [original human-judged baseline](docs/pilot-baseline.md) is retained as history;
+[v2](docs/pilot-qrels-v2.md) is the active judgment set.
 
 ## Prepare BGE windows
 
@@ -117,7 +120,7 @@ python scripts/embed_windows.py build data/windows/pilot-v1-002/p01 \
 
 The encoder saves normalized 768-dimensional vectors with their source-window
 mapping. See [BGE settings and MPS checks](docs/bge-embeddings.md). Exact cosine
-search is available below; the expanded pilot now has [human-judged results](docs/dense-baseline.md).
+search is available below; see the [current pilot results](docs/pilot-qrels-v2.md).
 
 ## Search with dense retrieval
 
@@ -131,8 +134,8 @@ python scripts/dense_search.py data/parsed/pilot-v1/p10 \
 
 Exact cosine search scores articles by their best window and returns that source
 fragment. See [dense retrieval and pool expansion](docs/dense-retrieval.md) for
-scoring and evaluation. All 199 pilot pairs are now judged; see the
-[three-method baseline](docs/dense-baseline.md).
+scoring and evaluation. The [current evaluation](docs/pilot-qrels-v2.md) uses 198
+judged pairs and preserves two unknowns.
 
 ## Search with RRF
 
@@ -146,21 +149,24 @@ python scripts/hybrid_search.py data/parsed/pilot-v1/p08 \
 
 The initial hybrid combines BM25/dense ranks with equal weights, c=60, and depth
 30. It is an experiment: [pilot results and fusion policy](docs/hybrid-retrieval.md)
-show no gain over dense. The [completed four-method baseline](docs/rrf-baseline.md)
-covers all 200 judged pairs.
+show no gain over dense. The [v2 comparison](docs/pilot-qrels-v2.md) is current;
+the [original four-method baseline](docs/rrf-baseline.md) is historical.
 
 ## Rerank with Qwen
 
 ```sh
 python scripts/evaluate_reranking.py benchmarks/pilot-v1/queries.jsonl \
-  --qrels data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl \
-  --baseline results/evaluation/pilot-v1-rrf-complete-001.json \
-  --output results/evaluation/pilot-v1-qwen-rerank-003.json
+  --qrels data/evaluation/pilot-v1/pilot-qrels-v2.jsonl \
+  --baseline results/evaluation/pilot-v1-v2-retrieval-001.json \
+  --output results/evaluation/pilot-v1-v2-qwen-new-run-001.json
 ```
 
+To rescore the existing outputs without running Qwen again, use the
+[active profile replay](docs/pilot-qrels-v2.md#replay-the-current-evaluation). The command above
+starts a new inference run after that replay has prepared the v2 retrieval baseline.
 The runner uses one cached model to reorder dense and RRF top-10 lists separately.
 Invalid output preserves the source order. See the [prompt and runtime policy](docs/llm-reranking.md)
-and [measured pilot comparison](docs/qwen-reranking-baseline.md).
+and [current pilot comparison](docs/pilot-qrels-v2.md).
 
 ## Runtime check
 

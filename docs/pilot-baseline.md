@@ -1,5 +1,8 @@
 # First human-judged retrieval baseline
 
+Historical result on the original human judgments. The active evaluation is
+[pilot-qrels-v2](pilot-qrels-v2.md); the metrics below retain their original inputs.
+
 The ten-query pilot is complete: one human annotator judged all 161 query/article pairs from the PubMed/BM25 top-10 union. Grades are 59 direct (2), 89 partial (1), and 13 irrelevant (0). The original p01 judgments are unchanged. No labels or ranking parameters were modified during this review.
 
 BM25 has higher mean nDCG@10, but neither method wins consistently. Keep both baselines for the next retrieval experiments.

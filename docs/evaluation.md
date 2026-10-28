@@ -1,5 +1,8 @@
 # Retrieval evaluation
 
+The active ten-question pilot profile is [pilot-qrels-v2](pilot-qrels-v2.md).
+The file formats and metric definitions below apply to every annotation version.
+
 The runner compares the saved PubMed candidate order with BM25 on the same
 verified parsed dataset for each query. It makes no network calls. Different
 queries may point to different candidate datasets; results are averaged by query.
@@ -36,7 +39,8 @@ A judgment row has exactly these fields:
 {"query_id":"pilot-001","pmid":"38724122","relevance":null}
 ```
 
-This example is deliberately unjudged. Replace `null` with a human judgment:
+This example is deliberately unjudged. Replace `null` with a relevance judgment,
+recording its provenance separately:
 
 | Grade | Meaning |
 | --- | --- |
