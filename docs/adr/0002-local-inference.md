@@ -1,6 +1,6 @@
 # Local inference
 
-Status: accepted for initial experiments; short-input smoke test passed
+Status: accepted for experiments; smoke and real-input reranking measured
 
 ## Context
 
@@ -13,8 +13,10 @@ Try Qwen/Qwen3.5-9B through Transformers and PyTorch on MPS, targeting 4-bit
 linear weights. Check the installed Metal quantization path with a smoke test.
 Do not assume documentation support proves this exact combination works.
 
-Reuse one model instance sequentially. Reranking is listwise over RRF's top-10;
-invalid permutations fall back to RRF. Generation gets at most six evidence
+Reuse one model instance sequentially. Reranking is listwise over ten papers;
+invalid permutations preserve the input ranking. The initial RRF input is now
+compared with dense top-10 as well, because dense outperformed RRF in the
+[completed pilot](../rrf-baseline.md). Generation gets at most six evidence
 fragments, two per paper, and 4000 evidence tokens, as starting experiment values.
 Use system-assigned citation IDs and validate exact quotations. Show partial
 answers or abstain when evidence is missing; present conflicting findings.
@@ -31,5 +33,7 @@ Keep model revision, package versions, prompt, output, and memory measurement
 scope in its report. Do not label a sampled memory maximum a true device peak.
 
 The [Day 1 report](../experiments/runtime-smoke.md) records the successful run,
-two invalid reranking outputs, and the HTTP header workaround. Real context-sized
-latency and retrieval quality remain unmeasured.
+two invalid reranking outputs, and the HTTP header workaround. The
+[reranking pilot](../qwen-reranking-baseline.md) now measures real abstract inputs,
+latency and ranking quality. Evidence-grounded synthesis at the planned context
+budget remains untested.
