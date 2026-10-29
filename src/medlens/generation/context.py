@@ -20,10 +20,13 @@ class ContextConfig:
     max_fragments: int = 6
     max_per_article: int = 2
     evidence_tokens: int = 4000
+    prefer_outcomes: bool = True
 
     def __post_init__(self):
-        if any(type(x) is not int or x <= 0 for x in asdict(self).values()):
+        if any(type(x) is not int or x <= 0 for x in (self.max_fragments, self.max_per_article, self.evidence_tokens)):
             raise ValueError("Context limits must be positive integers")
+        if type(self.prefer_outcomes) is not bool:
+            raise ValueError("prefer_outcomes must be boolean")
 
 
 def source_section(article, window):
@@ -50,6 +53,24 @@ def source_section(article, window):
             or window["title"] != (article.get("title") or "")):
         raise ValueError("Window does not match its exact source span")
     return section
+
+
+SERVICE_LABELS = {"systematic review registration", "trial registration", "clinical trial registration",
+    "registration", "funding", "funding sources", "funding source", "financial support"}
+
+
+def normalized_label(text):
+    return " ".join((text or "").casefold().replace("-", " ").replace("_", " ").split())
+
+
+def section_priority(article, window):
+    section = source_section(article, window)
+    label = normalized_label(section.get("label"))
+    category = normalized_label(section.get("nlm_category"))
+    if category in {"results", "conclusions"} or label in {
+            "results", "conclusion", "conclusions", "authors' conclusions", "conclusions and relevance"}:
+        return 0
+    return 1 if not label else 2
 
 
 def render_evidence(sources):
@@ -81,10 +102,13 @@ def build_context(dataset, window_manifest, windows, ranking, scores, tokenizer,
             continue
         if section is None or not window["text"].strip():
             skipped.append({"window_id": window["window_id"], "reason": "no-abstract-excerpt"})
+        elif normalized_label(section.get("label")) in SERVICE_LABELS:
+            skipped.append({"window_id": window["window_id"], "reason": "service-section"})
         else:
             grouped[window["pmid"]].append((float(score), order, window))
     for candidates in grouped.values():
-        candidates.sort(key=lambda x: (-x[0], x[1]))
+        candidates.sort(key=lambda x: (section_priority(articles[x[2]["pmid"]], x[2])
+            if config.prefer_outcomes else 0, -x[0], x[1]))
     sources = []
     empty_tokens = len(tokenizer.encode(render_evidence([]), add_special_tokens=False))
     if empty_tokens > config.evidence_tokens:
@@ -125,7 +149,7 @@ def build_context(dataset, window_manifest, windows, ranking, scores, tokenizer,
     identity = {"schema_version": 1, "dataset_id": dataset.manifest["dataset_id"],
         "window_artifact_id": window_manifest["artifact_id"], "article_ranking": list(ranking),
         "scores_sha256": digest([float(s) for s in scores]), "config": asdict(config),
-        "selection_policy": "article-round-robin-window-cosine-no-overlap-v1",
+        "selection_policy": "article-round-robin-section-priority-window-cosine-no-overlap-v2",
         "tokenizer": tokenizer_info, "sources_sha256": digest(sources),
         "implementation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     return {**identity, "context_id": digest(identity), "sources": sources, "evidence_payload": payload,
@@ -135,6 +159,9 @@ def build_context(dataset, window_manifest, windows, ranking, scores, tokenizer,
 
 def locate_quote(context, citation_id, quote):
     """Locate verbatim text, not entailment or scientific validity of a claim."""
+    if (digest(context["sources"]) != context["sources_sha256"]
+            or render_evidence(context["sources"]) != context["evidence_payload"]):
+        raise ValueError("Context source mapping or payload was modified")
     if not isinstance(quote, str) or not quote.strip():
         raise ValueError("Quote must be a nonempty string")
     sources = [s for s in context["sources"] if s["citation_id"] == citation_id]

@@ -76,6 +76,9 @@ def main():
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     summary = {**identity, "run_id": digest(identity), "query_count": len(rows),
         "selection_and_validation_seconds": time.perf_counter() - started,
+        "context_config": rows[0]["context"]["config"],
+        "selection_policy": rows[0]["context"]["selection_policy"],
+        "context_implementation_sha256": rows[0]["context"]["implementation_sha256"],
         "tokenizer": tokenizer_info, "query_encoder": encoder.info, "query_encoding": encoding,
         "per_query": public, "assertions": {"source_spans_match": True, "full_excerpt_quote_checks": True,
             "generation_run": False, "claim_entailment_checked": False}}

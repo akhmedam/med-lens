@@ -97,8 +97,14 @@ class EvidenceTests(unittest.TestCase):
             with self.subTest(cid=cid, quote=quote), self.assertRaises(ValueError):
                 locate_quote(r, cid, quote)
         altered = copy.deepcopy(r)
-        altered["sources"][0]["text"] = "yes yes"
-        match = locate_quote(altered, "E1", "yes")
+        altered["sources"][0]["text"] = "fabricated"
+        with self.assertRaisesRegex(ValueError, "modified"):
+            locate_quote(altered, "E1", "fabricated")
+        dataset, manifest, windows = fixtures()
+        text = dataset.articles[0]["abstract"]["sections"][0]["text"]
+        window = {**windows[0], "text": text, "char_end": len(text)}
+        complete = build_context(dataset, manifest, [window], ["1"], [.5], CharacterTokenizer(), {})
+        match = locate_quote(complete, "E1", "alpha")
         self.assertTrue(match["ambiguous"])
         self.assertEqual(len(match["matches"]), 2)
 
@@ -106,3 +112,25 @@ class EvidenceTests(unittest.TestCase):
         r = self.build(scores=[-.5] * 9)
         self.assertEqual(r["sources"][0]["window_id"], "2-0")
         self.assertEqual(r["sources"][0]["window_cosine"], -.5)
+
+
+    def test_service_sections_excluded_and_results_preferred(self):
+        dataset, manifest, _ = fixtures()
+        article = dataset.articles[0]
+        article["abstract"]["sections"] = [
+            {"index": 0, "label": "Systematic Review Registration", "text": "PROSPERO 123", "source_path": "registration"},
+            {"index": 1, "label": "Background", "text": "CBT is being studied", "source_path": "background"},
+            {"index": 2, "label": "Findings", "nlm_category": "RESULTS", "text": "No difference was observed", "source_path": "results"}]
+        windows = []
+        for section in article["abstract"]["sections"]:
+            windows.append({"pmid": "1", "window_id": str(section["index"]), "text_version_id": "v1",
+                "title": article["title"], "kind": "abstract", "section_index": section["index"],
+                "section_label": section["label"], "source_path": section["source_path"], "char_start": 0,
+                "char_end": len(section["text"]), "text": section["text"], "provenance": article["provenance"]})
+        def run(prefer):
+            return build_context(dataset, manifest, windows, ["1"], [1.0, .9, .1],
+                CharacterTokenizer(), {}, config=ContextConfig(max_fragments=1, prefer_outcomes=prefer))
+        selected = run(True)
+        self.assertEqual(selected["sources"][0]["text"], "No difference was observed")
+        self.assertTrue(any(s["reason"] == "service-section" for s in selected["skipped"]))
+        self.assertEqual(run(False)["sources"][0]["section"], "Background")

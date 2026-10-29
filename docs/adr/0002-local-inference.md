@@ -18,7 +18,8 @@ invalid permutations preserve the input ranking. The initial RRF input is now
 compared with dense top-10 as well, because dense outperformed RRF in the
 [completed pilot](../rrf-baseline.md). Generation gets at most six evidence
 fragments, two per paper, and 4000 evidence tokens, as starting experiment values.
-Use system-assigned citation IDs and validate exact quotations. Show partial
+The [evidence-context stage](../evidence-context.md) now implements these limits
+and source mappings. Use system-assigned citation IDs and validate exact quotations. Show partial
 answers or abstain when evidence is missing; present conflicting findings.
 
 ## Alternatives
