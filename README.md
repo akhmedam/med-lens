@@ -13,7 +13,8 @@ Search supports BM25, exact dense retrieval, and RRF. The active pilot uses
 `pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
 rerank frozen top-10 lists through
 Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
-for metrics and annotation provenance. Evidence-grounded answers are next.
+for metrics and annotation provenance. Source-bound evidence contexts are available;
+answer generation is next.
 
 ## Setup
 
@@ -167,6 +168,19 @@ starts a new inference run after that replay has prepared the v2 retrieval basel
 The runner uses one cached model to reorder dense and RRF top-10 lists separately.
 Invalid output preserves the source order. See the [prompt and runtime policy](docs/llm-reranking.md)
 and [current pilot comparison](docs/pilot-qrels-v2.md).
+
+## Prepare evidence for an answer
+
+```sh
+HF_HUB_OFFLINE=1 python scripts/prepare_evidence.py \
+  --output results/evidence/pilot-v1-dense-qwen-004.json \
+  --summary results/evidence/pilot-v1-dense-qwen-summary-004.json
+```
+
+This uses frozen pilot article rankings, stored windows/vectors and the Qwen
+tokenizer to select up to six source excerpts within 4000 evidence tokens.
+Citation IDs map to exact source spans; generation is not run yet. See the
+[selection policy and checks](docs/evidence-context.md).
 
 ## Runtime check
 
