@@ -6,8 +6,9 @@ import re
 from collections import Counter
 
 from .context import canonical, digest, locate_quote, render_evidence
+from .quotes import quote_catalog, resolve_quote
 
-PROMPT_VERSION = "cited-answer-v2"
+PROMPT_VERSION = "cited-answer-v3"
 REVIEW_VERSION = "claim-support-v2"
 LIMITATIONS = {"limited_excerpts", "population_unclear", "mixed_populations", "no_direct_comparison",
                "conflicting_findings", "methodological_limits"}
@@ -24,13 +25,13 @@ unspecified age, or extrapolate child findings to adults. Do not confuse improve
 biomarkers or relapse with the symptom outcome asked for. State null/conflicting findings if
 present, without averaging incomparable results or claiming equivalence from nonsignificance.
 Return ONLY JSON with exactly these keys:
-{"status":"partial","claims":[{"text":"A scoped finding.","citations":[{"citation_id":"E1","quote":"Exact source text."}]}],"limitations":["limited_excerpts"]}.
+{"status":"partial","claims":[{"text":"A scoped finding.","citations":[{"quote_id":"E1.Q1"}]}],"limitations":["limited_excerpts"]}.
 Status must be answered, partial, or insufficient_evidence.
 Use 1–3 claims if any useful answer is supported, even if the whole question cannot be answered.
 Use partial for incomplete population/comparator information. Use insufficient_evidence and an
-empty claims array when no answer is supported. Each claim needs 1–3 citations with exact
-verbatim source-text quotes, each at most 60 words; do not quote titles, use ellipses, edit
-spelling or invent IDs/PMIDs/URLs. Different source IDs refer to different excerpts, not
+empty claims array when no answer is supported. Each claim needs 1–3 quote_id references copied exactly from the provided sentence catalog.
+Return ONLY quote_id in a citation, never retype quotation text or add citation_id/PMID/URL.
+The program supplies the exact quotation for each selected ID. Do not invent IDs. Different source IDs refer to different excerpts, not
 necessarily independent studies. Present conflicts as separately cited findings.
 Limitations must be chosen ONLY from: limited_excerpts, population_unclear, mixed_populations,
 no_direct_comparison, conflicting_findings, methodological_limits. Use no markdown or extra keys."""
@@ -107,14 +108,27 @@ def chat_prompt(system, user, tokenizer):
     return {"messages": messages, "input_tokens": len(ids), "prompt_sha256": digest(messages)}
 
 
-def parse_draft(text, context):
+def parse_draft(text, context, *, catalog=None):
     value = strict_json(text)
-    if not isinstance(value, dict) or set(value) != {"status", "claims", "limitations"}:
+    if not isinstance(value, dict) or set(value) not in ({"status", "claims", "limitations"}, {"status", "claims"}):
         raise AnswerError("Unexpected answer fields")
     if not isinstance(value["status"], str) or value["status"] not in {"answered", "partial", "insufficient_evidence"}:
         raise AnswerError("Invalid answer status")
-    claims, limits = value["claims"], value["limitations"]
-    if (not isinstance(claims, list) or len(claims) > 3 or not isinstance(limits, list)
+    claims, limits = value["claims"], value.get("limitations", [])
+    def valid_limits(items):
+        return (isinstance(items, list) and all(isinstance(x, str) and x in LIMITATIONS for x in items)
+                and len(set(items)) == len(items))
+    if isinstance(claims, list):
+        for claim in claims:
+            if isinstance(claim, dict) and "limitations" in claim:
+                if not valid_limits(claim["limitations"]):
+                    raise AnswerError("Invalid per-claim limitation codes")
+                if not valid_limits(limits):
+                    raise AnswerError("Invalid root limitation codes")
+                limits = list(dict.fromkeys([*limits, *claim["limitations"]]))
+        if "limitations" not in value and not all(isinstance(c, dict) and "limitations" in c for c in claims):
+            raise AnswerError("Missing limitation fields")
+    if (not isinstance(claims, list) or len(claims) > 4 or not isinstance(limits, list)
             or not all(isinstance(x, str) and x in LIMITATIONS for x in limits)
             or len(set(limits)) != len(limits)):
         raise AnswerError("Invalid claims or limitation codes")
@@ -122,7 +136,7 @@ def parse_draft(text, context):
         raise AnswerError("Answer status and claim count disagree")
     resolved = []
     for i, claim in enumerate(claims, 1):
-        if (not isinstance(claim, dict) or set(claim) != {"text", "citations"}
+        if (not isinstance(claim, dict) or set(claim) not in ({"text", "citations"}, {"text", "citations", "limitations"})
                 or not isinstance(claim["text"], str) or not claim["text"].strip() or len(claim["text"]) > 1600
                 or re.search(r"https?://|\bPMID\b|\[[^]]+\]\(", claim["text"], re.I)
                 or not isinstance(claim["citations"], list) or not 1 <= len(claim["citations"]) <= 3):
@@ -130,23 +144,29 @@ def parse_draft(text, context):
         citations = []
         seen = set()
         for citation in claim["citations"]:
-            if (not isinstance(citation, dict) or set(citation) != {"citation_id", "quote"}
-                    or not isinstance(citation["citation_id"], str) or not isinstance(citation["quote"], str)
-                    or len(citation["quote"].split()) > 60):
-                raise AnswerError("Invalid citation fields or quote length")
-            key = (citation["citation_id"], citation["quote"])
+            try:
+                if catalog is not None:
+                    if not isinstance(citation, dict) or set(citation) != {"quote_id"}:
+                        raise AnswerError("Citations must contain only a quote_id")
+                    location = resolve_quote(context, catalog, citation["quote_id"])
+                    key = (location["citation_id"], citation["quote_id"])
+                else:
+                    if (not isinstance(citation, dict) or set(citation) != {"citation_id", "quote"}
+                            or not isinstance(citation["citation_id"], str) or not isinstance(citation["quote"], str)):
+                        raise AnswerError("Invalid citation fields")
+                    key = (citation["citation_id"], citation["quote"])
+                    location = locate_quote(context, *key)
+            except ValueError as exc:
+                raise AnswerError(str(exc)) from exc
             if key in seen:
                 raise AnswerError("Duplicate citation")
             seen.add(key)
-            try:
-                location = locate_quote(context, *key)
-            except ValueError as exc:
-                raise AnswerError(str(exc)) from exc
             if location["ambiguous"]:
                 raise AnswerError("Quote has ambiguous source offsets")
             citations.append(location)
         resolved.append({"claim_id": f"C{i}", "text": claim["text"], "citations": citations})
-    return {"status": value["status"], "claims": resolved, "limitations": limits}
+    return {"status": value["status"], "claims": resolved, "limitations": limits,
+            "format_variant": "per-claim-limitations" if any("limitations" in c for c in claims) else "root-limitations"}
 
 
 def parse_review(text, claim_ids):
@@ -168,22 +188,32 @@ def parse_review(text, claim_ids):
     return rows
 
 
-def generate_answer(question, context, runtime):
+def generate_answer(question, context, runtime, *, cached_calls=None):
     if not isinstance(question, str) or not question.strip():
         raise AnswerError("Question is required")
     check_context(context, runtime.tokenizer)
     result = {"question": question, "context_id": context["context_id"], "prompt_version": PROMPT_VERSION,
         "review_version": REVIEW_VERSION, "claims": [], "limitations": ["limited_excerpts"],
-        "model_calls": [], "review": [], "support_check": "same-model-review-not-independent"}
+        "model_calls": [], "review": [], "support_check": "same-model-review-not-independent",
+        "verification_status": "draft-requires-independent-review"}
     if not context["sources"]:
         return {**result, "status": "insufficient_evidence", "reason": "empty-context"}
-    prompt = chat_prompt(SYSTEM, "Question: " + canonical(question) + "\nEvidence:\n" + context["evidence_payload"], runtime.tokenizer)
-    generation = runtime.generate(prompt, max_new_tokens=768)
+    indexed = quote_catalog(context, runtime.tokenizer)
+    result.update(generator_evidence_tokens=indexed["tokens"], quote_catalog_sha256=indexed["sha256"],
+                  generator_evidence_payload=indexed["payload"])
+    prompt = chat_prompt(SYSTEM, "Question: " + canonical(question) + "\nEvidence:\n" + indexed["payload"], runtime.tokenizer)
+    def infer(stage, prompt, limit):
+        cached = (cached_calls or {}).get(stage)
+        if (cached and cached.get("prompt", {}).get("prompt_sha256") == prompt["prompt_sha256"]
+                and cached.get("max_new_tokens") == limit):
+            return {**{k: v for k, v in cached.items() if k not in {"stage", "prompt"}}, "cache_reused": True}
+        return {**runtime.generate(prompt, max_new_tokens=limit), "cache_reused": False}
+    generation = infer("draft", prompt, 768)
     result["model_calls"].append({"stage": "draft", "prompt": prompt, **generation})
     try:
         if generation["hit_output_limit"]:
             raise AnswerError("Draft output limit reached")
-        draft = parse_draft(generation["text"], context)
+        draft = parse_draft(generation["text"], context, catalog=indexed["catalog"])
         result["draft"] = draft
         if not draft["claims"]:
             return {**result, "status": "insufficient_evidence", "reason": "model-abstained",
@@ -196,7 +226,7 @@ def generate_answer(question, context, runtime):
             for c in draft["claims"]]
         review_prompt = chat_prompt(REVIEW_SYSTEM, "Question: " + canonical(question)
             + "\nDraft: " + canonical(review_claims) + "\nCited evidence:\n" + evidence, runtime.tokenizer)
-        checked = runtime.generate(review_prompt, max_new_tokens=512)
+        checked = infer("support-review", review_prompt, 512)
         result["model_calls"].append({"stage": "support-review", "prompt": review_prompt, **checked})
         if checked["hit_output_limit"]:
             raise AnswerError("Review output limit reached")
@@ -221,12 +251,14 @@ def render_answer(result):
         return "The draft could not be validated; no answer is shown."
     if not result["claims"]:
         return "The supplied excerpts do not support an answer to this question."
-    lines = ["Partial answer from the supplied excerpts:" if result["status"] == "partial"
-             else "Answer from the supplied excerpts:"]
+    lines = ["Partial research draft — requires independent review:" if result["status"] == "partial"
+             else "Research draft — requires independent review:"]
     for claim in result["claims"]:
         links = " ".join(f'[{c["citation_id"]}](https://pubmed.ncbi.nlm.nih.gov/{c["pmid"]}/)'
                          for c in claim["citations"])
         lines.append(f'- {claim["text"]} {links}')
+        for citation in claim["citations"]:
+            lines.append(f'{citation["citation_id"]} quote:\n> ' + citation["quote"].replace('\n','\n> '))
     if result["limitations"]:
         lines.append("Limitations: " + ", ".join(x.replace("_", " ") for x in result["limitations"]) + ".")
     return "\n\n".join(lines)

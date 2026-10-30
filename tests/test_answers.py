@@ -17,9 +17,15 @@ def context(empty=False):
         helpers.CharacterTokenizer(), {}, config=ContextConfig(max_fragments=1))
 
 
-def draft():
+def legacy_draft():
     return {"status": "partial", "claims": [{"text": "A scoped observation.",
         "citations": [{"citation_id": "E1", "quote": "alpha beta gamma"}]}], "limitations": ["limited_excerpts"]}
+
+
+def draft():
+    d=legacy_draft()
+    d['claims'][0]['citations']=[{'quote_id':'E1.Q1'}]
+    return d
 
 
 class Tokenizer(helpers.CharacterTokenizer):
@@ -42,10 +48,10 @@ class FakeRuntime:
 
 class AnswerTests(unittest.TestCase):
     def test_valid_citation_maps_to_source_not_model_supplied_pmid(self):
-        r = parse_draft(json.dumps(draft()), context())
+        r = parse_draft(json.dumps(legacy_draft()), context())
         self.assertEqual(r['claims'][0]['citations'][0]['pmid'], '1')
         self.assertEqual(r['claims'][0]['citations'][0]['matches'], [{'char_start':0,'char_end':16}])
-        d = draft();d['claims'][0]['citations'][0]['pmid']='999'
+        d = legacy_draft();d['claims'][0]['citations'][0]['pmid']='999'
         with self.assertRaises(AnswerError):parse_draft(json.dumps(d),context())
 
     def test_invalid_drafts_rejected(self):
@@ -59,7 +65,7 @@ class AnswerTests(unittest.TestCase):
             lambda x:x['claims'][0]['citations'][0].update(citation_id='E99'),
             lambda x:x['claims'][0]['citations'][0].update(quote='Alpha beta gamma'),
         ):
-            d=draft();modify(d);bad.append(json.dumps(d))
+            d=legacy_draft();modify(d);bad.append(json.dumps(d))
         bad+=['```json\n'+json.dumps(draft())+'\n```','null','{"status":"partial","status":"answered"}']
         for text in bad:
             with self.subTest(text=text),self.assertRaises(AnswerError):parse_draft(text,context())
@@ -104,7 +110,7 @@ class AnswerTests(unittest.TestCase):
         d=draft()
         d['status']='answered'
         d['claims'].append({'text':'An unsupported extension.',
-            'citations':[{'citation_id':'E1','quote':'alpha beta gamma'}]})
+            'citations':[{'quote_id':'E1.Q1'}]})
         rt=FakeRuntime([d,[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Supported scope.'},
                          {'claim_id':'C2','verdict':'unclear','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Missing population details.'}]])
         r=generate_answer('Question',context(),rt)
@@ -134,3 +140,38 @@ class AnswerTests(unittest.TestCase):
             result=generate_answer('Question',context(),FakeRuntime([draft(),[row]]))
             self.assertEqual(result['claims'],[])
             self.assertEqual(result['status'],'insufficient_evidence')
+
+    def test_per_claim_limitations_are_explicitly_supported_without_text_repair(self):
+        d=legacy_draft();d['claims'][0]['limitations']=['population_unclear'];d.pop('limitations')
+        parsed=parse_draft(json.dumps(d),context())
+        self.assertEqual(parsed['format_variant'],'per-claim-limitations')
+        self.assertEqual(parsed['claims'][0]['text'],d['claims'][0]['text'])
+        self.assertEqual(parsed['limitations'],['population_unclear'])
+        d['claims'][0]['unexpected']='not permitted'
+        with self.assertRaises(AnswerError):parse_draft(json.dumps(d),context())
+
+    def test_cache_reuse_requires_exact_prompt_and_limit(self):
+        row={'claim_id':'C1','verdict':'supported','reason':'Supported.',
+             'population_match':'match','comparison_match':'match','outcome_match':'match'}
+        original=generate_answer('Question',context(),FakeRuntime([draft(),[row]]))
+        cache={c['stage']:c for c in original['model_calls']}
+        rt=FakeRuntime([])
+        reused=generate_answer('Question',context(),rt,cached_calls=cache)
+        self.assertEqual(rt.calls,[])
+        self.assertEqual(reused['claims'],original['claims'])
+        self.assertTrue(all(c['cache_reused'] for c in reused['model_calls']))
+        changed=FakeRuntime([draft(),[row]])
+        fresh=generate_answer('Changed question',context(),changed,cached_calls=cache)
+        self.assertEqual(len(changed.calls),2)
+        self.assertFalse(any(c['cache_reused'] for c in fresh['model_calls']))
+
+
+    def test_quote_ids_resolve_exactly_and_cannot_invent_text(self):
+        from medlens.generation.quotes import quote_catalog,resolve_quote
+        c=context();catalog=quote_catalog(c,Tokenizer())
+        value=parse_draft(json.dumps(draft()),c,catalog=catalog['catalog'])
+        self.assertEqual(value['claims'][0]['citations'][0]['quote'],'alpha beta gamma')
+        d=draft();d['claims'][0]['citations'][0]['quote_id']='E99.Q9'
+        with self.assertRaises(AnswerError):parse_draft(json.dumps(d),c,catalog=catalog['catalog'])
+        changed=copy.deepcopy(catalog['catalog']);changed['E1.Q1']['char_start']+=1
+        with self.assertRaises(ValueError):resolve_quote(c,changed,'E1.Q1')

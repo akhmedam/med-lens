@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "run_id": "eaff209e2c60db4894beb0445d8c8d1ce5143b5c22748abd4fed42bc0a2c4017",
+  "context_report_sha256": "d859e4e6683977f3c4b475a11bd433f7817023c401f8ba32b8ada1e542733de0",
+  "profile_sha256": "0111be43c821afc36498813caac7051ee1c3038660e187587af9b849b8a7fe72",
+  "qrels_sha256": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41",
+  "case_ids": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10",
+    "empty-context",
+    "wrong-population"
+  ],
+  "code_sha256": {
+    "scripts/generate_answers.py": "b9ee67aa9d2bfb87ea2638238e09ea64b7954ae328b08a3498f4acdde9c90b51",
+    "src/medlens/generation/answers.py": "2ad19b4e99b55e6503b800409eb9f173e1a8aca9c5c1812815c2cec3e5172c08",
+    "src/medlens/inference/qwen.py": "982481b23c15594c0dcccd1eac078e6a95a531bdbab170034ec185357d8a9d9b"
+  },
+  "status": "complete",
+  "started_at": "2026-10-30T05:23:11.747884+00:00",
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 128,
+      "enable_thinking": false
+    },
+    "load_seconds": 23.36263812499965,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "finished_at": "2026-10-30T05:32:41.719198+00:00",
+  "process_peak_rss_bytes": 14732066816,
+  "local_report_sha256": "3b1df937366d1d2820a94372c52874022982223eb6e720aacd22f134f5c10885",
+  "per_case": [
+    {
+      "case_id": "p01",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "claim_count": 3,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 37.33496049999667,
+          "new_tokens": 220,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1603,
+          "prompt_sha256": "6af073fd2fd2ba863d2f6b8cfc1d3e81d0fc62fe2a6ac6ea41f79b3dc380595f"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 38.355086458002916,
+          "new_tokens": 255,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1136,
+          "prompt_sha256": "0a12c734f00e749d752f6ee0d7c77013c86844c91aee19ea0e268b7046e35b41"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p02",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Unexpected answer fields",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 74.71908691700082,
+          "new_tokens": 517,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1656,
+          "prompt_sha256": "17c53c4cda33fd7e9391ec185f23c3e1a9ee61556081e3146e9764cc57bd5cc4"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p03",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Unexpected answer fields",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 70.99125416699826,
+          "new_tokens": 484,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1764,
+          "prompt_sha256": "4c472176f7d57f37743dc2fbd4166061b9d187988e52745e12a7e8b7200e9847"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p04",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid cited claim",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 59.37310929099476,
+          "new_tokens": 393,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1935,
+          "prompt_sha256": "4cb5ea2be4d502d6e0ca01bdd1de9b5a7c6ffd9213c2a84551ca59ccc9f830d6"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p05",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid claims or limitation codes",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 37.23049608300062,
+          "new_tokens": 237,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1484,
+          "prompt_sha256": "850dcb1e5f49c594c67fae765c45c4254304fb2c81bed1d41908c531483a466b"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p06",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Unexpected answer fields",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 50.481859916995745,
+          "new_tokens": 340,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1501,
+          "prompt_sha256": "30cdbe4f28970bb9f409192933c2c62dc94688027450a299d4a21e24152972d4"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p07",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Quote is not present verbatim in the selected excerpt",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 24.58515204199648,
+          "new_tokens": 117,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1965,
+          "prompt_sha256": "a840151939b809ae670f8a8e92f5ca78f1e2a06fd262018e463c8075695bed6c"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p08",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Quote is not present verbatim in the selected excerpt",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 36.72642837499734,
+          "new_tokens": 221,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1737,
+          "prompt_sha256": "6cf6aa4295176b0759464e42e2ebaab10697358802bc57489f2f8a7609625877"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p09",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Unexpected answer fields",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 79.2143863750025,
+          "new_tokens": 530,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2266,
+          "prompt_sha256": "3508200d5b763ad47322074d6d363f038256a79108a06693d524d777b0217a04"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p10",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid JSON output",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 30.93763924999803,
+          "new_tokens": 196,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1179,
+          "prompt_sha256": "4367d3040ecf8b7a90c2be055e56808856f1b19bad645948317ed3d50a0c3a28"
+        }
+      ],
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "empty-context",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "empty-context",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [],
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    },
+    {
+      "case_id": "wrong-population",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "model-abstained",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 6.3742837910031085,
+          "new_tokens": 21,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 724,
+          "prompt_sha256": "9943b2b83a27c2793b16decf32cddb220b4614e34985b283fc3f003cf736b4eb"
+        }
+      ],
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    }
+  ]
+}

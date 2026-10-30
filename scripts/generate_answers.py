@@ -86,6 +86,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--include-controls", action="store_true")
+    parser.add_argument("--reuse-outputs", type=Path, help="Reuse only model calls with identical prompt hashes and token limits")
     args = parser.parse_args()
     if args.output.resolve() == args.summary.resolve() or args.output.exists() or args.summary.exists():
         parser.error("Choose two distinct unused paths")
@@ -112,10 +113,22 @@ def main():
         owner = next(r["context"] for r in artifact["per_query"] if pediatric[0] in r["context"]["sources"])
         cases.append({"case_id": "wrong-population", "kind": "control", "question": cases[0]["question"],
             "context": control_context(owner, [pediatric[0]], tokenizer), "expected": "insufficient_evidence"})
-    identity = {"context_report_sha256": artifact_hash, "profile_sha256": artifact["profile_sha256"],
+    cache, cache_hash = {}, None
+    if args.reuse_outputs:
+        cache_bytes = args.reuse_outputs.read_bytes()
+        previous = json.loads(cache_bytes)
+        if previous["context_report_sha256"] != artifact_hash or previous["profile_sha256"] != artifact["profile_sha256"]:
+            raise ValueError("Cached outputs belong to different contexts/profile")
+        if previous["runtime"]["model_id"] != MODEL_ID or previous["runtime"]["revision"] != REVISION:
+            raise ValueError("Cached model revision differs")
+        cache_hash = hashlib.sha256(cache_bytes).hexdigest()
+        for row in previous["per_case"]:
+            cache[row["case_id"]] = {call["stage"]: {**call, "cache_source_sha256": cache_hash}
+                                     for call in row["model_calls"]}
+    identity = {"context_report_sha256": artifact_hash, "cache_source_sha256": cache_hash, "profile_sha256": artifact["profile_sha256"],
         "qrels_sha256": artifact["qrels_sha256"], "case_ids": [c["case_id"] for c in cases],
         "code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
-            "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/inference/qwen.py")}}
+            "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/inference/qwen.py", "src/medlens/generation/quotes.py")}}
     report = {"schema_version": 1, "run_id": digest(identity), **identity, "status": "running",
         "started_at": datetime.now(timezone.utc).isoformat(), "per_case": []}
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -128,7 +141,7 @@ def main():
         runtime = QwenRuntime()
         report["runtime"] = runtime.metadata
         for case in cases:
-            result = generate_answer(case["question"], case["context"], runtime)
+            result = generate_answer(case["question"], case["context"], runtime, cached_calls=cache.get(case["case_id"]))
             result.update(case_id=case["case_id"], kind=case["kind"], expected=case.get("expected"))
             result["rendered_answer"] = render_answer(result)
             report["per_case"].append(result)
@@ -157,6 +170,11 @@ def main():
         "stages": [{k: c[k] for k in ("stage", "seconds", "new_tokens", "hit_output_limit", "max_new_tokens")}
                    | {"input_tokens": c["prompt"]["input_tokens"], "prompt_sha256": c["prompt"]["prompt_sha256"]}
                    for c in r["model_calls"]],
+        "format_variant": r.get("draft",{}).get("format_variant"),
+        "generator_evidence_tokens": r.get("generator_evidence_tokens"),
+        "quote_catalog_sha256": r.get("quote_catalog_sha256"),
+        "reused_calls": sum(c.get("cache_reused",False) for c in r["model_calls"]),
+        "verification_status": r["verification_status"],
         "expected": r.get("expected"), "matches_expected": r["status"] == r["expected"] if r.get("expected") else None}
         for r in report["per_case"]]
     args.summary.parent.mkdir(parents=True, exist_ok=True)
