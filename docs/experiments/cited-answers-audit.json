@@ -1,0 +1,136 @@
+{
+  "reviewer": "Codex; AI source comparison, not independent expert validation",
+  "run": "results/generation/pilot-v1-cited-004.json",
+  "findings": [
+    {
+      "case_id": "p01",
+      "claim_ids": [
+        "C1"
+      ],
+      "issues": [
+        "subgroup qualifier lost: more severely depressed",
+        "same-model false-positive support"
+      ]
+    },
+    {
+      "case_id": "p01",
+      "claim_ids": [
+        "C3"
+      ],
+      "issues": [
+        "comparison differs from question",
+        "adult eligibility absent in supplied excerpt",
+        "remission scope omitted"
+      ]
+    },
+    {
+      "case_id": "p02",
+      "claim_ids": [
+        "C2"
+      ],
+      "issues": [
+        "adult eligibility absent in supplied excerpt"
+      ]
+    },
+    {
+      "case_id": "p02",
+      "claim_ids": [
+        "C3"
+      ],
+      "issues": []
+    },
+    {
+      "case_id": "p03",
+      "claim_ids": [],
+      "issues": [
+        "draft returned eight claims; rejected because maximum is four"
+      ],
+      "type": "structural_failure"
+    },
+    {
+      "case_id": "p04",
+      "claim_ids": [],
+      "type": "structural_failure",
+      "issues": [
+        "five claims; maximum four"
+      ]
+    },
+    {
+      "case_id": "p05",
+      "claim_ids": [],
+      "type": "structural_failure",
+      "issues": [
+        "claim count exceeds maximum"
+      ]
+    },
+    {
+      "case_id": "p06",
+      "claim_ids": [
+        "C2"
+      ],
+      "issues": [
+        "older-adult subgroup omitted"
+      ]
+    },
+    {
+      "case_id": "p06",
+      "claim_ids": [
+        "C3"
+      ],
+      "issues": [
+        "adult eligibility absent in supplied excerpt/title"
+      ]
+    },
+    {
+      "case_id": "p07",
+      "claim_ids": [
+        "C2"
+      ],
+      "issues": [
+        "SSRI subgroup inferred from antidepressant-class result",
+        "adult eligibility absent in supplied excerpt/title"
+      ]
+    },
+    {
+      "case_id": "p07",
+      "claim_ids": [
+        "C3"
+      ],
+      "issues": []
+    },
+    {
+      "case_id": "p08",
+      "claim_ids": [],
+      "type": "structural_failure",
+      "issues": [
+        "review outcome_match used not_requested; schema forbids it"
+      ]
+    },
+    {
+      "case_id": "p09",
+      "claim_ids": [],
+      "type": "structural_failure",
+      "issues": [
+        "four citations on one claim; maximum three"
+      ]
+    },
+    {
+      "case_id": "p10",
+      "claim_ids": [],
+      "type": "structural_failure",
+      "issues": [
+        "malformed JSON draft"
+      ]
+    }
+  ],
+  "local_report_sha256": "7e07342eb09f14a372ebe0e546889d52a33e813ee5184a551f7404cd29e75fc6",
+  "source_checks": {
+    "cases_replayed": 12,
+    "cached_calls_replayed_without_inference": 17,
+    "catalog_entries_including_controls": 279,
+    "pilot_catalog_entries": 275,
+    "displayed_citations_resolved": 12,
+    "source_and_code_hashes_match": true
+  },
+  "scope": "Development-pilot inspection of displayed claims. Findings are examples, not exhaustive clinical adjudication or an accuracy metric."
+}

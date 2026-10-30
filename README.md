@@ -3,8 +3,9 @@
 Retrieval experiments over PubMed papers on depression and anxiety.
 
 The project starts with BM25 and dense retrieval, then measures whether hybrid
-ranking, LLM reranking, and full text help. Answers will link back to source
-fragments. This is a literature search tool, not a diagnostic system.
+ranking, LLM reranking, and full text help. Experimental answer drafts link back
+to exact source quotations. This is a literature search tool, not a diagnostic
+system.
 
 ## Status
 
@@ -13,8 +14,9 @@ Search supports BM25, exact dense retrieval, and RRF. The active pilot uses
 `pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
 rerank frozen top-10 lists through
 Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
-for metrics and annotation provenance. Source-bound evidence contexts are available;
-answer generation is next.
+for metrics and annotation provenance. Saved evidence contexts can feed
+experimental cited answer drafts with a separate model support review. These
+drafts require independent review; exact quotations do not prove claim support.
 
 ## Setup
 
@@ -179,8 +181,24 @@ HF_HUB_OFFLINE=1 python scripts/prepare_evidence.py \
 
 This uses frozen pilot article rankings, stored windows/vectors and the Qwen
 tokenizer to select up to six source excerpts within 4000 evidence tokens.
-Citation IDs map to exact source spans; generation is not run yet. See the
+Citation IDs map to exact source spans. See the
 [selection policy and checks](docs/evidence-context.md).
+
+## Generate cited drafts
+
+```sh
+python scripts/generate_answers.py results/evidence/pilot-v1-dense-qwen-004.json \
+  --include-controls \
+  --output results/generation/pilot-v1-cited-004.json \
+  --summary results/generation/pilot-v1-cited-summary-004.json
+```
+
+The generator selects sentence IDs; code supplies exact quotations and PubMed
+links. Unsupported or unclear claims are withheld by a second call to the same
+Qwen instance. Model review can miss scope errors, so every displayed answer is
+an unverified research draft. Invalid or truncated output shows no answer.
+Choose fresh output paths. See the [protocol and pilot results](docs/cited-answers.md).
+This runner consumes saved contexts; live search-to-answer integration is pending.
 
 ## Runtime check
 

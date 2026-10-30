@@ -1,7 +1,7 @@
 # Evidence context and source mapping
 
 MedLens can now pack exact abstract excerpts into a bounded context for the
-future answer generator. This stage selects source text and assigns citation
+[experimental answer generator](cited-answers.md). This stage selects source text and assigns citation
 IDs. It does not generate answers, determine whether a claim follows from a
 quote, or establish clinical validity.
 
@@ -19,7 +19,8 @@ The initial limits from the local-inference ADR apply:
   citation IDs, PMIDs, titles, journal, available journal-issue publication date,
   section labels and excerpt text.
 - Questions, instructions, chat-template overhead and answer tokens are outside
-  this evidence budget. Full generation memory/latency remain untested.
+  this evidence budget. Generation costs are measured separately in the
+  [answer pilot](cited-answers.md).
 
 Articles retain their input order. The first pass offers one excerpt per article;
 a second pass offers another only if capacity remains. Each pass skips excerpts
@@ -59,12 +60,15 @@ in that selected fragment. It rejects unknown IDs, case/whitespace changes,
 unmatched quotes and altered context source mappings/payloads. Repeated matches
 are returned with an ambiguity flag; their offsets are Unicode code-point offsets
 in the parsed abstract section. Quote matching verifies source location, not
-entailment. A future generator must receive the exact `evidence_payload` string
-and resolve references against its trusted context map.
+entailment. The answer generator preserves this source context and resolves
+references against its trusted map. It renders the excerpts as a sentence catalog
+with IDs such as `E1.Q1`, counts that representation against the same 4000-token
+budget, and rejects an over-budget catalog. This is a separate payload format;
+the original context payload and identity remain unchanged.
 
 Empty contexts return `no-source-excerpts`. A nonempty context is only
 `source-excerpts-selected`: it is not a declaration that the question has
-sufficient or relevant evidence. The next generation stage still needs to assess
+sufficient or relevant evidence. The generation stage must still assess
 population fit, scope, unsupported conclusions, contradictions and abstention.
 
 ## Pilot check
