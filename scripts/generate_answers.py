@@ -136,6 +136,9 @@ def main():
             print(case["case_id"],result["status"],len(result["claims"]),
                 round(sum(c["seconds"] for c in result["model_calls"]),2),result['reason'],flush=True)
         report["status"] = "complete"
+    except KeyboardInterrupt:
+        report["status"] = "interrupted"
+        raise
     except Exception as exc:
         report["status"] = "failed"
         report["error"] = {"type": type(exc).__name__, "message": str(exc)}
@@ -150,7 +153,7 @@ def main():
     summary["per_case"] = [{"case_id": r["case_id"], "kind": r["kind"], "status": r["status"],
         "reason": r["reason"], "claim_count": len(r["claims"]),
         "draft_claim_count": len(r.get("draft",{}).get("claims",[])),
-        "review_verdicts": [v["verdict"] for v in r["review"]],
+        "review_checks": [{k: v[k] for k in ("claim_id", "verdict", "population_match", "comparison_match", "outcome_match")} for v in r["review"]],
         "stages": [{k: c[k] for k in ("stage", "seconds", "new_tokens", "hit_output_limit", "max_new_tokens")}
                    | {"input_tokens": c["prompt"]["input_tokens"], "prompt_sha256": c["prompt"]["prompt_sha256"]}
                    for c in r["model_calls"]],
