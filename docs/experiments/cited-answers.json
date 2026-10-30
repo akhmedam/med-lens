@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "run_id": "cc3c00cd0c2a1932bed8b3a94da3a82c3aca5850c6f58a86b3cb3ac70b688b82",
+  "context_report_sha256": "d859e4e6683977f3c4b475a11bd433f7817023c401f8ba32b8ada1e542733de0",
+  "cache_source_sha256": "918650fac12564a26fd21fa722f9f5e60158a9fc9a590111dd9b49b25cb59ee5",
+  "profile_sha256": "0111be43c821afc36498813caac7051ee1c3038660e187587af9b849b8a7fe72",
+  "qrels_sha256": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41",
+  "case_ids": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10",
+    "empty-context",
+    "wrong-population"
+  ],
+  "code_sha256": {
+    "scripts/generate_answers.py": "d205f094d301cf00bdaefe7a31603d902b7ccaa2f544e9294f74dbf9fa0776ae",
+    "src/medlens/generation/answers.py": "125f70ed77223378501f3d01fccb4067a05332e0ba72042b01d6ea157f11bbfc",
+    "src/medlens/inference/qwen.py": "982481b23c15594c0dcccd1eac078e6a95a531bdbab170034ec185357d8a9d9b",
+    "src/medlens/generation/quotes.py": "ba45e527677c8499b217f62ac63dfc5c782ef4d2ebf461ce48b1f19c8ab302a9"
+  },
+  "status": "complete",
+  "started_at": "2026-10-30T05:38:50.917405+00:00",
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 128,
+      "enable_thinking": false
+    },
+    "load_seconds": 25.478418499995314,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "finished_at": "2026-10-30T05:47:07.117122+00:00",
+  "process_peak_rss_bytes": 14165688320,
+  "local_report_sha256": "7e07342eb09f14a372ebe0e546889d52a33e813ee5184a551f7404cd29e75fc6",
+  "per_case": [
+    {
+      "case_id": "p01",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "claim_count": 2,
+      "draft_claim_count": 4,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "not_supported",
+          "population_match": "mismatch",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C4",
+          "verdict": "not_supported",
+          "population_match": "mismatch",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 31.648945624998305,
+          "new_tokens": 169,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1899,
+          "prompt_sha256": "94490bc66124be7b13f448724f7bbe44f82e991e7ae56475cb0c522426a32176"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 25.920679292001296,
+          "new_tokens": 139,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1504,
+          "prompt_sha256": "ad6d1ac8737dbc1ba48697d7ef784b1f912829c742b86d76bf9e5938fede90ee"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1409,
+      "quote_catalog_sha256": "0e38d72c2da8f7955b74d62186da9cf4e8f608b97eb43f0b02252b2fa4a13f5c",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p02",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 32.30532354200113,
+          "new_tokens": 181,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1850,
+          "prompt_sha256": "bb69697baece7f32efa3381b2b77b572293f13da1b69d19400e596a06ecb786f"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 23.44157195799926,
+          "new_tokens": 104,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1954,
+          "prompt_sha256": "fbd0c4a8f472bcde755f295d74868624901937d0b4279638710aa8d59d1aa225"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1365,
+      "quote_catalog_sha256": "90b8607c63f21694b1300bf88aa373de9553d3045fec0a2a53cef0dbb523068f",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p03",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid claims or limitation codes",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 65.52631958299753,
+          "new_tokens": 435,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2139,
+          "prompt_sha256": "6814aca1a793183666cde4473e3d45994af174fe046f0daa926f2e9d786e9681"
+        }
+      ],
+      "format_variant": null,
+      "generator_evidence_tokens": 1657,
+      "quote_catalog_sha256": "51558d4faec04555b8280ced6a822e86aa22931706c1bbe49248dc63ea866110",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p04",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid claims or limitation codes",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 43.84588291700493,
+          "new_tokens": 260,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2334,
+          "prompt_sha256": "777f540a0fbbcad4e31891f563b75fe6bebe9939b8d84dc2449bd737f6e82c77"
+        }
+      ],
+      "format_variant": null,
+      "generator_evidence_tokens": 1848,
+      "quote_catalog_sha256": "596b6ddb893a08f3a7f34575401a1faab0326353aecf7b9787d9749c9ca68349",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p05",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid claims or limitation codes",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 48.5383917500003,
+          "new_tokens": 323,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1702,
+          "prompt_sha256": "c9ec3fd0d137061aa10a5db190e2faff4ce6c36348eedebb0e2a7526f77f62be"
+        }
+      ],
+      "format_variant": null,
+      "generator_evidence_tokens": 1218,
+      "quote_catalog_sha256": "6184cd53fb4ef95de7b7cbe2bb0927565f066b80e472135d9e0cb6394f0f5d39",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p06",
+      "kind": "pilot",
+      "status": "answered",
+      "reason": "support-review-complete",
+      "claim_count": 3,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 26.90827879200515,
+          "new_tokens": 146,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1753,
+          "prompt_sha256": "ba1cc85cae13e92592d0eaa834f7adfc4bdaed71a3d7fef8ccc7c9941131f19b"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 20.775197791997925,
+          "new_tokens": 103,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1532,
+          "prompt_sha256": "a7f2e8b6d36dacc503a388e48ffb2b8967361f29b6b42b8f7a15bb4dd5e06937"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1267,
+      "quote_catalog_sha256": "2ad051161d61513607bbc652cc0e51538705a985ef9ae540dbd47ea27cffe9a0",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p07",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "mismatch"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 29.499304875003872,
+          "new_tokens": 136,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2454,
+          "prompt_sha256": "385af86c8411615b7e6d8aaf2d115f0166a5bf46a4e5365687b781f5ab59966f"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 21.97062599999481,
+          "new_tokens": 105,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1729,
+          "prompt_sha256": "b1c3da9b3d15e1f55d7feef86851445e954cda372ce7e3e4f1a794ab8e1cf12a"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1964,
+      "quote_catalog_sha256": "8ead2aec027db2f62d45fa7b5ffbce05f48483f5ae86fff14217badb4853c55a",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p08",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid or duplicate claim review",
+      "claim_count": 0,
+      "draft_claim_count": 3,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 30.253174624995154,
+          "new_tokens": 156,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2111,
+          "prompt_sha256": "e05fd26e8a4385be3ae0b25c5299e160c4dd6f4f57b435909b5bc0a9e7cc6049"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 18.813624791997427,
+          "new_tokens": 104,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1125,
+          "prompt_sha256": "4ba6ed655aa43a273507e3ef806ca73b49a6ccd8493c2b8e9f1b210ddc5ba926"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1624,
+      "quote_catalog_sha256": "554f658167c129525a75f5690d55f27e793b46bbdc4c4c02a7158eee55b489f2",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p09",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid cited claim",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 36.34957258399663,
+          "new_tokens": 177,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2774,
+          "prompt_sha256": "c51e2396e73bf29ca0620de6cee497f029bfe1c2c7f2c997be4e69fe6f73faf7"
+        }
+      ],
+      "format_variant": null,
+      "generator_evidence_tokens": 2287,
+      "quote_catalog_sha256": "74ca4cdf069397d9c20e0e59e6ab6b0e185577704030e7555540dec06dc23bc9",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p10",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Invalid JSON output",
+      "claim_count": 0,
+      "draft_claim_count": 3,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 21.253063249998377,
+          "new_tokens": 116,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1317,
+          "prompt_sha256": "317296fca09192356d1fff6c984f26bf5e71b0bbd9ae223de78e8d530ebe76d7"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 18.55610112499562,
+          "new_tokens": 107,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1006,
+          "prompt_sha256": "57419e799d7c9bebe1bd337b8251e58ae270dcff3fa3df91ef32610db97bb24d"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 832,
+      "quote_catalog_sha256": "e43306f0ddbcc42efacfeec8c1f141373249d9bab4dbc2ffc334b25f7027a75e",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "empty-context",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "empty-context",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [],
+      "format_variant": null,
+      "generator_evidence_tokens": null,
+      "quote_catalog_sha256": null,
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    },
+    {
+      "case_id": "wrong-population",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "model-abstained",
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 6.4752714579954045,
+          "new_tokens": 20,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 777,
+          "prompt_sha256": "7d5c0a1ba27df80a4c9ff44a266332a419ce02a960fcf4072f585c265132f5a2"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 287,
+      "quote_catalog_sha256": "7aebf955198d38296e3eaa1fb039668656c581ebace13d4acb7041400d5234e5",
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    }
+  ]
+}

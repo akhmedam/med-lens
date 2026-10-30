@@ -1,6 +1,6 @@
 # Local inference
 
-Status: accepted for experiments; smoke and real-input reranking measured
+Status: accepted for experiments; reranking and cited draft generation measured
 
 ## Context
 
@@ -36,5 +36,9 @@ scope in its report. Do not label a sampled memory maximum a true device peak.
 The [Day 1 report](../experiments/runtime-smoke.md) records the successful run,
 two invalid reranking outputs, and the HTTP header workaround. The
 [reranking pilot](../qwen-reranking-baseline.md) now measures real abstract inputs,
-latency and ranking quality. Evidence-grounded synthesis at the planned context
-budget remains untested.
+latency and ranking quality. The [answer pilot](../cited-answers.md) uses the same
+runtime for sequential draft and support-review calls, with 768 and 512 output
+tokens respectively. Sentence IDs resolve to exact source slices. The pilot
+uses less than the full 4000-token evidence budget; testing at that limit remains
+open. Same-model review has missed population and qualifier errors, so generated
+answers remain research drafts requiring independent review.
