@@ -9,7 +9,9 @@ from .context import canonical, digest, locate_quote, render_evidence
 from .quotes import quote_catalog, resolve_quote
 
 PROMPT_VERSION = "cited-answer-v3"
-REVIEW_VERSION = "claim-support-v2"
+REVIEW_VERSION = "claim-support-v3"
+REVIEW_REASONS = {"supported_by_excerpt", "population_mismatch", "comparison_mismatch",
+                  "outcome_mismatch", "overstatement", "missing_details", "other"}
 LIMITATIONS = {"limited_excerpts", "population_unclear", "mixed_populations", "no_direct_comparison",
                "conflicting_findings", "methodological_limits"}
 SYSTEM = """You are a biomedical literature research assistant. Answer in English using ONLY
@@ -50,9 +52,11 @@ outcome_match: match, mismatch, or unclear. Symptoms, remission, recurrence, bio
 attitudes, quality of life and caregiver outcomes are different outcomes; preserve the scope.
 Verdict must be supported ONLY when every factual clause is supported, population/outcome match,
 and comparison is match or not_requested. Use not_supported for mismatches/overstatements,
-and unclear for missing details. Reason must explain the main concern or supporting evidence.
+and unclear for missing details. Reason must be exactly one code: supported_by_excerpt,
+population_mismatch, comparison_mismatch, outcome_mismatch, overstatement, missing_details, other.
+Do not explain, debate, or include free-form reasoning.
 Return ONLY a JSON array with EXACTLY one object per draft claim, no extra keys:
-[{"claim_id":"C1","verdict":"supported","population_match":"match","comparison_match":"not_requested","outcome_match":"match","reason":"Brief justification."}]
+[{"claim_id":"C1","verdict":"supported","population_match":"match","comparison_match":"not_requested","outcome_match":"match","reason":"supported_by_excerpt"}]
 verdict is supported, not_supported or unclear. Do not repair or create claims."""
 
 
@@ -182,7 +186,7 @@ def parse_review(text, claim_ids):
                 or not isinstance(row["population_match"], str) or row["population_match"] not in {"match", "mismatch", "unclear"}
                 or not isinstance(row["outcome_match"], str) or row["outcome_match"] not in {"match", "mismatch", "unclear"}
                 or not isinstance(row["comparison_match"], str) or row["comparison_match"] not in {"match", "mismatch", "unclear", "not_requested"}
-                or not isinstance(row["reason"], str) or not row["reason"].strip()):
+                or not isinstance(row["reason"], str) or row["reason"] not in REVIEW_REASONS):
             raise AnswerError("Invalid or duplicate claim review")
         seen.add(row["claim_id"])
     return rows

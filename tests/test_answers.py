@@ -72,20 +72,20 @@ class AnswerTests(unittest.TestCase):
         with self.assertRaises(AnswerError):strict_json('[NaN]')
 
     def test_review_must_cover_every_claim_once(self):
-        good={'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'The excerpt supports this scope.'}
+        good={'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}
         self.assertEqual(parse_review(json.dumps([good]),{'C1'}),[good])
-        for rows in ([],[good,good],[{**good,'claim_id':'C99'}],[{**good,'verdict':[]}],[{**good,'reason':''}]):
+        for rows in ([],[good,good],[{**good,'claim_id':'C99'}],[{**good,'verdict':[]}],[{**good,'reason':''}],[{**good,'reason':'Free-form explanation'}]):
             with self.subTest(rows=rows),self.assertRaises(AnswerError):parse_review(json.dumps(rows),{'C1'})
 
     def test_supported_claim_displayed_with_system_assigned_link(self):
-        rt=FakeRuntime([draft(),[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Matches the cited excerpt.'}]])
+        rt=FakeRuntime([draft(),[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}]])
         r=generate_answer('Research question?',context(),rt)
         self.assertEqual(len(r['claims']),1)
         self.assertIn('https://pubmed.ncbi.nlm.nih.gov/1/',render_answer(r))
         self.assertEqual([x[1] for x in rt.calls],[768,512])
 
     def test_rejected_claim_withheld_even_with_an_exact_quote(self):
-        rt=FakeRuntime([draft(),[{'claim_id':'C1','verdict':'not_supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Wrong population.'}]])
+        rt=FakeRuntime([draft(),[{'claim_id':'C1','verdict':'not_supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'population_mismatch'}]])
         r=generate_answer('Research question?',context(),rt)
         self.assertEqual(r['status'],'insufficient_evidence')
         self.assertEqual(r['claims'],[])
@@ -111,8 +111,8 @@ class AnswerTests(unittest.TestCase):
         d['status']='answered'
         d['claims'].append({'text':'An unsupported extension.',
             'citations':[{'quote_id':'E1.Q1'}]})
-        rt=FakeRuntime([d,[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Supported scope.'},
-                         {'claim_id':'C2','verdict':'unclear','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Missing population details.'}]])
+        rt=FakeRuntime([d,[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'},
+                         {'claim_id':'C2','verdict':'unclear','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'missing_details'}]])
         r=generate_answer('Question',context(),rt)
         self.assertEqual(r['status'],'partial')
         self.assertEqual([c['claim_id'] for c in r['claims']],['C1'])
@@ -125,7 +125,7 @@ class AnswerTests(unittest.TestCase):
                 r['hit_output_limit']=len(self.calls)==self.truncate_call
                 return r
         for stage in (1,2):
-            rt=TruncatedRuntime([draft(),[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'Supported.'}]])
+            rt=TruncatedRuntime([draft(),[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}]])
             rt.truncate_call=stage
             r=generate_answer('Question',context(),rt)
             self.assertEqual(r['status'],'validation_failed')
@@ -134,7 +134,7 @@ class AnswerTests(unittest.TestCase):
 
     def test_axis_mismatch_overrides_supported_verdict(self):
         for axis in ('population_match','comparison_match','outcome_match'):
-            row={'claim_id':'C1','verdict':'supported','reason':'A misleading overall verdict.',
+            row={'claim_id':'C1','verdict':'supported','reason':'supported_by_excerpt',
                  'population_match':'match','comparison_match':'match','outcome_match':'match'}
             row[axis]='mismatch'
             result=generate_answer('Question',context(),FakeRuntime([draft(),[row]]))
@@ -151,7 +151,7 @@ class AnswerTests(unittest.TestCase):
         with self.assertRaises(AnswerError):parse_draft(json.dumps(d),context())
 
     def test_cache_reuse_requires_exact_prompt_and_limit(self):
-        row={'claim_id':'C1','verdict':'supported','reason':'Supported.',
+        row={'claim_id':'C1','verdict':'supported','reason':'supported_by_excerpt',
              'population_match':'match','comparison_match':'match','outcome_match':'match'}
         original=generate_answer('Question',context(),FakeRuntime([draft(),[row]]))
         cache={c['stage']:c for c in original['model_calls']}
