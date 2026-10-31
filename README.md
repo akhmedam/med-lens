@@ -20,6 +20,9 @@ drafts require independent review; exact quotations do not prove claim support.
 A single local request command now connects search, optional reranking, source
 selection and optional generation, and saves an inspectable HTML report.
 
+The accepted [development plan](docs/development-plan.md) covers Days 15–28,
+including the two MedCPT experiments and an interactive CLI as the primary UI.
+
 ## Setup
 
 Python 3.11:
