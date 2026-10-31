@@ -17,6 +17,8 @@ Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](do
 for metrics and annotation provenance. Saved evidence contexts can feed
 experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
+A single local request command now connects search, optional reranking, source
+selection and optional generation, and saves an inspectable HTML report.
 
 ## Setup
 
@@ -33,6 +35,29 @@ PubMed ingestion uses the standard library. For the local model on Apple Silicon
 ```sh
 python -m pip install -r requirements-macos-arm64.lock
 ```
+
+## Ask a question
+
+Search a prepared local collection and save articles plus exact source excerpts:
+
+```sh
+python scripts/ask.py data/parsed/pilot-v1/p06 \
+  --windows data/windows/pilot-v1-002/p06 \
+  --embeddings data/embeddings/pilot-v1/p06 \
+  --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
+  --output-dir results/requests/gad-example
+open results/requests/gad-example/report.html
+```
+
+Add `--generate` for an experimental cited draft, and `--rerank` to reorder the
+dense hits with Qwen. Both flags share one Qwen instance. The default returns
+search results and excerpts without loading Qwen weights. Its cached tokenizer
+is still required to pack evidence. Use a fresh output directory for each run.
+
+The pilot collections contain up to thirty candidates per topic. This command
+searches the collection you supply; it does not fetch new papers or search all
+of PubMed. Questions should be in English. See the [local request guide](docs/local-requests.md)
+for modes, failures, exit codes and measured examples.
 
 ## Download papers
 
@@ -198,7 +223,8 @@ links. Unsupported or unclear claims are withheld by a second call to the same
 Qwen instance. Model review can miss scope errors, so every displayed answer is
 an unverified research draft. Invalid or truncated output shows no answer.
 Choose fresh output paths. See the [protocol and pilot results](docs/cited-answers.md).
-This runner consumes saved contexts; live search-to-answer integration is pending.
+This benchmark runner consumes saved contexts. Use `scripts/ask.py` above for
+a fresh search-to-answer request against a local collection.
 
 ## Runtime check
 

@@ -139,8 +139,9 @@ completed case is checkpointed; interrupted/failed runs retain their status.
 The local JSON includes the rendered answer, citations, raw model calls and
 review decisions. The public summary excludes individual labels and article text.
 
-This command consumes a prepared context; a live search-to-answer CLI/API and
-reuse of the same instance across a live rerank-to-generation request remain
-integration work. Broader answer evaluation, independent human checking,
+This command consumes a prepared context. The [local request CLI](local-requests.md)
+now searches fresh queries and reuses one Qwen instance across optional reranking,
+generation and support review. A served API and full-PubMed candidate retrieval
+remain integration work. Broader answer evaluation, independent human checking,
 contradiction/abstention coverage and testing near the full 4000-token evidence
 budget remain necessary before treating this as a final answering system.
