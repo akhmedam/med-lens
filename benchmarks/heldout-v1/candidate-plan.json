@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "version": "heldout-v1",
+  "frozen_on": "2026-11-01",
+  "queries_sha256": "7d1fa94cbf999bca44a139f60a3646e505565244712a6b60291ccae311a7035f",
+  "candidate_limit": 30,
+  "sort": "relevance",
+  "queries": [
+    {
+      "query_id": "h01",
+      "pubmed_query": "major depressive disorder AND interpersonal psychotherapy"
+    },
+    {
+      "query_id": "h02",
+      "pubmed_query": "treatment resistant depression AND electroconvulsive therapy"
+    },
+    {
+      "query_id": "h03",
+      "pubmed_query": "major depression AND repetitive transcranial magnetic stimulation"
+    },
+    {
+      "query_id": "h04",
+      "pubmed_query": "major depression AND antidepressant continuation AND discontinuation AND relapse"
+    },
+    {
+      "query_id": "h05",
+      "pubmed_query": "postpartum depression AND psychotherapy"
+    },
+    {
+      "query_id": "h06",
+      "pubmed_query": "major depressive disorder AND omega 3 supplementation"
+    },
+    {
+      "query_id": "h07",
+      "pubmed_query": "generalized anxiety disorder AND duloxetine AND placebo"
+    },
+    {
+      "query_id": "h08",
+      "pubmed_query": "generalized anxiety disorder AND pregabalin AND placebo"
+    },
+    {
+      "query_id": "h09",
+      "pubmed_query": "illness anxiety disorder AND cognitive behavioral therapy"
+    },
+    {
+      "query_id": "h10",
+      "pubmed_query": "social anxiety disorder AND acceptance commitment therapy"
+    },
+    {
+      "query_id": "h11",
+      "pubmed_query": "generalized anxiety disorder AND applied relaxation"
+    },
+    {
+      "query_id": "h12",
+      "pubmed_query": "adult separation anxiety disorder AND cognitive behavioral therapy"
+    }
+  ]
+}

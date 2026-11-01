@@ -1,0 +1,18 @@
+{
+  "local_report_sha256": "8611f76e7e77ddf2ac03de1a414920f18a4c162c297e5768a1463ffdb9c064a6",
+  "recorded_code_hashes_match": true,
+  "all_repeated_runs_have_consistent_pair_identities": true,
+  "direct_transformers_batch_checks": [
+    {
+      "device": "cpu",
+      "pair_count": 5,
+      "max_abs_difference_from_transformers_batch": 0.0
+    },
+    {
+      "device": "mps",
+      "pair_count": 5,
+      "max_abs_difference_from_transformers_batch": 0.0
+    }
+  ],
+  "scope": "Input padding/segment IDs/raw logit equivalence on five development pairs; no relevance evaluation."
+}
