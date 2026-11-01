@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "started_at": "2026-11-01T01:16:01.633424+00:00",
+  "finished_at": "2026-11-01T01:16:35.791217+00:00",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "artifacts": [
+    {
+      "query_id": "p01",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "window_artifact_id": "0b286fce328b332df9fce353c9c1f66c8f1331b96584194b0145b9d18e108fd6"
+    },
+    {
+      "query_id": "p02",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "window_artifact_id": "cdf0d493cde4b9b5f05aa4de6be6c9c5bd91d42264e67860c71e6890c5ddf557"
+    },
+    {
+      "query_id": "p03",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "window_artifact_id": "27ba50858e1c215eb25125c745036a8f40ccd317c97edc2212c2c4a8fbf6bc5b"
+    },
+    {
+      "query_id": "p04",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "window_artifact_id": "f24a5b13be81baa7d69e0a972470690f87c10a62467f0270efdf3f8466f278bd"
+    },
+    {
+      "query_id": "p05",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "window_artifact_id": "9ff9a3ac31551cdbc649f1b93fca12b0f27ebb0e1edd0e40c8cd7d4cfe66937a"
+    },
+    {
+      "query_id": "p06",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "window_artifact_id": "1dd98e67a1cab005b0d2713f93e9923a5a15323769ac3f426f63b415f0d190b0"
+    },
+    {
+      "query_id": "p07",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "window_artifact_id": "8fb16819a091b34eb15a965d987f283e58f693ec309e9f14b0b0355a4f0b7119"
+    },
+    {
+      "query_id": "p08",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "window_artifact_id": "2b0265320fa9b4cceb74d45a66f94046c1babfc99d2b91cb045ff5c8ca308ce8"
+    },
+    {
+      "query_id": "p09",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "window_artifact_id": "e552c2aec79a71925d0529a353b73bf036514112f1ae8f6dc00b9dff94a92561"
+    },
+    {
+      "query_id": "p10",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "window_artifact_id": "cdfe70608872d6a42e639db61e22eaeb2250f097583e890dcb70abfa574573f9"
+    }
+  ],
+  "tokenizer": {
+    "model_id": "ncbi/MedCPT-Cross-Encoder",
+    "revision": "71caf65d4927987813984f54c284405a13fcca49",
+    "backend_sha256": "fe6708d7e695ff5c8a730ad7bfaabc2eba552b5e425648fa93985fe1c9973cc6",
+    "pair_format": "[CLS] question [SEP] title-newline-excerpt [SEP]",
+    "max_input_tokens": 512,
+    "cls_token_id": 2,
+    "sep_token_id": 3,
+    "truncation": false
+  },
+  "code_sha256": {
+    "scripts/probe_medcpt.py": "42939dcec5c228107c0799da5f049ff1b372b6c1c8bd266170a51cd96842039b",
+    "src/medlens/reranking/medcpt.py": "3ff074ba56f4eebe9c20393429d2f9cd1eac6a7bdeb65457a0594cbfbb6c8a75"
+  },
+  "selection": "length-quantile-sample-ascending-length",
+  "boundary_checks": {
+    "accepted_tokens": 512,
+    "rejected_tokens": 513,
+    "overflow_rejected": true
+  },
+  "process_peak_rss_bytes": 1863434240,
+  "local_report_sha256": "8611f76e7e77ddf2ac03de1a414920f18a4c162c297e5768a1463ffdb9c064a6",
+  "audited_pair_count": 975,
+  "over_budget_count": 0,
+  "original_pair_token_range": [
+    20,
+    485
+  ],
+  "selected_pair_count": 32,
+  "selected_pair_token_range": [
+    20,
+    485
+  ],
+  "repeats": 3,
+  "devices": [
+    {
+      "metadata": {
+        "model_id": "ncbi/MedCPT-Cross-Encoder",
+        "revision": "71caf65d4927987813984f54c284405a13fcca49",
+        "source": {
+          "schema_version": 1,
+          "model_id": "ncbi/MedCPT-Cross-Encoder",
+          "revision": "71caf65d4927987813984f54c284405a13fcca49",
+          "files": {
+            "config.json": "1f375c7e8081f043c99fdb9c80059c44ed757cce7b05d333b7f3c81b1b713a42",
+            "pytorch_model.bin": "61d5ccd48869e03500544525fc231641d7daa9ba267b202c82724750038dc1e0",
+            "tokenizer.json": "6e046044df8a2fcedb10607075dca187cae61d806c0d80a96c5b81017edc90c9",
+            "tokenizer_config.json": "25e63abb25f637aa24981117b13394370693dd7bc140903d95008599b3abc1a9",
+            "added_tokens.json": "691a5ce0135045c12b8410af8d472ff8de864094df40ac9af418d6c644c7588d",
+            "special_tokens_map.json": "cb63d0cbbf45160dc9cd786a257759593b798ae0c72957011016dbc3972df4e4",
+            "vocab.txt": "79489a52be45e6fa033521e8ce8e4f62aedc0a742ee2aa6fc04667e5b0b1454d",
+            "LICENSE": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "README.md": "8ab1ceed3beea346789e0b9cd7e04d6373dcf8b738fb63b996c7d97bb25df2ec"
+          }
+        },
+        "tokenizer": {
+          "model_id": "ncbi/MedCPT-Cross-Encoder",
+          "revision": "71caf65d4927987813984f54c284405a13fcca49",
+          "backend_sha256": "fe6708d7e695ff5c8a730ad7bfaabc2eba552b5e425648fa93985fe1c9973cc6",
+          "pair_format": "[CLS] question [SEP] title-newline-excerpt [SEP]",
+          "max_input_tokens": 512,
+          "cls_token_id": 2,
+          "sep_token_id": 3,
+          "truncation": false
+        },
+        "device": "cpu",
+        "dtype": "float32",
+        "attention": "eager",
+        "default_batch_size": 4,
+        "score": "raw-single-logit-higher-is-more-relevant",
+        "parameter_count": 109483009,
+        "load_seconds": 0.43743020900001284,
+        "torch_threads": 6,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "tokenizers": "0.23.3",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "batch_consistency_atol_1e-4": true,
+      "batches": [
+        {
+          "batch_size": 1,
+          "median_forward_seconds": 1.3966436250011611,
+          "median_score_seconds": 1.404998792000697,
+          "max_abs_difference_from_batch1": 0.0,
+          "sampled_max_mps_tensor_bytes": null,
+          "sampled_max_mps_driver_bytes": null
+        },
+        {
+          "batch_size": 4,
+          "median_forward_seconds": 1.2422386670004926,
+          "median_score_seconds": 1.250624832999165,
+          "max_abs_difference_from_batch1": 1.9073486328125e-06,
+          "sampled_max_mps_tensor_bytes": null,
+          "sampled_max_mps_driver_bytes": null
+        },
+        {
+          "batch_size": 8,
+          "median_forward_seconds": 1.4745573340005649,
+          "median_score_seconds": 1.4828212079992227,
+          "max_abs_difference_from_batch1": 3.814697265625e-06,
+          "sampled_max_mps_tensor_bytes": null,
+          "sampled_max_mps_driver_bytes": null
+        },
+        {
+          "batch_size": 16,
+          "median_forward_seconds": 2.003407166001125,
+          "median_score_seconds": 2.0116991249997227,
+          "max_abs_difference_from_batch1": 8.58306884765625e-06,
+          "sampled_max_mps_tensor_bytes": null,
+          "sampled_max_mps_driver_bytes": null
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "model_id": "ncbi/MedCPT-Cross-Encoder",
+        "revision": "71caf65d4927987813984f54c284405a13fcca49",
+        "source": {
+          "schema_version": 1,
+          "model_id": "ncbi/MedCPT-Cross-Encoder",
+          "revision": "71caf65d4927987813984f54c284405a13fcca49",
+          "files": {
+            "config.json": "1f375c7e8081f043c99fdb9c80059c44ed757cce7b05d333b7f3c81b1b713a42",
+            "pytorch_model.bin": "61d5ccd48869e03500544525fc231641d7daa9ba267b202c82724750038dc1e0",
+            "tokenizer.json": "6e046044df8a2fcedb10607075dca187cae61d806c0d80a96c5b81017edc90c9",
+            "tokenizer_config.json": "25e63abb25f637aa24981117b13394370693dd7bc140903d95008599b3abc1a9",
+            "added_tokens.json": "691a5ce0135045c12b8410af8d472ff8de864094df40ac9af418d6c644c7588d",
+            "special_tokens_map.json": "cb63d0cbbf45160dc9cd786a257759593b798ae0c72957011016dbc3972df4e4",
+            "vocab.txt": "79489a52be45e6fa033521e8ce8e4f62aedc0a742ee2aa6fc04667e5b0b1454d",
+            "LICENSE": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "README.md": "8ab1ceed3beea346789e0b9cd7e04d6373dcf8b738fb63b996c7d97bb25df2ec"
+          }
+        },
+        "tokenizer": {
+          "model_id": "ncbi/MedCPT-Cross-Encoder",
+          "revision": "71caf65d4927987813984f54c284405a13fcca49",
+          "backend_sha256": "fe6708d7e695ff5c8a730ad7bfaabc2eba552b5e425648fa93985fe1c9973cc6",
+          "pair_format": "[CLS] question [SEP] title-newline-excerpt [SEP]",
+          "max_input_tokens": 512,
+          "cls_token_id": 2,
+          "sep_token_id": 3,
+          "truncation": false
+        },
+        "device": "mps",
+        "dtype": "float32",
+        "attention": "eager",
+        "default_batch_size": 4,
+        "score": "raw-single-logit-higher-is-more-relevant",
+        "parameter_count": 109483009,
+        "load_seconds": 0.37680812499820604,
+        "torch_threads": 6,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "tokenizers": "0.23.3",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "batch_consistency_atol_1e-4": true,
+      "comparison_with_first_device": {
+        "reference": "cpu",
+        "max_abs_difference": 2.3365020751953125e-05,
+        "within_atol_1e-3": true
+      },
+      "batches": [
+        {
+          "batch_size": 1,
+          "median_forward_seconds": 0.4721940409981471,
+          "median_score_seconds": 0.4826292920006381,
+          "max_abs_difference_from_batch1": 0.0,
+          "sampled_max_mps_tensor_bytes": 438561280,
+          "sampled_max_mps_driver_bytes": 1084981248
+        },
+        {
+          "batch_size": 4,
+          "median_forward_seconds": 0.39524091700150166,
+          "median_score_seconds": 0.4037339589995099,
+          "max_abs_difference_from_batch1": 1.2278556823730469e-05,
+          "sampled_max_mps_tensor_bytes": 438595840,
+          "sampled_max_mps_driver_bytes": 1094402048
+        },
+        {
+          "batch_size": 8,
+          "median_forward_seconds": 0.4586152089977986,
+          "median_score_seconds": 0.4670790420022968,
+          "max_abs_difference_from_batch1": 1.2278556823730469e-05,
+          "sampled_max_mps_tensor_bytes": 438642688,
+          "sampled_max_mps_driver_bytes": 1094402048
+        },
+        {
+          "batch_size": 16,
+          "median_forward_seconds": 0.661166083002172,
+          "median_score_seconds": 0.6695968749991152,
+          "max_abs_difference_from_batch1": 1.4007091522216797e-05,
+          "sampled_max_mps_tensor_bytes": 438735616,
+          "sampled_max_mps_driver_bytes": 2168143872
+        }
+      ]
+    }
+  ]
+}

@@ -229,6 +229,19 @@ Choose fresh output paths. See the [protocol and pilot results](docs/cited-answe
 This benchmark runner consumes saved contexts. Use `scripts/ask.py` above for
 a fresh search-to-answer request against a local collection.
 
+## MedCPT cross-encoder probe
+
+```sh
+python scripts/probe_medcpt.py --download \
+  --output results/preflight/medcpt-example.json \
+  --summary results/preflight/medcpt-example-summary.json
+```
+
+This pins and checks MedCPT assets, audits full question/document token budgets,
+and measures CPU/MPS batching on pilot source windows. It scores pairs; the two
+article-ranking modes are the next experiment. See the [scorer contract and
+measurements](docs/medcpt.md) and the [frozen held-out protocol](benchmarks/heldout-v1/README.md).
+
 ## Runtime check
 
 ```sh

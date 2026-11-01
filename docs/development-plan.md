@@ -1,7 +1,7 @@
 # Development plan
 
 Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
-Days 1–14 are complete; the next session is Day 15. Day numbers denote working
+Days 1–15 are complete; the next session is Day 16. Day numbers denote working
 sessions, not calendar deadlines. Target: a portfolio v1.0 at Day 28, with two
 to four reserve sessions for generation, PMC and corpus scaling.
 

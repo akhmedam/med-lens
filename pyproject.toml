@@ -10,6 +10,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
+reranking = ["torch==2.14.1", "transformers==5.20.1"]
 embeddings = ["torch==2.14.1", "transformers==5.20.1", "numpy==2.4.6"]
 tokenization = ["transformers==5.20.1"]
 retrieval = ["bm25s==0.3.14", "numpy==2.4.6"]
