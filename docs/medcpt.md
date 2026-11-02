@@ -115,11 +115,11 @@ loading and warm-up. Numerical agreement is checked at absolute tolerance 1e-4
 across batch sizes and 1e-3 between devices; it is not bitwise equality or a claim
 that rankings cannot change for near-tied scores.
 
-## Next experiment
+## Article ranking
 
-Day 16 adds article aggregation and the Dense → MedCPT/direct MedCPT modes. The
-current `ask.py --rerank` still calls Qwen; no MedCPT ranking score or quality
-gain is reported yet. Day 17 evaluates relevance and expands incomplete pools;
+The [article-ranking stage](medcpt-ranking.md) now implements the Dense → MedCPT
+and direct MedCPT modes with maximum-window aggregation. The current
+`ask.py --rerank` still calls Qwen; MedCPT relevance quality is not measured yet. Day 17 evaluates relevance and expands incomplete pools;
 Day 18 measures actual candidate-pool workloads. The runtime batch size can be
 revisited there using development data.
 
