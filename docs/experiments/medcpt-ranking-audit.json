@@ -1,0 +1,40 @@
+{
+  "local_report_sha256": "4528901b817191609d5d3ed0bb57091f0b90f193dfb6cd668e4fb13f727eaded",
+  "code_and_input_identity_verified": true,
+  "ranking_count": 20,
+  "source_pairs_verified": 1325,
+  "best_window_references_verified": 200,
+  "negative_window_scores_preserved": 243,
+  "aggregation_replayed_without_inference": true,
+  "relevance_metrics_evaluated": false,
+  "heldout_used": false,
+  "cli_smoke_requests": [
+    {
+      "case_id": "day16-direct-cli-001",
+      "report_sha256": "6fd0772243b2c87646bc14dd2e9649471dde42af757fecc0c5ee90878a4b78ca",
+      "mode": "medcpt",
+      "request_seconds": 3.3613274580020516,
+      "pair_count": 78,
+      "eligible_count": 30,
+      "dense_selection_present": false
+    },
+    {
+      "case_id": "day16-dense-cli-001",
+      "report_sha256": "2c80b0ac0e7e97f06eacb780f1e8045e106e3398625ba37df04e5b16d9037fbb",
+      "mode": "dense-medcpt",
+      "request_seconds": 2.924477000000479,
+      "pair_count": 31,
+      "eligible_count": 10,
+      "dense_selection_present": true
+    }
+  ],
+  "overflow_cli_check": {
+    "local_report_sha256": "1c4aaf20663c49e8233e0b19ec1a28c18c46388b67fda22dc0ee0144f179f843",
+    "status": "failed",
+    "error_type": "PairBudgetError",
+    "no_partial_ranking": true,
+    "observed_exit_code": 1
+  },
+  "unit_tests_passed": 172,
+  "validated_on": "2026-11-02"
+}

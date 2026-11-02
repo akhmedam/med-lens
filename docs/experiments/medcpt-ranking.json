@@ -1,0 +1,1027 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "run_id": "a1556cc8265bb61b586609133e1bb74579c2138ca273d7696afa869e490431ea",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "device": "mps",
+  "batch_size": 4,
+  "dense_depth": 10,
+  "top_k": 10,
+  "code_sha256": {
+    "scripts/prepare_medcpt_rankings.py": "c71b5c110d2067baed0a9a685b0f0789f61575ee58911d48559ae09fded62f32",
+    "src/medlens/reranking/articles.py": "148ed444288ac1fed5450cccfcf95cc225aca41e959c508e9e3bf44340cee56b",
+    "src/medlens/reranking/medcpt.py": "3ff074ba56f4eebe9c20393429d2f9cd1eac6a7bdeb65457a0594cbfbb6c8a75",
+    "src/medlens/retrieval/dense.py": "d33583bbdd6111419e96471b9e480b13f5dac833c5afda9f72f724f04f0a977e",
+    "src/medlens/retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e"
+  },
+  "started_at": "2026-11-02T05:03:28.329198+00:00",
+  "relevance_metrics_evaluated": false,
+  "heldout_used": false,
+  "bge_load_seconds": 0.32513599999947473,
+  "dense_phase_seconds": 2.4120316250009637,
+  "medcpt_runtime": {
+    "model_id": "ncbi/MedCPT-Cross-Encoder",
+    "revision": "71caf65d4927987813984f54c284405a13fcca49",
+    "source": {
+      "schema_version": 1,
+      "model_id": "ncbi/MedCPT-Cross-Encoder",
+      "revision": "71caf65d4927987813984f54c284405a13fcca49",
+      "files": {
+        "config.json": "1f375c7e8081f043c99fdb9c80059c44ed757cce7b05d333b7f3c81b1b713a42",
+        "pytorch_model.bin": "61d5ccd48869e03500544525fc231641d7daa9ba267b202c82724750038dc1e0",
+        "tokenizer.json": "6e046044df8a2fcedb10607075dca187cae61d806c0d80a96c5b81017edc90c9",
+        "tokenizer_config.json": "25e63abb25f637aa24981117b13394370693dd7bc140903d95008599b3abc1a9",
+        "added_tokens.json": "691a5ce0135045c12b8410af8d472ff8de864094df40ac9af418d6c644c7588d",
+        "special_tokens_map.json": "cb63d0cbbf45160dc9cd786a257759593b798ae0c72957011016dbc3972df4e4",
+        "vocab.txt": "79489a52be45e6fa033521e8ce8e4f62aedc0a742ee2aa6fc04667e5b0b1454d",
+        "LICENSE": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "README.md": "8ab1ceed3beea346789e0b9cd7e04d6373dcf8b738fb63b996c7d97bb25df2ec"
+      }
+    },
+    "tokenizer": {
+      "model_id": "ncbi/MedCPT-Cross-Encoder",
+      "revision": "71caf65d4927987813984f54c284405a13fcca49",
+      "backend_sha256": "fe6708d7e695ff5c8a730ad7bfaabc2eba552b5e425648fa93985fe1c9973cc6",
+      "pair_format": "[CLS] question [SEP] title-newline-excerpt [SEP]",
+      "max_input_tokens": 512,
+      "cls_token_id": 2,
+      "sep_token_id": 3,
+      "truncation": false
+    },
+    "device": "mps",
+    "dtype": "float32",
+    "attention": "eager",
+    "default_batch_size": 4,
+    "score": "raw-single-logit-higher-is-more-relevant",
+    "parameter_count": 109483009,
+    "load_seconds": 0.34132450000106473,
+    "torch_threads": 6,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "tokenizers": "0.23.3",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "input_run_ids": {
+    "dense": [
+      "aac098478ca3cca7e3e63c48fd2928a4aa1e82b86a2f586a6cb19e838a93806d",
+      "d5f42771b5adb10ae9921a410361b8891186e97806a47454788003634c972058",
+      "2aadf50dd0f1b0d4a76432752d563052dc847b0a538478085fdd91b2cde2f634",
+      "0a7380578c0161dc85ab19e8165fc1f2531ed1cdbfee053256c095702e4b2349",
+      "ab4169ca8e8c192632164ac464a5a064eb5d6fd2bf4c520c3bdcd12fd358ced2",
+      "a8894c3e14c7d73684632c55010e580554cee9acb6557aa575f3bb3dd353b9fd",
+      "4d941b1206846864c33e204c5c87affee7d9dd295e4b0f80fe1c499a605e2033",
+      "b8bd8ef03e8b56ccb3bc8d4844d45954f8f1f5a23cae6de0310c87b22e6a84c8",
+      "d5c6958d77b3e903288a4ed9199d7da6073ff3d45f4acbb47cf4d05852497433",
+      "2cd4423b0e62630cdc0982f1b0d66e8c332a859a43f9e8b138096bec34eded0b"
+    ],
+    "medcpt": [
+      {
+        "dense_medcpt": "53dac89d8edbaf5eb6058ce371e8c235ba618a9072fe2532405ff7783e3f9852",
+        "medcpt": "758b85a00d990d9c88ff871a5002b78a3e2b2f6986dcc18eafc1504df80c9bb3"
+      },
+      {
+        "dense_medcpt": "a5adeb5ef8c4194ae77e0fc46a0c72f7a06d6e2d19e2bf7f54d408114c053e30",
+        "medcpt": "e3e1efc8d11e2669a515cca82a8b28b80db8a8d225a6822ced616279071f0349"
+      },
+      {
+        "dense_medcpt": "1ec3dea819e4f1b3dbbb0a27fcb6a669b95e55a7057e991fd52842cca5f26936",
+        "medcpt": "64c698fafcf74187eb53859f51fe8ca6eabc5e4ba25e8b4c800d81c3866bd73b"
+      },
+      {
+        "dense_medcpt": "682951b82807d1fbff837ac1caa86625b33d0bee3539e5c12fcd71753a398925",
+        "medcpt": "615828c15d9850a8fdd3859d2c92d48a28ec6f0bd4c4acde9bd546a438d710c5"
+      },
+      {
+        "dense_medcpt": "dc570efbc87faa22657838119b917db2817c7e9eda0f8674d89d72906d54a490",
+        "medcpt": "ceea672f11649c797c70f5ec6c1c7c6d821d916036cd2ba9e17f6897ceb40f92"
+      },
+      {
+        "dense_medcpt": "766d2ff6561cd5a241d7556eb27949b36dfd19d38a4e9e352e280fd8a368b278",
+        "medcpt": "876662c6f2809c9ae740edc4b5e5837983ed952cde409158e62bca050c4e40b7"
+      },
+      {
+        "dense_medcpt": "4e555a22b5ac96ca44a1bfb0114b39a0a94e00ffc0796e469cd00d7da53d4d1f",
+        "medcpt": "20e0a4bfd5001938945a10c887d4d99a4c8b54642d5d09053ad94ae2811436c4"
+      },
+      {
+        "dense_medcpt": "4cfd7f5e7043a7011801d6932c98f90010451c31d27eaa334ea47ba10bf0109d",
+        "medcpt": "ebfd64643e5b2e59b3e4268df183c945e6d9742a1c97d21540d9cbbda1f0e5d5"
+      },
+      {
+        "dense_medcpt": "bcd6bff133ced6fe5ef51388797ed7ba033fc281c720a31175d76030d4ecc96b",
+        "medcpt": "121a28461dcca4c05d95693b6c75a76e0b956a1bdd278edd46428bbdca1fab6b"
+      },
+      {
+        "dense_medcpt": "d670a07da3d1d9f4e186522b3754a80590eca9fc9e44b2fc061fa128dbaee52f",
+        "medcpt": "4cc9c8a6901ceb78559057a023fcd5aa18658a1f5ecc9f7802704935ba29327a"
+      }
+    ]
+  },
+  "finished_at": "2026-11-02T05:03:52.016024+00:00",
+  "process_peak_rss_bytes": 1165967360,
+  "local_report_sha256": "4528901b817191609d5d3ed0bb57091f0b90f193dfb6cd668e4fb13f727eaded",
+  "per_query": [
+    {
+      "query_id": "p01",
+      "dataset_id": "1a5aebb22d4b34c4381300149486fca883dbb635c45146fd1ab97b4aab012cdd",
+      "window_artifact_id": "0b286fce328b332df9fce353c9c1f66c8f1331b96584194b0145b9d18e108fd6",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "16881773",
+        "20635774",
+        "24140226",
+        "17003660",
+        "28199710",
+        "26646303",
+        "17936366",
+        "15328551",
+        "30714202",
+        "29080596"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 6.67572021484375e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "53dac89d8edbaf5eb6058ce371e8c235ba618a9072fe2532405ff7783e3f9852",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 31,
+          "pairs_sha256": "843ca13d693ba8566a67b71abce0e7263d51fbcf407ccb5545880bd939fc6821",
+          "ranking_seconds": 0.3790344580011151,
+          "score_seconds": 0.37869558300008066,
+          "ranked_pmids": [
+            "16881773",
+            "20635774",
+            "24140226",
+            "26646303",
+            "17003660",
+            "29080596",
+            "15328551",
+            "28199710",
+            "30714202",
+            "17936366"
+          ],
+          "best_window_ids": [
+            "de9f2971b272707aa1669823e79131503c2fbae3855261b5b97424142a2edf3a",
+            "35f55d69a2cf98c71e77590b8aa9ccca57ddac9741e0be052647591e9566749b",
+            "ce153fd7b32cc5d9330c3a93cfa9171a0f1c0cfa0fd2a4234a11f9a55d5ccaec",
+            "9c23a0026b35e27bda97427e23826039c0bd25477e20fb537536f751aeac573a",
+            "f36b4c8782bcbecf563b5bca772aebb51f2a9cf03cfbe46b1a55f265b1330be7",
+            "ba04c2eb615473a7f33ffcdbf559fa917b4b27d80970cd85c747ff0886bd72df",
+            "ec90fa05cee8624615f9a76ae8fb552b8474b60ada61d0244d1f7b3b9d879129",
+            "64f1ee3deb4d230f2b1d8f3b0b754c3ee11172dab11d350e1cf63081d20d0633",
+            "2aedfe05387c2402be4ecaf153bf6fa2ca4c21c0150239023170624dfb816d9f",
+            "e1244f24edae60a7e317558d7d96db5eedb4140fe6005eca98a486103dd3f5b6"
+          ]
+        },
+        "medcpt": {
+          "run_id": "758b85a00d990d9c88ff871a5002b78a3e2b2f6986dcc18eafc1504df80c9bb3",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 78,
+          "pairs_sha256": "31e63e91fcca2b0ef071ea23654ad29d74f16ab08ac9fe7eefb51a4cd384b701",
+          "ranking_seconds": 1.2149756250000792,
+          "score_seconds": 1.2145842499994615,
+          "ranked_pmids": [
+            "16881773",
+            "20635774",
+            "24140226",
+            "26646303",
+            "17003660",
+            "12727682",
+            "8473580",
+            "29080596",
+            "11719914",
+            "27461440"
+          ],
+          "best_window_ids": [
+            "de9f2971b272707aa1669823e79131503c2fbae3855261b5b97424142a2edf3a",
+            "35f55d69a2cf98c71e77590b8aa9ccca57ddac9741e0be052647591e9566749b",
+            "ce153fd7b32cc5d9330c3a93cfa9171a0f1c0cfa0fd2a4234a11f9a55d5ccaec",
+            "9c23a0026b35e27bda97427e23826039c0bd25477e20fb537536f751aeac573a",
+            "f36b4c8782bcbecf563b5bca772aebb51f2a9cf03cfbe46b1a55f265b1330be7",
+            "a02b67d1b3d6e6ff5f1b01fd82ef56b9e17b77e64bb044c1ef62a6a704b5b1a6",
+            "37a7de75c30ff293d0980820a34c953284e44ed1ad154f925871ec52cad498fb",
+            "ba04c2eb615473a7f33ffcdbf559fa917b4b27d80970cd85c747ff0886bd72df",
+            "7feb7b988638ddc9bed3ed0b6e06ca920dabea372c3ccaec37136a79c42b7a6c",
+            "360b56f0eee476c6c1c590fef196bf95aaea8fa96037f04a0ef95524a3b4b4ab"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p02",
+      "dataset_id": "8a831f08ff662d0ccdd2f65be58b950f08e13da284898931c426b05951bd8fb5",
+      "window_artifact_id": "cdf0d493cde4b9b5f05aa4de6be6c9c5bd91d42264e67860c71e6890c5ddf557",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "33973857",
+        "39582126",
+        "31727306",
+        "33471111",
+        "33957075",
+        "35388776",
+        "33688840",
+        "27769266",
+        "35172706",
+        "38173167"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 1.33514404296875e-05,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "a5adeb5ef8c4194ae77e0fc46a0c72f7a06d6e2d19e2bf7f54d408114c053e30",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 51,
+          "pairs_sha256": "02c98246c402e45dab415c1ccf57f6d34492e442c5abfed3b3e6f825b69ccacb",
+          "ranking_seconds": 0.7141174159987713,
+          "score_seconds": 0.7137010410006042,
+          "ranked_pmids": [
+            "38173167",
+            "33471111",
+            "27769266",
+            "33973857",
+            "35388776",
+            "39582126",
+            "33957075",
+            "35172706",
+            "31727306",
+            "33688840"
+          ],
+          "best_window_ids": [
+            "c8b2a8d2167d451b787a488d8a8ce10f3819b0338553b01dffac3f9e0ac8bbd9",
+            "0aa0b2a2eb1acd7c866064783fce743e5946dc3f737e388a06d16dc9b33766c9",
+            "6f95dda74e62b3f5e52f89694610f8d3fb32f414a49f0c2835ba900dd028e6a9",
+            "216b698a4321528d5a188050361a297db3ff5907a6c9d530cef24b6533fc0fd6",
+            "f163770fb0d4cb465e76c6f8fdbe2cdba2079e5141734dcd9b4f5bd117fd000a",
+            "4840217a95707a15d51f2f98b590a33a3570289ada92b3391daba20da9b63d6a",
+            "94ec46802aca90c9b4b352e8e13172789dd5d97430496f1dc2d9a6ad38e88c1e",
+            "66d5f891eb2e1d40ab3b30f356e206fb6726e110f7ae80b177fe6b53d7ff1b62",
+            "7877834dea72e0f3f7c397ca13e8e38e30b00ba19fbffc6ca2419198d01c3d70",
+            "08b34d344db003c078da8ad5422d6d06bc546cdc73f62770411450bd3737da65"
+          ]
+        },
+        "medcpt": {
+          "run_id": "e3e1efc8d11e2669a515cca82a8b28b80db8a8d225a6822ced616279071f0349",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 123,
+          "pairs_sha256": "35b07f9eefaf9d03ee24a92ebd9d9b214139bf0d181cbda851de1678bd70ac71",
+          "ranking_seconds": 1.8893047500023386,
+          "score_seconds": 1.8887402079999447,
+          "ranked_pmids": [
+            "28475503",
+            "27712544",
+            "38173167",
+            "33471111",
+            "27769266",
+            "37227760",
+            "33973857",
+            "35388776",
+            "39582126",
+            "33957075"
+          ],
+          "best_window_ids": [
+            "4e0f02fc6c9456fd23812ac6cdcf9e5798202bc17f09776e3884c8473fc0bfa7",
+            "ad7a2716d18f0f6e6b6cd466dc8f1982180227776d7c418f163239970ae50a4f",
+            "c8b2a8d2167d451b787a488d8a8ce10f3819b0338553b01dffac3f9e0ac8bbd9",
+            "0aa0b2a2eb1acd7c866064783fce743e5946dc3f737e388a06d16dc9b33766c9",
+            "6f95dda74e62b3f5e52f89694610f8d3fb32f414a49f0c2835ba900dd028e6a9",
+            "7f618e6687e1dfff1862928e2975c02c4bde5409619e190b073c61e6a43914dd",
+            "216b698a4321528d5a188050361a297db3ff5907a6c9d530cef24b6533fc0fd6",
+            "f163770fb0d4cb465e76c6f8fdbe2cdba2079e5141734dcd9b4f5bd117fd000a",
+            "4840217a95707a15d51f2f98b590a33a3570289ada92b3391daba20da9b63d6a",
+            "94ec46802aca90c9b4b352e8e13172789dd5d97430496f1dc2d9a6ad38e88c1e"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p03",
+      "dataset_id": "c88aa6a5b3003d1ed1dce91e470e0f75e6cbcf47615e53d3cd437117e8976bf8",
+      "window_artifact_id": "27ba50858e1c215eb25125c745036a8f40ccd317c97edc2212c2c4a8fbf6bc5b",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "32838817",
+        "36731907",
+        "31389872",
+        "40432290",
+        "38355154",
+        "41500513",
+        "39042248",
+        "21495519",
+        "27253219",
+        "34264835"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 1.049041748046875e-05,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "1ec3dea819e4f1b3dbbb0a27fcb6a669b95e55a7057e991fd52842cca5f26936",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 44,
+          "pairs_sha256": "dd366efa92cb786cb9331adc36839da316e77945a8eedbbb28da1703a49d30c4",
+          "ranking_seconds": 0.641937209002208,
+          "score_seconds": 0.641567540998949,
+          "ranked_pmids": [
+            "36731907",
+            "40432290",
+            "41500513",
+            "31389872",
+            "34264835",
+            "38355154",
+            "27253219",
+            "21495519",
+            "39042248",
+            "32838817"
+          ],
+          "best_window_ids": [
+            "ccb04ef280dae83f73da470692701b849800710f227be1e98409174e7bf1dac0",
+            "eafa7fde3bd9abff7e3a9a66a21700982758dc4c3256cbbc30cce5654007290a",
+            "56870248f9719b2fa762583ad784db4f651b5d45e7f9b2fae8d737a086ceaae3",
+            "a72cce2c4a48a180375db54eed4c23b210bb20600830acc359b4db6d85191bf4",
+            "a167f16f02d379cb19195320cfbef9b61b6639bff36323de6474e0e288ae8221",
+            "6391154cf7b5a03822f95ddf09e64776c225a37a883ba5cfb13b5425cc42fff4",
+            "403feab0c2f0b9cbfe45d0b5e1f4250249d93c8abfa57108ba4691424815e186",
+            "bc36338c6a09cc0f1aec33b5e49a6b130bb2d77377f104b5b64d4a63c9523136",
+            "5e75ab413dcccb2db18aa0d78f7035cf57b0be9cb370229889bebd6469d5e6f0",
+            "54be687c6543565c61b9fc5e6be795186be77ddc22f291cf4f24324e0c887be8"
+          ]
+        },
+        "medcpt": {
+          "run_id": "64c698fafcf74187eb53859f51fe8ca6eabc5e4ba25e8b4c800d81c3866bd73b",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 107,
+          "pairs_sha256": "3a7eb8548b763dc4a4d7c49a299b2ae07627065ff9e470d6d7b487c8d755f042",
+          "ranking_seconds": 1.7400370409995958,
+          "score_seconds": 1.7396227499993984,
+          "ranked_pmids": [
+            "36731907",
+            "40432290",
+            "41500513",
+            "31389872",
+            "34264835",
+            "15626549",
+            "38355154",
+            "31586447",
+            "27253219",
+            "21495519"
+          ],
+          "best_window_ids": [
+            "ccb04ef280dae83f73da470692701b849800710f227be1e98409174e7bf1dac0",
+            "eafa7fde3bd9abff7e3a9a66a21700982758dc4c3256cbbc30cce5654007290a",
+            "56870248f9719b2fa762583ad784db4f651b5d45e7f9b2fae8d737a086ceaae3",
+            "a72cce2c4a48a180375db54eed4c23b210bb20600830acc359b4db6d85191bf4",
+            "a167f16f02d379cb19195320cfbef9b61b6639bff36323de6474e0e288ae8221",
+            "f931bb7d03a297eb2cc0a79defa00b92ed1bf6ac9af5fd63d16a3d7d39417a77",
+            "6391154cf7b5a03822f95ddf09e64776c225a37a883ba5cfb13b5425cc42fff4",
+            "3918b2e54f2717cf01e02537c0d4c20dfd3b13c7aa15f914f756e370e9edfe84",
+            "403feab0c2f0b9cbfe45d0b5e1f4250249d93c8abfa57108ba4691424815e186",
+            "bc36338c6a09cc0f1aec33b5e49a6b130bb2d77377f104b5b64d4a63c9523136"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p04",
+      "dataset_id": "9c8613dc00db5d0d1397e4e54ccb4fc2b15f23a5e8c53adba6e708a62d78cf6e",
+      "window_artifact_id": "f24a5b13be81baa7d69e0a972470690f87c10a62467f0270efdf3f8466f278bd",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "27119968",
+        "10965637",
+        "39418459",
+        "36698442",
+        "24294837",
+        "19045965",
+        "24595511",
+        "26575299",
+        "32075835",
+        "39512158"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 4.76837158203125e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "682951b82807d1fbff837ac1caa86625b33d0bee3539e5c12fcd71753a398925",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 40,
+          "pairs_sha256": "7056e07d9fbccf73cdfb4fa105671cb6d10b3aa9da4e32df7bae0323dabdc88d",
+          "ranking_seconds": 0.5600037080002949,
+          "score_seconds": 0.559545000000071,
+          "ranked_pmids": [
+            "27119968",
+            "10965637",
+            "19045965",
+            "24294837",
+            "24595511",
+            "36698442",
+            "39512158",
+            "39418459",
+            "26575299",
+            "32075835"
+          ],
+          "best_window_ids": [
+            "c414580031889a5152dc4ad2481d06e3769b1fbd85bf1e43e942a993bdf5feed",
+            "4f919da3692d9b21bc5f89d33cc4c49746a2d5ed3f784f2ca0031e0a9d7e1c09",
+            "96a5cfc706df406ab2c7bd3abfe7bbc4a377b795895a419f07378caa8870b3f8",
+            "913a7c42feba7ec4e1cf8c8705f9508c397140aa7d63e59e5a0d5bd2c203a7f8",
+            "aba91be1082fd6c2e1c3a36cb96ef7b2fbcd11da7662e55819d0f7309444de7e",
+            "1ccb75e17d6f3415789682b9603d2c8ab6b68b09e7a9da3c7c28dba95ee77cac",
+            "bd64c4d264ce0f4f2d616593d6a190d41a367c5cf438b6fd0c6ec0705d7b8ee1",
+            "c348fc901b5321b56ef0b89fd329bbf77f85dc7ab7317a56f1ef0d333954a6f2",
+            "caf2ba6799b8f5d25a06274589491ad0842c02d7cdb5b7078d60e84d610807a0",
+            "7a28cf12987dfe9bef0447c597d324a4214dea76720dfd905980e353ffa91cee"
+          ]
+        },
+        "medcpt": {
+          "run_id": "615828c15d9850a8fdd3859d2c92d48a28ec6f0bd4c4acde9bd546a438d710c5",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 160,
+          "pairs_sha256": "749fe5ad7e9966da1be8f621b0b5ec10502b342de4ad4aa2037f3f13a84c7c65",
+          "ranking_seconds": 3.1438072499986447,
+          "score_seconds": 3.1431202919993666,
+          "ranked_pmids": [
+            "27119968",
+            "10965637",
+            "19045965",
+            "24294837",
+            "24595511",
+            "36698442",
+            "39512158",
+            "22340145",
+            "39418459",
+            "31352908"
+          ],
+          "best_window_ids": [
+            "c414580031889a5152dc4ad2481d06e3769b1fbd85bf1e43e942a993bdf5feed",
+            "4f919da3692d9b21bc5f89d33cc4c49746a2d5ed3f784f2ca0031e0a9d7e1c09",
+            "96a5cfc706df406ab2c7bd3abfe7bbc4a377b795895a419f07378caa8870b3f8",
+            "913a7c42feba7ec4e1cf8c8705f9508c397140aa7d63e59e5a0d5bd2c203a7f8",
+            "aba91be1082fd6c2e1c3a36cb96ef7b2fbcd11da7662e55819d0f7309444de7e",
+            "1ccb75e17d6f3415789682b9603d2c8ab6b68b09e7a9da3c7c28dba95ee77cac",
+            "bd64c4d264ce0f4f2d616593d6a190d41a367c5cf438b6fd0c6ec0705d7b8ee1",
+            "735f00cc67e28677605f4d375430412d321ee391f2334cbabc1b15b8028b22c3",
+            "c348fc901b5321b56ef0b89fd329bbf77f85dc7ab7317a56f1ef0d333954a6f2",
+            "fc2f10bab486e3e4d8e7f68622df01200967cca7666d23d6ae0716ae440ff6b2"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p05",
+      "dataset_id": "9b2e365a8e9711fac5a8c46716a6f8d7d49f0074093be9ca84be01895a0e5aa2",
+      "window_artifact_id": "9ff9a3ac31551cdbc649f1b93fca12b0f27ebb0e1edd0e40c8cd7d4cfe66937a",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "30658278",
+        "10087688",
+        "18049290",
+        "36632826",
+        "21440850",
+        "16952769",
+        "38724122",
+        "17003660",
+        "29080592",
+        "27989281"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 9.5367431640625e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "dc570efbc87faa22657838119b917db2817c7e9eda0f8674d89d72906d54a490",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 31,
+          "pairs_sha256": "405d412df2eae769e4c9388c8687beca2ba9de8862088676dd9f2fc13cdf167d",
+          "ranking_seconds": 0.3175654580008995,
+          "score_seconds": 0.3172714590000396,
+          "ranked_pmids": [
+            "30658278",
+            "21440850",
+            "36632826",
+            "18049290",
+            "16952769",
+            "10087688",
+            "27989281",
+            "17003660",
+            "29080592",
+            "38724122"
+          ],
+          "best_window_ids": [
+            "5320ac639c29cefe163429e6a7ac303b917cbd61c5f2674335a0efa6227c900f",
+            "928198098835bc83752df14e712fe8341ddfb64f829a96104d4a3b9b773cebdf",
+            "8335b2c3ae65fd96767739de71015579a4277652e5a827234dba854e9c9f217a",
+            "d783ca359de1f4d180649ea631ae09f1727ab5537bc0b9b9bff8e4fa30c96446",
+            "1b25a8bbcb9077873f23d92751f9997cd0cf68a72454f2c0b5813e39758d29f6",
+            "655451adf7b5af6dd0487074efb6fad0ee0fdea5f598f12cfed6664ef277c2d8",
+            "f2550f5db3f3ca39b5998b71dfb44998b6229e15976bac7a285ac5d5ae53898f",
+            "e340bd6e0a9958a19f017c9d6b415cbf94119c06ce10b62d1773bb063f8c0b3d",
+            "5b6d837ee76fec6f36eee1535e94e2036e4abfa9ecdaf84791561b5c467572a6",
+            "43838c09bbee6be258ad369e36c4b5fb60f1d20b09a1322fb191d6c1b40d2343"
+          ]
+        },
+        "medcpt": {
+          "run_id": "ceea672f11649c797c70f5ec6c1c7c6d821d916036cd2ba9e17f6897ceb40f92",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 85,
+          "pairs_sha256": "759a322a4c01ded09b6be26bfdfc08183d431fb16667e4dde8275662170208bf",
+          "ranking_seconds": 1.124481458999071,
+          "score_seconds": 1.1240886249979667,
+          "ranked_pmids": [
+            "30658278",
+            "41981795",
+            "21440850",
+            "36632826",
+            "18049290",
+            "32130308",
+            "16952769",
+            "10087688",
+            "27989281",
+            "17003660"
+          ],
+          "best_window_ids": [
+            "5320ac639c29cefe163429e6a7ac303b917cbd61c5f2674335a0efa6227c900f",
+            "b87580840c54855444e98f251dfb03bd3c1f3fe0d5875cc7ecf9de0eccf7a3bb",
+            "928198098835bc83752df14e712fe8341ddfb64f829a96104d4a3b9b773cebdf",
+            "8335b2c3ae65fd96767739de71015579a4277652e5a827234dba854e9c9f217a",
+            "d783ca359de1f4d180649ea631ae09f1727ab5537bc0b9b9bff8e4fa30c96446",
+            "f566c917e35349273de67a9b814af0af0cdb6979fb9d077a99c977a351dde99b",
+            "1b25a8bbcb9077873f23d92751f9997cd0cf68a72454f2c0b5813e39758d29f6",
+            "655451adf7b5af6dd0487074efb6fad0ee0fdea5f598f12cfed6664ef277c2d8",
+            "f2550f5db3f3ca39b5998b71dfb44998b6229e15976bac7a285ac5d5ae53898f",
+            "e340bd6e0a9958a19f017c9d6b415cbf94119c06ce10b62d1773bb063f8c0b3d"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p06",
+      "dataset_id": "0608cfd7c313f55cb5a2c6380679120b298ca5622c3d5853a9f223514ea06bd5",
+      "window_artifact_id": "1dd98e67a1cab005b0d2713f93e9923a5a15323769ac3f426f63b415f0d190b0",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "27687212",
+        "32725848",
+        "31004521",
+        "36107159",
+        "28867944",
+        "24487344",
+        "41396602",
+        "35403706",
+        "31758858",
+        "26487814"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 3.814697265625e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "766d2ff6561cd5a241d7556eb27949b36dfd19d38a4e9e352e280fd8a368b278",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 38,
+          "pairs_sha256": "1c2c534362a7b985c5f0aecd1c17e87d40ab4d61bb45cf43ed18fa78fff34a30",
+          "ranking_seconds": 0.5337000420004188,
+          "score_seconds": 0.533352875001583,
+          "ranked_pmids": [
+            "36107159",
+            "31758858",
+            "27687212",
+            "32725848",
+            "31004521",
+            "26487814",
+            "28867944",
+            "41396602",
+            "35403706",
+            "24487344"
+          ],
+          "best_window_ids": [
+            "f1930e80af9b490b590a887d1ac0a99d2ef6b89153d8e18956a65c6154a36dd9",
+            "96b5fdfff3c6d041b552c4a16c9d3584207c852a5853729c9c7146fe4ec70d7c",
+            "94ed376c8e08c9a081247207346853333ece6f8a49033c939168e1cd511013c1",
+            "69de7e6e6208c58912016fb68879b5687a0305daeeebe4fb9ceddefc7ea84a5f",
+            "40a31bd1428435175b5c0d90393fc331ed96be75493711ee517943d3e27268b3",
+            "a23d4e8b4d2ff19cd06b60266bb5455b776679663a3692fe8b2d39c40d9fec2b",
+            "a31e0c03e929ad4e51542e15d7bd5c8f64b6ed9a256da1e42e0703b261f49e97",
+            "a1f5e04a755c6fd361f9fc92eb71cc852fce2c095513a7ae46aa273bcdbb8b67",
+            "74d0c597f0e192bc55bd1392a592519239dbc43fa18daa9d339973ab56aa3927",
+            "4934b71bb508f844ec47fa81be9c8d3e3dfc81aac77efe8628ecab227400a29f"
+          ]
+        },
+        "medcpt": {
+          "run_id": "876662c6f2809c9ae740edc4b5e5837983ed952cde409158e62bca050c4e40b7",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 85,
+          "pairs_sha256": "f828f3cc4341728dd11891375b778c3d8951d9ab8169644e2c61226e5576c5fc",
+          "ranking_seconds": 1.3052979169988248,
+          "score_seconds": 1.304902415999095,
+          "ranked_pmids": [
+            "36107159",
+            "31758858",
+            "27687212",
+            "32725848",
+            "31004521",
+            "26487814",
+            "28867944",
+            "41396602",
+            "29451967",
+            "40506439"
+          ],
+          "best_window_ids": [
+            "f1930e80af9b490b590a887d1ac0a99d2ef6b89153d8e18956a65c6154a36dd9",
+            "96b5fdfff3c6d041b552c4a16c9d3584207c852a5853729c9c7146fe4ec70d7c",
+            "94ed376c8e08c9a081247207346853333ece6f8a49033c939168e1cd511013c1",
+            "69de7e6e6208c58912016fb68879b5687a0305daeeebe4fb9ceddefc7ea84a5f",
+            "40a31bd1428435175b5c0d90393fc331ed96be75493711ee517943d3e27268b3",
+            "a23d4e8b4d2ff19cd06b60266bb5455b776679663a3692fe8b2d39c40d9fec2b",
+            "a31e0c03e929ad4e51542e15d7bd5c8f64b6ed9a256da1e42e0703b261f49e97",
+            "a1f5e04a755c6fd361f9fc92eb71cc852fce2c095513a7ae46aa273bcdbb8b67",
+            "75ac6f1406ae1ac5fbc56bc64ef0c253e980d2f6761cb589e02de47b9e24ec66",
+            "42030cb726545b98b973b252dadc655f7352d9e91cd9080d51df028ba41635c1"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p07",
+      "dataset_id": "7ecefb067e6e70017534267f5e2229b5f629130ee4ba93cb060a08d021a355b7",
+      "window_artifact_id": "8fb16819a091b34eb15a965d987f283e58f693ec309e9f14b0b0355a4f0b7119",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "30056792",
+        "39880377",
+        "32857933",
+        "38523533",
+        "35246699",
+        "39505448",
+        "35977134",
+        "36480651",
+        "28859190",
+        "25955736"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 7.62939453125e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "4e555a22b5ac96ca44a1bfb0114b39a0a94e00ffc0796e469cd00d7da53d4d1f",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 37,
+          "pairs_sha256": "bccbaa7a56f85a413a7a1c7880a35244315c39d153608e357b231cc5502fac73",
+          "ranking_seconds": 0.5959144590015057,
+          "score_seconds": 0.5956168750017241,
+          "ranked_pmids": [
+            "25955736",
+            "39505448",
+            "35977134",
+            "39880377",
+            "38523533",
+            "30056792",
+            "36480651",
+            "32857933",
+            "35246699",
+            "28859190"
+          ],
+          "best_window_ids": [
+            "ddd291642dea2dece0b2dcef06c4a12144d2a8ef9e0efddd0c2ba0492e44b782",
+            "babd4a77742ef3d5701405b74702e85ef5ad4ccec414c3424b2c142bf86908dc",
+            "81bfbf9340c71f70a5c89cc580ca4a6cddc5ea8b3f0c43649bd70caf6a17581b",
+            "80b7800748118fc8917c489969d9a14f8a66bb5b21722fc4286a82236b8cc99d",
+            "c2cedee6d701c40d4d2749ebbf92885ad978f8d869fc60ae6e66880ff6b8319c",
+            "3b20103b68805ed767ef86a7ecdf1ef36b7279e17a11000b1abe7b26a040692c",
+            "8a2bf469a17175a889e225cc10c6927073513ece7fbc081a6534537850e7655e",
+            "4121d3194949335bf25916dde285cb5bd5bf6e41863c3ba4318a6dd31c3129eb",
+            "711583c2374d48ffcc366d92278b48de5a2fff401cb8fafbe426c9d52f79b6de",
+            "0c9e04cb1ca73c9f5d3ec06f99694e3ed4a2dd2a9bb3a669ad9836545b24492b"
+          ]
+        },
+        "medcpt": {
+          "run_id": "20e0a4bfd5001938945a10c887d4d99a4c8b54642d5d09053ad94ae2811436c4",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 90,
+          "pairs_sha256": "612e46a88b82795773bdc45f44c5fa034cb8ca5ac9230d72778576cceec66170",
+          "ranking_seconds": 1.4699658330027887,
+          "score_seconds": 1.4695635419993778,
+          "ranked_pmids": [
+            "25955736",
+            "39505448",
+            "35977134",
+            "39880377",
+            "28867934",
+            "38523533",
+            "30934083",
+            "36573969",
+            "30056792",
+            "36480651"
+          ],
+          "best_window_ids": [
+            "ddd291642dea2dece0b2dcef06c4a12144d2a8ef9e0efddd0c2ba0492e44b782",
+            "babd4a77742ef3d5701405b74702e85ef5ad4ccec414c3424b2c142bf86908dc",
+            "81bfbf9340c71f70a5c89cc580ca4a6cddc5ea8b3f0c43649bd70caf6a17581b",
+            "80b7800748118fc8917c489969d9a14f8a66bb5b21722fc4286a82236b8cc99d",
+            "eddc413fe878d3fad1d4bf4baaffca0810daf4916d1e70b4a7cf0108f0b9ace2",
+            "c2cedee6d701c40d4d2749ebbf92885ad978f8d869fc60ae6e66880ff6b8319c",
+            "70596e3e1ea46df69f79d34377faea504eb07b0c56a89aa406a3ea224cd760b7",
+            "ba368451fded353e0d60af4117e818e6520c2e1ecd7be5d5b6c998abea79e565",
+            "3b20103b68805ed767ef86a7ecdf1ef36b7279e17a11000b1abe7b26a040692c",
+            "8a2bf469a17175a889e225cc10c6927073513ece7fbc081a6534537850e7655e"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p08",
+      "dataset_id": "cf6f069b4d1d63e236a69232cce309c547e1f21272b5fbbdd47a5a73e23afbad",
+      "window_artifact_id": "2b0265320fa9b4cceb74d45a66f94046c1babfc99d2b91cb045ff5c8ca308ce8",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "9167504",
+        "22440065",
+        "32544125",
+        "9536473",
+        "33774558",
+        "26487814",
+        "9872706",
+        "29368665",
+        "28493541",
+        "8476402"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 3.814697265625e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "4cfd7f5e7043a7011801d6932c98f90010451c31d27eaa334ea47ba10bf0109d",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 17,
+          "pairs_sha256": "023130ee60807202e987a0f66436e1f1fa81e4e9cdf3232f538085d0abe8d442",
+          "ranking_seconds": 0.2957142910017865,
+          "score_seconds": 0.2954342499979248,
+          "ranked_pmids": [
+            "33774558",
+            "9167504",
+            "28493541",
+            "9872706",
+            "32544125",
+            "9536473",
+            "26487814",
+            "22440065",
+            "8476402",
+            "29368665"
+          ],
+          "best_window_ids": [
+            "d2b1f5e6a61aabc8ebd9cd0caebf29f20b69505fadf7e2cf20574db04db4093d",
+            "778b26bfc1836c3484f8cccf97c5aeb32e746c8485419d3ad5fd355313d3dd70",
+            "219e560a619b3fa42486116b71820e2d26bb45b4f46318972519f451e6d2e9ae",
+            "1d4c0c0fdc7b07164d548f1829db74047e86b8475ca767833575175e970f4d80",
+            "14a29d2bf63c2e1fde9bf84c06d8fd84bb0c6a65d06fca7becd49ac6e22e6cdc",
+            "9d61d28db72368aab903e8c8d8a749e9b79470ad152c19b54e3eb19ed23f51b3",
+            "fc037c38cca5088e8d182dc68682419bcb91cadfb6c4a2f2728c592cbcf1545f",
+            "99b1dee1f90cc4d52511aec0fb2ce18ef215882bc5ca104dd7e4bd4c4ddc8387",
+            "2c987e2375c19f71a359785aa3bc923edfd2bad98c4d74307b9fa8723e568ae5",
+            "cee2f1914ef18979c6712d3529878901bee7815f6c23b01fb6f9413584f65a4c"
+          ]
+        },
+        "medcpt": {
+          "run_id": "ebfd64643e5b2e59b3e4268df183c945e6d9742a1c97d21540d9cbbda1f0e5d5",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 70,
+          "pairs_sha256": "fabccede731e1d2e44560462add6e5e516b0a8e50cb1caa20bcd69172d76c47d",
+          "ranking_seconds": 1.2297526250004012,
+          "score_seconds": 1.229177791003167,
+          "ranked_pmids": [
+            "33774558",
+            "9167504",
+            "28493541",
+            "30597535",
+            "9872706",
+            "32544125",
+            "9536473",
+            "26487814",
+            "22440065",
+            "32257825"
+          ],
+          "best_window_ids": [
+            "d2b1f5e6a61aabc8ebd9cd0caebf29f20b69505fadf7e2cf20574db04db4093d",
+            "778b26bfc1836c3484f8cccf97c5aeb32e746c8485419d3ad5fd355313d3dd70",
+            "219e560a619b3fa42486116b71820e2d26bb45b4f46318972519f451e6d2e9ae",
+            "00148d579b051329c56cae6a4d384bf4458ea214ac3bc743aa1e165c9a631143",
+            "1d4c0c0fdc7b07164d548f1829db74047e86b8475ca767833575175e970f4d80",
+            "14a29d2bf63c2e1fde9bf84c06d8fd84bb0c6a65d06fca7becd49ac6e22e6cdc",
+            "9d61d28db72368aab903e8c8d8a749e9b79470ad152c19b54e3eb19ed23f51b3",
+            "fc037c38cca5088e8d182dc68682419bcb91cadfb6c4a2f2728c592cbcf1545f",
+            "99b1dee1f90cc4d52511aec0fb2ce18ef215882bc5ca104dd7e4bd4c4ddc8387",
+            "fad70e6f7d4e170076b1ef94a241c8d250a6f13cebdb008d6dc5ca1149962317"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p09",
+      "dataset_id": "1cb72e6175fa9a170305b5f130922f39cda33a4ebc1521499331c17c0e27e0e0",
+      "window_artifact_id": "e552c2aec79a71925d0529a353b73bf036514112f1ae8f6dc00b9dff94a92561",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "33622514",
+        "36367388",
+        "37256597",
+        "36265270",
+        "40023260",
+        "29654442",
+        "39303446",
+        "26487814",
+        "36940221",
+        "38714138"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 1.9073486328125e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "bcd6bff133ced6fe5ef51388797ed7ba033fc281c720a31175d76030d4ecc96b",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 24,
+          "pairs_sha256": "1b1612e4c4beb96af291e977e41f10ecc176f2d9ac939cd88ea66b7953df5b62",
+          "ranking_seconds": 0.4187047919986071,
+          "score_seconds": 0.41841487499914365,
+          "ranked_pmids": [
+            "36265270",
+            "39303446",
+            "37256597",
+            "36367388",
+            "26487814",
+            "36940221",
+            "33622514",
+            "38714138",
+            "40023260",
+            "29654442"
+          ],
+          "best_window_ids": [
+            "c9c14e0486643b14a2cfda25de67da7cd85dac47845de6676e7b84a48aca634d",
+            "952dd53e450f4dffc8151cb5dd267017520542878cd04462eddf8061d2210706",
+            "6dc70939d8c44cc947c5ae13c36f48fd7bf438e6a5b59ae122b900836f95bf7d",
+            "5a1523ce5bcd7dffa49c5ce220f99b201c8dd926cf8416137bf208b9b135f3ad",
+            "4327ed82dc7a10e782cde3514bd6c1309794ab31add4b00dc14588a4ddd8e12d",
+            "1ee58625872df7399eaa803fcf82130c59198a65b101771e2e26307e2e0b44eb",
+            "82ee3854601c91395ab66b4dc079ad7ef4109872f7e3324319f8800c60d2e9ff",
+            "adbcbbf400b5ff1e5cdfbfc9a3fe23718934617f134620f3cd3edebc11d9e842",
+            "22ec734955b27d002ff7f8c59e5a810a4c50253c4b41a435cbc2f9da1b057f75",
+            "b45839acfe31ee78a25baceef3d3ab641b968d5845064627acec748cf07fa4af"
+          ]
+        },
+        "medcpt": {
+          "run_id": "121a28461dcca4c05d95693b6c75a76e0b956a1bdd278edd46428bbdca1fab6b",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 92,
+          "pairs_sha256": "cf54bc6fe72be0fba0e4b695a37c4f5d6e801de4d12e08644d875e8e92dc5e29",
+          "ranking_seconds": 1.6363102920004167,
+          "score_seconds": 1.6358580840023933,
+          "ranked_pmids": [
+            "36265270",
+            "39303446",
+            "37256597",
+            "33142004",
+            "36367388",
+            "33978699",
+            "34534800",
+            "39115189",
+            "18363421",
+            "26487814"
+          ],
+          "best_window_ids": [
+            "c9c14e0486643b14a2cfda25de67da7cd85dac47845de6676e7b84a48aca634d",
+            "952dd53e450f4dffc8151cb5dd267017520542878cd04462eddf8061d2210706",
+            "6dc70939d8c44cc947c5ae13c36f48fd7bf438e6a5b59ae122b900836f95bf7d",
+            "3b44eb1ab681a638fd1e1e991ff182d2e5d2b067a9969dc2f1c90b75e43cbc88",
+            "5a1523ce5bcd7dffa49c5ce220f99b201c8dd926cf8416137bf208b9b135f3ad",
+            "63d1f7cb8ff443a849443d88ae8a28e2c056f541f733237d3620dfc9d724aa0b",
+            "aab59629e2a54c068e64ab7e1e83e9622fcf1e2415fd8b24490f4ebb7ff124cf",
+            "414b5e1b6370128b7696623202211c288ebc561be0b13bfd269468ea524d044c",
+            "d5694e7d604ae7ff670dc61e1eb8531461230f801fd2b55d1e78aac786b320c9",
+            "4327ed82dc7a10e782cde3514bd6c1309794ab31add4b00dc14588a4ddd8e12d"
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "p10",
+      "dataset_id": "17f115f08c34201ee1ba97c0eb741eda60786a3fea2f095a7e408d5687cf78eb",
+      "window_artifact_id": "cdfe70608872d6a42e639db61e22eaeb2250f097583e890dcb70abfa574573f9",
+      "candidate_count": 30,
+      "dense_pmids": [
+        "25692403",
+        "30256264",
+        "36370264",
+        "18974308",
+        "37201966",
+        "30056623",
+        "12447028",
+        "30921598",
+        "36940221",
+        "16540816"
+      ],
+      "shared_window_score_check": {
+        "max_abs_difference": 5.7220458984375e-06,
+        "within_atol_1e-4": true
+      },
+      "methods": {
+        "dense_medcpt": {
+          "run_id": "d670a07da3d1d9f4e186522b3754a80590eca9fc9e44b2fc061fa128dbaee52f",
+          "eligible_count": 10,
+          "ranked_article_count": 10,
+          "pair_count": 37,
+          "pairs_sha256": "286eab9454bf790b26b990d004724752a157b8a34c56ecbd73e6b6a55518c0c6",
+          "ranking_seconds": 0.4153402919982909,
+          "score_seconds": 0.415022917000897,
+          "ranked_pmids": [
+            "37201966",
+            "30921598",
+            "30256264",
+            "36370264",
+            "30056623",
+            "25692403",
+            "12447028",
+            "18974308",
+            "16540816",
+            "36940221"
+          ],
+          "best_window_ids": [
+            "97b9e733313735cfae7a70d62e82b2a3cd1185d2672cde286376698315657871",
+            "1ca80d6dd86ff8c3ba559b30d68656b563c0f2994282d9a1207c34e72157bf34",
+            "ab6557245338031b4f0a616c7bfc40a5d27b496ce0267668e3469d8552ea6eac",
+            "c70acff9eb436d7c002efafe9ee030ba47fcbbb6508318a8f6dac1d01ff1e680",
+            "31140d49ef587619440ad36f983757765197ba12ce6eb54fdd673337f3a4cb6d",
+            "9cc6632201045dff5979d13e1f0982a8f6b3dcfe20b4c157f57c4370a9c0cea8",
+            "352d036ded92d32b3be3232fb6e60cfeb265c273e4f5b28fc7fe3f790932bfb3",
+            "382689bcc99a66f4e590aac88ed963c47e34b8b8e3cdf2686feff54dffdac211",
+            "625031baaabdd492bf4378922369c6a3592f22894cdfb232f598b9497634440d",
+            "f208730552109e960560ac0a67f0fe3359f739b195dc0c2dbd82f2284314c956"
+          ]
+        },
+        "medcpt": {
+          "run_id": "4cc9c8a6901ceb78559057a023fcd5aa18658a1f5ecc9f7802704935ba29327a",
+          "eligible_count": 30,
+          "ranked_article_count": 30,
+          "pair_count": 85,
+          "pairs_sha256": "dd5ce59258a1ca7d90b20f163b6184219eafe2e46e239819b83093a9d3ea8473",
+          "ranking_seconds": 1.048140124999918,
+          "score_seconds": 1.0477679169998737,
+          "ranked_pmids": [
+            "37201966",
+            "30921598",
+            "30256264",
+            "36370264",
+            "38724122",
+            "30056623",
+            "25692403",
+            "12447028",
+            "34296755",
+            "18974308"
+          ],
+          "best_window_ids": [
+            "97b9e733313735cfae7a70d62e82b2a3cd1185d2672cde286376698315657871",
+            "1ca80d6dd86ff8c3ba559b30d68656b563c0f2994282d9a1207c34e72157bf34",
+            "ab6557245338031b4f0a616c7bfc40a5d27b496ce0267668e3469d8552ea6eac",
+            "c70acff9eb436d7c002efafe9ee030ba47fcbbb6508318a8f6dac1d01ff1e680",
+            "d47e6f5dd53474b6cf1f650952dae6c2b13fd257ec8bb197d5d89e700f9c3e59",
+            "31140d49ef587619440ad36f983757765197ba12ce6eb54fdd673337f3a4cb6d",
+            "9cc6632201045dff5979d13e1f0982a8f6b3dcfe20b4c157f57c4370a9c0cea8",
+            "352d036ded92d32b3be3232fb6e60cfeb265c273e4f5b28fc7fe3f790932bfb3",
+            "5027ac1c17a8eeebbead5fe63e75d9fcf1c580cee2591687dd46a89cd8c57b8f",
+            "382689bcc99a66f4e590aac88ed963c47e34b8b8e3cdf2686feff54dffdac211"
+          ]
+        }
+      }
+    }
+  ]
+}

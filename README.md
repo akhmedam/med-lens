@@ -229,6 +229,23 @@ Choose fresh output paths. See the [protocol and pilot results](docs/cited-answe
 This benchmark runner consumes saved contexts. Use `scripts/ask.py` above for
 a fresh search-to-answer request against a local collection.
 
+## MedCPT ranking experiments
+
+```sh
+HF_HUB_OFFLINE=1 python scripts/medcpt_search.py data/parsed/pilot-v1/p01 \
+  --windows data/windows/pilot-v1-002/p01 \
+  --mode medcpt \
+  --query "How does cognitive behavioral therapy compare with antidepressants for depressive symptoms in adults with major depression?" \
+  --output results/ranking/medcpt-example.json
+```
+
+For Dense top-10 → MedCPT, use `--mode dense-medcpt` and add
+`--embeddings data/embeddings/pilot-v1/p01`. Both modes score every window of each
+eligible article and aggregate by maximum logit. Direct MedCPT needs no BGE
+model or embeddings at query time. See the [ranking contract and pilot
+preparation](docs/medcpt-ranking.md). Quality comparison is still pending;
+`ask.py --rerank` continues to use Qwen until primary-pipeline selection.
+
 ## MedCPT cross-encoder probe
 
 ```sh
@@ -238,8 +255,8 @@ python scripts/probe_medcpt.py --download \
 ```
 
 This pins and checks MedCPT assets, audits full question/document token budgets,
-and measures CPU/MPS batching on pilot source windows. It scores pairs; the two
-article-ranking modes are the next experiment. See the [scorer contract and
+and measures CPU/MPS batching on pilot source windows. The article-ranking
+commands above build on this scorer. See the [scorer contract and
 measurements](docs/medcpt.md) and the [frozen held-out protocol](benchmarks/heldout-v1/README.md).
 
 ## Runtime check
