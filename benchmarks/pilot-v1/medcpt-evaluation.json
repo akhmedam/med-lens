@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "pilot-medcpt-qrels-v3",
+  "split": "pilot",
+  "base_profile": {
+    "path": "benchmarks/pilot-v1/evaluation.json",
+    "sha256": "0111be43c821afc36498813caac7051ee1c3038660e187587af9b849b8a7fe72"
+  },
+  "rankings": {
+    "path": "results/ranking/pilot-v1-medcpt-002.json",
+    "sha256": "4528901b817191609d5d3ed0bb57091f0b90f193dfb6cd668e4fb13f727eaded"
+  },
+  "qrels": {
+    "path": "data/evaluation/pilot-v1/pilot-qrels-v3.jsonl",
+    "sha256": "2f5ea7d9847bc6c9f62e5d518dcf6c7df5f435f1c07c80e7bbde72b12c8c10cd"
+  },
+  "supplement_items": {
+    "path": "data/evaluation/pilot-v1/medcpt-supplement-v1.items.jsonl",
+    "sha256": "73fafd6e6132e700202cfc1eee22fc3f887caa3a8280e215227e268964f9095c"
+  },
+  "supplement_reviews": {
+    "path": "data/evaluation/pilot-v1/medcpt-supplement-v1.reviews.jsonl",
+    "sha256": "1bd832f06a6b70d3f848a14202df3f11f81c205ec3c3aa58654e5d0918074826"
+  },
+  "provenance": {
+    "path": "data/evaluation/pilot-v1/pilot-qrels-v3.jsonl.provenance.json",
+    "sha256": "900f01a85f17aa8359ac71ba3d1ce8aaf7ad4afb1bec84d0ea39bbe0898d060c"
+  },
+  "primary_methods": [
+    "pubmed",
+    "dense",
+    "dense_medcpt",
+    "medcpt"
+  ],
+  "unresolved_pairs": [
+    {
+      "query_id": "p01",
+      "pmid": "26646303"
+    },
+    {
+      "query_id": "p04",
+      "pmid": "33423271"
+    }
+  ],
+  "conservative_direct_pairs": [
+    {
+      "query_id": "p08",
+      "pmid": "32257825"
+    },
+    {
+      "query_id": "p09",
+      "pmid": "39115189"
+    }
+  ],
+  "annotation": {
+    "method": "AI-assisted assessment by Codex in this conversation",
+    "expert_human_verified": false,
+    "pair_count": 210,
+    "judged_count": 208,
+    "unjudged_count": 2,
+    "notes": "All 200 v2 pairs unchanged. Ten supplemental AI judgments; not independent expert ground truth or held-out evaluation."
+  }
+}

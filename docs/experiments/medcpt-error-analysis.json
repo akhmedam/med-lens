@@ -1,0 +1,48 @@
+{
+  "evaluation_summary_sha256": "db402f96ad6fe7723278ad85b6a6e0ba8c69890672965e71ec992663f16c817b",
+  "local_source_record_sha256": "f65d2c77b8768d2024ce01d4940db927dc0203680481064c2a07b7db9729458d",
+  "scope": "Four illustrative cases from frozen rankings and title/abstract inspection. Not an exhaustive error rate or a causal ablation of max pooling.",
+  "labels_changed_after_metric_inspection": false,
+  "cases": [
+    {
+      "query_id": "p02",
+      "category": "improvement-on-a-weak-dense-query",
+      "observation": "The adolescent-only study moves from Dense rank 2 to reranked rank 6; direct MedCPT can bring in a separately judged adult transdiagnostic iCBT meta-analysis outside the Dense top ten.",
+      "ndcg_at_10": {
+        "dense": 0.6410457898283652,
+        "dense_medcpt": 0.8142400058053647,
+        "medcpt": 0.8325709824935874
+      }
+    },
+    {
+      "query_id": "p07",
+      "category": "general-treatment-background-promoted",
+      "observation": "Broad adult GAD/panic or mixed-anxiety treatment summaries precede more directly useful GAD/antidepressant evidence under the existing rubric.",
+      "ndcg_at_10": {
+        "dense": 0.795463449573513,
+        "dense_medcpt": 0.6260686995409785,
+        "medcpt": 0.757901382038629
+      }
+    },
+    {
+      "query_id": "p05",
+      "category": "age-scope-not-separated",
+      "observation": "Direct MedCPT places a mobile-CBT review at rank 2 whose results combine ages 13\u201325, without separate adolescent estimates. The maximum-scoring window is the METHOD section.",
+      "ndcg_at_10": {
+        "dense": 0.9575861412006988,
+        "dense_medcpt": 0.9510907186004267,
+        "medcpt": 0.8632555551147043
+      }
+    },
+    {
+      "query_id": "p09",
+      "category": "methodological-review-promoted",
+      "observation": "A review of study designs is promoted above several direct symptom-outcome reports. This is thematic relevance with weaker answer-specific usefulness under the existing rubric.",
+      "ndcg_at_10": {
+        "dense": 0.8083682423538656,
+        "dense_medcpt": 0.7559835875381317,
+        "medcpt": 0.768576183662953
+      }
+    }
+  ]
+}

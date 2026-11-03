@@ -1,0 +1,20 @@
+{
+  "evaluation_summary_sha256": "db402f96ad6fe7723278ad85b6a6e0ba8c69890672965e71ec992663f16c817b",
+  "profile_sha256": "4aa9472770145f86ec8f9b3c9dffe11640de3f1badd957214f70b302dc3709c6",
+  "base_pairs_preserved": 200,
+  "supplement_pair_count": 10,
+  "judged_pair_count": 208,
+  "unresolved_pair_count": 2,
+  "independently_recomputed_metric_values": 320,
+  "exact_label_scenarios_checked": 9,
+  "deterministic_report_replay": true,
+  "model_dependency_imports_blocked": [
+    "numpy",
+    "torch",
+    "transformers"
+  ],
+  "network_blocked": true,
+  "heldout_used": false,
+  "unit_tests_passed": 188,
+  "scope": "Code/source/metric replay only; this does not independently validate AI relevance judgments."
+}

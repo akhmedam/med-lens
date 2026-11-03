@@ -119,7 +119,9 @@ that rankings cannot change for near-tied scores.
 
 The [article-ranking stage](medcpt-ranking.md) now implements the Dense → MedCPT
 and direct MedCPT modes with maximum-window aggregation. The current
-`ask.py --rerank` still calls Qwen; MedCPT relevance quality is not measured yet. Day 17 evaluates relevance and expands incomplete pools;
+`ask.py --rerank` still calls Qwen. The [Day 17 evaluation](medcpt-evaluation.md)
+now compares relevance on an expanded judgment pool; neither MedCPT mode improves
+the pilot primary metric over Dense.
 Day 18 measures actual candidate-pool workloads. The runtime batch size can be
 revisited there using development data.
 

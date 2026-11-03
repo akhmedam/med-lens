@@ -2,6 +2,8 @@
 
 The active ten-question pilot profile is [pilot-qrels-v2](pilot-qrels-v2.md).
 The file formats and metric definitions below apply to every annotation version.
+The latest [MedCPT comparison](medcpt-evaluation.md) uses a separate expanded v3
+pool and preserves the historical v2 profile for replay.
 
 The runner compares the saved PubMed candidate order with BM25 on the same
 verified parsed dataset for each query. It makes no network calls. Different
@@ -89,10 +91,11 @@ undefined values and show `defined_queries` and `total_queries` for each metric.
 
 Recall and candidate coverage are relative to **known judgments**, not all
 relevant literature in PubMed. A top-10 annotation pool cannot measure absolute
-recall. Freeze and version the pool when comparing methods. The planned pool
-unites unique PMIDs from PubMed/BM25/dense/RRF top-10 and hides method names and
-ranks during annotation. Dense and RRF do not exist yet; the runner currently
-compares only PubMed order and BM25.
+recall. Freeze and version the pool when comparing methods. The original pool
+unites unique PMIDs from PubMed/BM25/dense/RRF top-10. The later MedCPT extension
+adds its new results under a separately versioned profile. The lexical runner
+shown above compares PubMed order and BM25; use the linked comparison runner for
+MedCPT and historical reranking outputs.
 
 ## Reports and checks
 
@@ -108,8 +111,7 @@ fictional records with synthetic labels to exercise graded metrics, and our
 30-paper dataset with no labels to verify that quality remains undefined. The
 synthetic scores say nothing about biomedical retrieval quality.
 
-All 69 offline project tests pass. New cases check hand-computed scores, short
+The Day 5 change passed 69 offline tests, covering hand-computed scores, short
 and empty rankings, unjudged papers, relevant papers outside candidates, group
-leakage, input validation, deterministic replay, and the CLI. Day 6 will prepare
-the ten-query pilot and human annotation; this change supplies the measurement
-tools without manufacturing a benchmark.
+leakage, input validation, deterministic replay, and the CLI. The later pilot and
+MedCPT reports record their own expanded test and annotation scope.
