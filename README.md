@@ -10,7 +10,7 @@ system.
 ## Status
 
 PubMed ingestion, verified snapshot replay, and structured XML parsing work.
-Search supports BM25, exact dense retrieval, and RRF. The active pilot uses
+Search supports BM25, exact dense retrieval, and RRF. The historical pilot replay uses
 `pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
 rerank frozen top-10 lists through
 Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
@@ -19,6 +19,9 @@ experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
 A single local request command now connects search, optional reranking, source
 selection and optional generation, and saves an inspectable HTML report.
+The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
+(208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
+remains provisional because two pairs are unjudged.
 
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
@@ -243,7 +246,7 @@ For Dense top-10 → MedCPT, use `--mode dense-medcpt` and add
 `--embeddings data/embeddings/pilot-v1/p01`. Both modes score every window of each
 eligible article and aggregate by maximum logit. Direct MedCPT needs no BGE
 model or embeddings at query time. See the [ranking contract and pilot
-preparation](docs/medcpt-ranking.md). Quality comparison is still pending;
+preparation](docs/medcpt-ranking.md) and the [quality comparison](docs/medcpt-evaluation.md).
 `ask.py --rerank` continues to use Qwen until primary-pipeline selection.
 
 ## MedCPT cross-encoder probe
