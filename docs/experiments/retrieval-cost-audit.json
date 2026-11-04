@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "public_summary_sha256": "6d9eae89c64ede22ca56c5d70a747e61be35964676cd360ae1dd5ea0dea7d9ab",
+  "local_reports_sha256": {
+    "bge": "465d5016bb3f46197a77b3a6de6e64bf706e0e9e102cb9945cf669562d8657de",
+    "medcpt": "58401dcaf15d21cd1a608b8a86177ac9b8b4feca808480adc5ee96681db7d571"
+  },
+  "dense_repeats_checked": 90,
+  "medcpt_requests_replayed": 270,
+  "source_window_logit_mappings_checked": 15156,
+  "independent_per_query_metric_values_checked": 480,
+  "full_pool_day16_rankings_unchanged_all_repeats": true,
+  "model_imports_blocked": [
+    "torch",
+    "transformers",
+    "numpy"
+  ],
+  "socket_creation_blocked": true,
+  "heldout_used": false,
+  "annotation_validated_by_independent_expert": false,
+  "scope": "Source-window alignment, maximum-logit ranking replay, fresh/cached Dense order, timing composition, quality arithmetic. No independent validation of relevance labels."
+}

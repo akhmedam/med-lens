@@ -22,6 +22,9 @@ selection and optional generation, and saves an inspectable HTML report.
 The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
 (208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
 remains provisional because two pairs are unjudged.
+The [M3 Pro cost comparison](docs/retrieval-cost.md) covers 10/20/30-article pools
+and MedCPT depths: cached Dense is fastest; direct MedCPT avoids passage-embedding
+construction for fresh windows. Primary-pipeline selection is next.
 
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
