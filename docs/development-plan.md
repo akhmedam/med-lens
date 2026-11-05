@@ -1,7 +1,8 @@
 # Development plan
 
 Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
-Days 1–18 are complete; the next session is Day 19. Day numbers denote working
+Days 1–18 are complete. Day 19 prepared the pipeline decision and portable handoff;
+selection and integration await the user’s choice. Continue with that choice before Day 20. Day numbers denote working
 sessions, not calendar deadlines. Target: a portfolio v1.0 at Day 28, with two
 to four reserve sessions for generation, PMC and corpus scaling.
 
@@ -17,7 +18,7 @@ interface; a web UI is outside this release plan.
 | 16 | Implement BGE dense top-10 articles followed by MedCPT, and direct MedCPT over all candidate articles. Score every window of each eligible article and aggregate by maximum. | Two reproducible modes on identical snapshots and source windows. |
 | 17 | Compare PubMed Best Match, Dense, Dense → MedCPT and direct MedCPT. Judge newly retrieved results absent from the current pool. | Comparable nDCG@10 and Recall@10, with error analysis and incomplete judgments identified. |
 | 18 | Vary candidate-pool size; measure latency, pair count and memory. Separate Dense with cached embeddings from building embeddings. | A quality, latency and memory comparison on the M3 Pro. |
-| 19 | Select the primary search pipeline from the measured trade-offs, record the decision and integrate it into requests. | One primary search path; Qwen reranking retained only as a historical experiment. |
+| 19 | Prepare measured retrieval/answer options and transfer to the Air M3 (24 GB). Leave the final choice to the user, then integrate the selected path. | [Decision packet](pipeline-options.md) and [portable handoff](handoff.md) prepared; selection/integration pending. |
 | 20 | Improve generation format reliability: bounded claims/citations and structured output; measure refusals against Day 13. | Fewer format failures without weakening quote or output validation. |
 | 21 | Evaluate population/age, severity, intervention, comparator, outcome, null findings and contradictions. | Generation checks and an explicit record of remaining semantic errors. |
 | 22 | Pool local collections, handle duplicate records and text versions, verify cache updates and start the Small → Medium transition. | A shared collection with measured preparation and search costs. |

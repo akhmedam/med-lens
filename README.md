@@ -29,6 +29,14 @@ construction for fresh windows. Primary-pipeline selection is next.
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
 
+## Moving to another Mac
+
+Follow the [handoff guide](docs/handoff.md) to clone the code, restore the checked
+local-artifact bundle and rebuild Python 3.11 dependencies. Pilot labels and
+provenance are tracked; model weights, primary texts, vectors and raw runs are
+transferred separately. The [pipeline decision](docs/pipeline-options.md) awaits
+the user’s choice. Qwen inference on the Air M3 with 24 GB is not yet validated.
+
 ## Setup
 
 Python 3.11:

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "decision_status": "pending-user",
+  "selected_retrieval": null,
+  "selected_answer_mode": null,
+  "runtime_defaults_changed": false,
+  "heldout_used": false,
+  "target": {
+    "machine": "MacBook Air M3",
+    "unified_memory_gib": 24,
+    "inference_validated": false
+  },
+  "measurement_machine": {
+    "machine": "MacBook M3 Pro",
+    "unified_memory_gib": 36
+  },
+  "source_sha256": {
+    "docs/experiments/medcpt-evaluation.json": "db402f96ad6fe7723278ad85b6a6e0ba8c69890672965e71ec992663f16c817b",
+    "docs/experiments/retrieval-cost.json": "6d9eae89c64ede22ca56c5d70a747e61be35964676cd360ae1dd5ea0dea7d9ab",
+    "docs/experiments/qwen-reranking.json": "c6546e672ba392f02470e4f3085dad37b59db125df163ceaaca0fff2477dbc15",
+    "docs/experiments/cited-answers.json": "a76faf425a1fd4fea6e48e369a01a2c622c1775834477c56e2edc35cb5b4ebd3",
+    "docs/experiments/local-requests.json": "cd170183739f70e27926584a2b2201ff30df2fb57bcb4110c279a666dce8ce96",
+    "docs/experiments/runtime-reports/inference-005.json": "8ca5a3f9eb9ed81c15e3e9548c5f0b9794e96196d560f2439ee7b88040379f7e"
+  },
+  "retrieval_options": {
+    "dense": {
+      "ndcg_at_10": 0.863670388062066,
+      "known_pool_recall_at_10": 0.5306780208095997,
+      "judged_top10_coverage": 0.99,
+      "resident_cached_seconds": 0.008905000002414454,
+      "resident_recompute_vectors_seconds": 2.017151207997813,
+      "medcpt_pairs_per_ten_queries": 0,
+      "answer_integration": "existing ask.py"
+    },
+    "dense_medcpt": {
+      "ndcg_at_10": 0.8565307125970554,
+      "known_pool_recall_at_10": 0.5306780208095997,
+      "judged_top10_coverage": 0.99,
+      "resident_cached_seconds": 0.46991445800085785,
+      "resident_recompute_vectors_seconds": 2.4773347709979134,
+      "medcpt_pairs_per_ten_queries": 350,
+      "answer_integration": "standalone ranking CLI; requires score-kind and context integration after selection"
+    },
+    "dense_medcpt_depth20": {
+      "ndcg_at_10": 0.8574022449801293,
+      "known_pool_recall_at_10": 0.5387137350953141,
+      "judged_top10_coverage": 0.99,
+      "resident_cached_seconds": 0.9611567294996348,
+      "resident_recompute_vectors_seconds": 2.984126520499558,
+      "medcpt_pairs_per_ten_queries": 639,
+      "answer_integration": "standalone ranking CLI; requires score-kind and context integration after selection"
+    },
+    "medcpt": {
+      "ndcg_at_10": 0.8522312135522843,
+      "known_pool_recall_at_10": 0.5387137350953141,
+      "judged_top10_coverage": 0.99,
+      "resident_cached_seconds": 1.3496570624993183,
+      "resident_recompute_vectors_seconds": 1.3496570624993183,
+      "medcpt_pairs_per_ten_queries": 975,
+      "answer_integration": "standalone ranking CLI; requires score-kind and context integration after selection"
+    },
+    "dense_qwen_historical": {
+      "ndcg_at_10": 0.8841855190757762,
+      "known_pool_recall_at_10": 0.5306780208095997,
+      "rerank_only_median_seconds": 24.578009957996983,
+      "scope": "Historical Qwen permutations rescored on v3, no new timing run; listwise rerank input differs from MedCPT windows."
+    }
+  },
+  "generation_evidence": {
+    "model": "Qwen/Qwen3.5-9B",
+    "quantization": "Metal 4-bit, group 64",
+    "pilot_questions": 10,
+    "status_counts": {
+      "partial": 3,
+      "validation_failed": 6,
+      "answered": 1
+    },
+    "questions_with_visible_claims": 4,
+    "visible_claim_count": 9,
+    "scope": "Day 13 Dense+Qwen-reranked contexts; no matched answer-quality comparison of the four retrieval options.",
+    "draft_and_review_only_median_seconds": 48.80259558349644,
+    "known_semantic_issue": {
+      "case_id": "day14-full-001",
+      "claim_id": "C2",
+      "issue": "Older-adult subgroup qualifier omitted; same-model review accepted the claim.",
+      "assessment": "Codex source inspection, not independent expert adjudication."
+    },
+    "target_air_inference_tested": false,
+    "historical_smoke_memory": {
+      "memory_samples": {
+        "sampled_process_rss_bytes": 14630289408,
+        "sampled_mps_allocated_bytes": 8158205440,
+        "sampled_mps_driver_bytes": 28587032576
+      },
+      "process_peak_rss_bytes": 15025864704
+    }
+  },
+  "answer_modes": [
+    "ranked articles and exact source excerpts",
+    "experimental cited Qwen draft plus same-model review"
+  ],
+  "recommendation": "Dense as retrieval base; keep evidence-only usable. Qwen drafts remain experimental and require an Air memory/inference check before enabling there.",
+  "integration_if_medcpt_selected": [
+    "Add an explicit unbounded raw-logit score kind to evidence contexts; do not clamp logits to cosine.",
+    "Use the same scored windows and preserve source spans, empty-source behavior and strict generation gates.",
+    "Release each retrieval model before Qwen; measure on the Air and add integration checks."
+  ],
+  "limitations": [
+    "Ten development queries, AI-assisted nonexpert labels, 208/300 candidate pairs judged.",
+    "No primary-pipeline choice has been made by this report.",
+    "Retrieval nDCG does not establish generated answer correctness.",
+    "Cascade costs compose separately measured stages; loads, ingestion and generation excluded.",
+    "Qwen same-model review has missed age/subgroup/comparison errors."
+  ]
+}

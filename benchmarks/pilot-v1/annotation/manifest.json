@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "Development pilot; not held-out evaluation.",
+  "annotation_method": "v2 and v3: AI-assisted Codex assessment, not independent expert truth. Original human rounds retained with their original filenames.",
+  "files": {
+    "data/evaluation/pilot-v1/pilot-qrels-v2.jsonl": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41",
+    "data/evaluation/pilot-v1/pilot-qrels-v2.jsonl.provenance.json": "1109c036ad2794772469b69252303857f4ca08bbf32d28589ee7be9e5faf81a9",
+    "data/evaluation/pilot-v1/pilot-qrels-v3.jsonl": "2f5ea7d9847bc6c9f62e5d518dcf6c7df5f435f1c07c80e7bbde72b12c8c10cd",
+    "data/evaluation/pilot-v1/pilot-qrels-v3.jsonl.provenance.json": "900f01a85f17aa8359ac71ba3d1ce8aaf7ad4afb1bec84d0ea39bbe0898d060c",
+    "data/evaluation/pilot-v1/medcpt-supplement-v1.reviews.jsonl": "1bd832f06a6b70d3f848a14202df3f11f81c205ec3c3aa58654e5d0918074826",
+    "data/evaluation/pilot-v1/human-p01-001.jsonl": "a20aa1ab3e0160cabaebde78dfff0bab7b75f92ed561f8951d77bc6d4d974a93",
+    "data/evaluation/pilot-v1/human-final-001.jsonl": "f3ed40e8c63e1b76eb6a3d74892d4fbf6982c320d133b70b4eca2b8a227b69bb",
+    "data/evaluation/pilot-v1/human-expanded-001.jsonl": "020f38ef2a75ba6ba28a35c9259a62fd3251e6840a1a7f543edfec13d2bcca08",
+    "data/evaluation/pilot-v1/dense-supplement-human-001.jsonl": "ee32bb47068918bdafccd0f46393a3679a290c6e5855135c317454818f5bb267",
+    "data/evaluation/pilot-v1/rrf-supplement-human-001.jsonl": "4e5863c3a43136a942a5130a4664fc169780c9c4360425fe7427baa474335287",
+    "data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl": "f410b657a8abcdd833686813b6e05eb312f0c528e44196296df0b29e33ea7003",
+    "benchmarks/pilot-v1/annotation/reviews-v2.json": "bdd7d4270836f929990c84a8d8b4739eb2a0a2fb5f6ec32e9026a41e6ba51f62",
+    "benchmarks/pilot-v1/annotation/query-intents.json": "3cfbe89601d31bc282e594b0fc12ae32d4eef273f5da00f70bcb4f5380ea2446"
+  }
+}
