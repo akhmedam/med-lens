@@ -72,6 +72,17 @@ class PipelineTests(unittest.TestCase):
         self.assertTrue(result['context']['sources'])
         self.assertIn('Generation was not requested',render_report(result))
 
+    def test_selected_dense_qwen_path_keeps_order_and_only_drafts_then_reviews(self):
+        review = [{'claim_id':'C1','verdict':'supported','population_match':'match',
+            'comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}]
+        result = self.run_pipeline([answers.draft(), review], generate=True)
+        self.assertEqual(result['status'], 'complete')
+        self.assertEqual(result['reranking']['status'], 'skipped')
+        self.assertEqual(result['context']['article_ranking'], ['1', '2', '3'])
+        self.assertEqual(result['runtime_load_count'], 1)
+        self.assertEqual([limit for _, limit in self.runtime.calls], [768, 512])
+        self.assertEqual(result['answer']['claims'][0]['citations'][0]['pmid'], '1')
+
     def test_same_runtime_reranks_then_generates_and_reviews(self):
         review = [{'claim_id':'C1','verdict':'supported','population_match':'match',
             'comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}]

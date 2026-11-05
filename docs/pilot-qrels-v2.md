@@ -22,9 +22,10 @@ flagged in the local notes; some judgments remain debatable. The original p09
 intent allows other-age evidence as partial, whereas some other questions enforce
 age exclusions. The rubric was not harmonized retrospectively for this version.
 
-Individual labels, rationale text and full reports stay in the ignored local
-`data/` and `results/` directories. The committed profile records paths, hashes,
-counts and annotation provenance. The local review page is
+Canonical v2/v3 labels, original human rounds, provenance and rationale records
+are now tracked for reproducibility; see [annotation files](../benchmarks/pilot-v1/annotation/README.md).
+Full primary texts, annotation pages and raw reports remain local and are carried
+in the [transfer bundle](handoff.md). The local review page is
 `data/annotation/pilot-ai-review-001/index.html`.
 
 ## Current results
@@ -54,8 +55,7 @@ replace broader human and held-out validation.
 
 ## Replay the current evaluation
 
-Run from the repository root on the original checkout with the frozen local
-artifacts available:
+Run from the repository root with the frozen local artifacts restored:
 
 ```sh
 python scripts/rescore_pilot.py \
@@ -82,6 +82,6 @@ inference, the retrieval baseline must have the same query/qrels hashes; mixed
 versions are rejected. The profile selects the current version for replay and
 documents the convention; existing CLIs still take explicit inputs.
 
-The raw judgments are not bundled with a fresh public clone. Without the local
-artifacts, inspect the [aggregate report](experiments/pilot-qrels-v2.json) or
-prepare a separately versioned annotation set for your own corpus.
+A fresh public clone now includes the small judgment files. Exact replay still
+needs the frozen source corpus and raw rankings from the transfer bundle.
+The [aggregate report](experiments/pilot-qrels-v2.json) is available without them.

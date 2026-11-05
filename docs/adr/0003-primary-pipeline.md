@@ -1,0 +1,66 @@
+# Primary search-to-answer pipeline
+
+Status: accepted by the user on 2026-11-05.
+
+## Decision
+
+Use **Dense retrieval and article ranking**, followed by exact evidence selection
+and **Qwen/Qwen3.5-9B answer generation**. Generating a sourced answer is a required
+part of the product. Search-only output is a diagnostic mode and a useful partial
+result when a model stage fails.
+
+The primary request is:
+
+```text
+Question → BGE query embedding → Dense article ranking → exact source excerpts
+         → Qwen3.5-9B draft → same-instance support review → validated answer/citations
+```
+
+Dense uses BAAI/bge-base-en-v1.5 at revision
+`a5beb1e3e68b9ab74eb54cfd186867f64f240e1a`: normalized 768-dimensional final-layer
+CLS embeddings, exact cosine similarity and maximum-window article scores. There
+is no Qwen or MedCPT reranking stage in the selected pipeline.
+
+Qwen uses revision `c202236235762e1c871ad0ccb60c8ee5ba337b9a`, the existing
+Transformers/MPS runtime and Metal 4-bit quantization, group size 64. One instance
+handles the draft and support review sequentially after BGE is released. The
+existing six-fragment / two-per-article / 4000-evidence-token limits and strict
+citation/output gates remain in force.
+
+## Reasons and limits
+
+Dense offers the strongest measured quality/cost balance for repeated search
+in a prepared collection. On the expanded pilot it scores 0.8637 nDCG@10 with a
+resident cached query cost of about 0.009 s on the M3 Pro. The historical Qwen
+reranker scores higher (0.8842), but adds a median 24.58 s per Dense top-10 list.
+The MedCPT variants did not improve nDCG over Dense. These are small development
+results with incomplete, AI-assisted judgments, not held-out confirmation.
+
+The user selected Qwen9B as the generator. Its format and semantic reliability
+remain Day 20–21 work: generation being required does not waive the validation
+gates. Empty/insufficient evidence can produce an explicit abstention, malformed
+answers are withheld, and completed search remains available after model errors.
+Same-model support review is not independent verification.
+
+Target: Air M3, 24 GiB. Model loading, sustained speed and memory use on that
+machine still require measurement. The choice of Qwen9B is accepted; its support
+on that hardware is not yet established. Any later model/runtime change should
+be recorded as a new explicit decision.
+
+## Existing integration and continuation
+
+The chosen chain already exists in `scripts/ask.py`: use **`--generate` and omit
+`--rerank`**. No inference code or transfer payload changed to record this choice.
+The current CLI keeps explicit generation activation for staged checks; the
+primary documented request includes it. The interactive CLI planned for Day 25
+should present the complete question-to-answer workflow as the primary path.
+
+MedCPT, BM25/RRF and Qwen reranking remain historical comparison code until the
+planned Day 27 cleanup. Do not remove their experiment records. Continue on the
+Air with the staged [handoff checks](../handoff.md), then generation reliability
+on Days 20–21 and held-out confirmation on Day 26.
+
+The [current decision record](0003-primary-pipeline.json) is authoritative.
+[Pipeline options](../pipeline-options.md) retain the measured trade-offs. The
+Day 19 comparison packet and restore audit were captured before this choice;
+their `pending-user` fields are historical snapshots and do not override this ADR.

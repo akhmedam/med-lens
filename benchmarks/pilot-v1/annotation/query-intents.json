@@ -1,0 +1,52 @@
+[
+  {
+    "query_id": "p01",
+    "query": "How does cognitive behavioral therapy compare with antidepressants for depressive symptoms in adults with major depression?",
+    "intent": "Direct evidence compares CBT with antidepressant medication in adults with depression; CBT-only or mixed-population evidence is partial."
+  },
+  {
+    "query_id": "p02",
+    "query": "Does internet-delivered cognitive behavioral therapy reduce depressive symptoms in adults?",
+    "intent": "Direct evidence evaluates internet-delivered CBT and depressive symptom outcomes in adults; protocols without outcomes or general digital interventions are partial."
+  },
+  {
+    "query_id": "p03",
+    "query": "Does exercise reduce depressive symptoms in adults with depression?",
+    "intent": "Direct evidence evaluates exercise as an intervention for adults with depression; cross-sectional physical-activity associations alone are partial."
+  },
+  {
+    "query_id": "p04",
+    "query": "Does mindfulness-based cognitive therapy prevent relapse in adults with recurrent depression?",
+    "intent": "Direct evidence evaluates MBCT and relapse or recurrence in adults with recurrent depression; acute symptom-only outcomes are partial."
+  },
+  {
+    "query_id": "p05",
+    "query": "Does cognitive behavioral therapy reduce depressive symptoms in adolescents with depression?",
+    "intent": "Direct evidence concerns adolescent depression and CBT symptom outcomes; adults-only results do not satisfy the population constraint."
+  },
+  {
+    "query_id": "p06",
+    "query": "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?",
+    "intent": "Direct evidence concerns CBT, adult GAD, and anxiety outcomes; mixed anxiety populations without GAD-specific findings are partial."
+  },
+  {
+    "query_id": "p07",
+    "query": "Are selective serotonin reuptake inhibitors effective for anxiety symptoms in adults with generalized anxiety disorder?",
+    "intent": "Direct evidence concerns SSRIs and adult GAD symptom outcomes; other drug classes or mixed disorders alone are partial."
+  },
+  {
+    "query_id": "p08",
+    "query": "Does exposure-based cognitive behavioral therapy reduce panic symptoms in adults with panic disorder?",
+    "intent": "Direct evidence evaluates exposure-containing CBT and adult panic outcomes; nonspecific anxiety or CBT without an identifiable exposure component is partial."
+  },
+  {
+    "query_id": "p09",
+    "query": "Does cognitive behavioral therapy reduce social anxiety symptoms in adults with social anxiety disorder?",
+    "intent": "Direct evidence concerns adult social anxiety disorder and CBT symptom outcomes; other age groups or mixed disorders without separate findings are partial."
+  },
+  {
+    "query_id": "p10",
+    "query": "Does cognitive behavioral therapy reduce anxiety symptoms in children with anxiety disorders?",
+    "intent": "Direct evidence evaluates CBT and anxiety outcomes in children; adult-only evidence does not satisfy the population constraint; mixed child/adolescent evidence may be direct when child results are supported."
+  }
+]

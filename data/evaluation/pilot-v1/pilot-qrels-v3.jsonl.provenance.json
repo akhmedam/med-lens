@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-03T02:26:24.270693+00:00",
+  "method": "AI-assisted assessment by Codex in this conversation",
+  "expert_human_verified": false,
+  "evidence_scope": "Frozen titles and full primary abstracts only; no external sources or full texts.",
+  "item_order": "SHA256(query_id:PMID) order; method names, ranks and scores omitted from annotation items.",
+  "blinding_limit": "Prior conversation included method results and some p01 ranked titles/scores. This is not an independent blinded evaluation.",
+  "base_qrels_sha256": "90135dab3a2c92491b6d18cba389fef8f862e3ef1d8de834f4041fd33e137f41",
+  "items_sha256": "73fafd6e6132e700202cfc1eee22fc3f887caa3a8280e215227e268964f9095c",
+  "reviews_sha256": "1bd832f06a6b70d3f848a14202df3f11f81c205ec3c3aa58654e5d0918074826",
+  "qrels_sha256": "2f5ea7d9847bc6c9f62e5d518dcf6c7df5f435f1c07c80e7bbde72b12c8c10cd",
+  "preserved_base_pair_count": 200,
+  "added_pair_count": 10,
+  "added_grade_counts": {
+    "0": 0,
+    "1": 5,
+    "2": 5
+  },
+  "total_pair_count": 210,
+  "judged_count": 208,
+  "unjudged_count": 2,
+  "uncertainty_policy": "Existing missing abstracts remain null. Medium-confidence new direct judgments are separately downgraded to partial in sensitivity analysis.",
+  "age_policy": "Retain the base v2 convention for implicit adult scope; absence of age evidence is flagged, not presented as confirmed eligibility."
+}

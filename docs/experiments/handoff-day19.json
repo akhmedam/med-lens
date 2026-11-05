@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "status": "verified-local-restore",
+  "target": {
+    "machine": "MacBook Air M3",
+    "unified_memory_gib": 24,
+    "qwen_inference_tested": false
+  },
+  "validation_machine": {
+    "machine": "MacBook M3 Pro",
+    "unified_memory_gib": 36,
+    "fresh_clone": true,
+    "fresh_venv": true
+  },
+  "bundle": {
+    "relative_path": "transfer/medlens-day19",
+    "source_commit": "0eae69be852130ccc9bfc222d75d96fc79699cb8",
+    "manifest_sha256": "a449b51fc711c4bfc51c9842e83e32d5cf94c6e2c2512aa00393fbdf96cf2c90",
+    "artifact_bytes": 20281655707,
+    "archive_bytes": 20281989120,
+    "entry_count": 367,
+    "regular_files": 341,
+    "symlinks": 26,
+    "parts": [
+      {
+        "name": "part-0001.tarpart",
+        "bytes": 2147483648,
+        "sha256": "0684fd0f680a22947d7272a3579174f59b527c678fa5251dc28777c3b9527fb8"
+      },
+      {
+        "name": "part-0002.tarpart",
+        "bytes": 2147483648,
+        "sha256": "b47842251a59ad1931d8fed15a8fbc9377989876baf3b888a8c2dcf15f0abc61"
+      },
+      {
+        "name": "part-0003.tarpart",
+        "bytes": 2147483648,
+        "sha256": "08fbcef8eac000728bc0cc34f675bc1fd2920b770e075e8a811b40e3f66b79d7"
+      },
+      {
+        "name": "part-0004.tarpart",
+        "bytes": 2147483648,
+        "sha256": "21cda50462f4afcaf8e91576e20b8ef036a0291b5905d11c6c67e5653e42a80b"
+      },
+      {
+        "name": "part-0005.tarpart",
+        "bytes": 2147483648,
+        "sha256": "ee618595dce6859f9642d1ceaf30696bac2c5947316fa53b8c71dbc5f3c9bf8f"
+      },
+      {
+        "name": "part-0006.tarpart",
+        "bytes": 2147483648,
+        "sha256": "3d2aaebfac11f8bdc10ef965c8c72bd8659bc02523aafe3a924c7285439e02c5"
+      },
+      {
+        "name": "part-0007.tarpart",
+        "bytes": 2147483648,
+        "sha256": "db1002dd200aa8037d43e3888b3327f3d02c528cecafa66e272db98b13a59618"
+      },
+      {
+        "name": "part-0008.tarpart",
+        "bytes": 2147483648,
+        "sha256": "5e70f7811c1ac51aa13f1ce2e2eb56a501cc71ffc796f86f4c483e7fa940882c"
+      },
+      {
+        "name": "part-0009.tarpart",
+        "bytes": 2147483648,
+        "sha256": "ba2bdc30833a125e4013ae102d0c938a975fd0e0304272446e704198952294f5"
+      },
+      {
+        "name": "part-0010.tarpart",
+        "bytes": 954636288,
+        "sha256": "129a4b76a44cdb5af04e27ccf22ad93f7a16c0af8dac987f2f1fc1b1d64f9a35"
+      }
+    ]
+  },
+  "validation_sidecar_sha256": "4d7ae1484d671ff3d237b789547261db13f3ed0b91881b63d208cfc613603f52",
+  "checks": {
+    "requirements_lock_installed_cleanly": true,
+    "pip_check": "passed",
+    "tests_passed": 200,
+    "restored_input_check": "inputs_ready",
+    "frozen_medcpt_comparison_exact_json_equal": true,
+    "decision_packet_exact_replay": true,
+    "part_and_restored_file_checksums": "passed",
+    "existing_identical_tracked_labels": 11,
+    "v2_review_provenance_canonical_json_hash_matches": true
+  },
+  "search_smoke": {
+    "status": "complete",
+    "request_seconds": 3.049075916002039,
+    "hit_count": 10,
+    "source_count": 6,
+    "qwen_weight_loads": 0,
+    "offline": true,
+    "request_id": "c58927d873795b88e29666d0853d96f46398687e693ed5cc4dbf9ba40eafacbd"
+  },
+  "dependency_lock_sha256": "eb9a32043deb5ca73d655ca0116151b02296effcc51e4bc31ff2dc32d7dd7bc5",
+  "decision_status": "pending-user",
+  "selected_retrieval": null,
+  "selected_answer_mode": null,
+  "heldout_used": false
+}

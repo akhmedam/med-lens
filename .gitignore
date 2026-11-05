@@ -7,5 +7,24 @@ dist/
 .DS_Store
 .env
 .cache/
-data/
+data/*
+!data/evaluation/
+data/evaluation/*
+!data/evaluation/pilot-v1/
+data/evaluation/pilot-v1/*
 results/
+
+# Small versioned judgments; corpora, vectors and raw outputs stay local.
+!data/evaluation/pilot-v1/pilot-qrels-v2.jsonl
+!data/evaluation/pilot-v1/pilot-qrels-v2.jsonl.provenance.json
+!data/evaluation/pilot-v1/pilot-qrels-v3.jsonl
+!data/evaluation/pilot-v1/pilot-qrels-v3.jsonl.provenance.json
+!data/evaluation/pilot-v1/medcpt-supplement-v1.reviews.jsonl
+!data/evaluation/pilot-v1/human-p01-001.jsonl
+!data/evaluation/pilot-v1/human-final-001.jsonl
+!data/evaluation/pilot-v1/human-expanded-001.jsonl
+!data/evaluation/pilot-v1/dense-supplement-human-001.jsonl
+!data/evaluation/pilot-v1/rrf-supplement-human-001.jsonl
+!data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl
+
+transfer/
