@@ -1,9 +1,10 @@
-# Pipeline decision: evidence prepared, choice pending
+# Pipeline decision: Dense and Qwen9B
 
-Status: awaiting the user's retrieval and answer-mode choices. No primary pipeline
-was selected on Day 19. The existing Dense request path remains available; an
-unchanged default is not a new selection. Target machine: MacBook Air M3, 24 GB
-unified memory. All measured timings below come from the M3 Pro, 36 GB.
+Status: accepted by the user on 2026-11-05: **Dense → evidence context →
+Qwen3.5-9B answer generation and support review**, with no additional reranker.
+Generation is required in the primary product workflow; search-only is diagnostic.
+The [accepted ADR](adr/0003-primary-pipeline.md) records the decision. Target:
+MacBook Air M3, 24 GB; all timings below come from the M3 Pro, 36 GB.
 
 ## Retrieval options
 
@@ -39,17 +40,17 @@ reranking as historical, retaining Qwen for generation/review. Choosing to keep
 Qwen reranking as the primary method would explicitly revise that plan.
 
 PubMed/BM25/RRF controls are documented in the
-[expanded comparison](medcpt-evaluation.md). No losing implementations or model
-assets have been removed while the user's choice is pending.
+[expanded comparison](medcpt-evaluation.md). Alternative implementations and assets
+remain available until the planned Day 27 cleanup.
 
 ## Answer modes
 
-Retrieval and answer generation are separate choices:
+The primary workflow includes Qwen generation. Existing operational modes are:
 
 1. **Articles and exact source excerpts.** Existing Dense `ask.py` without
    `--generate`. No Qwen weights load; the cached tokenizer is used for evidence
-   budgeting. This is the usable baseline on the Air before generation is tested.
-2. **Experimental cited draft.** The same evidence enters Qwen3.5-9B, followed by
+   budgeting. This diagnostic mode is the first staged check on the Air.
+2. **Selected primary workflow: cited Qwen draft.** The same evidence enters Qwen3.5-9B, followed by
    support review using the same model instance. Quotes, IDs and output format
    are checked; invalid output is withheld. An accepted draft is still subject
    to independent review.
@@ -61,9 +62,9 @@ above. The Day 14 full request still omitted an older-adult qualifier, and the
 same-model reviewer accepted it. Higher nDCG alone cannot choose a generator or
 establish that its conclusions preserve the source population and comparisons.
 
-The recommendation is Dense plus inspectable evidence, with Qwen drafting kept
-experimental while Days 20–21 address format and semantic failures. The user can
-choose either answer mode independently of the retrieval recommendation.
+The accepted pipeline is Dense plus exact evidence and Qwen9B generation.
+Days 20–21 address format and semantic failures; output remains an experimental
+research draft until those release checks are met.
 
 ## Air M3 checks before enabling drafts
 
@@ -85,23 +86,23 @@ limits, silently reduce evidence budgets, swap models or enable CPU fallback to
 make a nominal success. A smaller model/runtime is an explicit new experiment
 if the existing Qwen path does not fit or is too slow.
 
-## After the user's choice
+## Continue with the accepted pipeline
 
-Record the chosen retrieval and answer mode, then integrate and smoke-test that
-specific combination on the Air. If MedCPT is chosen, evidence contexts need an
-explicit raw-logit score type: the current cosine-range check cannot accept its
-unbounded scores. Do not clamp logits to cosine or call them probabilities.
-Preserve window/source bindings, release retrieval models before Qwen, and test
-empty sources, model failures and withheld invalid drafts.
+Run `ask.py --generate` without `--rerank`. This already connects Dense, context
+selection, Qwen drafting and support review. Verify the staged Air checks, then
+continue Days 20–21. A future MedCPT integration would require explicit raw-logit
+context support; it is outside the selected primary path.
 
-The [machine-readable decision packet](experiments/pipeline-options.json)
-records source hashes, measured options, answer failures, pending choices and
-integration gaps. Rebuild it without inference using a fresh output path:
+The [machine-readable accepted decision](adr/0003-primary-pipeline.json) records
+the current choice. The earlier [comparison packet](experiments/pipeline-options.json)
+and restore audit remain immutable pre-decision evidence; their `pending-user`
+fields describe when those snapshots were captured. This command rebuilds that
+pre-decision evidence, not the current accepted ADR:
 
 ```sh
 .venv/bin/python scripts/prepare_pipeline_decision.py \
   --output results/decision/new-options.json
 ```
 
-The held-out questions remain reserved for Day 26. Day 19 prepared the decision
-and transfer; selection/integration await the user's instruction.
+The held-out questions remain reserved for Day 26. The selected pipeline is
+implemented; Qwen inference on the Air and generation quality work remain open.

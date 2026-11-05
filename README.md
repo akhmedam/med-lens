@@ -24,7 +24,8 @@ The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
 remains provisional because two pairs are unjudged.
 The [M3 Pro cost comparison](docs/retrieval-cost.md) covers 10/20/30-article pools
 and MedCPT depths: cached Dense is fastest; direct MedCPT avoids passage-embedding
-construction for fresh windows. Primary-pipeline selection is next.
+construction for fresh windows. The user selected **Dense → evidence context →
+Qwen3.5-9B generation** as the [primary pipeline](docs/adr/0003-primary-pipeline.md).
 
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
@@ -34,8 +35,9 @@ including the two MedCPT experiments and an interactive CLI as the primary UI.
 Follow the [handoff guide](docs/handoff.md) to clone the code, restore the checked
 local-artifact bundle and rebuild Python 3.11 dependencies. Pilot labels and
 provenance are tracked; model weights, primary texts, vectors and raw runs are
-transferred separately. The [pipeline decision](docs/pipeline-options.md) awaits
-the user’s choice. Qwen inference on the Air M3 with 24 GB is not yet validated.
+transferred separately. The [pipeline decision](docs/pipeline-options.md) is
+accepted: Dense search/ranking and Qwen9B generation. Qwen inference on the Air
+M3 with 24 GB is not yet validated.
 
 ## Setup
 
@@ -55,21 +57,22 @@ python -m pip install -r requirements-macos-arm64.lock
 
 ## Ask a question
 
-Search a prepared local collection and save articles plus exact source excerpts:
+Run the selected Dense → context → Qwen9B workflow against a prepared collection:
 
 ```sh
 python scripts/ask.py data/parsed/pilot-v1/p06 \
   --windows data/windows/pilot-v1-002/p06 \
   --embeddings data/embeddings/pilot-v1/p06 \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --output-dir results/requests/gad-example
-open results/requests/gad-example/report.html
+  --generate --output-dir results/requests/gad-answer-example
+open results/requests/gad-answer-example/report.html
 ```
 
-Add `--generate` for an experimental cited draft, and `--rerank` to reorder the
-dense hits with Qwen. Both flags share one Qwen instance. The default returns
-search results and excerpts without loading Qwen weights. Its cached tokenizer
-is still required to pack evidence. Use a fresh output directory for each run.
+Generation is a required part of the primary workflow; `--generate` currently
+activates it explicitly. Omit that flag for diagnostic search/excerpts without
+Qwen weights. The cached tokenizer is still needed for evidence budgeting.
+`--rerank` invokes the historical Qwen reranker and is omitted from the selected
+pipeline. Use a fresh output directory for each run.
 
 The pilot collections contain up to thirty candidates per topic. This command
 searches the collection you supply; it does not fetch new papers or search all

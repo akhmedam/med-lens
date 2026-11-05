@@ -3,6 +3,8 @@
 `scripts/ask.py` runs a fresh English question against one verified local
 collection. It saves a human-readable `report.html` and a full `run.json` in a
 new directory. No pilot relevance labels or saved rankings enter this path.
+The [accepted primary workflow](adr/0003-primary-pipeline.md) uses Dense followed
+by Qwen9B generation: pass `--generate` and omit `--rerank`.
 
 ## Run
 
@@ -13,11 +15,12 @@ From the project root, with the existing virtual environment and cached models:
   --windows data/windows/pilot-v1-002/p06 \
   --embeddings data/embeddings/pilot-v1/p06 \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --output-dir results/requests/gad-example
-open results/requests/gad-example/report.html
+  --generate --output-dir results/requests/gad-answer-example
+open results/requests/gad-answer-example/report.html
 ```
 
-The default mode returns dense search results and selected source passages.
+The CLI without `--generate` is a diagnostic search/excerpt mode; generation
+remains a required part of the primary product workflow.
 `--generate` enables experimental answer drafts; `--rerank` enables optional
 Qwen reranking of the dense results. These flags work independently. `--top-k`
 accepts one to ten articles and defaults to ten. `--device cpu` changes BGE only;

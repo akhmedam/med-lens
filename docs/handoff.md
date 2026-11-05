@@ -8,7 +8,7 @@ an M3 Pro with 36 GiB; Qwen inference on the Air has not been validated.
 Merge the Day 19 PR, then clone `akhmedam/med-lens` on the Air. The PR contains
 code, current dependency pins, both canonical pilot judgment versions, original
 human rounds, assessment provenance/rationales, benchmark definitions, results
-summaries and the pending [pipeline decision](pipeline-options.md).
+summaries and the accepted [Dense → Qwen9B pipeline](adr/0003-primary-pipeline.md).
 
 Copy the **entire** `transfer/medlens-day19/` directory to the flash drive,
 including `manifest.json` and every `part-*.tarpart`. A verified instance is
@@ -41,7 +41,9 @@ files and 26 internal symlinks. Its manifest SHA-256 is
 The [verification record](experiments/handoff-day19.json) pins every part and
 records a clean-clone install, 200 passing tests, exact frozen-evaluation replay
 and an offline search returning ten articles/six excerpts without Qwen weights.
-These checks ran on the source M3 Pro, not the target Air. The `validation/`
+These checks ran on the source M3 Pro, not the target Air. Later documentation
+records the accepted Dense → Qwen9B choice; all pinned code/config identities
+still match, so this bundle needs no replacement. The `validation/`
 sidecar carries the raw checks/reports; restore does not need to install it.
 
 ## Restore on the Air
@@ -119,9 +121,10 @@ HF_HUB_OFFLINE=1 .venv/bin/python scripts/ask.py data/parsed/pilot-v1/p06 \
   --output-dir results/requests/air-search-001
 ```
 
-If the user chooses to pursue Qwen drafts, first measure loading/short inference
-on the Air, then a real bounded request. Close unrelated heavy applications and
-record memory pressure/swap and elapsed time. Do not force `HF_HUB_OFFLINE=1` for
+The selected primary workflow uses Qwen9B. First measure loading/short inference
+on the Air, then a real bounded request with `--generate` and no `--rerank`.
+Close unrelated heavy applications and record memory pressure/swap and elapsed
+time. Do not force `HF_HUB_OFFLINE=1` for
 these Qwen runs; cached kernels can still need a publisher/version lookup.
 
 ```sh
@@ -144,12 +147,13 @@ an unsupported configuration.
 
 ## Work to resume
 
-1. Read `docs/pipeline-options.md` and ask the user for retrieval and answer-mode
-   choices. Both remain pending; Dense is a recommendation, not a new accepted
-   selection. Current `ask.py --rerank` still means historical Qwen reranking.
-2. Integrate the selected path. MedCPT requires explicit raw-logit context support
-   and model lifecycle integration before it can feed `ask.py` generation. Do not
-   clamp logits to the existing cosine range.
+1. Read `docs/adr/0003-primary-pipeline.md`: the user accepted Dense retrieval
+   and ranking, exact evidence, and Qwen3.5-9B generation. Generation is required
+   in the primary workflow. The existing CLI runs it with `--generate` and no
+   `--rerank`; search-only is diagnostic.
+2. Verify Qwen loading and a complete request on the Air before declaring that
+   hardware supported. No MedCPT or Qwen reranking integration is required for
+   the selected primary path.
 3. Continue Days 20–21: format reliability, age/population/comparator/outcome
    fidelity, contradictions and semantic answer checks. Four of ten Day 13
    questions had visible drafts; same-model review missed an age qualifier later.
