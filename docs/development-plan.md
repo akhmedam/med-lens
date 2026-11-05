@@ -2,8 +2,8 @@
 
 Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
 Days 1–18 are complete. Day 19 prepared the pipeline decision and portable handoff;
-selection and integration await the user’s choice. Continue with that choice before Day 20. Day numbers denote working
-sessions, not calendar deadlines. Target: a portfolio v1.0 at Day 28, with two
+selection and integration await the user’s choice. Continue with that choice
+before Day 20. Day numbers denote working sessions, not calendar deadlines. Target: a portfolio v1.0 at Day 28, with two
 to four reserve sessions for generation, PMC and corpus scaling.
 
 The primary user interface will be an interactive command-line application.

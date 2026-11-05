@@ -55,8 +55,7 @@ replace broader human and held-out validation.
 
 ## Replay the current evaluation
 
-Run from the repository root on the original checkout with the frozen local
-artifacts available:
+Run from the repository root with the frozen local artifacts restored:
 
 ```sh
 python scripts/rescore_pilot.py \

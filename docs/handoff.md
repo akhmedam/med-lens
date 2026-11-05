@@ -33,6 +33,17 @@ files, download locks, incomplete downloads, Xet logs and Python bytecode. GitHu
 login and any external API credentials must be configured separately if needed.
 Public PubMed/model access does not require copying a token.
 
+## Verified source bundle
+
+The prepared bundle is 20,281,989,120 bytes (18.89 GiB): ten parts, 341 regular
+files and 26 internal symlinks. Its manifest SHA-256 is
+`a449b51fc711c4bfc51c9842e83e32d5cf94c6e2c2512aa00393fbdf96cf2c90`.
+The [verification record](experiments/handoff-day19.json) pins every part and
+records a clean-clone install, 200 passing tests, exact frozen-evaluation replay
+and an offline search returning ten articles/six excerpts without Qwen weights.
+These checks ran on the source M3 Pro, not the target Air. The `validation/`
+sidecar carries the raw checks/reports; restore does not need to install it.
+
 ## Restore on the Air
 
 Run these commands from the new clone. Substitute the flash drive's actual path
