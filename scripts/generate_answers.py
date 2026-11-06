@@ -17,7 +17,8 @@ os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 from rescore_pilot import rescore
 from medlens.evaluation.formats import parse_queries
 from medlens.generation.context import canonical, digest, render_evidence, source_section
-from medlens.generation.answers import check_context, generate_answer, render_answer
+from medlens.generation.answers import (PROMPT_VERSION, REVIEW_VERSION, check_context,
+    generate_answer, render_answer)
 from medlens.inference.qwen import MODEL_ID, REVISION, QwenRuntime
 from medlens.parsing.dataset import load_dataset
 from medlens.retrieval.windows import load_windows
@@ -128,9 +129,11 @@ def main():
     identity = {"context_report_sha256": artifact_hash, "cache_source_sha256": cache_hash, "profile_sha256": artifact["profile_sha256"],
         "qrels_sha256": artifact["qrels_sha256"], "case_ids": [c["case_id"] for c in cases],
         "code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
-            "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/inference/qwen.py", "src/medlens/generation/quotes.py")}}
+            "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/generation/contracts.py",
+            "src/medlens/inference/qwen.py", "src/medlens/generation/quotes.py")}}
     report = {"schema_version": 1, "run_id": digest(identity), **identity, "status": "running",
-        "started_at": datetime.now(timezone.utc).isoformat(), "per_case": []}
+        "started_at": datetime.now(timezone.utc).isoformat(), "per_case": [],
+        "prompt_version": PROMPT_VERSION, "review_version": REVIEW_VERSION, "heldout_used": False}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as f:json.dump(report, f, indent=2)
     def checkpoint():
@@ -164,7 +167,8 @@ def main():
     summary = {k: v for k, v in report.items() if k != "per_case"}
     summary["local_report_sha256"] = hashlib.sha256(args.output.read_bytes()).hexdigest()
     summary["per_case"] = [{"case_id": r["case_id"], "kind": r["kind"], "status": r["status"],
-        "reason": r["reason"], "claim_count": len(r["claims"]),
+        "reason": r["reason"], "validation_error": r.get("validation_error"),
+        "claim_count": len(r["claims"]),
         "draft_claim_count": len(r.get("draft",{}).get("claims",[])),
         "review_checks": [{k: v[k] for k in ("claim_id", "verdict", "population_match", "comparison_match", "outcome_match")} for v in r["review"]],
         "stages": [{k: c[k] for k in ("stage", "seconds", "new_tokens", "hit_output_limit", "max_new_tokens")}

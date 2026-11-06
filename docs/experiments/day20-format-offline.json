@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "offline-implementation-checked",
+  "checked_on": "2026-11-06",
+  "machine": "MacBook Air M3, 24 GB",
+  "python": "3.11.9",
+  "prompt_version": "cited-answer-v4",
+  "review_version": "claim-support-v4",
+  "tests_passed": 218,
+  "pip_check": "passed",
+  "git_diff_check": "passed",
+  "model_inference_run": false,
+  "heldout_used": false,
+  "generation_compliance_improvement_measured": false,
+  "day13_reference": {
+    "path": "docs/experiments/cited-answers.json",
+    "sha256": "a76faf425a1fd4fea6e48e369a01a2c622c1775834477c56e2edc35cb5b4ebd3",
+    "format_outcomes": {
+      "pilot": {
+        "case_count": 10,
+        "statuses": {
+          "answered": 1,
+          "insufficient_evidence": 0,
+          "partial": 3,
+          "validation_failed": 6
+        },
+        "visible_drafts": 4,
+        "visible_draft_rate": 0.4,
+        "validation_failure_rate": 0.6,
+        "failure_reasons": {
+          "Invalid JSON output": 1,
+          "Invalid cited claim": 1,
+          "Invalid claims or limitation codes": 3,
+          "Invalid or duplicate claim review": 1
+        }
+      },
+      "control": {
+        "case_count": 2,
+        "statuses": {
+          "answered": 0,
+          "insufficient_evidence": 2,
+          "partial": 0,
+          "validation_failed": 0
+        },
+        "visible_drafts": 0,
+        "visible_draft_rate": 0.0,
+        "validation_failure_rate": 0.0,
+        "failure_reasons": {}
+      }
+    }
+  },
+  "comparison_tool_check": "Historical aggregate compared with itself; 0 paired delta. This is a tool smoke check, not a new generation experiment.",
+  "remaining": [
+    "Restore original pilot contexts and raw calls if available.",
+    "Validate pinned Qwen inference and memory on the Air.",
+    "Measure v3/v4 on identical contexts with fresh output paths.",
+    "Evaluate schema-prompt token overhead with the actual tokenizer near full context budget.",
+    "Perform Day 21 semantic evaluation."
+  ]
+}
