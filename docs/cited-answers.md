@@ -27,7 +27,11 @@ is 6500 input tokens including instructions/chat overhead.
 Neither evidence nor overlong prompts are silently truncated.
 
 The draft is JSON with a status, bounded cited claims and controlled
-limitation codes. The prompt requests one to three claims; the parser accepts up to four.
+limitation codes. The v4 prompt and parser both allow at most three claims. Request-specific JSON
+Schema contracts enumerate the available quote IDs and review claim IDs. They
+are prompt instructions, not grammar-constrained decoding; the strict parsers
+remain authoritative. The Day 13 parser accepted up to four claims. The tighter
+limit does not establish improved model compliance; see [Day 20 status](day20-format-reliability.md).
 Every claim needs one to three exact catalog quotations. Unknown IDs, changed
 source spans, duplicate JSON keys, invented citation fields,
 model-written PMID/URL references and malformed or truncated output are rejected.
@@ -53,7 +57,10 @@ as answered, partial, or insufficiently supported. Partial answers retain only
 accepted claims. Empty contexts skip
 inference. A schema/quote/output-limit failure is `validation_failed`, with no
 visible draft; it is distinct from a finding that the supplied excerpts do not
-support an answer. No automatic repair or retry changes the model output.
+support an answer. No automatic repair or retry changes the model output. Format failures record
+`validation_error.stage` and `validation_error.code` alongside the human-readable
+reason; excessive arrays are rejected in full. Duplicate keys and nonfinite JSON
+values have distinct diagnostic codes.
 
 ## Pilot and limitations
 

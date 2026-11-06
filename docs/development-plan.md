@@ -1,7 +1,9 @@
 # Development plan
 
 Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
-Days 1–19 are complete; the next session is Day 20. The user accepted Dense
+Days 1–19 are complete. [Day 20 implementation](day20-format-reliability.md) is
+prepared and checked offline; model inference and the before/after comparison
+remain pending restoration of local artifacts. The user accepted Dense
 retrieval/ranking and Qwen3.5-9B generation on 2026-11-05; see the
 [primary-pipeline ADR](adr/0003-primary-pipeline.md). The chain is implemented;
 inference on the Air M3 (24 GB) still needs validation. Day numbers denote
