@@ -34,7 +34,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
         for name in ("pipeline.py", "reporting.py", "retrieval/dense.py", "retrieval/embeddings.py",
             "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "generation/context.py",
-            "generation/answers.py", "generation/contracts.py", "generation/quotes.py")}
+            "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],
         "embedding_artifact_id": index.embedding_manifest["artifact_id"],

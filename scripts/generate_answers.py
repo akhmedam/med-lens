@@ -19,6 +19,7 @@ from medlens.evaluation.formats import parse_queries
 from medlens.generation.context import canonical, digest, render_evidence, source_section
 from medlens.generation.answers import (PROMPT_VERSION, REVIEW_VERSION, check_context,
     generate_answer, render_answer)
+from medlens.generation.contracts import REVIEW_VALUES
 from medlens.inference.qwen import MODEL_ID, REVISION, QwenRuntime
 from medlens.parsing.dataset import load_dataset
 from medlens.retrieval.windows import load_windows
@@ -137,7 +138,7 @@ def main():
         "code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
             "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/generation/contracts.py",
             "src/medlens/inference/qwen.py", "src/medlens/inference/metal.py", "src/medlens/generation/quotes.py",
-            "src/medlens/generation/request_contexts.py", "src/medlens/resources.py")}}
+            "src/medlens/generation/request_contexts.py", "src/medlens/resources.py", "src/medlens/generation/reviews.py")}}
     report = {"schema_version": 1, "run_id": digest(identity), **identity, "status": "running",
         "started_at": datetime.now(timezone.utc).isoformat(), "per_case": [],
         "prompt_version": PROMPT_VERSION, "review_version": REVIEW_VERSION, "heldout_used": False,
@@ -180,7 +181,7 @@ def main():
         "reason": r["reason"], "validation_error": r.get("validation_error"),
         "claim_count": len(r["claims"]),
         "draft_claim_count": len(r.get("draft",{}).get("claims",[])),
-        "review_checks": [{k: v[k] for k in ("claim_id", "verdict", "population_match", "comparison_match", "outcome_match")} for v in r["review"]],
+        "review_checks": [{k: v[k] for k in ("claim_id", *REVIEW_VALUES)} for v in r["review"]],
         "stages": [{k: c[k] for k in ("stage", "seconds", "new_tokens", "hit_output_limit", "max_new_tokens")}
                    | {"input_tokens": c["prompt"]["input_tokens"], "prompt_sha256": c["prompt"]["prompt_sha256"]}
                    for c in r["model_calls"]],
