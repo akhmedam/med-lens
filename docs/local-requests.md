@@ -11,9 +11,9 @@ by Qwen9B generation: pass `--generate` and omit `--rerank`.
 From the project root, with the existing virtual environment and cached models:
 
 ```sh
-.venv/bin/python scripts/ask.py data/parsed/pilot-v1/p06 \
-  --windows data/windows/pilot-v1-002/p06 \
-  --embeddings data/embeddings/pilot-v1/p06 \
+.venv/bin/python scripts/ask.py data/parsed/recovery-20261106/p06 \
+  --windows data/windows/recovery-20261106/p06 \
+  --embeddings data/embeddings/recovery-20261106/p06 \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
   --generate --output-dir results/requests/gad-answer-example
 open results/requests/gad-answer-example/report.html
@@ -44,7 +44,7 @@ outcome-section preference was developed for treatment-efficacy questions.
    permutations preserve the dense order. Repack evidence when the order changes.
 4. If requested, use that same instance to generate and review a cited draft.
    Empty contexts abstain without a model call. Otherwise the generator and
-   strict gates from the Day 13 baseline are unchanged.
+   strict source/semantic gates remain active with the v6 string-ID contract.
 
 The default mode loads BGE and the cached Qwen tokenizer, but no Qwen weights.
 Retrieval/tokenizer-only operation can run with `HF_HUB_OFFLINE=1`. With Qwen,
@@ -106,3 +106,23 @@ protection. Raw request files stay under ignored `results/requests/`.
 
 A pooled corpus, new PubMed candidate fetching, a served API, independent answer
 assessment and more reliable generation remain open work.
+
+## Air recovery
+
+The [recovery guide](recovery-without-bundle.md) prepares public pinned assets and
+a separately versioned corpus without the lost archive. On the 24 GiB Air, the
+loader synchronizes and releases unused MPS cache after each original Metal
+conversion, restoring the scoped converter afterward. Arithmetic, FP16 runtime,
+4-bit/group-64 and context/output budgets are unchanged. Generation rejects NaN,
+positive infinity and fully masked score rows without repairing scores; ordinary
+negative-infinity token masks remain allowed. Unused cache is released after
+each call, including errors. One Qwen instance is loaded after BGE is released.
+See [measurements and limits](experiments/air-recovery.json); successful loading
+or pipeline completion alone does not imply a valid draft.
+
+The recovery CLI p01 request completed with one accepted partial-draft claim
+in 188.75 seconds including process startup/imports; its two visible citations
+matched exact sources. The p06 request completed but withheld an overlong draft.
+The separate ten-question recovered baseline yielded nine visible drafts and
+one output-limit failure; both controls abstained. These are single developmental
+runs, not an independent answer-quality evaluation.

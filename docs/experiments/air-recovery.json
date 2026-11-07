@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "status": "working-state-restored-with-historical-loss",
+  "checked_on": "2026-11-07",
+  "machine": "MacBook Air M3, 24 GiB",
+  "historical_replay": false,
+  "heldout_used": false,
+  "pinned_assets": {
+    "manifest": "configs/model-assets.json",
+    "manifest_sha256": "f5543a013e7ccb75adb808ed18cd588d3e186356decdda118bee4bf2a1b864a9",
+    "original_day19_manifest_sha256": "a449b51fc711c4bfc51c9842e83e32d5cf94c6e2c2512aa00393fbdf96cf2c90",
+    "verification": {
+      "status": "assets_ready",
+      "model_inference": false,
+      "models": [
+        {
+          "name": "bge",
+          "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+          "files_checked": 2,
+          "downloaded_files": []
+        },
+        {
+          "name": "bge_tokenizer",
+          "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+          "files_checked": 2,
+          "downloaded_files": []
+        },
+        {
+          "name": "medcpt",
+          "revision": "71caf65d4927987813984f54c284405a13fcca49",
+          "files_checked": 9,
+          "downloaded_files": []
+        },
+        {
+          "name": "qwen",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+          "files_checked": 9,
+          "downloaded_files": []
+        }
+      ],
+      "metal_kernel": {
+        "repo_id": "kernels-community/mlx-quantization-metal-kernels",
+        "revision": "6ed0fc4eff016df00830678eb96acb92a6a8f351",
+        "version": 1,
+        "files_checked": 5
+      }
+    },
+    "download_tool_fresh_cache_check": "One small model file and the original kernel downloaded and checksum-verified; full model weights verified in restored cache."
+  },
+  "rebuilt_corpus": {
+    "profile": "configs/collections/recovery-20261106.json",
+    "profile_sha256": "ec7986899ead1fae39044b2a2e023e8a398b6ff017cd47714d10bb9e32fddaa4",
+    "collections": 10,
+    "article_memberships": 300,
+    "unique_pmids": 277,
+    "windows": 909,
+    "embedding_dimension": 768,
+    "search_only_requests_passed": 10,
+    "inputs_check": "inputs_ready",
+    "historical_qrels_applied": false,
+    "source_scope": "Live PubMed collections fetched 2026-11-06; not historical snapshot identities."
+  },
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "dtype": "float16",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    },
+    "loading_strategy": "synchronize-and-release-conversion-cache",
+    "changes": "Synchronize and empty unused MPS cache after each original conversion; reject invalid scores without repair; empty unused cache after each generation.",
+    "cpu_inference_fallback": false,
+    "allocator_limit_override": false,
+    "original_short_attempt": {
+      "status": "both-cases-invalid-output-at-cap",
+      "sampled_mps_driver_bytes": 28587032576,
+      "sampled_system_swap_peak_bytes": 13322747904
+    },
+    "fixed_short_smoke": {
+      "status": "passed",
+      "loading": {
+        "strategy": "synchronize-and-release-conversion-cache",
+        "conversion_count": 248,
+        "sampled_conversion_driver_peak_bytes": 9706356736,
+        "driver_after_load_bytes": 8531951616
+      },
+      "local_report_sha256": "57c94ba3ff59e02b38c5a268dc5219aa28eddfb5ea28ba3c3abffe35411ff173"
+    },
+    "primary_cli_p06": {
+      "status": "complete",
+      "answer_status": "validation_failed",
+      "validation_error": {
+        "stage": "draft",
+        "code": "output_limit"
+      },
+      "runtime_load_count": 1,
+      "timings": {
+        "retrieval_seconds": 0.896719916992879,
+        "context_seconds": 0.00899629200284835,
+        "reranking_seconds": 0.0006042500026524067,
+        "answer_seconds": 245.36904275000416,
+        "pipeline_seconds": 246.27979529200093
+      },
+      "loading": {
+        "strategy": "synchronize-and-release-conversion-cache",
+        "conversion_count": 248,
+        "sampled_conversion_driver_peak_bytes": 9605693440
+      },
+      "sampled_process_peak_rss_bytes": 4605870080,
+      "system_swap_before_bytes": 2190802944,
+      "sampled_system_swap_peak_bytes": 2190802944,
+      "system_swap_after_bytes": 2090139648,
+      "local_report_sha256": "cf9309083875135ea1d5adb04796fd1ac03b546b450124c0ab75641f0493af3a"
+    },
+    "measurement_limits": "Single-run observations, not a controlled memory benchmark. RSS, tensors and driver share unified memory; do not add them. Conversion peaks are sampled at conversion boundaries, not total inference peaks. Low-level cause of the original output collapse was not definitively isolated.",
+    "primary_cli_p01": {
+      "status": "complete",
+      "answer_status": "partial",
+      "accepted_claim_count": 1,
+      "exact_citations_checked": 2,
+      "offline_replay_calls": 2,
+      "runtime_load_count": 1,
+      "timings": {
+        "retrieval_seconds": 1.1179361670001526,
+        "context_seconds": 0.008823625001241453,
+        "reranking_seconds": 0.0006376669989549555,
+        "answer_seconds": 184.84041883300233,
+        "pipeline_seconds": 185.97314950000145
+      },
+      "including_process_startup_seconds": 188.7500729999956,
+      "loading": {
+        "strategy": "synchronize-and-release-conversion-cache",
+        "conversion_count": 248,
+        "sampled_conversion_driver_peak_bytes": 9689579520
+      },
+      "sampled_process_peak_rss_bytes": 4477911040,
+      "system_swap_before_bytes": 1754595328,
+      "sampled_system_swap_peak_bytes": 1754595328,
+      "system_swap_after_bytes": 1754595328,
+      "local_report_sha256": "1644a7b0028a816c8f2c38afbd5a68f8c8dee2e7a223817e18cf3c8c53e41414"
+    }
+  },
+  "generation": {
+    "summary": "docs/experiments/recovery-generation.json",
+    "prompt_version": "cited-answer-v6",
+    "review_version": "claim-support-v4",
+    "format_outcomes": {
+      "pilot": {
+        "case_count": 10,
+        "statuses": {
+          "answered": 6,
+          "insufficient_evidence": 0,
+          "partial": 3,
+          "validation_failed": 1
+        },
+        "visible_drafts": 9,
+        "visible_draft_rate": 0.9,
+        "validation_failure_rate": 0.1,
+        "failure_reasons": {
+          "Draft output limit reached": 1
+        }
+      },
+      "control": {
+        "case_count": 2,
+        "statuses": {
+          "answered": 0,
+          "insufficient_evidence": 2,
+          "partial": 0,
+          "validation_failed": 0
+        },
+        "visible_drafts": 0,
+        "visible_draft_rate": 0.0,
+        "validation_failure_rate": 0.0,
+        "failure_reasons": {}
+      }
+    },
+    "accepted_claim_count": 22,
+    "paired_historical_comparison": false,
+    "clinical_accuracy_measured": false,
+    "source_audit": {
+      "schema_version": 1,
+      "status": "passed",
+      "model_inference": false,
+      "heldout_used": false,
+      "report_sha256": "78a42e3cc8531584bc396317df4a77618d8f2772fa90ef41be46a3ab0fb5d5e1",
+      "context_manifest_sha256": "a094faeef083fa0364b46f09be986c1f9daaeebe5454c545041c9f944c410af5",
+      "cases_replayed": 12,
+      "cached_calls_replayed": 20,
+      "catalog_entries_resolved_including_reused_control_sources": 284,
+      "visible_citations_source_checked": 29,
+      "source_windows_and_metadata_verified": true,
+      "recorded_code_hashes_match": true,
+      "all_statuses_claims_reviews_and_rendered_answers_match": true,
+      "semantic_quality_assessment": false
+    }
+  },
+  "near_budget_tokenizer_check": {
+    "status": "passed",
+    "model_inference": false,
+    "synthetic_budget_check": true,
+    "heldout_used": false,
+    "original_evidence_tokens": 3910,
+    "quote_indexed_evidence_tokens": 4000,
+    "draft_input_tokens": 4774,
+    "review_input_tokens": 5015,
+    "max_input_tokens": 6500,
+    "max_evidence_tokens": 4000,
+    "production_generate_answer_path": true,
+    "limitations": "Real-tokenizer prompt packing with synthetic source and fake model outputs; no inference or semantic evidence."
+  },
+  "offline_checks": {
+    "unit_tests_passed": 247,
+    "pip_check": "No broken requirements found.",
+    "git_diff_check": "passed"
+  },
+  "remaining_limits": [
+    "Exact historical snapshots, vectors, rankings and raw Qwen calls remain unavailable; aggregate reports cannot reconstruct them.",
+    "Output caps/schema errors still withhold drafts; visible findings require independent review.",
+    "No held-out, independent clinical assessment or real inference at the full evidence budget.",
+    "A controlled Day 20 before/after comparison requires identical newly bound contexts for both variants."
+  ]
+}

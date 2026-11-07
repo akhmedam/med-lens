@@ -95,6 +95,7 @@ def main() -> int:
         if not args.run:
             report["status"] = "preflight_passed"
         else:
+            from medlens.inference.metal import RequireFiniteScores, bounded_metal_loading
             from huggingface_hub import HfApi
             from huggingface_hub.utils import get_session
 
@@ -131,13 +132,17 @@ def main() -> int:
             tokenizer = AutoTokenizer.from_pretrained(report["model_id"], revision=info.sha, token=False, trust_remote_code=False)
             report["stage"] = "load_model"
             load_started = time.perf_counter()
-            model = Qwen3_5ForCausalLM.from_pretrained(
-                report["model_id"], revision=info.sha, token=False,
-                device_map="mps", dtype=torch.float16,
-                quantization_config=config, trust_remote_code=False,
-                attn_implementation="sdpa",
-            ).eval()
+            with bounded_metal_loading() as loading:
+                model = Qwen3_5ForCausalLM.from_pretrained(
+                    report["model_id"], revision=info.sha, token=False,
+                    device_map="mps", dtype=torch.float16,
+                    quantization_config=config, trust_remote_code=False,
+                    attn_implementation="sdpa",
+                ).eval()
             torch.mps.synchronize()
+            torch.mps.empty_cache()
+            loading["driver_after_load_bytes"] = torch.mps.driver_allocated_memory()
+            report["loading"] = loading
             report["load_seconds_including_download"] = time.perf_counter() - load_started
             report["parameter_devices"] = sorted({str(p.device) for p in model.parameters()})
             report["module_types"] = sorted({f"{type(m).__module__}.{type(m).__name__}" for m in model.modules() if "metal" in type(m).__module__.lower()})
@@ -178,7 +183,8 @@ def main() -> int:
                 torch.mps.synchronize()
                 t0 = time.perf_counter()
                 with torch.inference_mode():
-                    output = model.generate(**inputs, max_new_tokens=128, do_sample=False)
+                    output = model.generate(**inputs, max_new_tokens=128, do_sample=False,
+                        logits_processor=[RequireFiniteScores()])
                 torch.mps.synchronize()
                 seconds = time.perf_counter() - t0
                 generated = output[0, inputs["input_ids"].shape[-1]:]

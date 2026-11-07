@@ -18,20 +18,47 @@ def supported(claim_id="C1"):
 
 
 class AnswerContractTests(unittest.TestCase):
+    def test_protocols_are_explicit_and_resolve_identical_source_spans(self):
+        context = helpers.context()
+        catalog = quote_catalog(context, helpers.Tokenizer())["catalog"]
+        ids = helpers.draft()
+        objects = copy.deepcopy(ids)
+        objects["claims"][0]["citations"] = [{"quote_id": "E1.Q1"}]
+        a = parse_draft(json.dumps(ids), context, catalog=catalog, citation_format="strings")
+        b = parse_draft(json.dumps(objects), context, catalog=catalog)
+        self.assertEqual(a["claims"], b["claims"])
+        for value, protocol in ((ids, "objects"), (objects, "strings")):
+            with self.assertRaises(AnswerError):
+                parse_draft(json.dumps(value), context, catalog=catalog, citation_format=protocol)
+
+    def test_string_protocol_still_rejects_unknown_ids_and_extra_fields(self):
+        context = helpers.context()
+        catalog = quote_catalog(context, helpers.Tokenizer())["catalog"]
+        for modify in (
+            lambda d: d["claims"][0].update(citations=["E99.Q1"]),
+            lambda d: d["claims"][0].update(citations=["E1.Q1", "E1.Q1"]),
+            lambda d: d["claims"][0].update(limitations=[]),
+            lambda d: d.pop("limitations"),
+            lambda d: d.update(summary="Unchecked text"),
+        ):
+            draft = helpers.draft()
+            modify(draft)
+            with self.assertRaises(AnswerError):
+                parse_draft(json.dumps(draft), context, catalog=catalog, citation_format="strings")
+
     def test_draft_schema_lists_only_current_quote_ids(self):
         schema = draft_contract(["E2.Q3", "E1.Q1"])
         claims = schema["properties"]["claims"]
         self.assertEqual(claims["maxItems"], 3)
         self.assertEqual(claims["items"]["properties"]["citations"]["maxItems"], 3)
-        self.assertEqual(claims["items"]["properties"]["citations"]["items"][
-            "properties"]["quote_id"]["enum"], ["E1.Q1", "E2.Q3"])
+        self.assertEqual(claims["items"]["properties"]["citations"]["items"]["enum"], ["E1.Q1", "E2.Q3"])
         self.assertFalse(schema["additionalProperties"])
         self.assertEqual(schema["then"]["properties"]["claims"]["maxItems"], 0)
         self.assertEqual(schema["else"]["properties"]["claims"]["minItems"], 1)
 
     def test_prompt_contains_live_contracts_without_changing_output_budgets(self):
         draft = helpers.draft()
-        draft["claims"].append({"text": "Another finding.", "citations": [{"quote_id": "E1.Q1"}]})
+        draft["claims"].append({"text": "Another finding.", "citations": ["E1.Q1"]})
         runtime = helpers.FakeRuntime([draft, [supported(), supported("C2")]])
         result = generate_answer("Question", helpers.context(), runtime)
         self.assertEqual(result["status"], "partial")
@@ -62,7 +89,7 @@ class AnswerContractTests(unittest.TestCase):
             draft = helpers.draft()
             draft["claims"][0]["citations"] *= count
             with self.subTest(count=count), self.assertRaises(AnswerError) as caught:
-                parse_draft(json.dumps(draft), context, catalog=catalog)
+                parse_draft(json.dumps(draft), context, catalog=catalog, citation_format="strings")
             self.assertEqual(caught.exception.code, code)
 
     def test_invalid_review_enum_reports_review_stage_and_withholds_everything(self):

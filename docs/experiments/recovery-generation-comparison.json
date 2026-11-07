@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "inference_run": false,
+  "heldout_used": false,
+  "comparable": false,
+  "identity_differences": [
+    "resource_scope_or_judgment_policy",
+    "context_report_sha256",
+    "profile_sha256",
+    "qrels_sha256"
+  ],
+  "baseline": {
+    "pilot": {
+      "case_count": 10,
+      "statuses": {
+        "answered": 1,
+        "insufficient_evidence": 0,
+        "partial": 3,
+        "validation_failed": 6
+      },
+      "visible_drafts": 4,
+      "visible_draft_rate": 0.4,
+      "validation_failure_rate": 0.6,
+      "failure_reasons": {
+        "Invalid JSON output": 1,
+        "Invalid cited claim": 1,
+        "Invalid claims or limitation codes": 3,
+        "Invalid or duplicate claim review": 1
+      }
+    },
+    "control": {
+      "case_count": 2,
+      "statuses": {
+        "answered": 0,
+        "insufficient_evidence": 2,
+        "partial": 0,
+        "validation_failed": 0
+      },
+      "visible_drafts": 0,
+      "visible_draft_rate": 0.0,
+      "validation_failure_rate": 0.0,
+      "failure_reasons": {}
+    }
+  },
+  "candidate": {
+    "pilot": {
+      "case_count": 10,
+      "statuses": {
+        "answered": 6,
+        "insufficient_evidence": 0,
+        "partial": 3,
+        "validation_failed": 1
+      },
+      "visible_drafts": 9,
+      "visible_draft_rate": 0.9,
+      "validation_failure_rate": 0.1,
+      "failure_reasons": {
+        "Draft output limit reached": 1
+      }
+    },
+    "control": {
+      "case_count": 2,
+      "statuses": {
+        "answered": 0,
+        "insufficient_evidence": 2,
+        "partial": 0,
+        "validation_failed": 0
+      },
+      "visible_drafts": 0,
+      "visible_draft_rate": 0.0,
+      "validation_failure_rate": 0.0,
+      "failure_reasons": {}
+    }
+  },
+  "pilot_status_transitions": null,
+  "pilot_visible_draft_rate_delta": null,
+  "interpretation": "Format outcomes only, not semantic accuracy. Different contexts, model, package versions or output budgets prevent a controlled format comparison.",
+  "baseline_sha256": "a76faf425a1fd4fea6e48e369a01a2c622c1775834477c56e2edc35cb5b4ebd3",
+  "candidate_sha256": "d708794101f61de833dc72703675c717d7d4e16ae6bed97afdcf910e3ff2b56f"
+}

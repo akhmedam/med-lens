@@ -42,10 +42,14 @@ gates. Empty/insufficient evidence can produce an explicit abstention, malformed
 answers are withheld, and completed search remains available after model errors.
 Same-model support review is not independent verification.
 
-Target: Air M3, 24 GiB. Model loading, sustained speed and memory use on that
-machine still require measurement. The choice of Qwen9B is accepted; its support
-on that hardware is not yet established. Any later model/runtime change should
-be recorded as a new explicit decision.
+Target: Air M3, 24 GiB. The [2026-11-07 recovery record](../experiments/air-recovery.json)
+validates short inference and execution of the primary CLI with bounded Metal
+conversion cache lifetimes; p01 produced a partial draft and p06 withheld an
+overlong draft. This establishes
+the measured runtime scope, not universal format or clinical reliability. Original
+model revision, FP16/4-bit/group-64, budgets and semantic gates are unchanged.
+Full-budget inference remains open; future model/quantization changes require
+a separate explicit decision.
 
 ## Existing integration and continuation
 

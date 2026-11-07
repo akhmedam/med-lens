@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "source": "Day 19 transfer manifest; public pinned model assets only",
+  "models": {
+    "bge": {
+      "repo_id": "BAAI/bge-base-en-v1.5",
+      "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+      "directory": ".cache/models/bge-base-en-v1.5",
+      "files": {
+        "config.json": {
+          "bytes": 777,
+          "sha256": "bc00af31a4a31b74040d73370aa83b62da34c90b75eb77bfa7db039d90abd591"
+        },
+        "model.safetensors": {
+          "bytes": 437955512,
+          "sha256": "c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7"
+        }
+      }
+    },
+    "bge_tokenizer": {
+      "repo_id": "BAAI/bge-base-en-v1.5",
+      "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+      "directory": ".cache/tokenizers/bge-base-en-v1.5",
+      "files": {
+        "tokenizer.json": {
+          "bytes": 711396,
+          "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+        },
+        "tokenizer_config.json": {
+          "bytes": 443,
+          "sha256": "649e41f8cf1cb1b67acc193795ccaef07bcaa3c4e0fc7d286ba8255fab79cffa"
+        }
+      }
+    },
+    "medcpt": {
+      "repo_id": "ncbi/MedCPT-Cross-Encoder",
+      "revision": "71caf65d4927987813984f54c284405a13fcca49",
+      "directory": ".cache/models/medcpt-cross-encoder",
+      "files": {
+        "config.json": {
+          "bytes": 741,
+          "sha256": "1f375c7e8081f043c99fdb9c80059c44ed757cce7b05d333b7f3c81b1b713a42"
+        },
+        "pytorch_model.bin": {
+          "bytes": 437998062,
+          "sha256": "61d5ccd48869e03500544525fc231641d7daa9ba267b202c82724750038dc1e0"
+        },
+        "tokenizer.json": {
+          "bytes": 706277,
+          "sha256": "6e046044df8a2fcedb10607075dca187cae61d806c0d80a96c5b81017edc90c9"
+        },
+        "tokenizer_config.json": {
+          "bytes": 1556,
+          "sha256": "25e63abb25f637aa24981117b13394370693dd7bc140903d95008599b3abc1a9"
+        },
+        "added_tokens.json": {
+          "bytes": 74,
+          "sha256": "691a5ce0135045c12b8410af8d472ff8de864094df40ac9af418d6c644c7588d"
+        },
+        "special_tokens_map.json": {
+          "bytes": 228,
+          "sha256": "cb63d0cbbf45160dc9cd786a257759593b798ae0c72957011016dbc3972df4e4"
+        },
+        "vocab.txt": {
+          "bytes": 226150,
+          "sha256": "79489a52be45e6fa033521e8ce8e4f62aedc0a742ee2aa6fc04667e5b0b1454d"
+        },
+        "LICENSE": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "README.md": {
+          "bytes": 4236,
+          "sha256": "8ab1ceed3beea346789e0b9cd7e04d6373dcf8b738fb63b996c7d97bb25df2ec"
+        }
+      }
+    },
+    "qwen": {
+      "repo_id": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "directory": ".cache/huggingface/hub/models--Qwen--Qwen3.5-9B/snapshots/c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "files": {
+        "chat_template.jinja": {
+          "bytes": 7756,
+          "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+        },
+        "config.json": {
+          "bytes": 3126,
+          "sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05"
+        },
+        "model.safetensors.index.json": {
+          "bytes": 79657,
+          "sha256": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5"
+        },
+        "tokenizer.json": {
+          "bytes": 12807982,
+          "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42"
+        },
+        "tokenizer_config.json": {
+          "bytes": 16710,
+          "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8"
+        },
+        "model.safetensors-00001-of-00004.safetensors": {
+          "bytes": 5276436216,
+          "sha256": "db6f444b43d318c92f360a13a25561a6a65b10c0631b8ed305a426dbaa6c380e"
+        },
+        "model.safetensors-00002-of-00004.safetensors": {
+          "bytes": 5335161512,
+          "sha256": "31c7d7e2dd5d207840b31cc59083c8f4c4718959149e0358c0364052bb9a0330"
+        },
+        "model.safetensors-00003-of-00004.safetensors": {
+          "bytes": 5368717440,
+          "sha256": "7ec36ba3a4176a44c3c0876ad80c56a2f70c84bf008d82e9501df642f17dadec"
+        },
+        "model.safetensors-00004-of-00004.safetensors": {
+          "bytes": 3325995712,
+          "sha256": "b62b0c4cd7e44edee103ee8f4fe225f246d5e768e07bfd5f25b63a8aa1fdd0c6"
+        }
+      }
+    }
+  },
+  "metal_kernel": {
+    "repo_id": "kernels-community/mlx-quantization-metal-kernels",
+    "revision": "6ed0fc4eff016df00830678eb96acb92a6a8f351",
+    "version": 1,
+    "directory": ".cache/huggingface/hub/kernels--kernels-community--mlx-quantization-metal-kernels/snapshots/6ed0fc4eff016df00830678eb96acb92a6a8f351/build/torch214-metal-aarch64-darwin",
+    "files": {
+      "__init__.py": {
+        "bytes": 4517,
+        "sha256": "44f2829ff72b9e5c4f3d13378d596b384f77f38d240f1a2d336fc1d13c36469e"
+      },
+      "_mlx_quantization_metal_kernels_metal_89d4054.abi3.so": {
+        "bytes": 40011496,
+        "sha256": "5f8f2a03c368ec0e628a8c8a13e50371bbf66c0df4b68f470cd77722148e7598"
+      },
+      "_ops.py": {
+        "bytes": 294,
+        "sha256": "aea051b9a406295b08628e5f422d54c2c4b38c293716cf9971f415daf603f95b"
+      },
+      "metadata.json": {
+        "bytes": 838,
+        "sha256": "4a48453688feb25be06319cf1b704006a4baf80b81d7a88979318ff0b7543945"
+      },
+      "metadata.json.sigstore": {
+        "bytes": 10769,
+        "sha256": "24a8d5ee14c5f39b18d06ae559a3dce7db093f478c036c026bf4cf9d0eaebaae"
+      }
+    }
+  },
+  "source_manifest_sha256": "a449b51fc711c4bfc51c9842e83e32d5cf94c6e2c2512aa00393fbdf96cf2c90"
+}

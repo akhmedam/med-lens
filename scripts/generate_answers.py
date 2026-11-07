@@ -82,8 +82,10 @@ def control_context(parent, sources, tokenizer):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("contexts", type=Path)
-    parser.add_argument("--profile", type=Path, default=ROOT / "benchmarks/pilot-v1/evaluation.json")
+    parser.add_argument("contexts", type=Path, help="Saved context report, or request directory with --collections")
+    source = parser.add_mutually_exclusive_group()
+    source.add_argument("--profile", type=Path, default=ROOT / "benchmarks/pilot-v1/evaluation.json")
+    source.add_argument("--collections", type=Path, help="Rebuilt-pilot collection profile; contexts is a request directory")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--include-controls", action="store_true")
@@ -91,7 +93,11 @@ def main():
     args = parser.parse_args()
     if args.output.resolve() == args.summary.resolve() or args.output.exists() or args.summary.exists():
         parser.error("Choose two distinct unused paths")
-    artifact, artifact_hash = load_cases(args.contexts, args.profile)
+    if args.collections:
+        from medlens.generation.request_contexts import load_request_contexts
+        artifact, artifact_hash = load_request_contexts(ROOT, args.contexts, args.collections)
+    else:
+        artifact, artifact_hash = load_cases(args.contexts, args.profile)
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=REVISION, token=False,
         trust_remote_code=False, local_files_only=True)
@@ -130,10 +136,14 @@ def main():
         "qrels_sha256": artifact["qrels_sha256"], "case_ids": [c["case_id"] for c in cases],
         "code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
             "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/generation/contracts.py",
-            "src/medlens/inference/qwen.py", "src/medlens/generation/quotes.py")}}
+            "src/medlens/inference/qwen.py", "src/medlens/inference/metal.py", "src/medlens/generation/quotes.py",
+            "src/medlens/generation/request_contexts.py", "src/medlens/resources.py")}}
     report = {"schema_version": 1, "run_id": digest(identity), **identity, "status": "running",
         "started_at": datetime.now(timezone.utc).isoformat(), "per_case": [],
-        "prompt_version": PROMPT_VERSION, "review_version": REVIEW_VERSION, "heldout_used": False}
+        "prompt_version": PROMPT_VERSION, "review_version": REVIEW_VERSION, "heldout_used": False,
+        "resource_scope": artifact.get("resource_scope", "original-frozen-pilot"),
+        "relevance_judgments_bound": artifact.get("relevance_judgments_bound", True),
+        "source_requests": artifact.get("source_requests")}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as f:json.dump(report, f, indent=2)
     def checkpoint():

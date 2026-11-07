@@ -27,10 +27,7 @@ def draft_contract(quote_ids):
                 "required": ["text", "citations"], "properties": {
                     "text": {"type": "string", "minLength": 1, "maxLength": MAX_CLAIM_CHARS},
                     "citations": {"type": "array", "minItems": 1, "maxItems": MAX_CITATIONS,
-                        "uniqueItems": True, "items": {
-                            "type": "object", "additionalProperties": False,
-                            "required": ["quote_id"], "properties": {
-                                "quote_id": {"enum": sorted(quote_ids)}}}},
+                        "uniqueItems": True, "items": {"type": "string", "enum": sorted(quote_ids)}},
                 }}},
             "limitations": {"type": "array", "uniqueItems": True,
                 "items": {"enum": sorted(LIMITATIONS)}},

@@ -24,7 +24,7 @@ def legacy_draft():
 
 def draft():
     d=legacy_draft()
-    d['claims'][0]['citations']=[{'quote_id':'E1.Q1'}]
+    d['claims'][0]['citations']=['E1.Q1']
     return d
 
 
@@ -110,7 +110,7 @@ class AnswerTests(unittest.TestCase):
         d=draft()
         d['status']='answered'
         d['claims'].append({'text':'An unsupported extension.',
-            'citations':[{'quote_id':'E1.Q1'}]})
+            'citations':['E1.Q1']})
         rt=FakeRuntime([d,[{'claim_id':'C1','verdict':'supported','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'},
                          {'claim_id':'C2','verdict':'unclear','population_match':'match','comparison_match':'not_requested','outcome_match':'match','reason':'missing_details'}]])
         r=generate_answer('Question',context(),rt)
@@ -169,9 +169,9 @@ class AnswerTests(unittest.TestCase):
     def test_quote_ids_resolve_exactly_and_cannot_invent_text(self):
         from medlens.generation.quotes import quote_catalog,resolve_quote
         c=context();catalog=quote_catalog(c,Tokenizer())
-        value=parse_draft(json.dumps(draft()),c,catalog=catalog['catalog'])
+        value=parse_draft(json.dumps(draft()),c,catalog=catalog['catalog'],citation_format='strings')
         self.assertEqual(value['claims'][0]['citations'][0]['quote'],'alpha beta gamma')
-        d=draft();d['claims'][0]['citations'][0]['quote_id']='E99.Q9'
-        with self.assertRaises(AnswerError):parse_draft(json.dumps(d),c,catalog=catalog['catalog'])
+        d=draft();d['claims'][0]['citations'][0]='E99.Q9'
+        with self.assertRaises(AnswerError):parse_draft(json.dumps(d),c,catalog=catalog['catalog'],citation_format='strings')
         changed=copy.deepcopy(catalog['catalog']);changed['E1.Q1']['char_start']+=1
         with self.assertRaises(ValueError):resolve_quote(c,changed,'E1.Q1')
