@@ -13,12 +13,16 @@
   "generator_runtime": "Transformers/MPS; Metal 4-bit, group 64",
   "support_review": "same Qwen instance, sequentially; not independent verification",
   "primary_reranker": null,
-  "primary_cli_flags": ["--generate"],
+  "primary_cli_flags": [
+    "--generate"
+  ],
   "historical_rerank_flag_in_primary_workflow": false,
   "search_only_role": "diagnostic mode and partial results after generation failure",
   "target_machine": "MacBook Air M3, 24 GiB",
-  "target_qwen_inference_validated": false,
+  "target_qwen_inference_validated": true,
   "runtime_code_changed_by_decision": false,
   "transfer_payload_changed_by_decision": false,
-  "heldout_used": false
+  "heldout_used": false,
+  "target_validation_scope": "Short smoke; primary CLI p01 partial draft with exact citations; primary CLI p06 overlong draft withheld; complete rebuilt development pilot (9/10 visible, 2/2 controls abstained)",
+  "target_validation_record": "docs/experiments/air-recovery.json"
 }

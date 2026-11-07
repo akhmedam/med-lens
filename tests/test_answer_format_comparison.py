@@ -52,6 +52,20 @@ class FormatComparisonTests(unittest.TestCase):
                 self.assertIsNone(result["pilot_visible_draft_rate_delta"])
                 self.assertIsNone(result["pilot_status_transitions"])
 
+    def test_unjudged_rebuilt_scope_requires_explicit_matching_policy(self):
+        a, b = report(), report()
+        for row in (a, b):
+            row.update(resource_scope="rebuilt-pilot", relevance_judgments_bound=False, qrels_sha256=None)
+        self.assertTrue(compare_formats(a, b)["comparable"])
+        for change in ({"resource_scope": "original-frozen-pilot"},
+                       {"relevance_judgments_bound": True}, {"relevance_judgments_bound": 0},
+                       {"qrels_sha256": "unexpected"}):
+            candidate = copy.deepcopy(b); candidate.update(change)
+            self.assertFalse(compare_formats(a, candidate)["comparable"])
+        for row in (a, b):
+            row.pop("resource_scope"); row.pop("relevance_judgments_bound")
+        self.assertFalse(compare_formats(a, b)["comparable"])
+
     def test_model_or_budget_changes_are_separate_factors(self):
         for key in ("model_id", "revision", "quantization", "packages"):
             candidate = report()

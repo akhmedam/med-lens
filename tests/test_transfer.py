@@ -49,6 +49,19 @@ class TransferTests(unittest.TestCase):
         self.assertFalse((self.dest/'.venv').exists())
         self.assertEqual(restore(self.bundle, self.dest)['existing_identical_files'], 3)
 
+    def test_tracked_recovery_configs_are_bound_before_restore(self):
+        name = 'configs/collections/rebuilt.json'
+        self.put(name, b'{"version": "bound"}')
+        subprocess.run(['git', '-C', str(self.root), 'add', name], check=True)
+        made = pack(self.root, self.bundle)
+        self.assertIn(name, made['checkout_sha256'])
+        target = self.dest/name; target.parent.mkdir(parents=True)
+        target.write_text('{"version": "other"}')
+        with self.assertRaisesRegex(ValueError, 'Checkout differs'):
+            restore(self.bundle, self.dest)
+        self.assertFalse((self.dest/'data').exists())
+        self.assertEqual(target.read_text(), '{"version": "other"}')
+
     def test_corruption_fails_before_destination_writes(self):
         manifest = pack(self.root, self.bundle, part_bytes=2048)
         part = self.bundle/manifest['parts'][0]['name']

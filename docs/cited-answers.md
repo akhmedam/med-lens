@@ -27,7 +27,9 @@ is 6500 input tokens including instructions/chat overhead.
 Neither evidence nor overlong prompts are silently truncated.
 
 The draft is JSON with a status, bounded cited claims and controlled
-limitation codes. The v4 prompt and parser both allow at most three claims. Request-specific JSON
+limitation codes. The current v6 prompt and parser allow at most three claims.
+Citations are exact ID strings (`"citations":["E1.Q1"]`), resolved through the
+trusted sentence catalog. Request-specific JSON
 Schema contracts enumerate the available quote IDs and review claim IDs. They
 are prompt instructions, not grammar-constrained decoding; the strict parsers
 remain authoritative. The Day 13 parser accepted up to four claims. The tighter
@@ -35,8 +37,9 @@ limit does not establish improved model compliance; see [Day 20 status](day20-fo
 Every claim needs one to three exact catalog quotations. Unknown IDs, changed
 source spans, duplicate JSON keys, invented citation fields,
 model-written PMID/URL references and malformed or truncated output are rejected.
-Limitations may appear at the root or inside claims; both layouts are explicitly
-recognized and combined without changing claim text or references. Unknown fields
+The v6 parser explicitly requires root limitations and string citations. The
+separate legacy object-citation mode retains per-claim limitations and free-quote
+compatibility. There is no automatic format detection or coercion. Unknown fields
 and limitation codes remain errors. PMID links come from the trusted source map.
 The renderer uses accepted claims only; it never displays an unchecked free-text
 summary alongside them.
@@ -62,7 +65,29 @@ support an answer. No automatic repair or retry changes the model output. Format
 reason; excessive arrays are rejected in full. Duplicate keys and nonfinite JSON
 values have distinct diagnostic codes.
 
-## Pilot and limitations
+## Current recovery baseline
+
+The [Air recovery](experiments/air-recovery.json) uses newly fetched development
+collections and primary Dense-only contexts. It does not replay the lost Day 13
+corpus or establish a paired improvement over its aggregate. Local v4/v5 p06
+probes failed the object-citation contract; v6 explicitly requests ID strings.
+A single developmental v6 p06 probe produced two accepted draft claims, but the
+ordinary full CLI p06 context exceeded the draft output cap and was withheld.
+A separate ordinary CLI p01 request completed with a partial draft and exact
+source citations in 188.75 seconds including Python startup/imports. It loaded
+Qwen once for two calls, with no sampled system swap growth.
+The [recovered-corpus baseline](experiments/recovery-generation.json) completed
+ten questions: six `answered`, three `partial`, one withheld at the draft output
+cap, with 22 accepted draft claims. Both controls abstained. Offline replay of
+20 cached calls reproduced all twelve statuses, claims, reviews and rendered
+answers; 284 catalog entries including controls and 29 visible citations resolved
+to exact source spans. Median summed model-call time was 150.83 seconds per pilot
+question, excluding 22.49-second model load and report overhead. These are Air
+observations, not clinical accuracy. The [historical comparison](experiments/recovery-generation-comparison.json)
+is descriptive and reports no paired delta. No held-out tuning was performed. Follow the [recovery guide](recovery-without-bundle.md)
+for the `--collections` route without historical artifacts.
+
+## Historical pilot and limitations
 
 The first coarse support-review run was stopped after p01. It accepted a
 teenager-only finding in an adult answer, and accepted a comparison between

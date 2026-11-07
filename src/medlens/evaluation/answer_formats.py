@@ -54,7 +54,17 @@ def summarize_formats(report):
 def compare_formats(baseline, candidate):
     before, after = summarize_formats(baseline), summarize_formats(candidate)
     differences = []
+    def scope(report):
+        return (report.get("resource_scope", "original-frozen-pilot"),
+                report.get("relevance_judgments_bound", True))
+    if scope(baseline) != scope(candidate):
+        differences.append("resource_scope_or_judgment_policy")
+    unjudged = all(r.get("resource_scope") == "rebuilt-pilot"
+                   and r.get("relevance_judgments_bound") is False
+                   and r.get("qrels_sha256") is None for r in (baseline, candidate))
     for key in ("context_report_sha256", "profile_sha256", "qrels_sha256"):
+        if key == "qrels_sha256" and unjudged:
+            continue
         if not baseline.get(key) or baseline.get(key) != candidate.get(key):
             differences.append(key)
     if [(r["case_id"], r["kind"]) for r in baseline["per_case"]] != [

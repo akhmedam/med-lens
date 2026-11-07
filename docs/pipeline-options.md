@@ -105,4 +105,6 @@ pre-decision evidence, not the current accepted ADR:
 ```
 
 The held-out questions remain reserved for Day 26. The selected pipeline is
-implemented; Qwen inference on the Air and generation quality work remain open.
+implemented. [Air restoration](experiments/air-recovery.json) now records short
+inference and primary-CLI execution with bounded conversion cache lifetimes.
+Full-budget inference and generation quality work remain open.

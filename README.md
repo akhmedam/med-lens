@@ -10,7 +10,7 @@ system.
 ## Status
 
 PubMed ingestion, verified snapshot replay, and structured XML parsing work.
-Search supports BM25, exact dense retrieval, and RRF. The historical pilot replay uses
+Search supports BM25, exact dense retrieval, and RRF. The recorded historical pilot uses
 `pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
 rerank frozen top-10 lists through
 Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
@@ -36,8 +36,11 @@ Follow the [handoff guide](docs/handoff.md) to clone the code, restore the check
 local-artifact bundle and rebuild Python 3.11 dependencies. Pilot labels and
 provenance are tracked; model weights, primary texts, vectors and raw runs are
 transferred separately. The [pipeline decision](docs/pipeline-options.md) is
-accepted: Dense search/ranking and Qwen9B generation. Qwen inference on the Air
-M3 with 24 GB is not yet validated.
+accepted: Dense search/ranking and Qwen9B generation. If the archive is lost,
+follow [recovery without a bundle](docs/recovery-without-bundle.md). Pinned assets
+and a separate 277-paper/909-window corpus were recovered on the Air M3, 24 GiB;
+see the [Air recovery record](docs/experiments/air-recovery.json) for measured
+runtime scope and format failures. Historical raw experiments remain lost.
 
 ## Setup
 
@@ -52,7 +55,7 @@ python -m pip install -e .
 PubMed ingestion uses the standard library. For the local model on Apple Silicon:
 
 ```sh
-python -m pip install -r requirements-macos-arm64.lock
+python -m pip install -r requirements-macos-arm64-day19.lock
 ```
 
 ## Ask a question
@@ -60,9 +63,9 @@ python -m pip install -r requirements-macos-arm64.lock
 Run the selected Dense → context → Qwen9B workflow against a prepared collection:
 
 ```sh
-python scripts/ask.py data/parsed/pilot-v1/p06 \
-  --windows data/windows/pilot-v1-002/p06 \
-  --embeddings data/embeddings/pilot-v1/p06 \
+python scripts/ask.py data/parsed/recovery-20261106/p06 \
+  --windows data/windows/recovery-20261106/p06 \
+  --embeddings data/embeddings/recovery-20261106/p06 \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
   --generate --output-dir results/requests/gad-answer-example
 open results/requests/gad-answer-example/report.html

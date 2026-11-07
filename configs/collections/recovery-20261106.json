@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "kind": "rebuilt-pilot",
+  "version": "recovery-20261106",
+  "historical_snapshot_restore": false,
+  "queries": {
+    "path": "benchmarks/pilot-v1/queries.jsonl",
+    "sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44"
+  },
+  "collections": [
+    {
+      "query_id": "p01",
+      "dataset": "data/parsed/recovery-20261106/p01",
+      "windows": "data/windows/recovery-20261106/p01",
+      "embeddings": "data/embeddings/recovery-20261106/p01",
+      "dataset_id": "38a44c2355f79139669e953188a09981e1e6bae2bda978fc642b46fc53e05ee0",
+      "window_artifact_id": "c3da33d5074f3415ca6e52fdacb62ac0190ef2e20c9bd95f8d2a7e7091d8ff0c",
+      "embedding_artifact_id": "640c741ab1c91ebd1f61bbf1035e91404befb5a3a2459f23416f77a3917a0bd8"
+    },
+    {
+      "query_id": "p02",
+      "dataset": "data/parsed/recovery-20261106/p02",
+      "windows": "data/windows/recovery-20261106/p02",
+      "embeddings": "data/embeddings/recovery-20261106/p02",
+      "dataset_id": "41e9475a9a5f0bc02bebd106a520b3d7d330dc2dd404a9fb2fbfe838683927a4",
+      "window_artifact_id": "6c3b947014973a939ab3c0967b3d1d837a25881c31e2574db0afbfcf93f38036",
+      "embedding_artifact_id": "bfaaca174b332c6a5c06f9069f141fed7a33f114ad50f1df8291b353e565e9df"
+    },
+    {
+      "query_id": "p03",
+      "dataset": "data/parsed/recovery-20261106/p03",
+      "windows": "data/windows/recovery-20261106/p03",
+      "embeddings": "data/embeddings/recovery-20261106/p03",
+      "dataset_id": "6c3227d2928dabf7cb4999fd17bba75390a3d8284b25b6c4333b8c1a1fb51c0e",
+      "window_artifact_id": "dca63d9ca02905cb3ba36620476de43386856b865854a393508d4e021d8acbaf",
+      "embedding_artifact_id": "71edd2aa1a09c313c0d545084606bd80b9fcf1841630ff90b0329c2008d38bf3"
+    },
+    {
+      "query_id": "p04",
+      "dataset": "data/parsed/recovery-20261106/p04",
+      "windows": "data/windows/recovery-20261106/p04",
+      "embeddings": "data/embeddings/recovery-20261106/p04",
+      "dataset_id": "b5c9693f0aa42a1006e78f333d9ea971e607201f1e5ce57d1780dc6f3c9e8510",
+      "window_artifact_id": "b6c41b63b425bcdd4bbc9fed50603381fd6f23cb44748ee3d3a5880f3f9fe55a",
+      "embedding_artifact_id": "581ca1f9a48326921f2f59376b2865d80bede0c8bc21c1c8c3fe0a6a6946229a"
+    },
+    {
+      "query_id": "p05",
+      "dataset": "data/parsed/recovery-20261106/p05",
+      "windows": "data/windows/recovery-20261106/p05",
+      "embeddings": "data/embeddings/recovery-20261106/p05",
+      "dataset_id": "344342dcebff02459ef8302ddf78d13258865d7ce24cfa1004b2451e55b3fb1b",
+      "window_artifact_id": "0405efb1189f894a624a223ed9dba68faeb3c17d3aeffb96c538f5ed1781fa93",
+      "embedding_artifact_id": "ea851b3643f4482d3b2655d2538cef93909bf9d63c77b136a25260789f8b40d0"
+    },
+    {
+      "query_id": "p06",
+      "dataset": "data/parsed/recovery-20261106/p06",
+      "windows": "data/windows/recovery-20261106/p06",
+      "embeddings": "data/embeddings/recovery-20261106/p06",
+      "dataset_id": "fa3916389a9dc4d7947d8d07bb8651d3337cbd48190536e98bb64a4b959f1319",
+      "window_artifact_id": "6aee1a232187c9de084664be9f45e636e03f746e5551a004414e22cf4130a054",
+      "embedding_artifact_id": "5d9783ca1052ebcfb8bd37f7623d815ec7e8e5d2f79a9b5a1c17fb8a91dab232"
+    },
+    {
+      "query_id": "p07",
+      "dataset": "data/parsed/recovery-20261106/p07",
+      "windows": "data/windows/recovery-20261106/p07",
+      "embeddings": "data/embeddings/recovery-20261106/p07",
+      "dataset_id": "99718793cb0fcdc059a1c6783ed09c51e54eafffa69984622984f1be25705574",
+      "window_artifact_id": "926f94f599c3a8377e387b9cbc21f67026818f3523fc16e0e708dbde5adb6901",
+      "embedding_artifact_id": "ff431ebb86d74b98c605d851ef3d7c48f59833da28b88aa3dcdb8245d69fe508"
+    },
+    {
+      "query_id": "p08",
+      "dataset": "data/parsed/recovery-20261106/p08",
+      "windows": "data/windows/recovery-20261106/p08",
+      "embeddings": "data/embeddings/recovery-20261106/p08",
+      "dataset_id": "2aabae921ad453da924e26398c9ec5b7da7d84d33b5c73b39ac448e58a3c97f1",
+      "window_artifact_id": "f80fbba7e9c3a2e40f514f54eb2a5223d810dc97b6567a01f0dca5c1c74aa8fe",
+      "embedding_artifact_id": "2cd21137c60390e1e43b08c793eeebba5f2cede2b4607b259743bfb6f2c12fc3"
+    },
+    {
+      "query_id": "p09",
+      "dataset": "data/parsed/recovery-20261106/p09",
+      "windows": "data/windows/recovery-20261106/p09",
+      "embeddings": "data/embeddings/recovery-20261106/p09",
+      "dataset_id": "a561bf2d115ea0ed5b52a9ca853bcdaf65daa91832bc28343a95efe75e5cab9b",
+      "window_artifact_id": "575dd069dba67d2da15e9260d2f618818b9385f63f9653365d189235e41d8419",
+      "embedding_artifact_id": "0aa971e63144db5c518216f90fbf28966d36e9bcf4f8823b83f4040c9fedb0c5"
+    },
+    {
+      "query_id": "p10",
+      "dataset": "data/parsed/recovery-20261106/p10",
+      "windows": "data/windows/recovery-20261106/p10",
+      "embeddings": "data/embeddings/recovery-20261106/p10",
+      "dataset_id": "5d21b78ed1ce505f5116d187e20119d5f369bd9300c191853897f21de97e5ea4",
+      "window_artifact_id": "f0252d599154104063212d1f571861c7d767549edcad3c6d52522c837a2af898",
+      "embedding_artifact_id": "33be86bf52bb2a440e48c3db0f1018e7298e5be7956dfa18398b4b4138de06ea"
+    }
+  ]
+}

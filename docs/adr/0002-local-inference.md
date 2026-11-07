@@ -4,7 +4,8 @@ Status: accepted for experiments; reranking and cited draft generation measured
 
 ## Context
 
-The laptop is an M3 Pro with 36 GB unified memory. We need both reranking and
+The original laptop was an M3 Pro with 36 GB unified memory; the recovery target
+is an Air M3 with 24 GiB. We need both reranking and
 answer synthesis, without loading two copies of the same model.
 
 ## Decision
@@ -42,3 +43,12 @@ tokens respectively. Sentence IDs resolve to exact source slices. The pilot
 uses less than the full 4000-token evidence budget; testing at that limit remains
 open. Same-model review has missed population and qualifier errors, so generated
 answers remain research drafts requiring independent review.
+
+## Air restoration, 2026-11-07
+
+The same pinned model/runtime now uses bounded conversion cache lifetimes.
+Original arithmetic, dtype and quantization stay unchanged. Short smoke inference
+passed; ordinary Dense → generation CLI p01 produced a partial draft, while
+p06 withheld an overlong draft. [Air evidence](../experiments/air-recovery.json) distinguishes runtime
+compatibility from answer compliance. No CPU fallback or allocator override was
+used. Full-budget inference and clinical reliability remain unproven.

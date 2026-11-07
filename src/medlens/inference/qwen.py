@@ -4,6 +4,8 @@ import importlib.metadata
 import os
 import time
 
+from .metal import RequireFiniteScores, bounded_metal_loading
+
 MODEL_ID = "Qwen/Qwen3.5-9B"
 REVISION = "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
 
@@ -24,10 +26,11 @@ class QwenRuntime:
         start = time.perf_counter()
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=REVISION,
             local_files_only=True, token=False, trust_remote_code=False)
-        self.model = Qwen3_5ForCausalLM.from_pretrained(MODEL_ID, revision=REVISION,
-            local_files_only=True, token=False, trust_remote_code=False, device_map="mps",
-            dtype=torch.float16, quantization_config=MetalConfig(bits=4, group_size=64),
-            attn_implementation="sdpa").eval()
+        with bounded_metal_loading() as loading:
+            self.model = Qwen3_5ForCausalLM.from_pretrained(MODEL_ID, revision=REVISION,
+                local_files_only=True, token=False, trust_remote_code=False, device_map="mps",
+                dtype=torch.float16, quantization_config=MetalConfig(bits=4, group_size=64),
+                attn_implementation="sdpa").eval()
         from transformers.integrations.metal_quantization import MetalLinear
         if not any(isinstance(m, MetalLinear) for m in self.model.modules()):
             raise RuntimeError("No quantized Metal layers found")
@@ -38,7 +41,9 @@ class QwenRuntime:
         self.metadata = {"model_id": MODEL_ID, "revision": REVISION, "device": "mps",
             "quantization": {"method": "metal", "bits": 4, "group_size": 64},
             "generation": {"do_sample": False, "max_new_tokens": 128, "enable_thinking": False},
-            "load_seconds": time.perf_counter() - start,
+            "load_seconds": time.perf_counter() - start, "loading": loading,
+            "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+            "release_cache_after_generation": True,
             "packages": {n: importlib.metadata.version(n) for n in
                          ("torch", "transformers", "accelerate", "kernels", "huggingface-hub")}}
 
@@ -53,13 +58,17 @@ class QwenRuntime:
             raise ValueError("Prompt token count changed")
         torch.mps.synchronize()
         start = time.perf_counter()
-        with torch.inference_mode():
-            output = self.model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False,
-                pad_token_id=self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None
-                else self.tokenizer.eos_token_id)
-        torch.mps.synchronize()
-        generated = output[0, inputs["input_ids"].shape[-1]:]
-        return {"text": self.tokenizer.decode(generated, skip_special_tokens=True).strip(),
-                "new_tokens": len(generated), "hit_output_limit": len(generated) >= max_new_tokens,
-                "max_new_tokens": max_new_tokens,
-                "seconds": time.perf_counter() - start}
+        try:
+            with torch.inference_mode():
+                output = self.model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False,
+                    logits_processor=[RequireFiniteScores()],
+                    pad_token_id=self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None
+                    else self.tokenizer.eos_token_id)
+            torch.mps.synchronize()
+            generated = output[0, inputs["input_ids"].shape[-1]:]
+            return {"text": self.tokenizer.decode(generated, skip_special_tokens=True).strip(),
+                    "new_tokens": len(generated), "hit_output_limit": len(generated) >= max_new_tokens,
+                    "max_new_tokens": max_new_tokens,
+                    "seconds": time.perf_counter() - start}
+        finally:
+            torch.mps.empty_cache()

@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT/'src'))
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--collections', type=Path, help='Explicit rebuilt-pilot resource profile; leaves frozen profiles unchanged')
     args = parser.parse_args()
     if args.output.exists():
         parser.error('Choose a fresh report path')
@@ -62,23 +63,38 @@ def main():
         for name in set(weight_map.values()):
             if not (snapshot/name).is_file(): raise ValueError('Missing Qwen weight shard: '+name)
         report['checks'].append('Qwen shard symlinks resolve')
-        path = ROOT/'benchmarks/pilot-v1/queries.jsonl'
-        queries = parse_queries(path.read_bytes(), path.parent)
+        if args.collections:
+            from medlens.resources import load_collection_profile
+            profile, checksum, collections = load_collection_profile(ROOT, args.collections)
+            report.update(collection_profile_sha256=checksum, resource_scope=profile['kind'],
+                corpus_version=profile['version'], historical_snapshot_restore=False)
+        else:
+            path = ROOT/'benchmarks/pilot-v1/queries.jsonl'
+            queries = parse_queries(path.read_bytes(), path.parent)
+            if any(q.split != 'pilot' for q in queries):
+                raise ValueError('Only development pilot inputs permitted')
+            collections = [{'query_id': q.query_id, 'dataset': q.dataset,
+                'windows': ROOT/'data/windows/pilot-v1-002'/q.query_id,
+                'embeddings': ROOT/'data/embeddings/pilot-v1'/q.query_id} for q in queries]
+            report['resource_scope'] = 'original-frozen-pilot'
         report['collections'] = []
-        for query in queries:
-            if query.split != 'pilot': raise ValueError('Only development pilot inputs permitted')
-            windows = ROOT/'data/windows/pilot-v1-002'/query.query_id
-            index = DenseIndex(query.dataset, windows, ROOT/'data/embeddings/pilot-v1'/query.query_id)
-            ranker = MedCPTRanker(query.dataset, windows)
-            if index.window_manifest != ranker.window_manifest: raise ValueError('Window identities differ')
-            report['collections'].append({'query_id': query.query_id,
-                'dataset_id': index.dataset.manifest['dataset_id'], 'windows': len(index.windows),
-                'candidates': len(index.articles)})
+        for row in collections:
+            index = DenseIndex(row['dataset'], row['windows'], row['embeddings'])
+            ranker = MedCPTRanker(row['dataset'], row['windows'])
+            if index.window_manifest != ranker.window_manifest:
+                raise ValueError('Window identities differ')
+            actual = {'dataset_id': index.dataset.manifest['dataset_id'],
+                'window_artifact_id': index.window_manifest['artifact_id'],
+                'embedding_artifact_id': index.embedding_manifest['artifact_id']}
+            if args.collections and any(row[key] != value for key, value in actual.items()):
+                raise ValueError('Collection identity differs: '+row['query_id'])
+            report['collections'].append({'query_id': row['query_id'], **actual,
+                'windows': len(index.windows), 'candidates': len(index.articles)})
         import torch
         import psutil
         report.update(mps_available=torch.backends.mps.is_available(), memory_bytes=psutil.virtual_memory().total)
         report['status'] = 'inputs_ready'
-        report['qwen_inference_on_this_machine'] = 'not-tested'
+        report['qwen_inference_on_this_machine'] = 'not-tested-by-this-check'
     except Exception as exc:
         report.update(status='failed', error={'type': type(exc).__name__, 'message': str(exc)})
     args.output.parent.mkdir(parents=True, exist_ok=True)
