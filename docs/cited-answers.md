@@ -44,7 +44,7 @@ and limitation codes remain errors. PMID links come from the trusted source map.
 The renderer uses accepted claims only; it never displays an unchecked free-text
 summary alongside them.
 
-Support review returns a verdict and three explicit axes for every draft claim:
+The default `claim-support-v4` review returns a verdict and three explicit axes for every draft claim:
 population, comparison and outcome, plus a controlled reason code. Free-form
 review explanations are rejected to keep the 512-token review bounded. Code
 accepts a claim only when the verdict
@@ -177,3 +177,17 @@ generation and support review. A served API and full-PubMed candidate retrieval
 remain integration work. Broader answer evaluation, independent human checking,
 contradiction/abstention coverage and testing near the full 4000-token evidence
 budget remain necessary before treating this as a final answering system.
+
+
+## Day 21 semantic diagnostics
+
+The [Day 21 experiment](day21-semantic-reliability.md) compares review protocols
+on unchanged development drafts and controlled synthetic contrasts. The expanded
+v5 candidate did not meet promotion requirements: it introduced unsupported
+acceptances and lost a supported control. The primary CLI preserves v4. Research
+runs may explicitly select `--review-protocol claim-support-v5` in
+`generate_answers.py`, or pass `review_protocol` to `generate_answer`; output
+records the actual version and the protocol is bound into the run identity.
+Old review output is never coerced into the new schema or reused under a changed
+prompt. These checks do not resolve the observed outcome, subgroup, diagnosis and
+citation-support errors. Generated findings remain unverified research drafts.

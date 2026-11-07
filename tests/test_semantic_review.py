@@ -28,7 +28,7 @@ class SemanticReviewTests(unittest.TestCase):
         for axis in axes:
             for value in ('mismatch','unclear'):
                 row = supported();row[axis] = value
-                parsed = parse_review(json.dumps([row]), {'C1'})
+                parsed = parse_review(json.dumps([row]), {'C1'},protocol=REVIEW_VERSION)
                 with self.subTest(axis=axis,value=value): self.assertEqual(accepted_claim_ids(parsed),set())
         row=supported();row['comparison_match']='not_requested'
         self.assertEqual(accepted_claim_ids([row]),{'C1'})
@@ -36,15 +36,15 @@ class SemanticReviewTests(unittest.TestCase):
     def test_missing_axes_and_wrong_not_requested_are_not_repaired(self):
         for axis in set(review_values()) - {'verdict','reason'}:
             row=supported();row.pop(axis)
-            with self.assertRaises(AnswerError): parse_review(json.dumps([row]),{'C1'})
+            with self.assertRaises(AnswerError): parse_review(json.dumps([row]),{'C1'},protocol=REVIEW_VERSION)
             if axis != 'comparison_match':
                 row=supported();row[axis]='not_requested'
-                with self.assertRaises(AnswerError):parse_review(json.dumps([row]),{'C1'})
+                with self.assertRaises(AnswerError):parse_review(json.dumps([row]),{'C1'},protocol=REVIEW_VERSION)
 
     def test_legacy_protocol_is_explicit_and_cannot_satisfy_new_contract(self):
         row=supported(LEGACY_REVIEW_VERSION)
         self.assertEqual(parse_review(json.dumps([row]),{'C1'},protocol=LEGACY_REVIEW_VERSION),[row])
-        with self.assertRaises(AnswerError):parse_review(json.dumps([row]),{'C1'})
+        with self.assertRaises(AnswerError):parse_review(json.dumps([row]),{'C1'},protocol=REVIEW_VERSION)
         with self.assertRaises(ValueError):review_values('invented')
 
     def test_all_selected_evidence_is_reviewed_without_laundering_citations(self):
@@ -85,7 +85,7 @@ class SemanticReviewTests(unittest.TestCase):
                 return range(6500 if self.calls==1 else 6501)
         runtime=helpers.FakeRuntime([helpers.draft()]);runtime.tokenizer=Sized()
         context=helpers.context();original=copy.deepcopy(context)
-        result=generate_answer('Question',context,runtime)
+        result=generate_answer('Question',context,runtime,review_protocol=REVIEW_VERSION)
         self.assertEqual(result['validation_error'],{'stage':'support-review','code':'input_limit'})
         self.assertEqual(result['claims'],[])
         self.assertEqual(len(runtime.calls),1)
@@ -101,3 +101,36 @@ class SemanticReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):summarize_challenges(rows+rows)
         rows[0].update(review_status='validation_failed',accepted=True)
         with self.assertRaises(ValueError):summarize_challenges(rows)
+
+
+class ReviewPromotionTests(unittest.TestCase):
+    def test_default_preserves_legacy_and_candidate_is_explicit(self):
+        from medlens.generation.answers import generate_answer
+        from medlens.generation.contracts import DEFAULT_REVIEW_VERSION
+        self.assertEqual(DEFAULT_REVIEW_VERSION,LEGACY_REVIEW_VERSION)
+        for protocol in (LEGACY_REVIEW_VERSION,REVIEW_VERSION):
+            runtime=helpers.FakeRuntime([helpers.draft(),[supported(protocol)]])
+            kwargs={} if protocol==LEGACY_REVIEW_VERSION else {'review_protocol':protocol}
+            result=generate_answer('Question',helpers.context(),runtime,**kwargs)
+            self.assertEqual(result['review_version'],protocol)
+            self.assertEqual(len(result['claims']),1)
+            self.assertEqual([limit for _,limit in runtime.calls],[768,512])
+
+    def test_unknown_candidate_fails_before_model(self):
+        from medlens.generation.answers import generate_answer
+        runtime=helpers.FakeRuntime([])
+        with self.assertRaises(ValueError):generate_answer('Question',helpers.context(),runtime,review_protocol='invented')
+        self.assertEqual(runtime.calls,[])
+
+
+    def test_optin_reuses_draft_but_never_a_legacy_review(self):
+        from medlens.generation.answers import generate_answer
+        old=generate_answer('Question',helpers.context(),helpers.FakeRuntime([helpers.draft(),[supported(LEGACY_REVIEW_VERSION)]]))
+        cache={c['stage']:c for c in old['model_calls']}
+        runtime=helpers.FakeRuntime([[supported(REVIEW_VERSION)]])
+        new=generate_answer('Question',helpers.context(),runtime,cached_calls=cache,review_protocol=REVIEW_VERSION)
+        self.assertEqual(len(runtime.calls),1)
+        self.assertEqual(runtime.calls[0][1],512)
+        self.assertTrue(new['model_calls'][0]['cache_reused'])
+        self.assertFalse(new['model_calls'][1]['cache_reused'])
+        self.assertEqual(new['review_version'],REVIEW_VERSION)

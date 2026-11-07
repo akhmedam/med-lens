@@ -7,6 +7,7 @@ LIMITATIONS = {"limited_excerpts", "population_unclear", "mixed_populations",
                "no_direct_comparison", "conflicting_findings", "methodological_limits"}
 LEGACY_REVIEW_VERSION = "claim-support-v4"
 REVIEW_VERSION = "claim-support-v5"
+DEFAULT_REVIEW_VERSION = LEGACY_REVIEW_VERSION
 REVIEW_REASONS = {"supported_by_excerpt", "population_mismatch", "comparison_mismatch",
                   "outcome_mismatch", "overstatement", "missing_details", "other"}
 LEGACY_REVIEW_VALUES = {
@@ -51,7 +52,7 @@ def draft_contract(quote_ids):
     }
 
 
-def review_contract(claim_ids, *, protocol=REVIEW_VERSION):
+def review_contract(claim_ids, *, protocol=DEFAULT_REVIEW_VERSION):
     properties = {"claim_id": {"enum": sorted(claim_ids)}}
     properties.update({key: {"enum": values} for key, values in review_values(protocol).items()})
     return {"type": "array", "minItems": len(claim_ids), "maxItems": len(claim_ids),

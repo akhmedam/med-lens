@@ -19,7 +19,7 @@ from medlens.evaluation.formats import parse_queries
 from medlens.generation.context import canonical, digest, render_evidence, source_section
 from medlens.generation.answers import (PROMPT_VERSION, REVIEW_VERSION, check_context,
     generate_answer, render_answer)
-from medlens.generation.contracts import REVIEW_VALUES
+from medlens.generation.contracts import DEFAULT_REVIEW_VERSION, LEGACY_REVIEW_VERSION, review_values
 from medlens.inference.qwen import MODEL_ID, REVISION, QwenRuntime
 from medlens.parsing.dataset import load_dataset
 from medlens.retrieval.windows import load_windows
@@ -90,6 +90,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--include-controls", action="store_true")
+    parser.add_argument("--review-protocol", choices=[LEGACY_REVIEW_VERSION, REVIEW_VERSION],
+        default=DEFAULT_REVIEW_VERSION, help="Support review; v5 is an experimental development candidate")
     parser.add_argument("--reuse-outputs", type=Path, help="Reuse only model calls with identical prompt hashes and token limits")
     args = parser.parse_args()
     if args.output.resolve() == args.summary.resolve() or args.output.exists() or args.summary.exists():
@@ -133,7 +135,7 @@ def main():
         for row in previous["per_case"]:
             cache[row["case_id"]] = {call["stage"]: {**call, "cache_source_sha256": cache_hash}
                                      for call in row["model_calls"]}
-    identity = {"context_report_sha256": artifact_hash, "cache_source_sha256": cache_hash, "profile_sha256": artifact["profile_sha256"],
+    identity = {"review_protocol": args.review_protocol, "context_report_sha256": artifact_hash, "cache_source_sha256": cache_hash, "profile_sha256": artifact["profile_sha256"],
         "qrels_sha256": artifact["qrels_sha256"], "case_ids": [c["case_id"] for c in cases],
         "code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
             "scripts/generate_answers.py", "src/medlens/generation/answers.py", "src/medlens/generation/contracts.py",
@@ -141,7 +143,7 @@ def main():
             "src/medlens/generation/request_contexts.py", "src/medlens/resources.py", "src/medlens/generation/reviews.py")}}
     report = {"schema_version": 1, "run_id": digest(identity), **identity, "status": "running",
         "started_at": datetime.now(timezone.utc).isoformat(), "per_case": [],
-        "prompt_version": PROMPT_VERSION, "review_version": REVIEW_VERSION, "heldout_used": False,
+        "prompt_version": PROMPT_VERSION, "review_version": args.review_protocol, "heldout_used": False,
         "resource_scope": artifact.get("resource_scope", "original-frozen-pilot"),
         "relevance_judgments_bound": artifact.get("relevance_judgments_bound", True),
         "source_requests": artifact.get("source_requests")}
@@ -155,7 +157,7 @@ def main():
         runtime = QwenRuntime()
         report["runtime"] = runtime.metadata
         for case in cases:
-            result = generate_answer(case["question"], case["context"], runtime, cached_calls=cache.get(case["case_id"]))
+            result = generate_answer(case["question"], case["context"], runtime, cached_calls=cache.get(case["case_id"]), review_protocol=args.review_protocol)
             result.update(case_id=case["case_id"], kind=case["kind"], expected=case.get("expected"))
             result["rendered_answer"] = render_answer(result)
             report["per_case"].append(result)
@@ -181,7 +183,7 @@ def main():
         "reason": r["reason"], "validation_error": r.get("validation_error"),
         "claim_count": len(r["claims"]),
         "draft_claim_count": len(r.get("draft",{}).get("claims",[])),
-        "review_checks": [{k: v[k] for k in ("claim_id", *REVIEW_VALUES)} for v in r["review"]],
+        "review_checks": [{k: v[k] for k in ("claim_id", *review_values(args.review_protocol))} for v in r["review"]],
         "stages": [{k: c[k] for k in ("stage", "seconds", "new_tokens", "hit_output_limit", "max_new_tokens")}
                    | {"input_tokens": c["prompt"]["input_tokens"], "prompt_sha256": c["prompt"]["prompt_sha256"]}
                    for c in r["model_calls"]],

@@ -1,12 +1,15 @@
 # Development plan
 
 Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
-Days 1–19 are complete. [Day 20 implementation](day20-format-reliability.md) is
-prepared and checked offline; model inference and the before/after comparison
-remain pending restoration of local artifacts. The user accepted Dense
-retrieval/ranking and Qwen3.5-9B generation on 2026-11-05; see the
-[primary-pipeline ADR](adr/0003-primary-pipeline.md). The chain is implemented;
-inference on the Air M3 (24 GB) still needs validation. Day numbers denote
+Days 1–19 are complete. [Air recovery](experiments/air-recovery.json) validated
+short Qwen inference and the primary CLI on the Air M3 (24 GiB). The
+[Day 20 rebuilt-corpus baseline](day20-format-reliability.md) yielded nine visible
+drafts and one output-cap failure; the lost original corpus prevents a controlled
+Day 13 comparison. [Day 21](day21-semantic-reliability.md) measured remaining
+semantic errors and rejected promotion of the expanded reviewer. Reserve semantic
+work is required before the release conditions are met. Dense retrieval/ranking
+and Qwen3.5-9B generation remain the user-accepted primary pipeline; see the
+[ADR](adr/0003-primary-pipeline.md). Day numbers denote
 working sessions, not calendar deadlines. Target: portfolio v1.0 at Day 28,
 with two to four reserve sessions for generation, PMC and corpus scaling.
 
@@ -22,9 +25,9 @@ interface; a web UI is outside this release plan.
 | 16 | Implement BGE dense top-10 articles followed by MedCPT, and direct MedCPT over all candidate articles. Score every window of each eligible article and aggregate by maximum. | Two reproducible modes on identical snapshots and source windows. |
 | 17 | Compare PubMed Best Match, Dense, Dense → MedCPT and direct MedCPT. Judge newly retrieved results absent from the current pool. | Comparable nDCG@10 and Recall@10, with error analysis and incomplete judgments identified. |
 | 18 | Vary candidate-pool size; measure latency, pair count and memory. Separate Dense with cached embeddings from building embeddings. | A quality, latency and memory comparison on the M3 Pro. |
-| 19 | Compare measured options, record the user’s choice and prepare transfer to the Air M3 (24 GB). | [Dense → Qwen9B accepted](adr/0003-primary-pipeline.md), existing request integration checked, and [portable handoff](handoff.md) verified; Air inference validation remains. |
-| 20 | Improve generation format reliability: bounded claims/citations and structured output; measure refusals against Day 13. | Fewer format failures without weakening quote or output validation. |
-| 21 | Evaluate population/age, severity, intervention, comparator, outcome, null findings and contradictions. | Generation checks and an explicit record of remaining semantic errors. |
+| 19 | Compare measured options, record the user’s choice and prepare transfer to the Air M3 (24 GB). | [Dense → Qwen9B accepted](adr/0003-primary-pipeline.md), existing request integration checked, and [portable handoff](handoff.md) verified; [subsequent Air recovery checks](experiments/air-recovery.json) completed. |
+| 20 | Improve generation format reliability: bounded claims/citations and structured output; measure refusals against Day 13. | [New-corpus format baseline measured](day20-format-reliability.md), strict gates retained; output-cap work remains. |
+| 21 | Evaluate population/age, severity, intervention, comparator, outcome, null findings and contradictions. | [Paired review diagnostics and remaining-error record](day21-semantic-reliability.md); v5 remains experimental after regressions. |
 | 22 | Pool local collections, handle duplicate records and text versions, verify cache updates and start the Small → Medium transition. | A shared collection with measured preparation and search costs. |
 | 23 | Test a small permitted PMC full-text subset, section/provenance preservation and date filters; compare abstracts with full text. | A measured decision on full-text value and cost. Publication recency is not a proxy for evidence quality. |
 | 24 | Add a minimal programmatic API with request parameters, errors and model lifecycle management. | The integrated pipeline is callable through an API. |

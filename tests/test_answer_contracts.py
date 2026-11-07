@@ -12,7 +12,7 @@ from medlens.generation.quotes import quote_catalog
 
 
 def supported(claim_id="C1"):
-    return {"claim_id": claim_id, "verdict": "supported", "intervention_match":"match", "qualifiers_preserved":"match", "finding_fidelity":"match", "context_consistency":"match", "population_match": "match",
+    return {"claim_id": claim_id, "verdict": "supported", "population_match": "match",
         "comparison_match": "not_requested", "outcome_match": "match",
         "reason": "supported_by_excerpt"}
 
@@ -113,7 +113,7 @@ class AnswerContractTests(unittest.TestCase):
             "claim_id"]["enum"], ["C1", "C2"])
         for rows in ([supported()], [supported(), supported()],
                      [supported(), supported("C3")],
-                     [supported(), {**supported("C2"), "intervention_match":"match", "qualifiers_preserved":"match", "finding_fidelity":"match", "context_consistency":"match", "population_match": []}]):
+                     [supported(), {**supported("C2"), "population_match": []}]):
             with self.subTest(rows=rows), self.assertRaises(AnswerError):
                 parse_review(json.dumps(rows), {"C1", "C2"})
 

@@ -5,6 +5,8 @@ from collections import Counter
 import hashlib
 import json
 import os
+import re
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -60,6 +62,7 @@ def main(argv=None):
     p.add_argument('baseline',type=Path);p.add_argument('candidate',type=Path)
     p.add_argument('--requests',type=Path,required=True);p.add_argument('--collections',type=Path,required=True)
     p.add_argument('--inspection',type=Path,default=ROOT/'docs/experiments/day21-source-inspection.json')
+    p.add_argument('--candidate-ref',help='Full commit SHA containing the recorded candidate implementation')
     p.add_argument('--output',type=Path,required=True);args=p.parse_args(argv)
     if args.output.exists():p.error('Choose a fresh output path')
     old_bytes,new_bytes=args.baseline.read_bytes(),args.candidate.read_bytes()
@@ -71,8 +74,14 @@ def main(argv=None):
         raise ValueError('Inspection belongs to another baseline')
     if new['cache_source_sha256']!=hashlib.sha256(old_bytes).hexdigest():
         raise ValueError('Candidate draft-cache identity differs')
+    if args.candidate_ref and re.fullmatch(r'[0-9a-f]{40}',args.candidate_ref) is None:
+        raise ValueError('Candidate reference must be a full commit SHA')
     for name,checksum in new['code_sha256'].items():
-        if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=checksum:raise ValueError('Candidate code changed: '+name)
+        path=Path(name)
+        if path.is_absolute() or '..' in path.parts or not name.startswith(('scripts/','src/medlens/')):
+            raise ValueError('Invalid candidate code path')
+        body=subprocess.check_output(['git','show',args.candidate_ref+':'+name],cwd=ROOT) if args.candidate_ref else (ROOT/path).read_bytes()
+        if hashlib.sha256(body).hexdigest()!=checksum:raise ValueError('Candidate code identity differs: '+name)
     artifact,checksum=load_request_contexts(ROOT,args.requests,args.collections)
     if checksum!=old['context_report_sha256']:raise ValueError('Saved requests differ')
     contexts={row['query_id']:row['context'] for row in artifact['per_query']}
@@ -98,7 +107,7 @@ def main(argv=None):
                 accepted=accepted_claim_ids(legacy,protocol=LEGACY_REVIEW_VERSION)
                 if before['review']!=legacy or before['claims']!=[c for c in draft['claims'] if c['claim_id'] in accepted]:
                     raise ValueError('Baseline legacy gates do not reproduce')
-        replay=generate_answer(after['question'],ctx,runtime,cached_calls={c['stage']:c for c in after['model_calls']})
+        replay=generate_answer(after['question'],ctx,runtime,cached_calls={c['stage']:c for c in after['model_calls']},review_protocol=REVIEW_VERSION)
         for key in ('status','claims','review','limitations','reason','context_id'):
             if replay[key]!=after[key]:raise ValueError('Candidate replay differs: '+key)
         if not all(c['cache_reused'] for c in replay['model_calls']):raise ValueError('Candidate call did not replay')
@@ -126,7 +135,7 @@ def main(argv=None):
     result={'schema_version':1,'status':'complete','model_inference':False,'heldout_used':False,
         'baseline_sha256':hashlib.sha256(old_bytes).hexdigest(),'candidate_sha256':hashlib.sha256(new_bytes).hexdigest(),
         'inspection_sha256':hashlib.sha256(inspection_bytes).hexdigest(),'context_manifest_sha256':checksum,
-        'paired_frozen_drafts':True,'clinical_accuracy_measured':False,'cases':cases,'inspection_outcomes':inspection_outcomes,
+        'candidate_code_ref':args.candidate_ref or 'working-tree','paired_frozen_drafts':True,'clinical_accuracy_measured':False,'cases':cases,'inspection_outcomes':inspection_outcomes,
         'counts':{key:sum(len(r[key]) for r in cases if r['kind']=='pilot') for key in
             ('baseline_visible_claims','candidate_visible_claims','newly_withheld','newly_accepted','retained')},
         'candidate_pilot_statuses':dict(Counter(r['candidate_status'] for r in cases if r['kind']=='pilot')),

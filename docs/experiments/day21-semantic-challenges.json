@@ -1,0 +1,1078 @@
+{
+  "schema_version": 1,
+  "run_id": "66f153c7559fca1c84dbcecabb35fe038ab31dbd201bf602f7d75228b815ab05",
+  "fixture_sha256": "3b78f5c219b47bcef71d5d6b01a268d45abca9073e984fbf429d02631b00a7e1",
+  "protocols": [
+    "claim-support-v4",
+    "claim-support-v5"
+  ],
+  "prompt_sha256": [
+    "95ef867bec49e0534d9068b3b56f401a0729eed78c730ff74ec0f9566571e455",
+    "e191fbf35fca773eb2ec63a75f0b898ad490234f340dbdda59d5e3f08a94f192",
+    "a447947672e41adf85e09c7a9094eab0f5326a28b10e84dc39589750af582e0e",
+    "b09306c97c2ff25c207cc29267f54f86b4bfc72da89de8ae486b9fbd6d92f1a2",
+    "f72017c26ebcfc70343d640fc44ce0007a9b4f5ca2961517e25a752ebad28150",
+    "71b8d4bfd081b044803e23232ad9dc9d401faa5d45a112fde370078060d97863",
+    "b3b7075d485e0b69054c83db2b75d872badf5a00dcb6cd4525531f0b6a970ecd",
+    "21a18de5bfbb19b02b58b2dec1968f0388f416f567bf06873c17a23f05b1df3b",
+    "f08b7380e3f09b29b51d0e20b87d53d4526939a66d77ff6451a2bcd1a54be5c5",
+    "a6d91c789060deef329cb7f466d3f6be8f44752c00ac3575195d85c488f56279",
+    "5b7b8098778c7035a88f6e3c8e07c6c2c35bb446c533d9884af062a39f394f5d",
+    "11987c82e84359439db95f8ff82147ac8c1dafafa942b805488a59acf5270c49",
+    "70ef1a32c755bc3310d94c401948d7c9fdaf99b4df8fbd2ddad360a404abb035",
+    "1623c2befb03b21f421ab33363f0488be99150a2e0e828b828cee8553e92e836"
+  ],
+  "max_new_tokens": 512,
+  "code_sha256": {
+    "scripts/evaluate_semantics.py": "362c2d8899e168a96cbf971862780394257fbd6dc8df6a062dccfca11aae683e",
+    "src/medlens/evaluation/semantics.py": "2c788bef5072a0f977453731a0a8bb5c5ef75051d87d97df66e70d3d9dea9196",
+    "src/medlens/generation/answers.py": "af81913baa17449da24a38e231dfc05b053abee18d3a446387c0ba0ddfd7e835",
+    "src/medlens/generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412",
+    "src/medlens/generation/contracts.py": "e78dc38b520a8fd0d45f6dd4574b0e56f45525d918c0266bd3676b7232b2d718",
+    "src/medlens/inference/qwen.py": "9212fec2f396b417fef0206be327498555d206363dd2d9974a62affb3e8eb806",
+    "src/medlens/inference/metal.py": "5fcad25a5128a6fae8c61e9632f67f2b9ec0e4ca333c2e4988ad88bb47f32567"
+  },
+  "status": "complete",
+  "started_at": "2026-11-07T10:11:57.028288+00:00",
+  "heldout_used": false,
+  "scope": "AI-authored synthetic development contrasts; not independent clinical validation",
+  "labels_exposed_to_model": false,
+  "per_claim": [
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "null-finding",
+      "protocol": "claim-support-v4",
+      "group_id": "outcome-null",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "outcome-substitution",
+      "protocol": "claim-support-v4",
+      "group_id": "outcome-null",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "nonsignificance-to-equivalence",
+      "protocol": "claim-support-v4",
+      "group_id": "outcome-null",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "scoped-severity",
+      "protocol": "claim-support-v4",
+      "group_id": "age-severity",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "lost-age-severity-qualifiers",
+      "protocol": "claim-support-v4",
+      "group_id": "age-severity",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "adolescent-to-adult",
+      "protocol": "claim-support-v4",
+      "group_id": "age-severity",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "exact-intervention",
+      "protocol": "claim-support-v4",
+      "group_id": "intervention-diagnosis",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "class-to-specific-drug",
+      "protocol": "claim-support-v4",
+      "group_id": "intervention-diagnosis",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "symptoms-to-diagnosis",
+      "protocol": "claim-support-v4",
+      "group_id": "intervention-diagnosis",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "direct-null-comparison",
+      "protocol": "claim-support-v4",
+      "group_id": "comparator",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "indirect-comparison",
+      "protocol": "claim-support-v4",
+      "group_id": "comparator",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "invented-comparator-direction",
+      "protocol": "claim-support-v4",
+      "group_id": "comparator",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "controlled-outcome",
+      "protocol": "claim-support-v4",
+      "group_id": "prepost-time",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "prepost-to-causal-contrast",
+      "protocol": "claim-support-v4",
+      "group_id": "prepost-time",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "invented-followup",
+      "protocol": "claim-support-v4",
+      "group_id": "prepost-time",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "preserved-contradiction",
+      "protocol": "claim-support-v4",
+      "group_id": "conflicting-studies",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "hidden-conflicting-evidence",
+      "protocol": "claim-support-v4",
+      "group_id": "conflicting-studies",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "reversed-null-result",
+      "protocol": "claim-support-v4",
+      "group_id": "conflicting-studies",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "supported-citation",
+      "protocol": "claim-support-v4",
+      "group_id": "background-citations",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "recommendation-as-result",
+      "protocol": "claim-support-v4",
+      "group_id": "background-citations",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "uncited-support-laundering",
+      "protocol": "claim-support-v4",
+      "group_id": "background-citations",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "null-finding",
+      "protocol": "claim-support-v5",
+      "group_id": "outcome-null",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "outcome-substitution",
+      "protocol": "claim-support-v5",
+      "group_id": "outcome-null",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "nonsignificance-to-equivalence",
+      "protocol": "claim-support-v5",
+      "group_id": "outcome-null",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "scoped-severity",
+      "protocol": "claim-support-v5",
+      "group_id": "age-severity",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "lost-age-severity-qualifiers",
+      "protocol": "claim-support-v5",
+      "group_id": "age-severity",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "adolescent-to-adult",
+      "protocol": "claim-support-v5",
+      "group_id": "age-severity",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "exact-intervention",
+      "protocol": "claim-support-v5",
+      "group_id": "intervention-diagnosis",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "class-to-specific-drug",
+      "protocol": "claim-support-v5",
+      "group_id": "intervention-diagnosis",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "symptoms-to-diagnosis",
+      "protocol": "claim-support-v5",
+      "group_id": "intervention-diagnosis",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "direct-null-comparison",
+      "protocol": "claim-support-v5",
+      "group_id": "comparator",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "indirect-comparison",
+      "protocol": "claim-support-v5",
+      "group_id": "comparator",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "invented-comparator-direction",
+      "protocol": "claim-support-v5",
+      "group_id": "comparator",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "controlled-outcome",
+      "protocol": "claim-support-v5",
+      "group_id": "prepost-time",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "prepost-to-causal-contrast",
+      "protocol": "claim-support-v5",
+      "group_id": "prepost-time",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "invented-followup",
+      "protocol": "claim-support-v5",
+      "group_id": "prepost-time",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "preserved-contradiction",
+      "protocol": "claim-support-v5",
+      "group_id": "conflicting-studies",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "hidden-conflicting-evidence",
+      "protocol": "claim-support-v5",
+      "group_id": "conflicting-studies",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "reversed-null-result",
+      "protocol": "claim-support-v5",
+      "group_id": "conflicting-studies",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C1",
+      "expected_supported": true,
+      "focus": "supported-citation",
+      "protocol": "claim-support-v5",
+      "group_id": "background-citations",
+      "accepted": true,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C2",
+      "expected_supported": false,
+      "focus": "recommendation-as-result",
+      "protocol": "claim-support-v5",
+      "group_id": "background-citations",
+      "accepted": false,
+      "review_status": "valid"
+    },
+    {
+      "claim_id": "C3",
+      "expected_supported": false,
+      "focus": "uncited-support-laundering",
+      "protocol": "claim-support-v5",
+      "group_id": "background-citations",
+      "accepted": true,
+      "review_status": "valid"
+    }
+  ],
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 128,
+      "enable_thinking": false
+    },
+    "load_seconds": 24.455995292002626,
+    "loading": {
+      "strategy": "synchronize-and-release-conversion-cache",
+      "conversion_count": 248,
+      "sampled_conversion_driver_peak_bytes": 9689579520
+    },
+    "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+    "release_cache_after_generation": true,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "finished_at": "2026-11-07T10:24:44.446609+00:00",
+  "local_report_sha256": "2976a4b431e9411bef2b49f3d98c30f050511d060c5b378ae7961db54595143d",
+  "per_group": [
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "outcome-null",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 880,
+      "new_tokens": 104,
+      "seconds": 31.247450499999104,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "age-severity",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "reason": "population_mismatch",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "reason": "population_mismatch",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 959,
+      "new_tokens": 106,
+      "seconds": 30.72478979200241,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "intervention-diagnosis",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "reason": "population_mismatch",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 1058,
+      "new_tokens": 104,
+      "seconds": 31.59534595900186,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "comparator",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 980,
+      "new_tokens": 106,
+      "seconds": 32.53486837499804,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "prepost-time",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "missing_details",
+          "verdict": "unclear"
+        }
+      ],
+      "input_tokens": 979,
+      "new_tokens": 104,
+      "seconds": 41.60785566699633,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "conflicting-studies",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 995,
+      "new_tokens": 104,
+      "seconds": 44.46675349999714,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v4",
+      "group_id": "background-citations",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "reason": "overstatement",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "input_tokens": 930,
+      "new_tokens": 104,
+      "seconds": 41.00296341699868,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "outcome-null",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "outcome_mismatch",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "input_tokens": 1146,
+      "new_tokens": 177,
+      "seconds": 65.79141158299899,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "age-severity",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "mismatch",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "qualifiers_preserved": "mismatch",
+          "reason": "context_conflict",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "mismatch",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "qualifiers_preserved": "mismatch",
+          "reason": "context_conflict",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 1222,
+      "new_tokens": 184,
+      "seconds": 69.84286766700097,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "intervention-diagnosis",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "mismatch",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "qualifiers_preserved": "match",
+          "reason": "population_mismatch",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "input_tokens": 1321,
+      "new_tokens": 177,
+      "seconds": 70.41579129100137,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "comparator",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "finding_distortion",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "finding_distortion",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 1234,
+      "new_tokens": 178,
+      "seconds": 71.12798512500012,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "prepost-time",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "mismatch",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "finding_distortion",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "mismatch",
+          "reason": "qualifier_loss",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 1251,
+      "new_tokens": 180,
+      "seconds": 70.20854249999684,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "conflicting-studies",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "mismatch",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "context_conflict",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "finding_distortion",
+          "verdict": "not_supported"
+        }
+      ],
+      "input_tokens": 1218,
+      "new_tokens": 180,
+      "seconds": 71.77078395799617,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    },
+    {
+      "protocol": "claim-support-v5",
+      "group_id": "background-citations",
+      "review_status": "valid",
+      "error": null,
+      "review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "mismatch",
+          "finding_fidelity": "mismatch",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "context_conflict",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "input_tokens": 1183,
+      "new_tokens": 177,
+      "seconds": 70.06705574999796,
+      "hit_output_limit": false,
+      "max_new_tokens": 512
+    }
+  ],
+  "by_protocol": {
+    "claim-support-v4": {
+      "claim_count": 21,
+      "expected_supported": 7,
+      "expected_withheld": 14,
+      "supported_retained": 7,
+      "supported_withheld": 0,
+      "unsupported_accepted": 1,
+      "unsupported_withheld": 13,
+      "claims_with_invalid_reviews": 0
+    },
+    "claim-support-v5": {
+      "claim_count": 21,
+      "expected_supported": 7,
+      "expected_withheld": 14,
+      "supported_retained": 6,
+      "supported_withheld": 1,
+      "unsupported_accepted": 3,
+      "unsupported_withheld": 11,
+      "claims_with_invalid_reviews": 0
+    }
+  }
+}

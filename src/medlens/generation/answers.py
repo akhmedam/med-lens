@@ -8,7 +8,7 @@ from collections import Counter
 from .context import canonical, digest, locate_quote, render_evidence
 from .quotes import quote_catalog, resolve_quote
 from .contracts import (LIMITATIONS, MAX_CLAIMS, MAX_CITATIONS, MAX_CLAIM_CHARS,
-    REVIEW_VERSION, REVIEW_VALUES, draft_contract, review_values)
+    DEFAULT_REVIEW_VERSION, REVIEW_VERSION, draft_contract, review_values)
 from .reviews import review_messages
 
 PROMPT_VERSION = "cited-answer-v6"
@@ -180,7 +180,7 @@ def parse_draft(text, context, *, catalog=None, citation_format="objects"):
             "format_variant": "per-claim-limitations" if any("limitations" in c for c in claims) else "root-limitations"}
 
 
-def parse_review(text, claim_ids, *, protocol=REVIEW_VERSION):
+def parse_review(text, claim_ids, *, protocol=DEFAULT_REVIEW_VERSION):
     values = review_values(protocol)
     rows = strict_json(text)
     if not isinstance(rows, list) or len(rows) != len(claim_ids):
@@ -206,12 +206,13 @@ def accepted_claim_ids(review, *, protocol=REVIEW_VERSION):
                 for key in axes)}
 
 
-def generate_answer(question, context, runtime, *, cached_calls=None):
+def generate_answer(question, context, runtime, *, cached_calls=None, review_protocol=DEFAULT_REVIEW_VERSION):
+    review_values(review_protocol)
     if not isinstance(question, str) or not question.strip():
         raise AnswerError("Question is required")
     check_context(context, runtime.tokenizer)
     result = {"question": question, "context_id": context["context_id"], "prompt_version": PROMPT_VERSION,
-        "review_version": REVIEW_VERSION, "claims": [], "limitations": ["limited_excerpts"],
+        "review_version": review_protocol, "claims": [], "limitations": ["limited_excerpts"],
         "model_calls": [], "review": [], "support_check": "same-model-review-not-independent",
         "verification_status": "draft-requires-independent-review"}
     if not context["sources"]:
@@ -240,14 +241,14 @@ def generate_answer(question, context, runtime, *, cached_calls=None):
             return {**result, "status": "insufficient_evidence", "reason": "model-abstained",
                     "limitations": draft["limitations"]}
         stage = "support-review"
-        review_prompt = chat_prompt(*review_messages(question, context, draft['claims'], indexed), runtime.tokenizer)
+        review_prompt = chat_prompt(*review_messages(question, context, draft['claims'], indexed, protocol=review_protocol), runtime.tokenizer)
         checked = infer("support-review", review_prompt, 512)
         result["model_calls"].append({"stage": "support-review", "prompt": review_prompt, **checked})
         if checked["hit_output_limit"]:
             raise AnswerError("Review output limit reached", code="output_limit")
-        review = parse_review(checked["text"], {c["claim_id"] for c in draft["claims"]})
+        review = parse_review(checked["text"], {c["claim_id"] for c in draft["claims"]}, protocol=review_protocol)
         result["review"] = review
-        accepted = accepted_claim_ids(review)
+        accepted = accepted_claim_ids(review, protocol=review_protocol)
         claims = [c for c in draft["claims"] if c["claim_id"] in accepted]
         status = draft["status"] if len(claims) == len(draft["claims"]) else "partial"
         if not claims:

@@ -1,0 +1,848 @@
+{
+  "schema_version": 1,
+  "run_id": "e7f8ebbfc568cd7fe7e5de7d15331291a1b5ed14b2696c9aa24970f347d13905",
+  "context_report_sha256": "a094faeef083fa0364b46f09be986c1f9daaeebe5454c545041c9f944c410af5",
+  "cache_source_sha256": "78a42e3cc8531584bc396317df4a77618d8f2772fa90ef41be46a3ab0fb5d5e1",
+  "profile_sha256": "ec7986899ead1fae39044b2a2e023e8a398b6ff017cd47714d10bb9e32fddaa4",
+  "qrels_sha256": null,
+  "case_ids": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10",
+    "empty-context",
+    "wrong-population"
+  ],
+  "code_sha256": {
+    "scripts/generate_answers.py": "64343e3be022727b71a56900e58af419732ebf6f54b067adf96e9c869b8bf89e",
+    "src/medlens/generation/answers.py": "af81913baa17449da24a38e231dfc05b053abee18d3a446387c0ba0ddfd7e835",
+    "src/medlens/generation/contracts.py": "e78dc38b520a8fd0d45f6dd4574b0e56f45525d918c0266bd3676b7232b2d718",
+    "src/medlens/inference/qwen.py": "9212fec2f396b417fef0206be327498555d206363dd2d9974a62affb3e8eb806",
+    "src/medlens/inference/metal.py": "5fcad25a5128a6fae8c61e9632f67f2b9ec0e4ca333c2e4988ad88bb47f32567",
+    "src/medlens/generation/quotes.py": "ba45e527677c8499b217f62ac63dfc5c782ef4d2ebf461ce48b1f19c8ab302a9",
+    "src/medlens/generation/request_contexts.py": "a6282491623182d7884553881293276c2803620bf24f897fbd167c883e2167d5",
+    "src/medlens/resources.py": "58d76394c209960c935cf2ca34bdb63e25d937dbc16453f4529addee52641fcd",
+    "src/medlens/generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412"
+  },
+  "status": "complete",
+  "started_at": "2026-11-07T10:24:47.314809+00:00",
+  "prompt_version": "cited-answer-v6",
+  "review_version": "claim-support-v5",
+  "heldout_used": false,
+  "resource_scope": "rebuilt-pilot",
+  "relevance_judgments_bound": false,
+  "source_requests": [
+    {
+      "path": "p01/run.json",
+      "sha256": "13bdebe37bf5e75798aed78bc2d76255cd4aaa126e29639c815f5fccd01906fe"
+    },
+    {
+      "path": "p02/run.json",
+      "sha256": "30d6ecd7e931b5c318a93c7def5bf46bc9b5f29321aaa61920f5e1e507fd86c8"
+    },
+    {
+      "path": "p03/run.json",
+      "sha256": "657de8a792f959c4ba85390f015154a5869143c7d6ce596f4d82d4d23ab96f48"
+    },
+    {
+      "path": "p04/run.json",
+      "sha256": "461d12a4d097d405daab7573566d2d57a04e1958f8ef9d1b938115e7b7439215"
+    },
+    {
+      "path": "p05/run.json",
+      "sha256": "11506acad27835b4716dd6a383700b1b532a854081a7df96ed9e80cfdb5fe827"
+    },
+    {
+      "path": "p06/run.json",
+      "sha256": "2664960c5aba5d3710dc35a8db829b4bf0c02e7ed81feb3db18986f18831c15b"
+    },
+    {
+      "path": "p07/run.json",
+      "sha256": "59705c7ea2e1871d5293dc55cfbcb0070426890837599c7647b136f4d404c02b"
+    },
+    {
+      "path": "p08/run.json",
+      "sha256": "82f5202c5dd5c4e7bd5e87a3b01366b496fa6f6d797728ab676d497887162d77"
+    },
+    {
+      "path": "p09/run.json",
+      "sha256": "7b343ba35542ab93219d5ccaf8e1e8d0da3f45f86b4a538252c6d4778561da04"
+    },
+    {
+      "path": "p10/run.json",
+      "sha256": "2d9baedb26b7c713f5ef50183c10bde4cf5927bd3d599bd8cdd7a4f0713304bf"
+    }
+  ],
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 128,
+      "enable_thinking": false
+    },
+    "load_seconds": 26.27577599999495,
+    "loading": {
+      "strategy": "synchronize-and-release-conversion-cache",
+      "conversion_count": 248,
+      "sampled_conversion_driver_peak_bytes": 9706356736
+    },
+    "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+    "release_cache_after_generation": true,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "finished_at": "2026-11-07T10:38:33.228645+00:00",
+  "process_peak_rss_bytes": 4981768192,
+  "local_report_sha256": "1245f0e141875af1022a60d705f6c1f430d07cc5107c468a5f350440580c9829",
+  "per_case": [
+    {
+      "case_id": "p01",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 1,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "mismatch",
+          "reason": "outcome_mismatch",
+          "intervention_match": "mismatch",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "mismatch",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "not_supported",
+          "population_match": "mismatch",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "overstatement",
+          "intervention_match": "match",
+          "qualifiers_preserved": "mismatch",
+          "finding_fidelity": "mismatch",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 87.09213145800459,
+          "new_tokens": 235,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2390,
+          "prompt_sha256": "0faad604eb8f0b48313f76bff3720722f45c06aab89ddaafde7148c7b83396bf"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 106.41930129200045,
+          "new_tokens": 240,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 2546,
+          "prompt_sha256": "2c33f07d8227d5d11f0cad52d43b9bc75588e7695fc55c0d868084bb15fae5de"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1503,
+      "quote_catalog_sha256": "1d9b00726333e1ce6f95fdf75f63729f100da43818cb90eacae6f1500be3503c",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p02",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "not_supported",
+          "population_match": "mismatch",
+          "comparison_match": "not_requested",
+          "outcome_match": "match",
+          "reason": "population_mismatch",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 77.62498600000254,
+          "new_tokens": 195,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1768,
+          "prompt_sha256": "28fe0cee73bba7b350dd35c047cc963e9780092425f98cafc13b0dd6e87ec21c"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 80.00495745900116,
+          "new_tokens": 179,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1987,
+          "prompt_sha256": "e1170fd2fe79d04702db77170388d075e02aed57538c1692fbe635ebebda435f"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 966,
+      "quote_catalog_sha256": "572f34e303a0011f46c3ffefc34c7fbb5aeec0004ba2725eaa28ea2571b53435",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p03",
+      "kind": "pilot",
+      "status": "answered",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 3,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 117.78386091700668,
+          "new_tokens": 264,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2651,
+          "prompt_sha256": "a3ee2a0892eb5389fc02a0c8efc0f2a262d0404e274d6a84c58992f3c8d1dc3f"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 88.098098459006,
+          "new_tokens": 174,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 2791,
+          "prompt_sha256": "567cfe703e0bc91b78085596d6c256b6db670a9390f53d167eb82245c48a629e"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1728,
+      "quote_catalog_sha256": "8bf42c938027664260a26f1803554889d4513b77790878650a86e3c658135087",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p04",
+      "kind": "pilot",
+      "status": "answered",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 3,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 95.90435741599504,
+          "new_tokens": 231,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2552,
+          "prompt_sha256": "32ba2f1b934111d6f93b9c5b46569fb79718a4e0a133e26db2a2709ac9d8217b"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 91.51086970799952,
+          "new_tokens": 176,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 2701,
+          "prompt_sha256": "c302f08e14dc888d3980670ef93add58aa941785c3f51baf362b321f4e1a9830"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1650,
+      "quote_catalog_sha256": "c1c59c9f677e661b0cc0516b972652e6baaf8c3bbf0c80689a3ebd59171e2311",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p05",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "mismatch",
+          "reason": "outcome_mismatch",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 71.91398354199919,
+          "new_tokens": 157,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1805,
+          "prompt_sha256": "6d58cd17b1e89943590fd1bd0d6b5dde2d33ab114ada4aab7ca37249e2660f7f"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 81.78313566699944,
+          "new_tokens": 176,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1976,
+          "prompt_sha256": "2c857e976ff0a873161375d98eed48fe34298b86e6c90d5ee4ed73daf20dcd8a"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 994,
+      "quote_catalog_sha256": "c18523c7b0d9fdde1e13306b013a3249737f5f1d65fedec2a1ed50789ce2ba1c",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p06",
+      "kind": "pilot",
+      "status": "validation_failed",
+      "reason": "Draft output limit reached",
+      "validation_error": {
+        "stage": "draft",
+        "code": "output_limit"
+      },
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 267.14386516700324,
+          "new_tokens": 768,
+          "hit_output_limit": true,
+          "max_new_tokens": 768,
+          "input_tokens": 2446,
+          "prompt_sha256": "475a2cd5c1d6e3a4b2ad082899854bfcbac6eb8abe5b4a04125e716bf1510f25"
+        }
+      ],
+      "format_variant": null,
+      "generator_evidence_tokens": 1556,
+      "quote_catalog_sha256": "5df708c2e981560c33fdd2df51f016ec2f8e9f0cd071240001ccc70158751149",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p07",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 1,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "intervention_mismatch",
+          "intervention_match": "mismatch",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "mismatch",
+          "reason": "outcome_mismatch",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 90.89942733399948,
+          "new_tokens": 173,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2936,
+          "prompt_sha256": "83fdf927e6c6c36a1f08d0c1feb4fb2075e344acccd108f32dca56cbe74e769d"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 95.90605595800298,
+          "new_tokens": 178,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 3009,
+          "prompt_sha256": "89660a82e8f7d65361f91ef56adc81172eaf42bca6e378235473aafc592a8333"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 2013,
+      "quote_catalog_sha256": "fed6dc0295775fcebcfb6fcd214293ee35bd3decc2085b3a30f9315a1e721623",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p08",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "unclear",
+          "population_match": "match",
+          "comparison_match": "not_requested",
+          "outcome_match": "unclear",
+          "reason": "missing_details",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 98.46015758400608,
+          "new_tokens": 212,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 2528,
+          "prompt_sha256": "fb793384fe40044991a1ab7cfcaf138d3bf2051c4e45786316771d41398f3157"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 91.4303654999967,
+          "new_tokens": 176,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 2658,
+          "prompt_sha256": "e3e1711c866410b93a625a0ecc76a969f6150d0f0717b3bbcd74e850e62cebea"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 1624,
+      "quote_catalog_sha256": "554f658167c129525a75f5690d55f27e793b46bbdc4c4c02a7158eee55b489f2",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p09",
+      "kind": "pilot",
+      "status": "answered",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 2,
+      "draft_claim_count": 2,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 96.1099549999999,
+          "new_tokens": 153,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 3568,
+          "prompt_sha256": "0aec4bae36fe24f1fd1d89b8f1218630bd6348151f4a75ac4d38801563e13df0"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 83.08714608300215,
+          "new_tokens": 118,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 3547,
+          "prompt_sha256": "404d64a7ac2b60443512baa95fccedb9ab266e101d7353e4e5fa761c90f714b0"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 2565,
+      "quote_catalog_sha256": "716482f3def86d9f26f2f0a59efb583426f37d5de60b3a1ee303ebfca69b4b00",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "p10",
+      "kind": "pilot",
+      "status": "partial",
+      "reason": "support-review-complete",
+      "validation_error": null,
+      "claim_count": 2,
+      "draft_claim_count": 3,
+      "review_checks": [
+        {
+          "claim_id": "C1",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "reason": "supported_by_excerpt",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "mismatch",
+          "reason": "outcome_mismatch",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 81.55405187500583,
+          "new_tokens": 171,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1686,
+          "prompt_sha256": "7b3355337d829c3153581564e943d1505968454af42917582bbc60769f17d636"
+        },
+        {
+          "stage": "support-review",
+          "seconds": 80.81176979200245,
+          "new_tokens": 176,
+          "hit_output_limit": false,
+          "max_new_tokens": 512,
+          "input_tokens": 1874,
+          "prompt_sha256": "7b2a7f9f33ef17c930e97146e2f62fae95a063f46109ce5db9572a2049afd2ba"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 884,
+      "quote_catalog_sha256": "02f4665b714ec1306e703227d9324409f87d73bd274db3f8923df379890af64a",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": null,
+      "matches_expected": null
+    },
+    {
+      "case_id": "empty-context",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "empty-context",
+      "validation_error": null,
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [],
+      "format_variant": null,
+      "generator_evidence_tokens": null,
+      "quote_catalog_sha256": null,
+      "reused_calls": 0,
+      "verification_status": "draft-requires-independent-review",
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    },
+    {
+      "case_id": "wrong-population",
+      "kind": "control",
+      "status": "insufficient_evidence",
+      "reason": "model-abstained",
+      "validation_error": null,
+      "claim_count": 0,
+      "draft_claim_count": 0,
+      "review_checks": [],
+      "stages": [
+        {
+          "stage": "draft",
+          "seconds": 22.82649591700465,
+          "new_tokens": 33,
+          "hit_output_limit": false,
+          "max_new_tokens": 768,
+          "input_tokens": 1054,
+          "prompt_sha256": "1d9ace3f24490afa0dbc8f21c4836aae6bb03a0026403318f3eae74dcf6aa339"
+        }
+      ],
+      "format_variant": "root-limitations",
+      "generator_evidence_tokens": 287,
+      "quote_catalog_sha256": "7aebf955198d38296e3eaa1fb039668656c581ebace13d4acb7041400d5234e5",
+      "reused_calls": 1,
+      "verification_status": "draft-requires-independent-review",
+      "expected": "insufficient_evidence",
+      "matches_expected": true
+    }
+  ]
+}

@@ -126,3 +126,9 @@ matched exact sources. The p06 request completed but withheld an overlong draft.
 The separate ten-question recovered baseline yielded nine visible drafts and
 one output-limit failure; both controls abstained. These are single developmental
 runs, not an independent answer-quality evaluation.
+
+The primary CLI retains baseline review v4. [Day 21 measurements](day21-semantic-reliability.md)
+found material support errors in both v4 and an experimental seven-axis v5
+reviewer; v5 regressed on controls and is available only through explicit research
+selection in `generate_answers.py` or `generate_answer`. Neither provides independent
+clinical validation.

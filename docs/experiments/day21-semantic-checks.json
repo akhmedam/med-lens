@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "checked-candidate-not-promoted",
+  "checked_on": "2026-11-07",
+  "heldout_used": false,
+  "model_inference_by_this_audit": false,
+  "experimental_source_commit": "7f6dfbe59e112c2a9befa7eeb4aeaad51b121a37",
+  "controlled_experiment": {
+    "fixture_sha256": "3b78f5c219b47bcef71d5d6b01a268d45abca9073e984fbf429d02631b00a7e1",
+    "raw_report_sha256": "2976a4b431e9411bef2b49f3d98c30f050511d060c5b378ae7961db54595143d",
+    "summary_sha256": "b51d201d487f34df41cec25e3c1dd0d36bd1078e7eec4b564b750abc19bdba5b",
+    "groups_replayed": 14,
+    "labels_not_in_model_messages": true,
+    "source_code_hashes_match_commit": true,
+    "by_protocol": {
+      "claim-support-v4": {
+        "claim_count": 21,
+        "expected_supported": 7,
+        "expected_withheld": 14,
+        "supported_retained": 7,
+        "supported_withheld": 0,
+        "unsupported_accepted": 1,
+        "unsupported_withheld": 13,
+        "claims_with_invalid_reviews": 0
+      },
+      "claim-support-v5": {
+        "claim_count": 21,
+        "expected_supported": 7,
+        "expected_withheld": 14,
+        "supported_retained": 6,
+        "supported_withheld": 1,
+        "unsupported_accepted": 3,
+        "unsupported_withheld": 11,
+        "claims_with_invalid_reviews": 0
+      }
+    }
+  },
+  "default_policy": {
+    "review_version": "claim-support-v4",
+    "candidate_promoted": false,
+    "reason": "The candidate introduced two new unsupported acceptances and lost a supported control; known real-source errors remain.",
+    "baseline_report_sha256": "78a42e3cc8531584bc396317df4a77618d8f2772fa90ef41be46a3ab0fb5d5e1",
+    "cases_replayed": 12,
+    "cached_calls_replayed": 20,
+    "visible_citations_source_checked": 29,
+    "all_statuses_claims_reviews_and_renderings_preserved": true
+  },
+  "frozen_candidate_source_checks": {
+    "cases_replayed": 12,
+    "cached_calls_replayed": 20,
+    "catalog_entries_including_controls": 284,
+    "displayed_citations_resolved": 25,
+    "source_windows_and_metadata_verified": true,
+    "candidate_code_hashes_match": true
+  },
+  "frozen_candidate_counts": {
+    "baseline_visible_claims": 22,
+    "candidate_visible_claims": 18,
+    "newly_withheld": 4,
+    "newly_accepted": 0,
+    "retained": 18
+  },
+  "near_budget": {
+    "status": "passed",
+    "review_version": "claim-support-v5",
+    "model_inference": false,
+    "synthetic_sources_and_model_outputs": true,
+    "heldout_used": false,
+    "quote_indexed_evidence_tokens": 4000,
+    "max_evidence_tokens": 4000,
+    "max_input_tokens": 6500,
+    "claim_count": 3,
+    "draft_input_tokens": 4774,
+    "review_input_tokens": 4945,
+    "draft_output_limit": 768,
+    "review_output_limit": 512,
+    "scope": "Real-tokenizer production prompt packing only; no semantic or inference-at-budget validation."
+  },
+  "checks": {
+    "unit_tests_passed": 260,
+    "pip_check": "No broken requirements found.",
+    "git_diff_check": "passed"
+  },
+  "scope": "AI-authored synthetic development contrasts and AI source inspection only; no independent clinical accuracy or held-out confirmation."
+}

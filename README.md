@@ -27,6 +27,11 @@ and MedCPT depths: cached Dense is fastest; direct MedCPT avoids passage-embeddi
 construction for fresh windows. The user selected **Dense → evidence context →
 Qwen3.5-9B generation** as the [primary pipeline](docs/adr/0003-primary-pipeline.md).
 
+The [Day 21 semantic checks](docs/day21-semantic-reliability.md) document
+remaining source-support errors. The seven-axis review candidate regressed on
+controlled development cases and remains opt-in; baseline review is preserved.
+Neither reviewer establishes clinical correctness.
+
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
 
