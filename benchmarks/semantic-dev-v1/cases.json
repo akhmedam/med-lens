@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic-semantic-development",
+  "split": "development",
+  "heldout_used": false,
+  "label_provenance": "AI-authored synthetic contrasts with explicit fictional sources; not independent clinical gold or real studies.",
+  "scope": "One positive and two negative claims per group. Labels/focus are withheld from model prompts. Predeclared development diagnostics, not held-out confirmation.",
+  "groups": [
+    {
+      "group_id": "outcome-null",
+      "question": "How does CBT compare with medication for depressive symptoms in adults with major depression?",
+      "sources": [
+        "A synthetic randomized trial enrolled adults aged 18 to 65 with major depression. At 12 weeks, dysfunctional attitudes decreased in both CBT and medication arms. There was no statistically significant difference in depressive symptoms between CBT and medication at 12 weeks. Equivalence and non-inferiority were not tested."
+      ],
+      "claims": [
+        {
+          "text": "In adults with major depression, no statistically significant difference in depressive symptoms between CBT and medication was found at 12 weeks.",
+          "citations": [
+            "E1.Q3"
+          ],
+          "expected_supported": true,
+          "focus": "null-finding"
+        },
+        {
+          "text": "CBT reduced depressive symptoms more than medication because dysfunctional attitudes decreased.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "outcome-substitution"
+        },
+        {
+          "text": "CBT and medication were established to be equivalent for depressive symptoms at 12 weeks.",
+          "citations": [
+            "E1.Q3"
+          ],
+          "expected_supported": false,
+          "focus": "nonsignificance-to-equivalence"
+        }
+      ]
+    },
+    {
+      "group_id": "age-severity",
+      "question": "How does CBT compare with medication for depressive symptoms in adults with major depression?",
+      "sources": [
+        "A synthetic trial enrolled adults aged 65 to 80 with moderate or severe major depression. CBT reduced depressive symptoms more than medication at eight weeks only in the severe subgroup. No significant treatment difference was found in the moderate subgroup.",
+        "A separate synthetic trial enrolled adolescents aged 12 to 17 with major depression. CBT reduced depressive symptoms more than medication at eight weeks in these adolescents."
+      ],
+      "claims": [
+        {
+          "text": "In adults aged 65 to 80 with severe major depression, CBT reduced depressive symptoms more than medication at eight weeks.",
+          "citations": [
+            "E1.Q1",
+            "E1.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "scoped-severity"
+        },
+        {
+          "text": "CBT reduced depressive symptoms more than medication in all adults regardless of age or baseline severity.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "lost-age-severity-qualifiers"
+        },
+        {
+          "text": "CBT reduced depressive symptoms more than medication in adults aged 18 to 65.",
+          "citations": [
+            "E2.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "adolescent-to-adult"
+        }
+      ]
+    },
+    {
+      "group_id": "intervention-diagnosis",
+      "question": "Do SSRIs reduce anxiety symptoms compared with placebo in adults diagnosed with generalized anxiety disorder?",
+      "sources": [
+        "A synthetic trial enrolled adults aged 18 to 65 diagnosed with generalized anxiety disorder. Pooled antidepressants reduced anxiety symptoms more than placebo after six weeks. No drug-class-specific results or SSRI subgroup estimates were reported.",
+        "A synthetic trial enrolled adults aged 18 to 65 with opioid use disorder; generalized anxiety disorder diagnosis was not assessed. SSRIs reduced generalized anxiety symptoms more than placebo in this substance-use sample after six weeks.",
+        "A synthetic trial enrolled adults aged 18 to 65 diagnosed with generalized anxiety disorder. SSRIs reduced anxiety symptoms more than placebo after six weeks."
+      ],
+      "claims": [
+        {
+          "text": "In adults diagnosed with generalized anxiety disorder, SSRIs reduced anxiety symptoms more than placebo after six weeks.",
+          "citations": [
+            "E3.Q1",
+            "E3.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "exact-intervention"
+        },
+        {
+          "text": "SSRIs reduced anxiety symptoms more than placebo in adults diagnosed with generalized anxiety disorder.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "class-to-specific-drug"
+        },
+        {
+          "text": "SSRIs reduced anxiety symptoms more than placebo in adults diagnosed with generalized anxiety disorder.",
+          "citations": [
+            "E2.Q1",
+            "E2.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "symptoms-to-diagnosis"
+        }
+      ]
+    },
+    {
+      "group_id": "comparator",
+      "question": "How does CBT compare with medication for depressive symptoms in adults with major depression?",
+      "sources": [
+        "A synthetic adult major-depression trial compared CBT against combined CBT plus medication, and medication against combined CBT plus medication. Combined treatment produced better depressive-symptom outcomes than either monotherapy at 12 weeks. No direct CBT-versus-medication contrast was estimated.",
+        "A separate synthetic randomized trial enrolled adults aged 18 to 65 with major depression. This trial found no statistically significant difference in depressive symptoms between CBT and medication after 12 weeks."
+      ],
+      "claims": [
+        {
+          "text": "A separate adult major-depression trial found no statistically significant difference in depressive symptoms between CBT and medication after 12 weeks.",
+          "citations": [
+            "E2.Q1",
+            "E2.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "direct-null-comparison"
+        },
+        {
+          "text": "CBT and medication were equally effective because both were less effective than their combination.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "indirect-comparison"
+        },
+        {
+          "text": "CBT was superior to medication because combined treatment outperformed both monotherapies.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "invented-comparator-direction"
+        }
+      ]
+    },
+    {
+      "group_id": "prepost-time",
+      "question": "Does exposure-based CBT reduce panic symptoms compared with waitlist in adults with panic disorder?",
+      "sources": [
+        "A synthetic trial enrolled adults aged 18 to 65 with panic disorder into internet exposure therapy or internet CBT arms. Both arms showed within-group panic-symptom improvement from baseline to 12 weeks. There was no significant difference between the arms and no waitlist control.",
+        "A synthetic randomized trial enrolled adults aged 18 to 65 with panic disorder. Exposure-based CBT reduced panic symptoms more than waitlist at 12 weeks. Six-month outcomes were not measured."
+      ],
+      "claims": [
+        {
+          "text": "In adults with panic disorder, exposure-based CBT reduced panic symptoms more than waitlist at 12 weeks.",
+          "citations": [
+            "E2.Q1",
+            "E2.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "controlled-outcome"
+        },
+        {
+          "text": "Within-group improvement demonstrated that internet exposure therapy was superior to internet CBT and waitlist.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "prepost-to-causal-contrast"
+        },
+        {
+          "text": "Exposure-based CBT reduced panic symptoms more than waitlist with benefits maintained for six months.",
+          "citations": [
+            "E2.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "invented-followup"
+        }
+      ]
+    },
+    {
+      "group_id": "conflicting-studies",
+      "question": "Does CBT reduce anxiety symptoms compared with waitlist in adults with generalized anxiety disorder?",
+      "sources": [
+        "Synthetic Study A enrolled adults aged 18 to 65 diagnosed with generalized anxiety disorder. Study A found that CBT reduced anxiety symptoms more than waitlist after eight weeks.",
+        "Synthetic Study B enrolled adults aged 18 to 65 diagnosed with generalized anxiety disorder. Study B found no statistically significant difference in anxiety symptoms between CBT and waitlist after eight weeks."
+      ],
+      "claims": [
+        {
+          "text": "Study A found lower anxiety symptoms with CBT than waitlist in adults with generalized anxiety disorder at eight weeks, whereas Study B found no statistically significant difference.",
+          "citations": [
+            "E1.Q1",
+            "E1.Q2",
+            "E2.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "preserved-contradiction"
+        },
+        {
+          "text": "All supplied adult generalized-anxiety trials consistently demonstrated that CBT was superior to waitlist after eight weeks.",
+          "citations": [
+            "E1.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "hidden-conflicting-evidence"
+        },
+        {
+          "text": "Study B demonstrated that CBT reduced anxiety symptoms more than waitlist at eight weeks.",
+          "citations": [
+            "E2.Q2"
+          ],
+          "expected_supported": false,
+          "focus": "reversed-null-result"
+        }
+      ]
+    },
+    {
+      "group_id": "background-citations",
+      "question": "Do SSRIs reduce anxiety symptoms compared with placebo in adults with generalized anxiety disorder?",
+      "sources": [
+        "A synthetic expert recommendation describes SSRIs as first-line treatment for adults with generalized anxiety disorder. It provides no trial outcomes or placebo comparisons.",
+        "A synthetic randomized trial enrolled adults aged 18 to 65 diagnosed with generalized anxiety disorder. SSRIs reduced anxiety symptoms more than placebo at six weeks."
+      ],
+      "claims": [
+        {
+          "text": "In the synthetic trial of adults with generalized anxiety disorder, SSRIs reduced anxiety symptoms more than placebo at six weeks.",
+          "citations": [
+            "E2.Q1",
+            "E2.Q2"
+          ],
+          "expected_supported": true,
+          "focus": "supported-citation"
+        },
+        {
+          "text": "The first-line recommendation demonstrated that SSRIs reduced anxiety symptoms more than placebo.",
+          "citations": [
+            "E1.Q1"
+          ],
+          "expected_supported": false,
+          "focus": "recommendation-as-result"
+        },
+        {
+          "text": "SSRIs reduced anxiety symptoms more than placebo at six weeks in adults with generalized anxiety disorder.",
+          "citations": [
+            "E1.Q1"
+          ],
+          "expected_supported": false,
+          "focus": "uncited-support-laundering"
+        }
+      ]
+    }
+  ]
+}

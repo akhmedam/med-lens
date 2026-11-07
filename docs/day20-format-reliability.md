@@ -112,3 +112,7 @@ source checks and offline replay of all twelve cases using twenty cached calls.
 This establishes a new baseline, not independent semantic validation. Long-output
 compliance, a controlled prompt comparison on fixed new contexts and Day 21
 semantic checks remain open.
+
+[Day 21 diagnostics](day21-semantic-reliability.md) have since measured semantic
+errors on the frozen recovery drafts. The expanded review candidate was not
+promoted; further semantic work is required before release.

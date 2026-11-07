@@ -1,0 +1,1033 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "model_inference": false,
+  "heldout_used": false,
+  "baseline_sha256": "78a42e3cc8531584bc396317df4a77618d8f2772fa90ef41be46a3ab0fb5d5e1",
+  "candidate_sha256": "1245f0e141875af1022a60d705f6c1f430d07cc5107c468a5f350440580c9829",
+  "inspection_sha256": "90d45d5c4f82ffcac1587acfdf6c3f8b69d5331048d5bb63aec7144d168a6aa8",
+  "context_manifest_sha256": "a094faeef083fa0364b46f09be986c1f9daaeebe5454c545041c9f944c410af5",
+  "candidate_code_ref": "7f6dfbe59e112c2a9befa7eeb4aeaad51b121a37",
+  "paired_frozen_drafts": true,
+  "clinical_accuracy_measured": false,
+  "cases": [
+    {
+      "case_id": "p01",
+      "kind": "pilot",
+      "baseline_status": "partial",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C2"
+      ],
+      "candidate_visible_claims": [
+        "C2"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C2"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "verdict": "not_supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "mismatch",
+          "intervention_match": "mismatch",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "mismatch",
+          "context_consistency": "match",
+          "reason": "outcome_mismatch"
+        },
+        {
+          "claim_id": "C2",
+          "verdict": "supported",
+          "population_match": "match",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "intervention_match": "match",
+          "qualifiers_preserved": "match",
+          "finding_fidelity": "match",
+          "context_consistency": "match",
+          "reason": "supported_by_excerpt"
+        },
+        {
+          "claim_id": "C3",
+          "verdict": "not_supported",
+          "population_match": "mismatch",
+          "comparison_match": "match",
+          "outcome_match": "match",
+          "intervention_match": "match",
+          "qualifiers_preserved": "mismatch",
+          "finding_fidelity": "mismatch",
+          "context_consistency": "match",
+          "reason": "overstatement"
+        }
+      ],
+      "fresh_review_seconds": 106.41930129200045
+    },
+    {
+      "case_id": "p02",
+      "kind": "pilot",
+      "baseline_status": "partial",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C2",
+        "C3"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C2",
+        "C3"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "mismatch",
+          "qualifiers_preserved": "match",
+          "reason": "population_mismatch",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "fresh_review_seconds": 80.00495745900116
+    },
+    {
+      "case_id": "p03",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "answered",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "fresh_review_seconds": 88.098098459006
+    },
+    {
+      "case_id": "p04",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "answered",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "fresh_review_seconds": 91.51086970799952
+    },
+    {
+      "case_id": "p05",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C2"
+      ],
+      "newly_withheld": [
+        "C3"
+      ],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C2"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "outcome_mismatch",
+          "verdict": "not_supported"
+        }
+      ],
+      "fresh_review_seconds": 81.78313566699944
+    },
+    {
+      "case_id": "p06",
+      "kind": "pilot",
+      "baseline_status": "validation_failed",
+      "candidate_status": "validation_failed",
+      "draft_claim_count": 0,
+      "baseline_visible_claims": [],
+      "candidate_visible_claims": [],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [],
+      "candidate_validation_error": {
+        "stage": "draft",
+        "code": "output_limit"
+      },
+      "candidate_review": [],
+      "fresh_review_seconds": 0
+    },
+    {
+      "case_id": "p07",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C1"
+      ],
+      "newly_withheld": [
+        "C2",
+        "C3"
+      ],
+      "newly_accepted": [],
+      "retained": [
+        "C1"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "mismatch",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "intervention_mismatch",
+          "verdict": "not_supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "outcome_mismatch",
+          "verdict": "not_supported"
+        }
+      ],
+      "fresh_review_seconds": 95.90605595800298
+    },
+    {
+      "case_id": "p08",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C3"
+      ],
+      "newly_withheld": [
+        "C2"
+      ],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C3"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "not_requested",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "unclear",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "missing_details",
+          "verdict": "unclear"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "fresh_review_seconds": 91.4303654999967
+    },
+    {
+      "case_id": "p09",
+      "kind": "pilot",
+      "baseline_status": "answered",
+      "candidate_status": "answered",
+      "draft_claim_count": 2,
+      "baseline_visible_claims": [
+        "C1",
+        "C2"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C2"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C2"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        }
+      ],
+      "fresh_review_seconds": 83.08714608300215
+    },
+    {
+      "case_id": "p10",
+      "kind": "pilot",
+      "baseline_status": "partial",
+      "candidate_status": "partial",
+      "draft_claim_count": 3,
+      "baseline_visible_claims": [
+        "C1",
+        "C2"
+      ],
+      "candidate_visible_claims": [
+        "C1",
+        "C2"
+      ],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [
+        "C1",
+        "C2"
+      ],
+      "candidate_validation_error": null,
+      "candidate_review": [
+        {
+          "claim_id": "C1",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C2",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "match",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "supported_by_excerpt",
+          "verdict": "supported"
+        },
+        {
+          "claim_id": "C3",
+          "comparison_match": "match",
+          "context_consistency": "match",
+          "finding_fidelity": "match",
+          "intervention_match": "match",
+          "outcome_match": "mismatch",
+          "population_match": "match",
+          "qualifiers_preserved": "match",
+          "reason": "outcome_mismatch",
+          "verdict": "not_supported"
+        }
+      ],
+      "fresh_review_seconds": 80.81176979200245
+    },
+    {
+      "case_id": "empty-context",
+      "kind": "control",
+      "baseline_status": "insufficient_evidence",
+      "candidate_status": "insufficient_evidence",
+      "draft_claim_count": 0,
+      "baseline_visible_claims": [],
+      "candidate_visible_claims": [],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [],
+      "candidate_validation_error": null,
+      "candidate_review": [],
+      "fresh_review_seconds": 0
+    },
+    {
+      "case_id": "wrong-population",
+      "kind": "control",
+      "baseline_status": "insufficient_evidence",
+      "candidate_status": "insufficient_evidence",
+      "draft_claim_count": 0,
+      "baseline_visible_claims": [],
+      "candidate_visible_claims": [],
+      "newly_withheld": [],
+      "newly_accepted": [],
+      "retained": [],
+      "candidate_validation_error": null,
+      "candidate_review": [],
+      "fresh_review_seconds": 0
+    }
+  ],
+  "inspection_outcomes": [
+    {
+      "case_id": "p01",
+      "claim_id": "C2",
+      "assessment": "textual_or_answer_scope_error",
+      "issues": [
+        "outcome_substitution",
+        "moderator_qualification_lost"
+      ],
+      "note": "DA denotes dysfunctional attitudes, not depressive symptoms. The cited moderator result was not replicated across studies or self-reports.",
+      "source_refs": [
+        {
+          "pmid": "42241063",
+          "quote_id": "E4.Q2"
+        },
+        {
+          "pmid": "42241063",
+          "quote_id": "E4.Q4"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p02",
+      "claim_id": "C2",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "University-student status alone does not establish adult eligibility in the supplied source.",
+      "source_refs": [
+        {
+          "pmid": "39319584",
+          "quote_id": "E4.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p02",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "The cited text/title describes depression severity, but does not explicitly establish adult age.",
+      "source_refs": [
+        {
+          "pmid": "33471111",
+          "quote_id": "E5.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p03",
+      "claim_id": "C1",
+      "assessment": "no_specific_issue_identified",
+      "issues": [],
+      "note": "The claim retains the source population, baseline-severity and RewP qualifiers; this is not expert validation.",
+      "source_refs": [
+        {
+          "pmid": "32838817",
+          "quote_id": "E1.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p03",
+      "claim_id": "C2",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "The supplied excerpt/title lacks explicit adult eligibility.",
+      "source_refs": [
+        {
+          "pmid": "36731907",
+          "quote_id": "E2.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p03",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "diagnostic_population_mixed_or_unspecified"
+      ],
+      "note": "The source includes adults diagnosed with depression or anxiety; eligibility within the depressive-outcome pool is not fully specified.",
+      "source_refs": [
+        {
+          "pmid": "40432290",
+          "quote_id": "E4.Q9"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p04",
+      "claim_id": "C1",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "Residual-symptom qualifier is retained, but the supplied source does not explicitly establish adult eligibility.",
+      "source_refs": [
+        {
+          "pmid": "27119968",
+          "quote_id": "E1.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p04",
+      "claim_id": "C2",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "The claim preserves the three-versus-two-episode contrast; adult age is not explicit.",
+      "source_refs": [
+        {
+          "pmid": "10965637",
+          "quote_id": "E2.Q4"
+        },
+        {
+          "pmid": "10965637",
+          "quote_id": "E2.Q5"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p04",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit",
+        "cointervention_scope_unclear"
+      ],
+      "note": "The source trial used MBCT plus medication-taper support. The claim preserves the confidence-interval caveat; age is not explicit.",
+      "source_refs": [
+        {
+          "pmid": "19045965",
+          "quote_id": "E6.Q9"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p05",
+      "claim_id": "C1",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "mixed_child_adolescent_population"
+      ],
+      "note": "A pooled children/adolescents result is presented as an adolescent finding without a separate adolescent estimate in the excerpt.",
+      "source_refs": [
+        {
+          "pmid": "30658278",
+          "quote_id": "E1.Q2"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p05",
+      "claim_id": "C2",
+      "assessment": "no_specific_issue_identified",
+      "issues": [],
+      "note": "The statement and adolescent population are explicit in the supplied source; not expert validation.",
+      "source_refs": [
+        {
+          "pmid": "18049290",
+          "quote_id": "E4.Q2"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p05",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "suicidality_qualification_not_conveyed"
+      ],
+      "note": "The source warns that evidence in suicidal adolescents is limited. The broad statement does not convey that limitation; this is an omission risk, not an asserted falsehood for all adolescents.",
+      "source_refs": [
+        {
+          "pmid": "21440850",
+          "quote_id": "E6.Q1"
+        }
+      ],
+      "candidate_visible": false,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p07",
+      "claim_id": "C1",
+      "assessment": "textual_or_answer_scope_error",
+      "issues": [
+        "recommendation_instead_of_efficacy_outcome"
+      ],
+      "note": "The cited first-line recommendations do not themselves answer the requested anxiety-symptom efficacy question.",
+      "source_refs": [
+        {
+          "pmid": "30056792",
+          "quote_id": "E1.Q6"
+        },
+        {
+          "pmid": "39352792",
+          "quote_id": "E6.Q2"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p07",
+      "claim_id": "C2",
+      "assessment": "textual_or_answer_scope_error",
+      "issues": [
+        "drug_class_to_ssri_subgroup"
+      ],
+      "note": "The cited antidepressant-class result does not identify an SSRI-specific effect.",
+      "source_refs": [
+        {
+          "pmid": "39880377",
+          "quote_id": "E2.Q2"
+        }
+      ],
+      "candidate_visible": false,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p07",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "gad_diagnosis_not_explicit",
+        "adult_age_not_explicit"
+      ],
+      "note": "Generalized anxiety symptoms in substance-use populations do not establish diagnosed adult GAD in the supplied source.",
+      "source_refs": [
+        {
+          "pmid": "35246699",
+          "quote_id": "E5.Q2"
+        }
+      ],
+      "candidate_visible": false,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p08",
+      "claim_id": "C1",
+      "assessment": "textual_or_answer_scope_error",
+      "issues": [
+        "within_group_to_treatment_effect",
+        "intervention_conflation"
+      ],
+      "note": "Both internet-exposure and internet-CBT arms improved within groups; there was no between-arm difference. This does not identify the effect of their conflation as exposure-based CBT.",
+      "source_refs": [
+        {
+          "pmid": "33774558",
+          "quote_id": "E5.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p08",
+      "claim_id": "C2",
+      "assessment": "textual_or_answer_scope_error",
+      "issues": [
+        "background_instead_of_efficacy_outcome"
+      ],
+      "note": "The quoted background assertion describes CBT components, not an observed panic-symptom outcome.",
+      "source_refs": [
+        {
+          "pmid": "32544125",
+          "quote_id": "E3.Q1"
+        }
+      ],
+      "candidate_visible": false,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p08",
+      "claim_id": "C3",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit",
+        "exposure_component_effect_not_established"
+      ],
+      "note": "The excerpt reports CBT outcomes but does not establish adult eligibility or the efficacy of the particular exposure component asked for.",
+      "source_refs": [
+        {
+          "pmid": "9536473",
+          "quote_id": "E4.Q4"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p09",
+      "claim_id": "C1",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "adult_age_not_explicit"
+      ],
+      "note": "Both cited sources lack explicit adult age. Long-term source estimates are within-group; the claim does not describe a controlled long-term comparison.",
+      "source_refs": [
+        {
+          "pmid": "36367388",
+          "quote_id": "E2.Q6"
+        },
+        {
+          "pmid": "36367388",
+          "quote_id": "E2.Q9"
+        },
+        {
+          "pmid": "36265270",
+          "quote_id": "E4.Q4"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p09",
+      "claim_id": "C2",
+      "assessment": "no_specific_issue_identified",
+      "issues": [],
+      "note": "Adult eligibility is explicit in the source title and the network-meta-analysis ranking is qualified as generally; not expert validation.",
+      "source_refs": [
+        {
+          "pmid": "40023260",
+          "quote_id": "E5.Q7"
+        },
+        {
+          "pmid": "40023260",
+          "quote_id": "E5.Q6"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "answered"
+    },
+    {
+      "case_id": "p10",
+      "claim_id": "C1",
+      "assessment": "scope_uncertain",
+      "issues": [
+        "comparative_followup_uncertainty_not_conveyed"
+      ],
+      "note": "The cited source states that evidence against active controls, TAU or medication at follow-up is limited/inconclusive; the broad finding does not convey that limitation.",
+      "source_refs": [
+        {
+          "pmid": "25692403",
+          "quote_id": "E1.Q1"
+        },
+        {
+          "pmid": "37201966",
+          "quote_id": "E5.Q3"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    },
+    {
+      "case_id": "p10",
+      "claim_id": "C2",
+      "assessment": "no_specific_issue_identified",
+      "issues": [],
+      "note": "The children/anxiety population and direction are explicit in the source; not expert validation.",
+      "source_refs": [
+        {
+          "pmid": "18974308",
+          "quote_id": "E4.Q1"
+        }
+      ],
+      "candidate_visible": true,
+      "candidate_case_status": "partial"
+    }
+  ],
+  "counts": {
+    "baseline_visible_claims": 22,
+    "candidate_visible_claims": 18,
+    "newly_withheld": 4,
+    "newly_accepted": 0,
+    "retained": 18
+  },
+  "candidate_pilot_statuses": {
+    "partial": 6,
+    "answered": 3,
+    "validation_failed": 1
+  },
+  "source_checks": {
+    "cases_replayed": 12,
+    "cached_calls_replayed": 20,
+    "catalog_entries_including_controls": 284,
+    "displayed_citations_resolved": 25,
+    "source_windows_and_metadata_verified": true,
+    "candidate_code_hashes_match": true
+  },
+  "interpretation": "Fixed drafts isolate the bundled review-protocol change (axes, instructions and evidence visibility), not individual mechanisms. AI source inspection is not independent clinical gold; withholding is not proof that a claim is false."
+}
