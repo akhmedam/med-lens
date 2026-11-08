@@ -1,0 +1,573 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "created_at": "2026-11-08T06:53:20.653795+00:00",
+  "platform": "macOS-26.7.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "heldout_used": false,
+  "qrels_used": false,
+  "scope": "Rebuilt abstract-only development collections; start of Small to Medium transition, not large-corpus or quality validation.",
+  "timing_scope": "Single preparation run per scenario. OS filesystem caches not flushed. Cold means an empty vector cache and actual BGE inference, not cold OS/model storage. Search reuses one model and resident validated indexes; one query vector per repetition for both searches, alternating order. Warm-up excluded. Validation, model construction and preparation reported separately.",
+  "memory_scope": "Process RSS high-water marks and sampled post-forward MPS tensor/driver allocations are separate overlapping views; do not add. Parent preparation excludes child RSS. No instantaneous device-peak claim.",
+  "repeats": 5,
+  "profile_sha256": "ec7986899ead1fae39044b2a2e023e8a398b6ff017cd47714d10bb9e32fddaa4",
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "code_sha256": {
+    "scripts/benchmark_shared_corpus.py": "276a72d85e5191586aaf7f15ac5b94423e0789f94cce4b61c9bc0d49a8cd0c6b",
+    "src/medlens/corpus.py": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343",
+    "src/medlens/retrieval/vector_cache.py": "4555312aadd58a9985dc319f34dbbe951fa9c1776d12c5dc3ceed0a1d9227420",
+    "src/medlens/retrieval/dense.py": "c902f1603f1583821f7df4505509ffe2aee8a5a84857a1f419d84c7c8f8d0dd7",
+    "src/medlens/retrieval/windows.py": "9d593df503c82a0f83a47c4b46ddcfcb0c452dffa0094b1ca94701e884e2725e",
+    "src/medlens/retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e"
+  },
+  "source_files_sha256": {
+    "data/parsed/recovery-20261106/p01/articles.jsonl": "2b5e0334195c534a88b8d7c2cf1ccf248eb884a917fc044858ab132235a26d92",
+    "data/parsed/recovery-20261106/p01/manifest.json": "4338d361cc8e71f4aeeed46d9c801ff72001069a554978e7caf20b72630aac1e",
+    "data/parsed/recovery-20261106/p01/source-manifest.json": "fe8fca8b04fcb676db35e9596ac043de06614b295d19ecc3eaeef8714173c681",
+    "data/windows/recovery-20261106/p01/manifest.json": "c6ffb6f2c0a39618318b0d4cd8d1b64037c9727b9700b2145860bcc3747b1531",
+    "data/windows/recovery-20261106/p01/windows.jsonl": "9f24e631b405bae484d0e1d114fc2ab2cead3a859ec0e986d9cc6e6c2a372d38",
+    "data/embeddings/recovery-20261106/p01/manifest.json": "4eb504062865846b539257062edc777dfadaabd7e1225ff532cb5b99dc0aa57b",
+    "data/embeddings/recovery-20261106/p01/rows.jsonl": "b25805b976816ddaf80272782f0962fce536e3c9f79899f3eb71f8847b75d56a",
+    "data/embeddings/recovery-20261106/p01/vectors.npy": "5b74ae4fd0e715af5ab22720daa88377001d08ff29b9f202c545056697439bbf",
+    "data/embeddings/recovery-20261106/p01/windows-manifest.json": "c6ffb6f2c0a39618318b0d4cd8d1b64037c9727b9700b2145860bcc3747b1531",
+    "data/parsed/recovery-20261106/p02/articles.jsonl": "1aca472deead1c4babbd69f7f274dbf4f03e40315c0979816e34b1b201b31933",
+    "data/parsed/recovery-20261106/p02/manifest.json": "e5f3e657d599d5da5416dfc11ca4ab89b7c4257089d397c45f4ab5d0e4b39433",
+    "data/parsed/recovery-20261106/p02/source-manifest.json": "ff24c42dffb9c7dce052c7b57ecebb86113e7207c474464dc2d0435c3a7e6c75",
+    "data/windows/recovery-20261106/p02/manifest.json": "03683511802ddc4b13e9fb72b991cbc6e5e8301dcc8c97717f1e4a668ac4a637",
+    "data/windows/recovery-20261106/p02/windows.jsonl": "461057aa4546930b3d64c2b481d45dc897c4c872f561eabb4cba923ad10a7e0c",
+    "data/embeddings/recovery-20261106/p02/manifest.json": "72d2cc4ebacec638820f7e9559ab36259a033b1d10406bf95a019b74e6a77174",
+    "data/embeddings/recovery-20261106/p02/rows.jsonl": "2c8f454eebcbdac8428fdc3d44d8cd1395c5711e74ddf76e2f1e089dd326f379",
+    "data/embeddings/recovery-20261106/p02/vectors.npy": "dd029b9c798c730b7d3722b81ce1534968a22d6de61aaa100a8740206b9295ef",
+    "data/embeddings/recovery-20261106/p02/windows-manifest.json": "03683511802ddc4b13e9fb72b991cbc6e5e8301dcc8c97717f1e4a668ac4a637",
+    "data/parsed/recovery-20261106/p03/articles.jsonl": "2f2f1741e0416340675c35bf5b7985b6dcd5e81c37312a0199b16fa280a6cca8",
+    "data/parsed/recovery-20261106/p03/manifest.json": "ae373508bd9aeeaade8cde31e3747ae21c1142dfa5c1990e1ec2d7637c833f1e",
+    "data/parsed/recovery-20261106/p03/source-manifest.json": "9f598596ed62bd6c56ac4dd91db91282dd900ca10dbb5c05b0268e6381cdc767",
+    "data/windows/recovery-20261106/p03/manifest.json": "12bb6c0b7d83cdbe506b9a92337a17726d0ad184bcedc231359fc97c5de4c2eb",
+    "data/windows/recovery-20261106/p03/windows.jsonl": "1912e678ab003fdf9343bdbb2d00f3bf545663568f7d34c5e9696504a7bc77ed",
+    "data/embeddings/recovery-20261106/p03/manifest.json": "0a7597f2b16a8a730f57eb2c9967e31aed0948c02628d20b22539a12f1a0e4f8",
+    "data/embeddings/recovery-20261106/p03/rows.jsonl": "ee315adb1bc414ba569383d203e3663569dc3cd88acdea103b81a46326357482",
+    "data/embeddings/recovery-20261106/p03/vectors.npy": "5f6fca79ff134274bb63c3663e5a8f91e8713e2820e6c90cc7692fe20142164c",
+    "data/embeddings/recovery-20261106/p03/windows-manifest.json": "12bb6c0b7d83cdbe506b9a92337a17726d0ad184bcedc231359fc97c5de4c2eb",
+    "data/parsed/recovery-20261106/p04/articles.jsonl": "5f1698bc626e54bef086132a6782bc07a5d0be13318f1b0eb0438015c92d967d",
+    "data/parsed/recovery-20261106/p04/manifest.json": "a1b61ade41840a652a83922041b5e278a7095d085f2efe0b650ec75267a9cae1",
+    "data/parsed/recovery-20261106/p04/source-manifest.json": "9812f568aba9fd6fc3a19db7bf7f5e25ad9d4dce321fa3459fc9a0762497c4b1",
+    "data/windows/recovery-20261106/p04/manifest.json": "269b6d738ae85c4d876127274d824cfa068183ce9cc58626ae5dc70bfaad31c3",
+    "data/windows/recovery-20261106/p04/windows.jsonl": "525ca478e1908c0a4ca4bed19174516b20b500370edad90ce6765387ed0a10d4",
+    "data/embeddings/recovery-20261106/p04/manifest.json": "716a03c923bfe365fe3ac6963f5a60d71dc8dbd4ecfbdd715f974bea6391c6de",
+    "data/embeddings/recovery-20261106/p04/rows.jsonl": "9aeffc35c47f8ff3159ae2144d7892bde17cefaa1fe94c09beeadf1a3a3646d8",
+    "data/embeddings/recovery-20261106/p04/vectors.npy": "90de6fdd10638ffdd66af2c6483dd6331aa7af71313bbf7306d12949fd78929a",
+    "data/embeddings/recovery-20261106/p04/windows-manifest.json": "269b6d738ae85c4d876127274d824cfa068183ce9cc58626ae5dc70bfaad31c3",
+    "data/parsed/recovery-20261106/p05/articles.jsonl": "8fb51748a38e48bee97b2813ad6b16d81c1360526b9f2153711d054f3d37301d",
+    "data/parsed/recovery-20261106/p05/manifest.json": "2cef1b4d1117b126116f2a5a412000ef7c8a0f189c6c69ac1f99b110bd8157ac",
+    "data/parsed/recovery-20261106/p05/source-manifest.json": "027dd7659b0a2464d9b63869de3d183f74b6ee511a2e983dad4087fb55c828cd",
+    "data/windows/recovery-20261106/p05/manifest.json": "ad173cb67137d992652aa594846f8fdd8c0cc33f13ea4c52cdce8aa49db7d9fc",
+    "data/windows/recovery-20261106/p05/windows.jsonl": "5f5e2ebcd2cb31a26ed174281c72fd60b7347324aa73ab8630fe7d5439d68a69",
+    "data/embeddings/recovery-20261106/p05/manifest.json": "a539703169db8174e37598785bf40170748fea8a0c7753fb62714698662b19e1",
+    "data/embeddings/recovery-20261106/p05/rows.jsonl": "0fdf79e82cdce0460824f5b7bd39476dd2897273248c97da324038e82874f08d",
+    "data/embeddings/recovery-20261106/p05/vectors.npy": "160a68232b75fd026049342ff0af4072f602d55152a43cee8252068c5876676b",
+    "data/embeddings/recovery-20261106/p05/windows-manifest.json": "ad173cb67137d992652aa594846f8fdd8c0cc33f13ea4c52cdce8aa49db7d9fc",
+    "data/parsed/recovery-20261106/p06/articles.jsonl": "60e1687398253c9d2072b01d0801c3b9584d68a2752ab12b12846babaf5f6ca0",
+    "data/parsed/recovery-20261106/p06/manifest.json": "14134c97cb567edbc1a03f64accf4c5275c72e6c3d318cd1e15fe7dbc1d03953",
+    "data/parsed/recovery-20261106/p06/source-manifest.json": "32819f3396f2618c66bf4f2bca0c7b90aadc9b7d2d8363821bf2dae7b97f1a99",
+    "data/windows/recovery-20261106/p06/manifest.json": "a541d5fd6ffaa054de99aec797ee018edad4c4d1b00c34daacb40371ba45a59b",
+    "data/windows/recovery-20261106/p06/windows.jsonl": "11ab4ad10f009261f2fb5ad709a110b76a4255a8281a3c5dc11d843e2b2e1270",
+    "data/embeddings/recovery-20261106/p06/manifest.json": "fc922678e5ae738c89dc6d189b97397300bb6ac7aaa68e2c5b2a335f0624f274",
+    "data/embeddings/recovery-20261106/p06/rows.jsonl": "b7886c8951b4c18259912b23937d59eaed1a51e107c48fb4b3048d1068896641",
+    "data/embeddings/recovery-20261106/p06/vectors.npy": "531db16c1e46e5444d06eb8131feac836ef2ce887b47856f1def5ac398144130",
+    "data/embeddings/recovery-20261106/p06/windows-manifest.json": "a541d5fd6ffaa054de99aec797ee018edad4c4d1b00c34daacb40371ba45a59b",
+    "data/parsed/recovery-20261106/p07/articles.jsonl": "1a2aea4ff7660ad603c098df24c827009b89119cb8d550624c490912566ffc80",
+    "data/parsed/recovery-20261106/p07/manifest.json": "fd747aa6fd347e2f2300101bd5c7e74b471ff22755885323f030398ed15fe5a2",
+    "data/parsed/recovery-20261106/p07/source-manifest.json": "5386a81e7cbb25d6302b17c96f6827f62bc41a49566e65d9508bfd47eda5d118",
+    "data/windows/recovery-20261106/p07/manifest.json": "5b3954202fcf273644161836d664e6f617e21762c178853d26e87c9bbb88fb03",
+    "data/windows/recovery-20261106/p07/windows.jsonl": "6ba5260f1e8c805f68d2b6b14d5d6920968aa30e7e5f45fd6216c9a03d298352",
+    "data/embeddings/recovery-20261106/p07/manifest.json": "7eb97867e7dfe2a704ebf58795360a0f2b71026373939c6c808d6759c351dd5e",
+    "data/embeddings/recovery-20261106/p07/rows.jsonl": "727a76b6d77586253bfe92e2a6863ae0363efca2425d1c2c62a9eb9fca89f91b",
+    "data/embeddings/recovery-20261106/p07/vectors.npy": "e44b5eda86fb3104305999415867863eb950983a4fd275e6e07554117d62af69",
+    "data/embeddings/recovery-20261106/p07/windows-manifest.json": "5b3954202fcf273644161836d664e6f617e21762c178853d26e87c9bbb88fb03",
+    "data/parsed/recovery-20261106/p08/articles.jsonl": "786e04437e175fc1e15f2dbabae1754a8bea1c929ac20cd6d30160554e985fb6",
+    "data/parsed/recovery-20261106/p08/manifest.json": "eff093be8db024d47cbda5bdba3f41af9aee80ef21648c3df2b6c858e65046eb",
+    "data/parsed/recovery-20261106/p08/source-manifest.json": "becda37964aee9f6dc2fd6dd5d5f39e893eadaaca1f19e2982c13549a037db06",
+    "data/windows/recovery-20261106/p08/manifest.json": "c0c73a48fa31a588856e9ecf9ba80c0e2c75e5a33b3c8c5e950aabf5949b2b85",
+    "data/windows/recovery-20261106/p08/windows.jsonl": "cae15bcb41911d0077433deef9c02814bd175161c44e25eea0ccbfbc673f21fd",
+    "data/embeddings/recovery-20261106/p08/manifest.json": "38ecdb91b661c612ddb717184b64c5465f69bf142cfc289d3e4c785dd75eeb03",
+    "data/embeddings/recovery-20261106/p08/rows.jsonl": "bc7b3f4eb086f145deae8aeb3b56732fdad31bd1d97b3c4633ca37d44d14bb03",
+    "data/embeddings/recovery-20261106/p08/vectors.npy": "d3dda3ac45e2aa6eb83dcee602cd954d0979d8755062ef9d40fa2de994293338",
+    "data/embeddings/recovery-20261106/p08/windows-manifest.json": "c0c73a48fa31a588856e9ecf9ba80c0e2c75e5a33b3c8c5e950aabf5949b2b85",
+    "data/parsed/recovery-20261106/p09/articles.jsonl": "b1d878091e3f60bf3451af563cd41fc70dd83b1b88dde323b66f95180423016f",
+    "data/parsed/recovery-20261106/p09/manifest.json": "37a1181034abcef99385705c188198aa75b14a87c777071aa2d56e5ee1174bf1",
+    "data/parsed/recovery-20261106/p09/source-manifest.json": "1ddad4cb509d54d4664a563688ec7406d748ae3371951a9e7edf056110fe9f3a",
+    "data/windows/recovery-20261106/p09/manifest.json": "8ce1acad1dec6c127293e1c8d651640d1ff8a179ffd516f3309feda03fad5db1",
+    "data/windows/recovery-20261106/p09/windows.jsonl": "ddd619b47c36d39ec1cd86db3d599b4817ec85ec9590434a0aa305a3a0457a1b",
+    "data/embeddings/recovery-20261106/p09/manifest.json": "fd007c4d612823f7cfe224f6c47f2515c0427f9f9c4dee90681aac75ac56d880",
+    "data/embeddings/recovery-20261106/p09/rows.jsonl": "b8ed3fe468238bf79d1259f0a3bce08a5bcdcd0a8cfc619c58c79483b79ed6ec",
+    "data/embeddings/recovery-20261106/p09/vectors.npy": "343f8b6ea2e3a8129578e7958f645329b7877ba2adf29ff13ba79e23ffa7357a",
+    "data/embeddings/recovery-20261106/p09/windows-manifest.json": "8ce1acad1dec6c127293e1c8d651640d1ff8a179ffd516f3309feda03fad5db1",
+    "data/parsed/recovery-20261106/p10/articles.jsonl": "a828ca3578e801eceed041023a9935ac90e353ecf6cb10e8ac58d7101691a668",
+    "data/parsed/recovery-20261106/p10/manifest.json": "4923aeb92b0fdd246e1dc807d175e9c4bab8264c9e0c4dea5ebc510d70891610",
+    "data/parsed/recovery-20261106/p10/source-manifest.json": "012320226796e078d1893ae06389d571e11b3422df5eba92859418695abb5f9d",
+    "data/windows/recovery-20261106/p10/manifest.json": "d1f8c4656bd04e79cf7eb7b1c5a912e27a2e916f696acb284737c8b792a9c720",
+    "data/windows/recovery-20261106/p10/windows.jsonl": "5c6099367757ecfb07c892991b9e04bd6bf14c992d28aa30edda40d9858caf20",
+    "data/embeddings/recovery-20261106/p10/manifest.json": "4d6014dd9a08a5840041a18044409b232047758ed35e53c6ae36434296c8bd22",
+    "data/embeddings/recovery-20261106/p10/rows.jsonl": "518a9ffe2364f23c8f1f9d662906936bc4c8c1473622405bf86bf10eabfde6bb",
+    "data/embeddings/recovery-20261106/p10/vectors.npy": "0f28268b62bbb348b6323dd638d040252f3330a53575582a444539d315b4bd02",
+    "data/embeddings/recovery-20261106/p10/windows-manifest.json": "d1f8c4656bd04e79cf7eb7b1c5a912e27a2e916f696acb284737c8b792a9c720"
+  },
+  "source_files_unchanged": true,
+  "cached_rebuild_identities_equal": true,
+  "removal_restores_small_identity": true,
+  "stages": {
+    "small": {
+      "collection_id": "d85f6344f4d13244b292d43f0872b76f787549a6f45c9cd175e444a572dcf2f4",
+      "manifest_id": "5e8e437a3bf5560270acd0a34fc1b4ef40d281337c261b407f1e027b49b069f0",
+      "identity": {
+        "dataset_id": "ecfb8ded9fcdc814218af5be04897c6f2e5fdc9565401d4de62ca94a0fb74d9f",
+        "window_artifact_id": "d8ad7e64c0f436b1a0a27da80ffd05006d05b89509a6fa3bef29d6f943315a2b",
+        "embedding_artifact_id": "b127bc579dc0d5d063950d624b9982f86c2f974e251c2cd6bc17e3ac4edf4c80",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 1,
+        "native_datasets": 1,
+        "article_memberships": 30,
+        "unique_pmids": 30,
+        "duplicate_memberships_removed": 0,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 30,
+        "windows": 75
+      },
+      "measurements": {
+        "source_preparation_seconds": 0.08249825000530109,
+        "total_seconds": 0.10821766700246371,
+        "cache": {
+          "window_rows": 75,
+          "unique_inputs": 75,
+          "cache_hit_inputs": 75,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.00956733399652876,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.001735790996463038
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": [
+          {
+            "source": "p01",
+            "rows": 75,
+            "new_entries": 75,
+            "existing_entries": 0,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          }
+        ]
+      },
+      "wall_seconds_including_final_validation": 0.1226762080041226
+    },
+    "shared": {
+      "collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+      "manifest_id": "5d18e36a0ee00a36a0203d8e9be2014411e2aa5dd9d25df6df0c84431987f2a0",
+      "identity": {
+        "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+        "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945",
+        "embedding_artifact_id": "0465131184c697405ce4b9596260141356d1376ea2cdbd034c0ce9e08c8f543f",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 10,
+        "native_datasets": 10,
+        "article_memberships": 300,
+        "unique_pmids": 277,
+        "duplicate_memberships_removed": 23,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 277,
+        "windows": 850
+      },
+      "measurements": {
+        "source_preparation_seconds": 0.8903821669955505,
+        "total_seconds": 1.1510731669986853,
+        "cache": {
+          "window_rows": 850,
+          "unique_inputs": 846,
+          "cache_hit_inputs": 846,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.10596258299483452,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.016507334003108554
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": [
+          {
+            "source": "p08",
+            "rows": 73,
+            "new_entries": 73,
+            "existing_entries": 0,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          },
+          {
+            "source": "p05",
+            "rows": 89,
+            "new_entries": 81,
+            "existing_entries": 8,
+            "max_existing_vector_abs_difference": 1.1175870895385742e-07,
+            "skipped": null
+          },
+          {
+            "source": "p01",
+            "rows": 75,
+            "new_entries": 0,
+            "existing_entries": 75,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          },
+          {
+            "source": "p02",
+            "rows": 121,
+            "new_entries": 118,
+            "existing_entries": 3,
+            "max_existing_vector_abs_difference": 1.043081283569336e-07,
+            "skipped": null
+          },
+          {
+            "source": "p10",
+            "rows": 85,
+            "new_entries": 75,
+            "existing_entries": 10,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          },
+          {
+            "source": "p03",
+            "rows": 96,
+            "new_entries": 95,
+            "existing_entries": 1,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          },
+          {
+            "source": "p07",
+            "rows": 85,
+            "new_entries": 68,
+            "existing_entries": 17,
+            "max_existing_vector_abs_difference": 1.210719347000122e-07,
+            "skipped": null
+          },
+          {
+            "source": "p09",
+            "rows": 93,
+            "new_entries": 83,
+            "existing_entries": 10,
+            "max_existing_vector_abs_difference": 1.4156103134155273e-07,
+            "skipped": null
+          },
+          {
+            "source": "p04",
+            "rows": 113,
+            "new_entries": 112,
+            "existing_entries": 1,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          },
+          {
+            "source": "p06",
+            "rows": 79,
+            "new_entries": 66,
+            "existing_entries": 13,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          }
+        ]
+      },
+      "wall_seconds_including_final_validation": 1.3706110830098623
+    },
+    "repeat": {
+      "collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+      "manifest_id": "436886a09e7ca73753103db1da8780ddaeee9609b177fd32f38854d6c01d5edf",
+      "identity": {
+        "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+        "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945",
+        "embedding_artifact_id": "0465131184c697405ce4b9596260141356d1376ea2cdbd034c0ce9e08c8f543f",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 10,
+        "native_datasets": 10,
+        "article_memberships": 300,
+        "unique_pmids": 277,
+        "duplicate_memberships_removed": 23,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 277,
+        "windows": 850
+      },
+      "measurements": {
+        "source_preparation_seconds": 0.520862584002316,
+        "total_seconds": 0.8441013339906931,
+        "cache": {
+          "window_rows": 850,
+          "unique_inputs": 846,
+          "cache_hit_inputs": 846,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.09862641700601671,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.016550041997106746
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": []
+      },
+      "wall_seconds_including_final_validation": 0.9892985410115216
+    },
+    "reversed": {
+      "collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+      "manifest_id": "63d5181cb3ca05844100d872bc087e627ce73dda0a0acd34918f6a6da80c26a8",
+      "identity": {
+        "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+        "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945",
+        "embedding_artifact_id": "0465131184c697405ce4b9596260141356d1376ea2cdbd034c0ce9e08c8f543f",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 10,
+        "native_datasets": 10,
+        "article_memberships": 300,
+        "unique_pmids": 277,
+        "duplicate_memberships_removed": 23,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 277,
+        "windows": 850
+      },
+      "measurements": {
+        "source_preparation_seconds": 0.5144201670045732,
+        "total_seconds": 0.8282064999948489,
+        "cache": {
+          "window_rows": 850,
+          "unique_inputs": 846,
+          "cache_hit_inputs": 846,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.10042287500982638,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.017233749997103587
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": []
+      },
+      "wall_seconds_including_final_validation": 0.9746202919923235
+    },
+    "removed": {
+      "collection_id": "d85f6344f4d13244b292d43f0872b76f787549a6f45c9cd175e444a572dcf2f4",
+      "manifest_id": "eb7d46395d32c6ef935ac57e4789711fcadb31716a7278a67e52414dc407dc46",
+      "identity": {
+        "dataset_id": "ecfb8ded9fcdc814218af5be04897c6f2e5fdc9565401d4de62ca94a0fb74d9f",
+        "window_artifact_id": "d8ad7e64c0f436b1a0a27da80ffd05006d05b89509a6fa3bef29d6f943315a2b",
+        "embedding_artifact_id": "b127bc579dc0d5d063950d624b9982f86c2f974e251c2cd6bc17e3ac4edf4c80",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 1,
+        "native_datasets": 1,
+        "article_memberships": 30,
+        "unique_pmids": 30,
+        "duplicate_memberships_removed": 0,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 30,
+        "windows": 75
+      },
+      "measurements": {
+        "source_preparation_seconds": 0.050076540996087715,
+        "total_seconds": 0.07534308300819248,
+        "cache": {
+          "window_rows": 75,
+          "unique_inputs": 75,
+          "cache_hit_inputs": 75,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.009701832997961901,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.0019254999933764338
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": []
+      },
+      "wall_seconds_including_final_validation": 0.08982629200909287
+    },
+    "reseeded": {
+      "collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+      "manifest_id": "12885671a754294a077c3a0367fb46c8a0f117e74849e7f0088cd4dfaf01e55c",
+      "identity": {
+        "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+        "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945",
+        "embedding_artifact_id": "0465131184c697405ce4b9596260141356d1376ea2cdbd034c0ce9e08c8f543f",
+        "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+      },
+      "counts": {
+        "input_collections": 10,
+        "native_datasets": 10,
+        "article_memberships": 300,
+        "unique_pmids": 277,
+        "duplicate_memberships_removed": 23,
+        "pmids_with_multiple_text_versions": 0,
+        "retained_text_versions": 277,
+        "windows": 850
+      },
+      "measurements": {
+        "source_preparation_seconds": 1.2985551250021672,
+        "total_seconds": 1.564883875005762,
+        "cache": {
+          "window_rows": 850,
+          "unique_inputs": 846,
+          "cache_hit_inputs": 846,
+          "encoded_inputs": 0,
+          "encoder_loads": 0,
+          "cache_lookup_seconds": 0.1078890409989981,
+          "model_constructor_seconds": 0.0,
+          "encode_seconds": 0.0,
+          "cache_write_seconds": 0.0,
+          "artifact_write_seconds": 0.016319375004968606
+        },
+        "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+        "seeds": [
+          {
+            "source": "previous-shared-index",
+            "rows": 850,
+            "new_entries": 846,
+            "existing_entries": 4,
+            "max_existing_vector_abs_difference": 0.0,
+            "skipped": null
+          }
+        ]
+      },
+      "wall_seconds_including_final_validation": 1.8017421669937903
+    }
+  },
+  "cold": {
+    "collection_id": "dc299f3415352f70068509dc2a1dda3efe8ff9048bf2dc0d10ea6f9036b320ad",
+    "manifest_id": "8a6d0346f2fb205de8a545407f071314ec823d9cd0a1353ba9a0ee6498cf2db0",
+    "identity": {
+      "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+      "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945",
+      "embedding_artifact_id": "079771663429234d5fe4ddd68523e6746add41a67398143ec95edee89891f985",
+      "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343"
+    },
+    "counts": {
+      "input_collections": 10,
+      "native_datasets": 10,
+      "article_memberships": 300,
+      "unique_pmids": 277,
+      "duplicate_memberships_removed": 23,
+      "pmids_with_multiple_text_versions": 0,
+      "retained_text_versions": 277,
+      "windows": 850
+    },
+    "measurements": {
+      "source_preparation_seconds": 0.5771883749985136,
+      "total_seconds": 32.91025379199709,
+      "cache": {
+        "window_rows": 850,
+        "unique_inputs": 846,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 846,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.0517092079971917,
+        "model_constructor_seconds": 0.6298589999933029,
+        "encode_seconds": 30.89152083299996,
+        "cache_write_seconds": 0.47902425000211224,
+        "sampled_max_mps_tensor_bytes": 459673088,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.01821854199806694
+      },
+      "cache_policy_sha256": "fa23ace120adb30f3627fb7f06a6ca9c0eb0e558647e99b19f61db3567505fc0",
+      "seeds": []
+    },
+    "wall_seconds_including_final_validation": 33.08648899999389,
+    "process_peak_rss_bytes": 837238784
+  },
+  "cached_preparation_process_peak_rss_bytes": 489586688,
+  "search": {
+    "status": "complete",
+    "shared_index_validation_seconds": 0.16900799999712035,
+    "cold_index_validation_seconds": 0.16719166599796154,
+    "shared_vector_bytes": 2611200,
+    "max_cold_cached_vector_abs_difference": 1.5832483768463135e-07,
+    "all_cold_cached_top10_equal": true,
+    "model_constructor_seconds": 2.1571402499976102,
+    "model_internal_load_seconds": 0.3683042079937877,
+    "warmup_seconds": 0.13703133299713954,
+    "runtime": {
+      "model": {
+        "model_id": "BAAI/bge-base-en-v1.5",
+        "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+        "files": {
+          "config.json": "bc00af31a4a31b74040d73370aa83b62da34c90b75eb77bfa7db039d90abd591",
+          "model.safetensors": "c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7"
+        }
+      },
+      "device": "mps",
+      "dtype": "float32",
+      "pooling": "last_hidden_state[:,0,:]",
+      "normalization": "L2",
+      "dimension": 768,
+      "attention": "eager",
+      "batch_size": 16,
+      "pad_token_id": 0,
+      "padding_side": "right",
+      "query_instruction": "Represent this sentence for searching relevant passages: ",
+      "passage_instruction": null,
+      "torch_version": "2.14.1",
+      "transformers_version": "5.20.1",
+      "numpy_version": "2.4.6"
+    },
+    "process_peak_rss_bytes": 829767680
+  },
+  "aggregate": {
+    "query_encoding_seconds": {
+      "min": 0.009828209003899246,
+      "median": 0.01235493749845773,
+      "max": 0.0277437079930678,
+      "count": 50
+    },
+    "small_search_seconds": {
+      "min": 6.500000017695129e-05,
+      "median": 9.068699728231877e-05,
+      "max": 0.00016324999160133302,
+      "count": 50
+    },
+    "shared_search_seconds": {
+      "min": 0.00033999999868683517,
+      "median": 0.00040295850340044126,
+      "max": 0.0012097500002710149,
+      "count": 50
+    },
+    "top10_overlap_by_query": {
+      "p01": 6,
+      "p02": 10,
+      "p03": 10,
+      "p04": 10,
+      "p05": 9,
+      "p06": 9,
+      "p07": 10,
+      "p08": 10,
+      "p09": 10,
+      "p10": 8
+    },
+    "small_validation_seconds": {
+      "min": 0.004942291998304427,
+      "median": 0.0054086464951979,
+      "max": 0.006434833005187102,
+      "count": 10
+    },
+    "sampled_max_mps_tensor_bytes": 438644224,
+    "sampled_max_mps_driver_bytes": 1084981248
+  },
+  "cache_entries": 846
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "scope": "One primary CLI integration smoke; no clinical or retrieval-quality estimate.",
+  "request_id": "88186c72be1729407418e72c7e7895443e591aa8713cd114b0bc7532c1280ef6",
+  "local_report_sha256": "66e1b0f5b9e48bb18c015f25bca02de7fad47d40e71eac278afc16837bb149a0",
+  "collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+  "identity": {
+    "dataset_id": "63f62fd31ad10fd6269d3aad0b23aa3ad010f1220c5095686fec8d0bbae709de",
+    "embedding_artifact_id": "0465131184c697405ce4b9596260141356d1376ea2cdbd034c0ce9e08c8f543f",
+    "implementation_sha256": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343",
+    "window_artifact_id": "3020a4bc03b90db091b41fb363aec47b4edba2a17f8384fa5783efd5ce9ce945"
+  },
+  "counts": {
+    "article_memberships": 300,
+    "duplicate_memberships_removed": 23,
+    "input_collections": 10,
+    "native_datasets": 10,
+    "pmids_with_multiple_text_versions": 0,
+    "retained_text_versions": 277,
+    "unique_pmids": 277,
+    "windows": 850
+  },
+  "execution_status": "complete",
+  "answer_status": "answered",
+  "answer_reason": "support-review-complete",
+  "generate": true,
+  "rerank": false,
+  "runtime_load_count": 1,
+  "request_seconds": 136.77725266700145,
+  "timing_scope": "CLI timer after fresh output directory creation; excludes Python startup/imports and final checkpoint write.",
+  "timings": {
+    "retrieval_seconds": 0.7420930000080261,
+    "context_seconds": 0.012054999999236315,
+    "reranking_seconds": 0.0006417500117095187,
+    "answer_seconds": 133.92580120899947,
+    "pipeline_seconds": 134.68497041700175
+  },
+  "runtime": {
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "device": "mps",
+    "quantization": {
+      "method": "metal",
+      "bits": 4,
+      "group_size": 64
+    },
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 128,
+      "enable_thinking": false
+    },
+    "load_seconds": 26.623287832990172,
+    "loading": {
+      "strategy": "synchronize-and-release-conversion-cache",
+      "conversion_count": 248,
+      "sampled_conversion_driver_peak_bytes": 9706356736
+    },
+    "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+    "release_cache_after_generation": true,
+    "packages": {
+      "torch": "2.14.1",
+      "transformers": "5.20.1",
+      "accelerate": "1.15.0",
+      "kernels": "0.17.2",
+      "huggingface-hub": "2.2.0"
+    }
+  },
+  "prompt_version": "cited-answer-v6",
+  "review_version": "claim-support-v4",
+  "visible_claims": 3,
+  "model_calls": 2,
+  "selected_sources_checked": 6,
+  "visible_citations_checked": 5,
+  "quote_catalog_entries_checked": 28,
+  "offline_cached_replay_equal": true,
+  "checks": {
+    "unit_tests_passed": 276,
+    "pip_check": "No broken requirements found.",
+    "source_lineage_windows_and_vectors": "verified",
+    "heldout_used": false,
+    "qrels_used": false,
+    "independent_semantic_assessment": false
+  },
+  "implementation_sha256": {
+    "pipeline.py": "041cc278e429f7b09908ae6d6f6ea3a51dea4395e7a3f6d069db11b208a36c62",
+    "reporting.py": "42b2367a6c99bae09b4525393861ecb75906eba75e40312782073cf7ef4bbf40",
+    "corpus.py": "57a8b5720450054f5011e64d1a543804dbe90c1a7548a6530efde189467d6343",
+    "retrieval/dense.py": "c902f1603f1583821f7df4505509ffe2aee8a5a84857a1f419d84c7c8f8d0dd7",
+    "retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e",
+    "reranking/listwise.py": "a41e2f84d76b13c4d9dbdb2c9bb472a4c40db28ed35bb2651d1b84b1f8bb53df",
+    "inference/qwen.py": "9212fec2f396b417fef0206be327498555d206363dd2d9974a62affb3e8eb806",
+    "inference/metal.py": "5fcad25a5128a6fae8c61e9632f67f2b9ec0e4ca333c2e4988ad88bb47f32567",
+    "generation/context.py": "a3feae8fa714c94e772948f50492c3732bce6150f421c10453d94bdcfd86f1a0",
+    "generation/answers.py": "fd8501174f850f2483b922ed7ca424f360a7e52af6f715d5020498cef46db1e3",
+    "generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412",
+    "generation/contracts.py": "ca556077259cc63d79ab3f1f689211d72cff41b5525557af3e680cd48bcdfcd3",
+    "generation/quotes.py": "ba45e527677c8499b217f62ac63dfc5c782ef4d2ebf461ce48b1f19c8ab302a9"
+  }
+}
