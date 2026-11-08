@@ -21,7 +21,12 @@ class DenseError(ValueError):
 class DenseIndex:
     def __init__(self, dataset_dir: Path, windows_dir: Path, embeddings_dir: Path):
         started = perf_counter()
-        self.dataset = load_dataset(dataset_dir)
+        header = json.loads((Path(dataset_dir)/"manifest.json").read_bytes())
+        if header.get("kind") == "pooled-pubmed-dataset":
+            from medlens.corpus import load_pooled_dataset
+            self.dataset = load_pooled_dataset(dataset_dir)
+        else:
+            self.dataset = load_dataset(dataset_dir)
         self.window_manifest, self.windows = load_windows(windows_dir)
         self.embedding_manifest, mapping, self.vectors = load_embeddings(embeddings_dir)
         if (self.window_manifest["dataset_id"] != self.dataset.manifest["dataset_id"]

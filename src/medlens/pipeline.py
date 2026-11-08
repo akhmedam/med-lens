@@ -32,7 +32,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         raise ValueError("generate and rerank must be booleans")
     info = tokenizer_identity(tokenizer)
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
-        for name in ("pipeline.py", "reporting.py", "retrieval/dense.py", "retrieval/embeddings.py",
+        for name in ("pipeline.py", "reporting.py", "corpus.py", "retrieval/dense.py", "retrieval/embeddings.py",
             "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],

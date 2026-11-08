@@ -104,8 +104,11 @@ empty evidence without Qwen, preserved search/context after model failure,
 withheld malformed drafts, tokenizer mismatch, HTML escaping and output reuse
 protection. Raw request files stay under ignored `results/requests/`.
 
-A pooled corpus, new PubMed candidate fetching, a served API, independent answer
-assessment and more reliable generation remain open work.
+The [shared local corpus](shared-corpus.md) now supports the same CLI with its
+`dataset`, `windows` and `embeddings` directories. It starts the Small → Medium
+transition at 277 unique articles; no new-paper fetching occurs during a request.
+A served API, independent answer assessment and more reliable generation remain
+open work.
 
 ## Air recovery
 

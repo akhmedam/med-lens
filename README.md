@@ -32,6 +32,11 @@ remaining source-support errors. The seven-axis review candidate regressed on
 controlled development cases and remains opt-in; baseline review is preserved.
 Neither reviewer establishes clinical correctness.
 
+The [shared local corpus](docs/shared-corpus.md) pools the rebuilt topic collections
+into 277 unique articles and 850 windows, with an immutable embedding cache.
+Measured preparation and search costs cover the start of the Small → Medium
+transition; retrieval and clinical-answer quality are not revalidated by pooling.
+
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
 
@@ -82,7 +87,9 @@ Qwen weights. The cached tokenizer is still needed for evidence budgeting.
 `--rerank` invokes the historical Qwen reranker and is omitted from the selected
 pipeline. Use a fresh output directory for each run.
 
-The pilot collections contain up to thirty candidates per topic. This command
+The topic collections contain up to thirty candidates each. To search the pooled
+277-article revision, use the three directories in the [shared-corpus guide](docs/shared-corpus.md).
+This command
 searches the collection you supply; it does not fetch new papers or search all
 of PubMed. Questions should be in English. See the [local request guide](docs/local-requests.md)
 for modes, failures, exit codes and measured examples.
