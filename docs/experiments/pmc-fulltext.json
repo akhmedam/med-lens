@@ -1,0 +1,3599 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "created_at": "2026-11-09T06:31:04.339213+00:00",
+  "platform": "macOS-26.7.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "heldout_used": false,
+  "qrels_used": false,
+  "question_set_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "question_ids": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10"
+  ],
+  "scope": "Six deterministically selected, explicitly CC-BY PMC articles linked from the rebuilt development pool. Feasibility and cost only; not a representative sample or evidence-quality estimate.",
+  "selection": {
+    "method": "ascending PMID; first six eligible records within sequential candidate cap",
+    "candidates_with_pmcid": 111,
+    "fetched": 33,
+    "selected": 6,
+    "rejected_by_reason": {
+      "oai:cannotDisseminateFormat": 7,
+      "license-not-explicit-cc-by-or-cc0": 18,
+      "accepted": 6,
+      "missing-or-ambiguous-license": 2
+    },
+    "retained_source_xml_files": 6,
+    "rejected_source_xml_retained": false,
+    "articles": [
+      {
+        "pmid": "22185596",
+        "pmcid": "PMC3347982",
+        "license_uri": "http://creativecommons.org/licenses/by/2.0",
+        "retrieved_at": "2026-11-09T06:22:09.116302+00:00",
+        "raw_xml_sha256": "0c2536950e21606d7e6e7a4840f83a4b1ab0bbc44c1d54cca523e47e433e4a04"
+      },
+      {
+        "pmid": "24294837",
+        "pmcid": "PMC3964149",
+        "license_uri": "http://creativecommons.org/licenses/by/3.0/",
+        "retrieved_at": "2026-11-09T06:22:11.791001+00:00",
+        "raw_xml_sha256": "76bbbfe57c0b8ea8a3315414dad6deb81004e26cb9f4715b7ce60030a60b2363"
+      },
+      {
+        "pmid": "26581107",
+        "pmcid": "PMC4651423",
+        "license_uri": "http://creativecommons.org/licenses/by/4.0/",
+        "retrieved_at": "2026-11-09T06:22:15.130087+00:00",
+        "raw_xml_sha256": "eb0c011786ed3a69c7034c87e88f026dd32f39255f20d5a910b7936446907330"
+      },
+      {
+        "pmid": "27461440",
+        "pmcid": "PMC5007415",
+        "license_uri": "http://creativecommons.org/licenses/by/4.0/",
+        "retrieved_at": "2026-11-09T06:22:16.320634+00:00",
+        "raw_xml_sha256": "f4820a7a1457eeef9f00e562c7b4a9a2ebecc8cd995eb44486f8a438e80cf1d0"
+      },
+      {
+        "pmid": "29368665",
+        "pmcid": "PMC6137372",
+        "license_uri": "http://creativecommons.org/licenses/by/4.0/",
+        "retrieved_at": "2026-11-09T06:22:23.031671+00:00",
+        "raw_xml_sha256": "9550ee399c8a4fb36bf22860dc9b9705b309aca8206e8e52ba50cc0e4aefa41d"
+      },
+      {
+        "pmid": "29654442",
+        "pmcid": "PMC6447508",
+        "license_uri": "http://creativecommons.org/licenses/by/4.0/",
+        "retrieved_at": "2026-11-09T06:22:24.238549+00:00",
+        "raw_xml_sha256": "33fe34fa73a13e004c7efae0e93cc8c5c32ddab3e86f363a2a8f41bd97b59539"
+      }
+    ]
+  },
+  "snapshot_id": "14695e01309d6912d9535bd18bf3a18c9efbcd90cae8e24717d0df65354ff74d",
+  "base_collection_id": "11eb3754c5310feb0f9e5ac984e5ec110f333f25fa74cd0837782cfc943692c3",
+  "paired_artifacts": {
+    "abstract": {
+      "manifest_id": "1708cb69787a8ba921e00d9f9911523a7ed641f300e9c99616949a3cd829d4b7",
+      "dataset_id": "31f5a1b744d6146da1eb72dfd27295144e913f29857fb525d6dae8c74b010dfe",
+      "window_artifact_id": "192c49202731c6297eb945dece5cd37a7ffb0df8eed130e2bfcac2557ed319e2",
+      "embedding_artifact_id": "15c9c444dd3d91c4c23da56ce61e8b7842484aa741cd625c4c2ef074087d5722",
+      "counts": {
+        "abstract_windows": 14,
+        "articles": 6,
+        "body_windows": 0,
+        "narrative_paragraphs": 272,
+        "windows": 14
+      },
+      "measurements": {
+        "cache": {
+          "artifact_write_seconds": 0.0007806250068824738,
+          "cache_hit_inputs": 0,
+          "cache_lookup_seconds": 0.0011895839998032898,
+          "cache_write_seconds": 0.008799417002592236,
+          "encode_seconds": 0.9550992079894058,
+          "encoded_inputs": 14,
+          "encoder_loads": 1,
+          "model_constructor_seconds": 0.6430263750080485,
+          "sampled_max_mps_driver_bytes": 1082867712,
+          "sampled_max_mps_tensor_bytes": 456505856,
+          "unique_inputs": 14,
+          "window_rows": 14
+        },
+        "prepublication_seconds": 1.6459746660257224
+      }
+    },
+    "fulltext": {
+      "manifest_id": "6e11628e71ddbaa18ac5461df154f976d1adc261b4b864ff44a8501a737c11a1",
+      "dataset_id": "31f5a1b744d6146da1eb72dfd27295144e913f29857fb525d6dae8c74b010dfe",
+      "window_artifact_id": "44be2098760cb062450052124f60ac8817471d9683c236714e9a06b737e9e213",
+      "embedding_artifact_id": "d01efb3499e7af949c3ddd32beee5ab1b8567ea42ac512d1d8107e4dc20079f3",
+      "counts": {
+        "abstract_windows": 14,
+        "articles": 6,
+        "body_windows": 288,
+        "narrative_paragraphs": 272,
+        "windows": 302
+      },
+      "measurements": {
+        "cache": {
+          "artifact_write_seconds": 0.008265916985692456,
+          "cache_hit_inputs": 14,
+          "cache_lookup_seconds": 0.023984542000107467,
+          "cache_write_seconds": 0.16102720799972303,
+          "encode_seconds": 11.455916291015455,
+          "encoded_inputs": 288,
+          "encoder_loads": 1,
+          "model_constructor_seconds": 0.550285833014641,
+          "sampled_max_mps_driver_bytes": 2156609536,
+          "sampled_max_mps_tensor_bytes": 459673600,
+          "unique_inputs": 302,
+          "window_rows": 302
+        },
+        "prepublication_seconds": 12.321818291995442
+      }
+    },
+    "same_dataset": true,
+    "abstract_windows_preserved": true,
+    "all_fulltext_spans_verified": true
+  },
+  "timing_scope": "One validated resident model and both in-memory indexes. Same query vector used by both modes; order alternated. Warm-up excluded. Context score calculation and evidence packing reported separately from exact retrieval. Artifact preparation excludes Python startup and tokenizer loading.",
+  "memory_scope": "Separate process RSS high-water and sampled post-forward MPS tensor/driver allocations; counters overlap and are not added. MPS measurements are not instantaneous peaks.",
+  "runtime": {
+    "model": {
+      "model_id": "BAAI/bge-base-en-v1.5",
+      "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+      "files": {
+        "config.json": "bc00af31a4a31b74040d73370aa83b62da34c90b75eb77bfa7db039d90abd591",
+        "model.safetensors": "c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7"
+      }
+    },
+    "device": "mps",
+    "dtype": "float32",
+    "pooling": "last_hidden_state[:,0,:]",
+    "normalization": "L2",
+    "dimension": 768,
+    "attention": "eager",
+    "batch_size": 16,
+    "pad_token_id": 0,
+    "padding_side": "right",
+    "query_instruction": "Represent this sentence for searching relevant passages: ",
+    "passage_instruction": null,
+    "torch_version": "2.14.1",
+    "transformers_version": "5.20.1",
+    "numpy_version": "2.4.6"
+  },
+  "model_constructor_seconds": 0.5535504590079654,
+  "query_tokenizer_load_seconds": 0.21765179198700935,
+  "warmup_seconds_excluded": 0.1345342089771293,
+  "index_validation_seconds": {
+    "abstract": 0.0272960830188822,
+    "fulltext": 0.03659004098153673
+  },
+  "preparation": {
+    "abstract": {
+      "cache": {
+        "artifact_write_seconds": 0.0007806250068824738,
+        "cache_hit_inputs": 0,
+        "cache_lookup_seconds": 0.0011895839998032898,
+        "cache_write_seconds": 0.008799417002592236,
+        "encode_seconds": 0.9550992079894058,
+        "encoded_inputs": 14,
+        "encoder_loads": 1,
+        "model_constructor_seconds": 0.6430263750080485,
+        "sampled_max_mps_driver_bytes": 1082867712,
+        "sampled_max_mps_tensor_bytes": 456505856,
+        "unique_inputs": 14,
+        "window_rows": 14
+      },
+      "prepublication_seconds": 1.6459746660257224
+    },
+    "fulltext": {
+      "cache": {
+        "artifact_write_seconds": 0.008265916985692456,
+        "cache_hit_inputs": 14,
+        "cache_lookup_seconds": 0.023984542000107467,
+        "cache_write_seconds": 0.16102720799972303,
+        "encode_seconds": 11.455916291015455,
+        "encoded_inputs": 288,
+        "encoder_loads": 1,
+        "model_constructor_seconds": 0.550285833014641,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "sampled_max_mps_tensor_bytes": 459673600,
+        "unique_inputs": 302,
+        "window_rows": 302
+      },
+      "prepublication_seconds": 12.321818291995442
+    },
+    "shared_input_vectors_reused": 14,
+    "new_fulltext_vectors_encoded": 288,
+    "encoder_loads": 1
+  },
+  "date_filter": {
+    "policy": "inclusive-overlap-with-journal-issue-date-interval-v1",
+    "unknown_dates_excluded_when_bounded": true,
+    "inclusive_day_boundary_checks_passed": true,
+    "example_published_from": "2016-08-27",
+    "example_selected": 3,
+    "published_from": "2016-08-27",
+    "published_until": null,
+    "unknown_date_pmids": [],
+    "outside_date_pmids": [
+      "22185596",
+      "24294837",
+      "26581107"
+    ],
+    "input_article_count": 6,
+    "eligible_article_count": 3,
+    "unknown_dates_included": false
+  },
+  "repeated_search": {
+    "repeats_per_question": 5,
+    "aggregate": {
+      "abstract": {
+        "search_seconds": {
+          "min": 4.2333995224907994e-05,
+          "median": 5.4604504839517176e-05,
+          "max": 0.00019808299839496613,
+          "count": 50
+        },
+        "context_score_and_pack_seconds": {
+          "min": 0.008063457993557677,
+          "median": 0.009737416505231522,
+          "max": 0.011697500012814999,
+          "count": 50
+        },
+        "evidence_tokens": {
+          "min": 1783,
+          "median": 2118.0,
+          "max": 2215,
+          "count": 50
+        },
+        "abstract_context_sources": {
+          "median": 6.0,
+          "min": 6,
+          "max": 6
+        },
+        "fulltext_context_sources": {
+          "median": 0.0,
+          "min": 0,
+          "max": 0
+        },
+        "source_characters": {
+          "min": 6691,
+          "median": 7804.0,
+          "max": 8107,
+          "count": 50
+        },
+        "index_validation_seconds": 0.0272960830188822,
+        "vector_bytes": 43008
+      },
+      "fulltext": {
+        "search_seconds": {
+          "min": 5.862500984221697e-05,
+          "median": 8.191600500140339e-05,
+          "max": 0.0001367499935440719,
+          "count": 50
+        },
+        "context_score_and_pack_seconds": {
+          "min": 0.00846524999360554,
+          "median": 0.009975645996746607,
+          "max": 0.01279504198464565,
+          "count": 50
+        },
+        "evidence_tokens": {
+          "min": 1408,
+          "median": 1737.0,
+          "max": 2155,
+          "count": 50
+        },
+        "abstract_context_sources": {
+          "median": 1.0,
+          "min": 1,
+          "max": 2
+        },
+        "fulltext_context_sources": {
+          "median": 5.0,
+          "min": 4,
+          "max": 5
+        },
+        "source_characters": {
+          "min": 4152,
+          "median": 5719.5,
+          "max": 7345,
+          "count": 50
+        },
+        "index_validation_seconds": 0.03659004098153673,
+        "vector_bytes": 927744
+      }
+    },
+    "candidate_set_overlap_by_question": {
+      "p01": 6,
+      "p02": 6,
+      "p03": 6,
+      "p04": 6,
+      "p05": 6,
+      "p06": 6,
+      "p07": 6,
+      "p08": 6,
+      "p09": 6,
+      "p10": 6
+    },
+    "rank_agreement_by_question": {
+      "p01": {
+        "same_rank_positions_median": 6,
+        "kendall_tau_median": 1.0,
+        "top1_same_repeats": 5
+      },
+      "p02": {
+        "same_rank_positions_median": 6,
+        "kendall_tau_median": 1.0,
+        "top1_same_repeats": 5
+      },
+      "p03": {
+        "same_rank_positions_median": 4,
+        "kendall_tau_median": 0.8666666666666667,
+        "top1_same_repeats": 0
+      },
+      "p04": {
+        "same_rank_positions_median": 4,
+        "kendall_tau_median": 0.8666666666666667,
+        "top1_same_repeats": 5
+      },
+      "p05": {
+        "same_rank_positions_median": 2,
+        "kendall_tau_median": 0.7333333333333333,
+        "top1_same_repeats": 5
+      },
+      "p06": {
+        "same_rank_positions_median": 2,
+        "kendall_tau_median": 0.4666666666666667,
+        "top1_same_repeats": 0
+      },
+      "p07": {
+        "same_rank_positions_median": 2,
+        "kendall_tau_median": 0.3333333333333333,
+        "top1_same_repeats": 5
+      },
+      "p08": {
+        "same_rank_positions_median": 4,
+        "kendall_tau_median": 0.8666666666666667,
+        "top1_same_repeats": 5
+      },
+      "p09": {
+        "same_rank_positions_median": 4,
+        "kendall_tau_median": 0.8666666666666667,
+        "top1_same_repeats": 5
+      },
+      "p10": {
+        "same_rank_positions_median": 2,
+        "kendall_tau_median": 0.7333333333333333,
+        "top1_same_repeats": 0
+      }
+    },
+    "per_query": [
+      {
+        "query_id": "p01",
+        "runs": [
+          {
+            "query_encode_seconds": 0.01009870899724774,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438644224,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 0.00019808299839496613,
+                "context_score_and_pack_seconds": 0.010470167006133124,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.0001367499935440719,
+                "context_score_and_pack_seconds": 0.010435583011712879,
+                "context_sources": 6,
+                "evidence_tokens": 1694,
+                "abstract_context_sources": 2,
+                "fulltext_context_sources": 4,
+                "source_characters": 5558
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.009679333015810698,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438644224,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.00010375000420026481,
+                "context_score_and_pack_seconds": 0.0099050409917254,
+                "context_sources": 6,
+                "evidence_tokens": 1694,
+                "abstract_context_sources": 2,
+                "fulltext_context_sources": 4,
+                "source_characters": 5558
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.7375000324100256e-05,
+                "context_score_and_pack_seconds": 0.00848133399267681,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010203332989476621,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438644224,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.7083991123363376e-05,
+                "context_score_and_pack_seconds": 0.008330709009896964,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.21659923531115e-05,
+                "context_score_and_pack_seconds": 0.009298916993429884,
+                "context_sources": 6,
+                "evidence_tokens": 1694,
+                "abstract_context_sources": 2,
+                "fulltext_context_sources": 4,
+                "source_characters": 5558
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010445082996739075,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438644224,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 7.204199209809303e-05,
+                "context_score_and_pack_seconds": 0.009941208001691848,
+                "context_sources": 6,
+                "evidence_tokens": 1694,
+                "abstract_context_sources": 2,
+                "fulltext_context_sources": 4,
+                "source_characters": 5558
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.966699634678662e-05,
+                "context_score_and_pack_seconds": 0.008907125011319295,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.012811749998945743,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438644224,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.095798405818641e-05,
+                "context_score_and_pack_seconds": 0.008063457993557677,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "26581107",
+                  "29368665",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.229098653420806e-05,
+                "context_score_and_pack_seconds": 0.009497416001977399,
+                "context_sources": 6,
+                "evidence_tokens": 1694,
+                "abstract_context_sources": 2,
+                "fulltext_context_sources": 4,
+                "source_characters": 5558
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p02",
+        "runs": [
+          {
+            "query_encode_seconds": 0.017584667017217726,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.47920130379498e-05,
+                "context_score_and_pack_seconds": 0.010935833008261397,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.370800060220063e-05,
+                "context_score_and_pack_seconds": 0.01212395800394006,
+                "context_sources": 6,
+                "evidence_tokens": 2010,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7146
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.012180207995697856,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 7.395801367238164e-05,
+                "context_score_and_pack_seconds": 0.011727791978046298,
+                "context_sources": 6,
+                "evidence_tokens": 2010,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7146
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.129197961650789e-05,
+                "context_score_and_pack_seconds": 0.011274916003458202,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.014255415997467935,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.1042006816715e-05,
+                "context_score_and_pack_seconds": 0.011697500012814999,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.808299804106355e-05,
+                "context_score_and_pack_seconds": 0.011897499993210658,
+                "context_sources": 6,
+                "evidence_tokens": 2010,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7146
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.016563249984756112,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.758300100453198e-05,
+                "context_score_and_pack_seconds": 0.01149162501678802,
+                "context_sources": 6,
+                "evidence_tokens": 2010,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7146
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.05829812027514e-05,
+                "context_score_and_pack_seconds": 0.011213624995434657,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.022199541999725625,
+            "same_rank_positions": 6,
+            "kendall_tau": 1.0,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.7124998420476913e-05,
+                "context_score_and_pack_seconds": 0.010935625003185123,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "24294837",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.870798046700656e-05,
+                "context_score_and_pack_seconds": 0.011256083991611376,
+                "context_sources": 6,
+                "evidence_tokens": 2010,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7146
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p03",
+        "runs": [
+          {
+            "query_encode_seconds": 0.019006083981366828,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438613504,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.170799653977156e-05,
+                "context_score_and_pack_seconds": 0.010949041985441,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "27461440",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.00010691600618883967,
+                "context_score_and_pack_seconds": 0.011729999998351559,
+                "context_sources": 6,
+                "evidence_tokens": 2155,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7345
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01926487500895746,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438613504,
+              "sampled_driver_bytes": 1084981248
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "27461440",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.900000830180943e-05,
+                "context_score_and_pack_seconds": 0.011968334001721814,
+                "context_sources": 6,
+                "evidence_tokens": 2155,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7345
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 8.179101860150695e-05,
+                "context_score_and_pack_seconds": 0.011418582987971604,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.02685741599998437,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438613504,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 8.645799243822694e-05,
+                "context_score_and_pack_seconds": 0.011149208003189415,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "27461440",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.095899829640985e-05,
+                "context_score_and_pack_seconds": 0.01188529099454172,
+                "context_sources": 6,
+                "evidence_tokens": 2155,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7345
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.020044125005370006,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438613504,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "27461440",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 9.887499618344009e-05,
+                "context_score_and_pack_seconds": 0.01279504198464565,
+                "context_sources": 6,
+                "evidence_tokens": 2155,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7345
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 8.04169976618141e-05,
+                "context_score_and_pack_seconds": 0.011257083009695634,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01628233300289139,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438613504,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "27461440",
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.275001214817166e-05,
+                "context_score_and_pack_seconds": 0.010942084016278386,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "27461440",
+                  "26581107",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.349999552592635e-05,
+                "context_score_and_pack_seconds": 0.012220875010825694,
+                "context_sources": 6,
+                "evidence_tokens": 2155,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 7345
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p04",
+        "runs": [
+          {
+            "query_encode_seconds": 0.018968624994158745,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438635008,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.875001756474376e-05,
+                "context_score_and_pack_seconds": 0.009252207993995398,
+                "context_sources": 6,
+                "evidence_tokens": 1783,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6716
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.366600377485156e-05,
+                "context_score_and_pack_seconds": 0.011460040987003595,
+                "context_sources": 6,
+                "evidence_tokens": 1894,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 6375
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.02373183300369419,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438635008,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.00011079199612140656,
+                "context_score_and_pack_seconds": 0.011847249988932163,
+                "context_sources": 6,
+                "evidence_tokens": 1894,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 6375
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.649998249486089e-05,
+                "context_score_and_pack_seconds": 0.009058083000127226,
+                "context_sources": 6,
+                "evidence_tokens": 1783,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6716
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.009716875007143244,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438635008,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.270799738354981e-05,
+                "context_score_and_pack_seconds": 0.008369708026293665,
+                "context_sources": 6,
+                "evidence_tokens": 1783,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6716
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.849999772384763e-05,
+                "context_score_and_pack_seconds": 0.01117237500147894,
+                "context_sources": 6,
+                "evidence_tokens": 1894,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 6375
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.020717000006698072,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438635008,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.00010212502093054354,
+                "context_score_and_pack_seconds": 0.011735209001926705,
+                "context_sources": 6,
+                "evidence_tokens": 1894,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 6375
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.049999501556158e-05,
+                "context_score_and_pack_seconds": 0.0088848750165198,
+                "context_sources": 6,
+                "evidence_tokens": 1783,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6716
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010039165994385257,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438635008,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "29368665",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.416698357090354e-05,
+                "context_score_and_pack_seconds": 0.008844416995998472,
+                "context_sources": 6,
+                "evidence_tokens": 1783,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6716
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "24294837",
+                  "26581107",
+                  "29368665",
+                  "27461440",
+                  "22185596",
+                  "29654442"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.275001214817166e-05,
+                "context_score_and_pack_seconds": 0.011593374976655468,
+                "context_sources": 6,
+                "evidence_tokens": 1894,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 6375
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p05",
+        "runs": [
+          {
+            "query_encode_seconds": 0.014525334001518786,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "22185596",
+                  "27461440",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.616699440404773e-05,
+                "context_score_and_pack_seconds": 0.010180832992773503,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "22185596",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract"
+                ],
+                "search_seconds": 8.166601764969528e-05,
+                "context_score_and_pack_seconds": 0.00979812498553656,
+                "context_sources": 6,
+                "evidence_tokens": 1625,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4912
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010962750006001443,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "22185596",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract"
+                ],
+                "search_seconds": 9.795802179723978e-05,
+                "context_score_and_pack_seconds": 0.009395208995556459,
+                "context_sources": 6,
+                "evidence_tokens": 1625,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4912
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "22185596",
+                  "27461440",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.600000102072954e-05,
+                "context_score_and_pack_seconds": 0.01027500000782311,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01254495800822042,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "22185596",
+                  "27461440",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.324999801814556e-05,
+                "context_score_and_pack_seconds": 0.009667292004451156,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "22185596",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract"
+                ],
+                "search_seconds": 6.495902198366821e-05,
+                "context_score_and_pack_seconds": 0.009530250012176111,
+                "context_sources": 6,
+                "evidence_tokens": 1625,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4912
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.012870457983808592,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "22185596",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract"
+                ],
+                "search_seconds": 8.454199996776879e-05,
+                "context_score_and_pack_seconds": 0.009470583026995882,
+                "context_sources": 6,
+                "evidence_tokens": 1625,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4912
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "22185596",
+                  "27461440",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.6375003876164556e-05,
+                "context_score_and_pack_seconds": 0.010279125010129064,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.013367541978368536,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "22185596",
+                  "27461440",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.1166978664696217e-05,
+                "context_score_and_pack_seconds": 0.00976095799705945,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "24294837",
+                  "26581107",
+                  "27461440",
+                  "22185596",
+                  "29368665"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract"
+                ],
+                "search_seconds": 6.262498209252954e-05,
+                "context_score_and_pack_seconds": 0.009574458003044128,
+                "context_sources": 6,
+                "evidence_tokens": 1625,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4912
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p06",
+        "runs": [
+          {
+            "query_encode_seconds": 0.014375708997249603,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.4666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "29654442",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.43339881207794e-05,
+                "context_score_and_pack_seconds": 0.008991125010652468,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "27461440",
+                  "26581107",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.645798566751182e-05,
+                "context_score_and_pack_seconds": 0.009853916009888053,
+                "context_sources": 6,
+                "evidence_tokens": 1728,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5754
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.015363542013801634,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.4666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "27461440",
+                  "26581107",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.399999933317304e-05,
+                "context_score_and_pack_seconds": 0.009623457997804508,
+                "context_sources": 6,
+                "evidence_tokens": 1728,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5754
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "29654442",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.6375003876164556e-05,
+                "context_score_and_pack_seconds": 0.009354082983918488,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.016040375019656494,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.4666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "29654442",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.1749986596405506e-05,
+                "context_score_and_pack_seconds": 0.009401041985256597,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "27461440",
+                  "26581107",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.86249986756593e-05,
+                "context_score_and_pack_seconds": 0.009640125004807487,
+                "context_sources": 6,
+                "evidence_tokens": 1728,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5754
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.015006957983132452,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.4666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "27461440",
+                  "26581107",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.612500874325633e-05,
+                "context_score_and_pack_seconds": 0.009759708016645163,
+                "context_sources": 6,
+                "evidence_tokens": 1728,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5754
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "29654442",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.6208995627239347e-05,
+                "context_score_and_pack_seconds": 0.008784208999713883,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.0195749580161646,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.4666666666666667,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438622720,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "29654442",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.4666987378150225e-05,
+                "context_score_and_pack_seconds": 0.009115541994106025,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "27461440",
+                  "26581107",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.133399438112974e-05,
+                "context_score_and_pack_seconds": 0.009638374991482124,
+                "context_sources": 6,
+                "evidence_tokens": 1728,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5754
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p07",
+        "runs": [
+          {
+            "query_encode_seconds": 0.013712959014810622,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.3333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438641152,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29368665",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.208400009199977e-05,
+                "context_score_and_pack_seconds": 0.010016790998633951,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "24294837",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.612501551397145e-05,
+                "context_score_and_pack_seconds": 0.010323916998459026,
+                "context_sources": 6,
+                "evidence_tokens": 1754,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5685
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.015786707983352244,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.3333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438641152,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "24294837",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.654099656268954e-05,
+                "context_score_and_pack_seconds": 0.009956291993148625,
+                "context_sources": 6,
+                "evidence_tokens": 1754,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5685
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29368665",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.604097921401262e-05,
+                "context_score_and_pack_seconds": 0.01036866701906547,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01902550001977943,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.3333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438641152,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29368665",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.370899452827871e-05,
+                "context_score_and_pack_seconds": 0.01007741698413156,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "24294837",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.650001159869134e-05,
+                "context_score_and_pack_seconds": 0.010114708973560482,
+                "context_sources": 6,
+                "evidence_tokens": 1754,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5685
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.009985834010876715,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.3333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438641152,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "24294837",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 0.00011724999058060348,
+                "context_score_and_pack_seconds": 0.010489624983165413,
+                "context_sources": 6,
+                "evidence_tokens": 1754,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5685
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29368665",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.53339845687151e-05,
+                "context_score_and_pack_seconds": 0.009673708991613239,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010593708982924,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.3333333333333333,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438641152,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29368665",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.645799683406949e-05,
+                "context_score_and_pack_seconds": 0.009467875002883375,
+                "context_sources": 6,
+                "evidence_tokens": 2215,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 8107
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "22185596",
+                  "24294837",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.883301052264869e-05,
+                "context_score_and_pack_seconds": 0.010275084001477808,
+                "context_sources": 6,
+                "evidence_tokens": 1754,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5685
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p08",
+        "runs": [
+          {
+            "query_encode_seconds": 0.013430582999717444,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438628864,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 7.770900265313685e-05,
+                "context_score_and_pack_seconds": 0.009713875013403594,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.362499647773802e-05,
+                "context_score_and_pack_seconds": 0.010416958015412092,
+                "context_sources": 6,
+                "evidence_tokens": 1746,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5920
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010766499995952472,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438628864,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 7.445801747962832e-05,
+                "context_score_and_pack_seconds": 0.010103417007485405,
+                "context_sources": 6,
+                "evidence_tokens": 1746,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5920
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.1916984375566244e-05,
+                "context_score_and_pack_seconds": 0.009972291998565197,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.011611583002377301,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438628864,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.2333995224907994e-05,
+                "context_score_and_pack_seconds": 0.00947645801352337,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.262498209252954e-05,
+                "context_score_and_pack_seconds": 0.010397584002930671,
+                "context_sources": 6,
+                "evidence_tokens": 1746,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5920
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01226045799558051,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438628864,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.77499920129776e-05,
+                "context_score_and_pack_seconds": 0.00999500000034459,
+                "context_sources": 6,
+                "evidence_tokens": 1746,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5920
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.4665997847914696e-05,
+                "context_score_and_pack_seconds": 0.010144583007786423,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.014231166976969689,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438628864,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.366699770092964e-05,
+                "context_score_and_pack_seconds": 0.009924582991516218,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29368665",
+                  "22185596",
+                  "29654442",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.816699169576168e-05,
+                "context_score_and_pack_seconds": 0.01057383298757486,
+                "context_sources": 6,
+                "evidence_tokens": 1746,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5920
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p09",
+        "runs": [
+          {
+            "query_encode_seconds": 0.023401041980832815,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438625792,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "29368665",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 8.045899448916316e-05,
+                "context_score_and_pack_seconds": 0.010872915998334065,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 9.558297460898757e-05,
+                "context_score_and_pack_seconds": 0.009213791025104001,
+                "context_sources": 6,
+                "evidence_tokens": 1506,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5078
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.021179957984713838,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438625792,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 9.154199506156147e-05,
+                "context_score_and_pack_seconds": 0.009923000005073845,
+                "context_sources": 6,
+                "evidence_tokens": 1506,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5078
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "29368665",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.229198723100126e-05,
+                "context_score_and_pack_seconds": 0.010025541996583343,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.020878709008684382,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438625792,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "29368665",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.304099224507809e-05,
+                "context_score_and_pack_seconds": 0.010413625015644357,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.9749984908849e-05,
+                "context_score_and_pack_seconds": 0.00900204200297594,
+                "context_sources": 6,
+                "evidence_tokens": 1506,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5078
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010346625000238419,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438625792,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.42079976387322e-05,
+                "context_score_and_pack_seconds": 0.009549457987304777,
+                "context_sources": 6,
+                "evidence_tokens": 1506,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5078
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "29368665",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.416599404066801e-05,
+                "context_score_and_pack_seconds": 0.010406042012618855,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.010681584011763334,
+            "same_rank_positions": 4,
+            "kendall_tau": 0.8666666666666667,
+            "top1_same": true,
+            "mps": {
+              "sampled_tensor_bytes": 438625792,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "29654442",
+                  "29368665",
+                  "22185596",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.5209005950018764e-05,
+                "context_score_and_pack_seconds": 0.009356916998513043,
+                "context_sources": 6,
+                "evidence_tokens": 2118,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 7804
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "abstract",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.337501690723002e-05,
+                "context_score_and_pack_seconds": 0.009322708006948233,
+                "context_sources": 6,
+                "evidence_tokens": 1506,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 5078
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      },
+      {
+        "query_id": "p10",
+        "runs": [
+          {
+            "query_encode_seconds": 0.012475833995267749,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.58749889023602e-05,
+                "context_score_and_pack_seconds": 0.008381833002204075,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 5.862500984221697e-05,
+                "context_score_and_pack_seconds": 0.008752791996812448,
+                "context_sources": 6,
+                "evidence_tokens": 1408,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4152
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.014219042001059279,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 9.32089751586318e-05,
+                "context_score_and_pack_seconds": 0.00846524999360554,
+                "context_sources": 6,
+                "evidence_tokens": 1408,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4152
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 4.937499761581421e-05,
+                "context_score_and_pack_seconds": 0.00862224999582395,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.014027791999978945,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 6.620900239795446e-05,
+                "context_score_and_pack_seconds": 0.009509084018645808,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 7.73330102674663e-05,
+                "context_score_and_pack_seconds": 0.009187249990645796,
+                "context_sources": 6,
+                "evidence_tokens": 1408,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4152
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.016077790991403162,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 8.037500083446503e-05,
+                "context_score_and_pack_seconds": 0.009221540996804833,
+                "context_sources": 6,
+                "evidence_tokens": 1408,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4152
+              },
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.400000372901559e-05,
+                "context_score_and_pack_seconds": 0.009378124988870695,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              }
+            },
+            "top6_overlap": 6
+          },
+          {
+            "query_encode_seconds": 0.01767395800561644,
+            "same_rank_positions": 2,
+            "kendall_tau": 0.7333333333333333,
+            "top1_same": false,
+            "mps": {
+              "sampled_tensor_bytes": 438619648,
+              "sampled_driver_bytes": 1084964864
+            },
+            "modes": {
+              "abstract": {
+                "ranked_pmids": [
+                  "22185596",
+                  "29654442",
+                  "29368665",
+                  "26581107",
+                  "24294837",
+                  "27461440"
+                ],
+                "best_window_kinds": [
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract",
+                  "abstract"
+                ],
+                "search_seconds": 5.962501745671034e-05,
+                "context_score_and_pack_seconds": 0.0089541659981478,
+                "context_sources": 6,
+                "evidence_tokens": 1885,
+                "abstract_context_sources": 6,
+                "fulltext_context_sources": 0,
+                "source_characters": 6691
+              },
+              "fulltext": {
+                "ranked_pmids": [
+                  "29654442",
+                  "22185596",
+                  "29368665",
+                  "26581107",
+                  "27461440",
+                  "24294837"
+                ],
+                "best_window_kinds": [
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext",
+                  "fulltext"
+                ],
+                "search_seconds": 6.741701508872211e-05,
+                "context_score_and_pack_seconds": 0.008817875001113862,
+                "context_sources": 6,
+                "evidence_tokens": 1408,
+                "abstract_context_sources": 1,
+                "fulltext_context_sources": 5,
+                "source_characters": 4152
+              }
+            },
+            "top6_overlap": 6
+          }
+        ]
+      }
+    ],
+    "sampled_mps_tensor_bytes_max": 438644224,
+    "sampled_mps_driver_bytes_max": 1084981248,
+    "process_peak_rss_bytes": 788086784
+  },
+  "decision": "Keep full text as an opt-in, license-gated experiment. The 6-record sample adds measurable body coverage and rankings can shift, but the current data have no independent relevance or answer-quality judgments; do not change the primary abstract workflow based on these results.",
+  "code_sha256": {
+    "scripts/benchmark_pmc_pilot.py": "5f00883806b08d2a94d43d9e96a61a23c81dc0a3f195c69de94abb270616c82e",
+    "src/medlens/pmc.py": "190071072a28df781615b12f7b3638cddfd5c8c5d25f52ea78b9907a674b7a40",
+    "src/medlens/dates.py": "a2476cdda27a138c8911bb1328dd4e72ea19cf046c9dfbbac90c66183a5954e6",
+    "src/medlens/retrieval/dense.py": "257d97259a76a6d8c4eae43eada7291f5653ca7a9702863729e8afcd0d43b976",
+    "src/medlens/retrieval/windows.py": "9d593df503c82a0f83a47c4b46ddcfcb0c452dffa0094b1ca94701e884e2725e",
+    "src/medlens/retrieval/vector_cache.py": "4555312aadd58a9985dc319f34dbbe951fa9c1776d12c5dc3ceed0a1d9227420",
+    "src/medlens/generation/context.py": "532fd1128d1a6518e37a32784808377fb492e23a064916bb25dc6ae7365a4301",
+    "src/medlens/pipeline.py": "5f2bad92f8f30c0affc22e9986bacfe8a3617edf6c980680eda08c0110d79d53"
+  }
+}

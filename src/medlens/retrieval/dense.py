@@ -19,12 +19,16 @@ class DenseError(ValueError):
 
 
 class DenseIndex:
-    def __init__(self, dataset_dir: Path, windows_dir: Path, embeddings_dir: Path):
+    def __init__(self, dataset_dir: Path, windows_dir: Path, embeddings_dir: Path, *,
+                 published_from=None, published_until=None):
         started = perf_counter()
         header = json.loads((Path(dataset_dir)/"manifest.json").read_bytes())
         if header.get("kind") == "pooled-pubmed-dataset":
             from medlens.corpus import load_pooled_dataset
             self.dataset = load_pooled_dataset(dataset_dir)
+        elif header.get("kind") == "pmc-pilot-dataset":
+            from medlens.pmc import load_pmc_dataset
+            self.dataset = load_pmc_dataset(dataset_dir)
         else:
             self.dataset = load_dataset(dataset_dir)
         self.window_manifest, self.windows = load_windows(windows_dir)
@@ -47,6 +51,12 @@ class DenseIndex:
         if missing != self.window_manifest["empty_pmids"]:
             raise DenseError("Candidate window coverage mismatch")
         self.missing_pmids = missing
+        from medlens.dates import select_publication_dates
+        eligible, self.date_selection = select_publication_dates(self.dataset.articles, published_from, published_until)
+        allowed = set(eligible)
+        self.articles = {p:a for p,a in self.articles.items() if p in allowed}
+        self.positions = {p:v for p,v in self.positions.items() if p in allowed}
+        self.missing_pmids = [p for p in self.missing_pmids if p in allowed]
         self.index_seconds = perf_counter() - started
 
     def verify_encoder(self, encoder):
@@ -101,6 +111,7 @@ class DenseIndex:
             "implementation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
             "query_encoder_implementation_sha256": hashlib.sha256(Path(__file__).with_name("embeddings.py").read_bytes()).hexdigest(),
             "query": query, "query_encoder": encoder.info, "top_k": top_k,
+            "date_selection": self.date_selection,
             "query_vector_sha256": hashlib.sha256(vectors[0].astype(np.float32).tobytes()).hexdigest(),
             "similarity": "cosine-dot-unit-vectors", "distance": "1-cosine",
             "article_score": "max-window", "article_ties": "candidate-order",

@@ -32,19 +32,21 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         raise ValueError("generate and rerank must be booleans")
     info = tokenizer_identity(tokenizer)
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
-        for name in ("pipeline.py", "reporting.py", "corpus.py", "retrieval/dense.py", "retrieval/embeddings.py",
+        for name in ("pipeline.py", "reporting.py", "corpus.py", "pmc.py", "dates.py", "retrieval/dense.py", "retrieval/embeddings.py",
             "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],
         "embedding_artifact_id": index.embedding_manifest["artifact_id"],
         "top_k": top_k, "generate": generate, "rerank": rerank, "tokenizer": info,
+        "date_selection": getattr(index, "date_selection", None),
         "implementation_sha256": implementation}
     report = {"schema_version": 1, "request_id": digest(identity), **identity,
         "status": "running", "stage": "retrieval", "timings": {},
         "scope": {"source": "provided-local-collection", "candidate_count": len(index.articles),
             "searchable_count": len(index.articles) - len(index.missing_pmids),
-            "window_count": len(index.windows), "missing_vector_pmids": index.missing_pmids},
+            "window_count": len(index.windows), "missing_vector_pmids": index.missing_pmids,
+            "date_selection": getattr(index, "date_selection", None)},
         "runtime_load_count": 0}
     started = perf_counter()
     runtime = None

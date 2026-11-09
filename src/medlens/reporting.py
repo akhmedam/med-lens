@@ -10,6 +10,15 @@ def pubmed_link(pmid, label):
     return f'<a href="https://pubmed.ncbi.nlm.nih.gov/{pmid}/">{escape(label)}</a>'
 
 
+def source_link(source, label):
+    if source.get('source_kind') == 'fulltext':
+        pmcid = source.get('pmcid')
+        if not isinstance(pmcid, str) or re.fullmatch(r'PMC[1-9][0-9]*', pmcid) is None:
+            raise ValueError("Invalid PMC ID")
+        return '<a href="https://pmc.ncbi.nlm.nih.gov/articles/' + pmcid + '/">' + escape(label) + '</a>'
+    return pubmed_link(source['pmid'], label)
+
+
 def render_report(report):
     parts = ['<!doctype html><html lang="en"><meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
@@ -19,6 +28,11 @@ def render_report(report):
     parts.append('<p class="muted">Search scope: provided local collection · '
         + escape(str(scope.get('candidate_count', '?'))) + ' articles. '
         'These results do not cover all of PubMed. Questions work best in English.</p>')
+    dates = scope.get('date_selection') or {}
+    if dates.get('published_from') or dates.get('published_until'):
+        parts.append('<p class="muted">Publication interval: ' + escape(dates.get('published_from') or 'unbounded')
+            + ' to ' + escape(dates.get('published_until') or 'unbounded')
+            + '. Partial dates match by interval overlap; unknown dates are excluded. Recency does not establish evidence quality.</p>')
     if report.get('status') in {'failed', 'interrupted'}:
         error = report.get('error', {})
         parts.append('<aside>Run ' + escape(report['status']) + ' at ' + escape(error.get('stage', 'setup'))
@@ -39,7 +53,7 @@ def render_report(report):
         for claim in answer['claims']:
             parts.append('<article><p>' + escape(claim['text']) + '</p>')
             for citation in claim['citations']:
-                parts.append(pubmed_link(citation['pmid'], citation['citation_id'])
+                parts.append(source_link(citation, citation['citation_id'])
                     + '<blockquote>' + escape(citation['quote']) + '</blockquote>')
             parts.append('</article>')
         if answer.get('limitations'):
@@ -63,7 +77,7 @@ def render_report(report):
     if not sources:
         parts.append('<p>No source excerpts are available.</p>')
     for source in sources:
-        parts.append('<article><p>' + pubmed_link(source['pmid'], source['citation_id'] + ' · ' + (source.get('title') or 'Untitled article'))
+        parts.append('<article><p>' + source_link(source, source['citation_id'] + ' · ' + (source.get('title') or 'Untitled article'))
             + '</p><p class="muted">' + escape(source.get('section') or 'Unstructured abstract')
             + ' · source characters ' + str(source['char_start']) + '–' + str(source['char_end'])
             + '</p><blockquote>' + escape(source['text']) + '</blockquote></article>')
