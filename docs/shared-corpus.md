@@ -167,5 +167,7 @@ does not independently assess the claims or establish a success rate.
 The [semantic error record](day21-semantic-reliability.md) still applies. A larger
 candidate pool may change retrieved evidence and generated drafts; neither valid
 format nor exact quotations establish support. Independent relevance judgments
-and answer assessment, a larger measured Medium corpus and permitted PMC
-full text remain future work. Publication recency is not a quality signal.
+and answer assessment and a larger measured Medium corpus remain future work.
+The [PMC study](pmc-fulltext.md) now measures a six-article licensed subset; full
+text stays opt-in until its relevance and answer value are independently assessed.
+Publication recency is not a quality signal.

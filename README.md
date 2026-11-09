@@ -37,6 +37,11 @@ into 277 unique articles and 850 windows, with an immutable embedding cache.
 Measured preparation and search costs cover the start of the Small → Medium
 transition; retrieval and clinical-answer quality are not revalidated by pooling.
 
+A six-article [PMC full-text feasibility study](docs/pmc-fulltext.md) compares
+paired abstract and narrative indexes. Full text adds source coverage and changes
+rank order; the pilot has no independent relevance labels, so abstract retrieval
+remains primary.
+
 The accepted [development plan](docs/development-plan.md) covers Days 15–28,
 including the two MedCPT experiments and an interactive CLI as the primary UI.
 

@@ -38,9 +38,10 @@ def source_section(article, window):
         if window["text"] or window["title"] != (article.get("title") or ""):
             raise ValueError("Invalid title-only window")
         return None
-    if window["kind"] != "abstract":
+    if window["kind"] not in {"abstract", "fulltext"}:
         raise ValueError("Unsupported evidence source")
-    sections = (article.get("abstract") or {}).get("sections", [])
+    field = "full_text" if window["kind"] == "fulltext" else "abstract"
+    sections = (article.get(field) or {}).get("sections", [])
     found = [s for s in sections if s["index"] == window["section_index"]]
     if len(found) != 1:
         raise ValueError("Window section is missing or ambiguous")
@@ -125,7 +126,8 @@ def build_context(dataset, window_manifest, windows, ranking, scores, tokenizer,
             for score, _, window in grouped[pmid]:
                 if any(s["window_id"] == window["window_id"] for s in selected):
                     continue
-                if any(s["section_index"] == window["section_index"]
+                if any(s.get("source_kind", "abstract") == window["kind"]
+                       and s["section_index"] == window["section_index"]
                        and max(s["char_start"], window["char_start"]) < min(s["char_end"], window["char_end"])
                        for s in selected):
                     skipped.append({"window_id": window["window_id"], "reason": "overlapping-span"})
@@ -139,6 +141,10 @@ def build_context(dataset, window_manifest, windows, ranking, scores, tokenizer,
                         "source_path", "char_start", "char_end", "text", "provenance")},
                     "url": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/", "article_rank": article_rank,
                     "window_cosine": score}
+                if window["kind"] == "fulltext":
+                    source.update(source_kind="fulltext", pmcid=article["full_text"]["pmcid"],
+                        license_uri=article["full_text"]["license_uri"])
+                    source["url"] = "https://pmc.ncbi.nlm.nih.gov/articles/" + source["pmcid"] + "/"
                 count = len(tokenizer.encode(render_evidence([*sources, source]), add_special_tokens=False))
                 if count > config.evidence_tokens:
                     skipped.append({"window_id": window["window_id"], "reason": "token-budget"})
@@ -175,7 +181,9 @@ def locate_quote(context, citation_id, quote):
         start = index + 1
     if not offsets:
         raise ValueError("Quote is not present verbatim in the selected excerpt")
-    return {"citation_id": citation_id, "pmid": source["pmid"], "window_id": source["window_id"],
+    return {**({k:source[k] for k in ("source_kind", "pmcid", "license_uri")}
+        if source.get("source_kind")=="fulltext" else {}),
+        "citation_id": citation_id, "pmid": source["pmid"], "window_id": source["window_id"],
         "text_version_id": source["text_version_id"], "source_path": source["source_path"],
         "section_index": source["section_index"], "matches": offsets,
         "ambiguous": len(offsets) > 1, "quote": quote}

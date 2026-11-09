@@ -26,6 +26,8 @@ def main(argv=None):
     parser.add_argument('--embeddings', type=Path, required=True)
     parser.add_argument('--query', required=True, help='Research question in English')
     parser.add_argument('--top-k', type=int, default=10)
+    parser.add_argument('--published-from', help='Inclusive publication lower bound, YYYY-MM-DD')
+    parser.add_argument('--published-until', help='Inclusive publication upper bound, YYYY-MM-DD')
     parser.add_argument('--generate', action='store_true', help='Enable experimental Qwen draft generation')
     parser.add_argument('--rerank', action='store_true', help='Rerank dense hits with the same Qwen instance')
     parser.add_argument('--model', type=Path, default=ROOT / '.cache/models/bge-base-en-v1.5')
@@ -35,6 +37,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if not args.query.strip() or not 1 <= args.top_k <= 10:
         parser.error('Supply a nonempty query and top-k between one and ten')
+    from medlens.dates import select_publication_dates
+    try:select_publication_dates([], args.published_from, args.published_until)
+    except ValueError as exc:parser.error(str(exc))
     # A dedicated directory owns its checkpoints; never overwrite an existing run.
     try:
         args.output_dir.mkdir(parents=True, exist_ok=False)
@@ -59,7 +64,8 @@ def main(argv=None):
             last_state = state
     checkpoint(report)
     try:
-        index = DenseIndex(args.dataset, args.windows, args.embeddings)
+        index = DenseIndex(args.dataset, args.windows, args.embeddings,
+            published_from=args.published_from, published_until=args.published_until)
         from transformers import AutoTokenizer
         tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=REVISION, token=False,
             trust_remote_code=False, local_files_only=True)

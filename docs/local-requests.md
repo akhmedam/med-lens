@@ -107,8 +107,9 @@ protection. Raw request files stay under ignored `results/requests/`.
 The [shared local corpus](shared-corpus.md) now supports the same CLI with its
 `dataset`, `windows` and `embeddings` directories. It starts the Small → Medium
 transition at 277 unique articles; no new-paper fetching occurs during a request.
-A served API, independent answer assessment and more reliable generation remain
-open work.
+A license-gated PMC full-text experiment is documented in [pmc-fulltext.md](pmc-fulltext.md).
+Abstract retrieval remains the primary workflow until full-text relevance and
+answer support receive independent assessment. A served API also remains open work.
 
 ## Air recovery
 
