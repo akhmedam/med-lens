@@ -5,8 +5,9 @@ records for each request, then runs the selected Dense → evidence → Qwen dra
 and support-review pipeline. It does not require a prebuilt local collection.
 The current scope remains English questions about depression, anxiety and panic;
 broader biomedical evaluation follows the user's independent manual annotation.
-Use the pinned local assets prepared by the [recovery guide](recovery-without-bundle.md);
-restoring an old source collection is not required for this mode.
+Prepare the pinned default 4B assets with the [native MLX guide](native-mlx.md)
+and the main environment/BGE assets with the [recovery guide](recovery-without-bundle.md).
+Restoring an old source collection is not required for this mode.
 
 ```sh
 .venv/bin/python scripts/ask_live.py \
@@ -75,12 +76,16 @@ to `BAAI/bge-base-en-v1.5` with normalized float32 CLS vectors, eager attention 
 batch size 16 on MPS. On a cold vector cache, passage encoding and query encoding
 currently use separate sequential BGE instances. A request whose passage inputs are all cached skips the passage
 model entirely; fresh result changes can still require some new vectors. BGE is collected and unused MPS cache is released before loading
-Qwen. One Qwen instance generates and reviews the answer with the current v6/v4
-contracts and token budgets. The default is now the [isolated native MLX
-backend](native-mlx.md); `--engine transformers` selects the original runtime.
-Both record their exact precision and stop policy. The measurements below
-remain the original Transformers/Metal baseline; see the native runtime record
-for the separate optimization experiment.
+Qwen. One Qwen instance generates and reviews the answer. The current default is
+native Qwen3.5-4B with the compact `cited-answer-v7` draft and named six-field
+`claim-support-v4` review using `axes-first-v1`. Token budgets and exact citation
+checks remain bounded; model review does not establish factual support. See the
+[native MLX guide](native-mlx.md) and [development-default decision](adr/0005-qwen4b-development-default.md).
+Pass `--answer-model 9b` for native 9B or both `--answer-model 9b --engine transformers`
+for the original runtime; both comparisons retain the legacy v6 policy. Every
+profile records its exact precision and stop policy. The measurements below
+remain the historical Transformers/Metal baseline; current 4B integration
+observations are [recorded separately](experiments/qwen4b-default-integration.json).
 
 Empty PubMed results complete with an explicit insufficient-evidence result and
 load no model weights. If all selected sources lack usable excerpts, the ordinary
@@ -92,9 +97,10 @@ Exit codes follow the existing request CLI: 0 for a completed request including
 abstention, 1 for execution/source errors, 2 for a completed validation failure or
 argument error (inspect `run.json`), and 130 for interruption.
 
-## Runtime measurements and verification
+## Historical runtime measurements and verification
 
-The live benchmark uses p03 (exercise/depression) and p06 (CBT/generalized anxiety)
+The following benchmark predates the 4B default and describes the original 9B
+Transformers/Metal workflow. The live benchmark uses p03 (exercise/depression) and p06 (CBT/generalized anxiety)
 from the fixed development question file. It measures 30, 100 and 300 candidates
 with a fresh vector cache followed by its reuse. Both requests still search and
 fetch PubMed anew, and every model call is fresh. Each request runs in a new
@@ -104,6 +110,7 @@ estimate of cache benefit for Qwen.
 
 ```sh
 .venv/bin/python scripts/benchmark_live_search.py \
+  --answer-model 9b --engine transformers \
   --output results/live/new-paired-run \
   --summary docs/experiments/live-new-paired-run.json
 ```
@@ -123,7 +130,7 @@ and deterministic/fake model outputs, not clinical labels. The end-to-end runs
 check real saved source spans and visible citations, independently of any verdict
 about what a generated claim means.
 
-## Recorded observations
+## Historical 9B observations
 
 | Question | Candidates | Cold command | Warm command | Cold passage prep | Warm passage prep | Automatic answer status (cold / warm) |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |

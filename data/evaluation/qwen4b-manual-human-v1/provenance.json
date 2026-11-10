@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "manual-human-annotation-evidence-provenance",
+  "created_at": "2026-11-10T13:09:17.582685+00:00",
+  "annotation_method": "MANUAL HUMAN ANNOTATION",
+  "annotator": "project owner / user",
+  "assistant_generated_labels": false,
+  "assistant_generated_rationales": false,
+  "human_labels_rewritten": false,
+  "human_rationales_rewritten": false,
+  "original_exports_copied_byte_identically": true,
+  "authorization": {
+    "scope": "Include the manual human evidence with the 4B default change authorized by the owner and its associated pull request.",
+    "current_user_instruction": "The owner selected 4B for continuing work and authorized publishing its PR.",
+    "historical_local_only_restriction": "Superseded for this concrete change/evidence package; historical originals/reports remain unchanged.",
+    "manual_origin_condition": "Any committed annotations must explicitly identify their manual human origin."
+  },
+  "scope": {
+    "independent_questions": 2,
+    "source_contexts": 6,
+    "unique_claims": 30,
+    "claim_occurrences": 32,
+    "paired_answers": 6,
+    "human_annotators": 1
+  },
+  "claim_reference_finalization": "Explicit finalized=true plus canonical reference SHA256 in unchanged user export.",
+  "answer_reference_finalization": "Explicit user statement after completing the separate answer form; form had no finalized flag.",
+  "files": {
+    "human-manual-claims-original.json": {
+      "bytes": 14923,
+      "sha256": "4b7844755ffd4d7cdc13183b4ac5f5d37fa11c4dc4836c15501b3bfe4e8822bc"
+    },
+    "human-manual-answers-original.json": {
+      "bytes": 6556,
+      "sha256": "e5263b3ba8411cf9cad6f3f79c57577eb2eec5ff1112eb751cd4940ffee56374"
+    },
+    "claim-audit.json": {
+      "bytes": 27180,
+      "sha256": "f769139a1c9c221b0651223e31e4e4ee4ed9b2d6e88fb16b61098d6ebb90efcf"
+    },
+    "answer-audit.json": {
+      "bytes": 11425,
+      "sha256": "c2b77ae7af09f566037e309454eab64f3133e6dd4f93b78cb9997374d1b6353d"
+    },
+    "verify.py": {
+      "bytes": 10522,
+      "sha256": "64c3726a31556c80ace1515d06f932c8e35ddcfe83d93553c3b8ab0639e58fa1"
+    }
+  },
+  "local_source_report_sha256": {
+    "results/research/qwen4b-viability-20261110/human-manual-001/provenance.json": "33430ea1050398235e94956d44024194a4372fd0ac0eceb24774e44188519788",
+    "results/research/qwen4b-viability-20261110/evaluation/manual-human-assessment-001.json": "3376afd50624236a395fa892a78abccecd781ceabb31b6b2d104fb270fe51755",
+    "results/research/qwen4b-viability-20261110/evaluation/claim-results-manual-human-001.json": "5fc6532ca00a85478028c55047e8731d4faaa4b5899be42779abb669ddcaccf4",
+    "results/research/qwen4b-viability-20261110/evaluation/answer-assessment-final.json": "827662d1436b4c9302fe67cf0eb4883d1bf9662956303d73d6a301acc889fab0",
+    "results/research/qwen4b-viability-20261110/evaluation/independent-manual-human-claim-audit.json": "71c11722426ec2ba1818bf046c5b3d969cc17dc93bff5d008a784329f0872ea5"
+  },
+  "publication_contents": "Manual human labels/rationales and allowlisted text-free audit metadata only; no raw articles, generated answers or weights.",
+  "metrics_origin": "Deterministic aggregation of the owner's manual labels and frozen model predictions; models are not ground truth.",
+  "artifact_id": "e36425b853c9a94744ec08b617aa62f22d0941f84aea50dd80ef6b80353486e0"
+}

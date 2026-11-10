@@ -60,10 +60,13 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         self.outputs[0]["claims"][0]["text"] = "PRIVATE GENERATED FINDING"
         self.pipeline = cli.run_question
 
-    def execute(self, *, outputs=None, source=None, change_pipeline=None, repeat=False):
+    def execute(self, *, outputs=None, source=None, change_pipeline=None, repeat=False, compact=False):
         def factory(*args, **kwargs):
             def make():
                 runtime = Runtime(copy.deepcopy(self.outputs if outputs is None else outputs))
+                if compact:
+                    runtime.answer_policy = 'compact-v1'
+                    runtime.cache_identity = {'model_profile':'4b','artifact_id':'fixture'}
                 self.runtimes.append(runtime)
                 return runtime
             make.identity = {"engine": "fixture"}
@@ -87,7 +90,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         with (patch.object(cli, "ROOT", self.root),
               patch.object(cli, "code_identity", return_value={"fixture.py": "code-hash"}),
               patch.object(cli, "DenseIndex", return_value=self.index),
-              patch.object(cli, "load_answer_tokenizer", side_effect=helpers.Tokenizer),
+              patch.object(cli, "load_answer_tokenizer", side_effect=lambda *a, **k: helpers.Tokenizer()),
               patch.object(cli, "BGEEncoder", return_value=helpers.Encoder()),
               patch.object(cli, "runtime_factory", side_effect=factory),
               patch.object(cli, "release_accelerator"),
@@ -123,6 +126,17 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             self.assertNotIn(private_text, body)
         self.assertFalse(summary["semantic_quality_evaluated"])
         self.assertFalse(summary["qrels_read"])
+
+
+    def test_replay_runtime_wrapper_preserves_compact4b_schema_policy(self):
+        code, summary, output = self.execute(compact=True)
+        self.assertEqual(code,0)
+        row = summary['runs'][0]
+        self.assertEqual(row['prompt_version'],'cited-answer-v7')
+        runtime = self.runtimes[0]
+        self.assertEqual([p['constraint_kind'] for p,_ in runtime.calls],['draft','literal'])
+        self.assertTrue(all('decoding_schema' in p for p,_ in runtime.calls))
+        self.assertTrue(runtime.closed)
 
     def test_validation_failed_is_recorded_separately_and_does_not_hide_sources(self):
         code, summary, output = self.execute(outputs=["not JSON"])

@@ -1,15 +1,18 @@
 # Primary search-to-answer pipeline
 
-Status: accepted by the user on 2026-11-05.
+Status: the retrieval/generation chain remains accepted. The original 9B model
+choice, accepted on 2026-11-05, is superseded by the user-selected 4B development
+default in [ADR 0005](0005-qwen4b-development-default.md). Model-specific fields
+and measurements below describe the historical decision.
 
-## Decision
+## Historical model decision; retained retrieval chain
 
-Use **Dense retrieval and article ranking**, followed by exact evidence selection
-and **Qwen/Qwen3.5-9B answer generation**. Generating a sourced answer is a required
+The original model selection used **Dense retrieval and article ranking**,
+followed by exact evidence selection and **Qwen/Qwen3.5-9B answer generation**. Generating a sourced answer is a required
 part of the product. Search-only output is a diagnostic mode and a useful partial
 result when a model stage fails.
 
-The primary request is:
+The historical primary request was:
 
 ```text
 Question → BGE query embedding → Dense article ranking → exact source excerpts
@@ -65,7 +68,9 @@ planned Day 27 cleanup. Do not remove their experiment records. Continue on the
 Air with the staged [handoff checks](../handoff.md), then generation reliability
 on Days 20–21 and held-out confirmation on Day 26.
 
-The [current decision record](0003-primary-pipeline.json) is authoritative.
+The [historical machine-readable record](0003-primary-pipeline.json) retains its
+9B fields and explicit supersession pointers. [ADR 0005](0005-qwen4b-development-default.md)
+is authoritative for the current development model/default.
 [Pipeline options](../pipeline-options.md) retain the measured trade-offs. The
 Day 19 comparison packet and restore audit were captured before this choice;
 their `pending-user` fields are historical snapshots and do not override this ADR.
@@ -77,3 +82,11 @@ execution backend after the user requested performance optimization. It preserve
 the selected retrieval/generation chain and pinned 9B checkpoint, while explicitly
 recording arithmetic and stopping-policy differences. Independent answer quality
 validation remains required.
+
+## Development model refinement
+
+[ADR 0005](0005-qwen4b-development-default.md) changes the default to pinned native
+Qwen3.5-4B with compact draft/named review contracts. Dense retrieval, exact source
+selection and the requirement for generation remain selected. This is a user
+choice for development; both reviewers failed the manually annotated pilot
+safety gate, and no clinical or generalized quality equivalence is established.

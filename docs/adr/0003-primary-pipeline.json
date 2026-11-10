@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "decision_status": "accepted",
+  "decision_status": "partially-superseded",
   "accepted_on": "2026-11-05",
   "decision_by": "user",
   "selected_retrieval": "dense",
@@ -35,5 +35,16 @@
   "live_validation_scope": "Two in-scope development questions, 30/100/300 fresh candidates with cold/warm embedding caches. Runtime/integrity only; 6 answered, 2 partial, 2 validation failures withheld, 2 abstentions. No relevance or answer-quality evaluation.",
   "fallback_runtime": "Explicit --engine transformers; original Transformers/MPS Metal backend",
   "runtime_decision": "docs/adr/0004-native-mlx-runtime.md",
-  "runtime_validation_record": "docs/experiments/native-mlx.json"
+  "runtime_validation_record": "docs/experiments/native-mlx.json",
+  "model_decision_status": "superseded",
+  "model_decision_superseded_on": "2026-11-10",
+  "model_decision_superseded_by": "docs/adr/0005-qwen4b-development-default.md",
+  "current_development_model_decision": "docs/adr/0005-qwen4b-development-default.json",
+  "model_specific_fields_are_historical": true,
+  "retained_decision_scope": [
+    "Dense retrieval and article ranking",
+    "exact evidence selection",
+    "required sourced draft generation",
+    "diagnostic search-only mode"
+  ]
 }

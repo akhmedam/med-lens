@@ -208,24 +208,42 @@ def accepted_claim_ids(review, *, protocol=REVIEW_VERSION):
 
 def generate_answer(question, context, runtime, *, cached_calls=None, review_protocol=DEFAULT_REVIEW_VERSION):
     review_values(review_protocol)
+    compact = getattr(runtime, "answer_policy", "legacy-v6") == "compact-v1"
+    if compact:
+        from . import compact as compact_policy
+        if review_protocol != compact_policy.LEGACY_REVIEW_VERSION:
+            raise ValueError("compact-v1 requires claim-support-v4; use legacy-v6 for other review protocols")
     if not isinstance(question, str) or not question.strip():
         raise AnswerError("Question is required")
     check_context(context, runtime.tokenizer)
-    result = {"question": question, "context_id": context["context_id"], "prompt_version": PROMPT_VERSION,
+    result = {"question": question, "context_id": context["context_id"], "prompt_version": compact_policy.PROMPT_VERSION if compact else PROMPT_VERSION,
         "review_version": review_protocol, "claims": [], "limitations": ["limited_excerpts"],
         "model_calls": [], "review": [], "support_check": "same-model-review-not-independent",
         "verification_status": "draft-requires-independent-review"}
+    if compact:
+        result.update(answer_policy=compact_policy.ANSWER_POLICY,
+            review_prompt_version=compact_policy.REVIEW_PROMPT_VERSION)
     if not context["sources"]:
         return {**result, "status": "insufficient_evidence", "reason": "empty-context"}
-    indexed = quote_catalog(context, runtime.tokenizer)
+    if compact:
+        prompt, indexed = compact_policy.build_draft_prompt(question, context, runtime.tokenizer)
+    else:
+        indexed = quote_catalog(context, runtime.tokenizer)
     result.update(generator_evidence_tokens=indexed["tokens"], quote_catalog_sha256=indexed["sha256"],
                   generator_evidence_payload=indexed["payload"])
-    prompt = chat_prompt(SYSTEM + "\nOutput contract (JSON Schema):\n"
-        + canonical(draft_contract(indexed["catalog"])),
-        "Question: " + canonical(question) + "\nEvidence:\n" + indexed["payload"], runtime.tokenizer)
+    if not compact:
+        prompt = chat_prompt(SYSTEM + "\nOutput contract (JSON Schema):\n"
+            + canonical(draft_contract(indexed["catalog"])),
+            "Question: " + canonical(question) + "\nEvidence:\n" + indexed["payload"], runtime.tokenizer)
     def infer(stage, prompt, limit):
         cached = (cached_calls or {}).get(stage)
-        if (cached and cached.get("prompt", {}).get("prompt_sha256") == prompt["prompt_sha256"]
+        identity = getattr(runtime, "cache_identity", None) if compact else None
+        compact_cache_matches = (not compact or (isinstance(identity, dict) and bool(identity)
+            and cached is not None and cached.get("runtime_identity") == identity
+            and cached.get("prompt", {}).get("decoding_schema") == prompt.get("decoding_schema")
+            and cached.get("prompt", {}).get("constraint_kind") == prompt.get("constraint_kind")))
+        if (cached and compact_cache_matches
+                and cached.get("prompt", {}).get("prompt_sha256") == prompt["prompt_sha256"]
                 and cached.get("max_new_tokens") == limit):
             return {**{k: v for k, v in cached.items() if k not in {"stage", "prompt"}}, "cache_reused": True}
         return {**runtime.generate(prompt, max_new_tokens=limit), "cache_reused": False}
@@ -241,12 +259,17 @@ def generate_answer(question, context, runtime, *, cached_calls=None, review_pro
             return {**result, "status": "insufficient_evidence", "reason": "model-abstained",
                     "limitations": draft["limitations"]}
         stage = "support-review"
-        review_prompt = chat_prompt(*review_messages(question, context, draft['claims'], indexed, protocol=review_protocol), runtime.tokenizer)
+        if compact:
+            review_prompt = compact_policy.build_review_prompt(question, context, draft['claims'], indexed, runtime.tokenizer)
+        else:
+            review_prompt = chat_prompt(*review_messages(question, context, draft['claims'], indexed, protocol=review_protocol), runtime.tokenizer)
         checked = infer("support-review", review_prompt, 512)
         result["model_calls"].append({"stage": "support-review", "prompt": review_prompt, **checked})
         if checked["hit_output_limit"]:
             raise AnswerError("Review output limit reached", code="output_limit")
-        review = parse_review(checked["text"], {c["claim_id"] for c in draft["claims"]}, protocol=review_protocol)
+        claim_ids = {c["claim_id"] for c in draft["claims"]}
+        review = (compact_policy.parse_compact_review(checked["text"], claim_ids) if compact
+            else parse_review(checked["text"], claim_ids, protocol=review_protocol))
         result["review"] = review
         accepted = accepted_claim_ids(review, protocol=review_protocol)
         claims = [c for c in draft["claims"] if c["claim_id"] in accepted]

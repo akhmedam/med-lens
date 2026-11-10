@@ -1,0 +1,1715 @@
+{
+  "schema_version": 1,
+  "kind": "qwen4b-manual-human-assessment",
+  "annotation_method": "MANUAL HUMAN ANNOTATION",
+  "annotator": "project owner / user",
+  "assistant_generated_labels": false,
+  "human_rationales_rewritten": false,
+  "scope": {
+    "unique_claims": 30,
+    "claim_occurrences": 32,
+    "source_contexts": 6,
+    "independent_questions": 2,
+    "human_annotators": 1,
+    "generalized_quality_claim_permitted": false
+  },
+  "policy_scope": "Frozen axes-first format-only reviewer runs and their recombined answers; not a quality validation of newly changed decoder outputs.",
+  "human_classes": {
+    "eligible": 24,
+    "bad": 5,
+    "uncertain": 1
+  },
+  "claims": {
+    "unique_claim_count": 30,
+    "human_classes": {
+      "eligible": 24,
+      "bad": 5,
+      "uncertain": 1
+    },
+    "occurrence_count": 32,
+    "models": {
+      "4b": {
+        "unique": {
+          "false_accept_bad": {
+            "count_lower": 3,
+            "count_upper": 3,
+            "denominator": 5,
+            "rate_lower": 0.6,
+            "rate_upper": 0.6
+          },
+          "false_reject_eligible": {
+            "count_lower": 8,
+            "count_upper": 8,
+            "denominator": 24,
+            "rate_lower": 0.3333333333333333,
+            "rate_upper": 0.3333333333333333
+          },
+          "recall_eligible": {
+            "count_lower": 16,
+            "count_upper": 16,
+            "denominator": 24,
+            "rate_lower": 0.6666666666666666,
+            "rate_upper": 0.6666666666666666
+          },
+          "accepted_uncertain": {
+            "count_lower": 1,
+            "count_upper": 1,
+            "denominator": 1,
+            "rate_lower": 1.0,
+            "rate_upper": 1.0
+          }
+        },
+        "occurrences": {
+          "false_accept_bad": {
+            "count": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "false_reject_eligible": {
+            "count": 8,
+            "denominator": 26,
+            "rate": 0.3076923076923077
+          },
+          "recall_eligible": {
+            "count": 18,
+            "denominator": 26,
+            "rate": 0.6923076923076923
+          },
+          "accepted_uncertain": {
+            "count": 1,
+            "denominator": 1,
+            "rate": 1.0
+          }
+        },
+        "duplicate_discordance_count": 0,
+        "duplicate_discordances": [],
+        "zero_observed_bad_acceptances": false,
+        "uncertain_acceptance_requires_abstention": true
+      },
+      "9b": {
+        "unique": {
+          "false_accept_bad": {
+            "count_lower": 4,
+            "count_upper": 4,
+            "denominator": 5,
+            "rate_lower": 0.8,
+            "rate_upper": 0.8
+          },
+          "false_reject_eligible": {
+            "count_lower": 9,
+            "count_upper": 9,
+            "denominator": 24,
+            "rate_lower": 0.375,
+            "rate_upper": 0.375
+          },
+          "recall_eligible": {
+            "count_lower": 15,
+            "count_upper": 15,
+            "denominator": 24,
+            "rate_lower": 0.625,
+            "rate_upper": 0.625
+          },
+          "accepted_uncertain": {
+            "count_lower": 0,
+            "count_upper": 0,
+            "denominator": 1,
+            "rate_lower": 0.0,
+            "rate_upper": 0.0
+          }
+        },
+        "occurrences": {
+          "false_accept_bad": {
+            "count": 4,
+            "denominator": 5,
+            "rate": 0.8
+          },
+          "false_reject_eligible": {
+            "count": 9,
+            "denominator": 26,
+            "rate": 0.34615384615384615
+          },
+          "recall_eligible": {
+            "count": 17,
+            "denominator": 26,
+            "rate": 0.6538461538461539
+          },
+          "accepted_uncertain": {
+            "count": 0,
+            "denominator": 1,
+            "rate": 0.0
+          }
+        },
+        "duplicate_discordance_count": 0,
+        "duplicate_discordances": [],
+        "zero_observed_bad_acceptances": false,
+        "uncertain_acceptance_requires_abstention": false
+      }
+    },
+    "paired_recall_gate": {
+      "status": "pass",
+      "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+      "threshold": "9/10"
+    }
+  },
+  "claim_breakdown": {
+    "per_question": [
+      {
+        "question_sha256": "6f51ab1dd9a55da9a838a7f809567f4e59c10e61ba450fab991de9347be9be1b",
+        "unique_claim_count": 13,
+        "human_classes": {
+          "eligible": 12,
+          "bad": 1,
+          "uncertain": 0
+        },
+        "occurrence_count": 15,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 12,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "recall_eligible": {
+                "count_lower": 12,
+                "count_upper": 12,
+                "denominator": 12,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "false_reject_eligible": {
+                "count": 0,
+                "denominator": 14,
+                "rate": 0.0
+              },
+              "recall_eligible": {
+                "count": 14,
+                "denominator": 14,
+                "rate": 1.0
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 4,
+                "count_upper": 4,
+                "denominator": 12,
+                "rate_lower": 0.3333333333333333,
+                "rate_upper": 0.3333333333333333
+              },
+              "recall_eligible": {
+                "count_lower": 8,
+                "count_upper": 8,
+                "denominator": 12,
+                "rate_lower": 0.6666666666666666,
+                "rate_upper": 0.6666666666666666
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 4,
+                "denominator": 14,
+                "rate": 0.2857142857142857
+              },
+              "recall_eligible": {
+                "count": 10,
+                "denominator": 14,
+                "rate": 0.7142857142857143
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "bcbdc89ecdd251acf7ff99aa65266904ec641664333089d8f74bb2301028fae1",
+        "unique_claim_count": 17,
+        "human_classes": {
+          "eligible": 12,
+          "bad": 4,
+          "uncertain": 1
+        },
+        "occurrence_count": 17,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 4,
+                "rate_lower": 0.75,
+                "rate_upper": 0.75
+              },
+              "false_reject_eligible": {
+                "count_lower": 8,
+                "count_upper": 8,
+                "denominator": 12,
+                "rate_lower": 0.6666666666666666,
+                "rate_upper": 0.6666666666666666
+              },
+              "recall_eligible": {
+                "count_lower": 4,
+                "count_upper": 4,
+                "denominator": 12,
+                "rate_lower": 0.3333333333333333,
+                "rate_upper": 0.3333333333333333
+              },
+              "accepted_uncertain": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 3,
+                "denominator": 4,
+                "rate": 0.75
+              },
+              "false_reject_eligible": {
+                "count": 8,
+                "denominator": 12,
+                "rate": 0.6666666666666666
+              },
+              "recall_eligible": {
+                "count": 4,
+                "denominator": 12,
+                "rate": 0.3333333333333333
+              },
+              "accepted_uncertain": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": true
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 4,
+                "rate_lower": 0.75,
+                "rate_upper": 0.75
+              },
+              "false_reject_eligible": {
+                "count_lower": 5,
+                "count_upper": 5,
+                "denominator": 12,
+                "rate_lower": 0.4166666666666667,
+                "rate_upper": 0.4166666666666667
+              },
+              "recall_eligible": {
+                "count_lower": 7,
+                "count_upper": 7,
+                "denominator": 12,
+                "rate_lower": 0.5833333333333334,
+                "rate_upper": 0.5833333333333334
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 3,
+                "denominator": 4,
+                "rate": 0.75
+              },
+              "false_reject_eligible": {
+                "count": 5,
+                "denominator": 12,
+                "rate": 0.4166666666666667
+              },
+              "recall_eligible": {
+                "count": 7,
+                "denominator": 12,
+                "rate": 0.5833333333333334
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "fail",
+          "reason": "candidate-upper-recall-below-0.9-baseline-lower",
+          "threshold": "9/10"
+        }
+      }
+    ],
+    "per_context": [
+      {
+        "question_sha256": "6f51ab1dd9a55da9a838a7f809567f4e59c10e61ba450fab991de9347be9be1b",
+        "context_sha256": "60223bfdbe12e4d2571934565d1d61c2a0ecfa7974879a32407cc93667282a3c",
+        "unique_claim_count": 4,
+        "human_classes": {
+          "eligible": 4,
+          "bad": 0,
+          "uncertain": 0
+        },
+        "occurrence_count": 6,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              },
+              "false_reject_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 4,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "recall_eligible": {
+                "count_lower": 4,
+                "count_upper": 4,
+                "denominator": 4,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "false_reject_eligible": {
+                "count": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "recall_eligible": {
+                "count": 6,
+                "denominator": 6,
+                "rate": 1.0
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              },
+              "false_reject_eligible": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 4,
+                "rate_lower": 0.25,
+                "rate_upper": 0.25
+              },
+              "recall_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 4,
+                "rate_lower": 0.75,
+                "rate_upper": 0.75
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "false_reject_eligible": {
+                "count": 1,
+                "denominator": 6,
+                "rate": 0.16666666666666666
+              },
+              "recall_eligible": {
+                "count": 5,
+                "denominator": 6,
+                "rate": 0.8333333333333334
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "6f51ab1dd9a55da9a838a7f809567f4e59c10e61ba450fab991de9347be9be1b",
+        "context_sha256": "c9d2532d6eb06e356dca32c5cdc7af20e3e8c4838e91c0789af69430e540667c",
+        "unique_claim_count": 6,
+        "human_classes": {
+          "eligible": 5,
+          "bad": 1,
+          "uncertain": 0
+        },
+        "occurrence_count": 6,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 5,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "recall_eligible": {
+                "count_lower": 5,
+                "count_upper": 5,
+                "denominator": 5,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "false_reject_eligible": {
+                "count": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "recall_eligible": {
+                "count": 5,
+                "denominator": 5,
+                "rate": 1.0
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 5,
+                "rate_lower": 0.6,
+                "rate_upper": 0.6
+              },
+              "recall_eligible": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 5,
+                "rate_lower": 0.4,
+                "rate_upper": 0.4
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 3,
+                "denominator": 5,
+                "rate": 0.6
+              },
+              "recall_eligible": {
+                "count": 2,
+                "denominator": 5,
+                "rate": 0.4
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "6f51ab1dd9a55da9a838a7f809567f4e59c10e61ba450fab991de9347be9be1b",
+        "context_sha256": "f76b3d43c9bd73de241fed8a17050c7e79690a21f7104cd228f5d63703e0fb81",
+        "unique_claim_count": 3,
+        "human_classes": {
+          "eligible": 3,
+          "bad": 0,
+          "uncertain": 0
+        },
+        "occurrence_count": 3,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              },
+              "false_reject_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 3,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "recall_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 3,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "false_reject_eligible": {
+                "count": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "recall_eligible": {
+                "count": 3,
+                "denominator": 3,
+                "rate": 1.0
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              },
+              "false_reject_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 3,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "recall_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 3,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "false_reject_eligible": {
+                "count": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "recall_eligible": {
+                "count": 3,
+                "denominator": 3,
+                "rate": 1.0
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "bcbdc89ecdd251acf7ff99aa65266904ec641664333089d8f74bb2301028fae1",
+        "context_sha256": "0dc6bc7ac8ca25aa7bac2c7cdd80d7790b50feb07ee4ee48f1636930d83f7fc0",
+        "unique_claim_count": 5,
+        "human_classes": {
+          "eligible": 3,
+          "bad": 1,
+          "uncertain": 1
+        },
+        "occurrence_count": 5,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 3,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "recall_eligible": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 3,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "accepted_uncertain": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 3,
+                "denominator": 3,
+                "rate": 1.0
+              },
+              "recall_eligible": {
+                "count": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "accepted_uncertain": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": true
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 3,
+                "rate_lower": 0.3333333333333333,
+                "rate_upper": 0.3333333333333333
+              },
+              "recall_eligible": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 3,
+                "rate_lower": 0.6666666666666666,
+                "rate_upper": 0.6666666666666666
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 1,
+                "denominator": 3,
+                "rate": 0.3333333333333333
+              },
+              "recall_eligible": {
+                "count": 2,
+                "denominator": 3,
+                "rate": 0.6666666666666666
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "fail",
+          "reason": "candidate-upper-recall-below-0.9-baseline-lower",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "bcbdc89ecdd251acf7ff99aa65266904ec641664333089d8f74bb2301028fae1",
+        "context_sha256": "7e4bbe7a2944e60572e4808dcf797aba00071be99f30cabd068d0964a0a5168f",
+        "unique_claim_count": 6,
+        "human_classes": {
+          "eligible": 5,
+          "bad": 1,
+          "uncertain": 0
+        },
+        "occurrence_count": 6,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 4,
+                "count_upper": 4,
+                "denominator": 5,
+                "rate_lower": 0.8,
+                "rate_upper": 0.8
+              },
+              "recall_eligible": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 5,
+                "rate_lower": 0.2,
+                "rate_upper": 0.2
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 4,
+                "denominator": 5,
+                "rate": 0.8
+              },
+              "recall_eligible": {
+                "count": 1,
+                "denominator": 5,
+                "rate": 0.2
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 5,
+                "rate_lower": 0.6,
+                "rate_upper": 0.6
+              },
+              "recall_eligible": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 5,
+                "rate_lower": 0.4,
+                "rate_upper": 0.4
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "false_reject_eligible": {
+                "count": 3,
+                "denominator": 5,
+                "rate": 0.6
+              },
+              "recall_eligible": {
+                "count": 2,
+                "denominator": 5,
+                "rate": 0.4
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "fail",
+          "reason": "candidate-upper-recall-below-0.9-baseline-lower",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "question_sha256": "bcbdc89ecdd251acf7ff99aa65266904ec641664333089d8f74bb2301028fae1",
+        "context_sha256": "8defbeecae78bd8575b904541202507ef09a159a99ce183bd7a0dbbe0bf6ab84",
+        "unique_claim_count": 6,
+        "human_classes": {
+          "eligible": 4,
+          "bad": 2,
+          "uncertain": 0
+        },
+        "occurrence_count": 6,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 2,
+                "rate_lower": 0.5,
+                "rate_upper": 0.5
+              },
+              "false_reject_eligible": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 4,
+                "rate_lower": 0.25,
+                "rate_upper": 0.25
+              },
+              "recall_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 4,
+                "rate_lower": 0.75,
+                "rate_upper": 0.75
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "false_reject_eligible": {
+                "count": 1,
+                "denominator": 4,
+                "rate": 0.25
+              },
+              "recall_eligible": {
+                "count": 3,
+                "denominator": 4,
+                "rate": 0.75
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 2,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 4,
+                "rate_lower": 0.25,
+                "rate_upper": 0.25
+              },
+              "recall_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 4,
+                "rate_lower": 0.75,
+                "rate_upper": 0.75
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 2,
+                "denominator": 2,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 1,
+                "denominator": 4,
+                "rate": 0.25
+              },
+              "recall_eligible": {
+                "count": 3,
+                "denominator": 4,
+                "rate": 0.75
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      }
+    ],
+    "per_draft_origin": [
+      {
+        "draft_origin": "qwen4b-concise-ordered-positional",
+        "parseable_draft_sets": 6,
+        "excluded_format_failures": [],
+        "unique_claim_count": 18,
+        "human_classes": {
+          "eligible": 14,
+          "bad": 3,
+          "uncertain": 1
+        },
+        "occurrence_count": 18,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 3,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 14,
+                "rate_lower": 0.14285714285714285,
+                "rate_upper": 0.14285714285714285
+              },
+              "recall_eligible": {
+                "count_lower": 12,
+                "count_upper": 12,
+                "denominator": 14,
+                "rate_lower": 0.8571428571428571,
+                "rate_upper": 0.8571428571428571
+              },
+              "accepted_uncertain": {
+                "count_lower": 1,
+                "count_upper": 1,
+                "denominator": 1,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 3,
+                "denominator": 3,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 2,
+                "denominator": 14,
+                "rate": 0.14285714285714285
+              },
+              "recall_eligible": {
+                "count": 12,
+                "denominator": 14,
+                "rate": 0.8571428571428571
+              },
+              "accepted_uncertain": {
+                "count": 1,
+                "denominator": 1,
+                "rate": 1.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": true
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 3,
+                "rate_lower": 0.6666666666666666,
+                "rate_upper": 0.6666666666666666
+              },
+              "false_reject_eligible": {
+                "count_lower": 3,
+                "count_upper": 3,
+                "denominator": 14,
+                "rate_lower": 0.21428571428571427,
+                "rate_upper": 0.21428571428571427
+              },
+              "recall_eligible": {
+                "count_lower": 11,
+                "count_upper": 11,
+                "denominator": 14,
+                "rate_lower": 0.7857142857142857,
+                "rate_upper": 0.7857142857142857
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 1,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 2,
+                "denominator": 3,
+                "rate": 0.6666666666666666
+              },
+              "false_reject_eligible": {
+                "count": 3,
+                "denominator": 14,
+                "rate": 0.21428571428571427
+              },
+              "recall_eligible": {
+                "count": 11,
+                "denominator": 14,
+                "rate": 0.7857142857142857
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 1,
+                "rate": 0.0
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      },
+      {
+        "draft_origin": "qwen9b-native-linear",
+        "parseable_draft_sets": 5,
+        "excluded_format_failures": [
+          {
+            "case": "p03-100-cold",
+            "origin": "qwen9b-native-linear",
+            "raw_sha256": "87c0eb942237560e152ac66cabf1aa058cd655a59ea8b75ab7b0526437ff6384",
+            "reason": "invalid_json"
+          }
+        ],
+        "unique_claim_count": 14,
+        "human_classes": {
+          "eligible": 12,
+          "bad": 2,
+          "uncertain": 0
+        },
+        "occurrence_count": 14,
+        "models": {
+          "4b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 2,
+                "rate_lower": 0.0,
+                "rate_upper": 0.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 6,
+                "count_upper": 6,
+                "denominator": 12,
+                "rate_lower": 0.5,
+                "rate_upper": 0.5
+              },
+              "recall_eligible": {
+                "count_lower": 6,
+                "count_upper": 6,
+                "denominator": 12,
+                "rate_lower": 0.5,
+                "rate_upper": 0.5
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "false_reject_eligible": {
+                "count": 6,
+                "denominator": 12,
+                "rate": 0.5
+              },
+              "recall_eligible": {
+                "count": 6,
+                "denominator": 12,
+                "rate": 0.5
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": true,
+            "uncertain_acceptance_requires_abstention": false
+          },
+          "9b": {
+            "unique": {
+              "false_accept_bad": {
+                "count_lower": 2,
+                "count_upper": 2,
+                "denominator": 2,
+                "rate_lower": 1.0,
+                "rate_upper": 1.0
+              },
+              "false_reject_eligible": {
+                "count_lower": 6,
+                "count_upper": 6,
+                "denominator": 12,
+                "rate_lower": 0.5,
+                "rate_upper": 0.5
+              },
+              "recall_eligible": {
+                "count_lower": 6,
+                "count_upper": 6,
+                "denominator": 12,
+                "rate_lower": 0.5,
+                "rate_upper": 0.5
+              },
+              "accepted_uncertain": {
+                "count_lower": 0,
+                "count_upper": 0,
+                "denominator": 0,
+                "rate_lower": null,
+                "rate_upper": null
+              }
+            },
+            "occurrences": {
+              "false_accept_bad": {
+                "count": 2,
+                "denominator": 2,
+                "rate": 1.0
+              },
+              "false_reject_eligible": {
+                "count": 6,
+                "denominator": 12,
+                "rate": 0.5
+              },
+              "recall_eligible": {
+                "count": 6,
+                "denominator": 12,
+                "rate": 0.5
+              },
+              "accepted_uncertain": {
+                "count": 0,
+                "denominator": 0,
+                "rate": null
+              }
+            },
+            "duplicate_discordance_count": 0,
+            "duplicate_discordances": [],
+            "zero_observed_bad_acceptances": false,
+            "uncertain_acceptance_requires_abstention": false
+          }
+        },
+        "paired_recall_gate": {
+          "status": "pass",
+          "reason": "candidate-lower-recall-meets-0.9-baseline-upper",
+          "threshold": "9/10"
+        }
+      }
+    ],
+    "origin_denominators": "Unique human IDs may appear in multiple origins; occurrence subsets are disjoint, unique origin counts need not sum to the global unique count."
+  },
+  "answers": {
+    "models": {
+      "4b-named-axes-first": {
+        "answer_count": 6,
+        "empty_answer_count": 0,
+        "criteria": {
+          "source_support": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "all": 6
+            },
+            "applicable_counts": {
+              "all": 6
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "question_scope": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "exact": 4,
+              "partial": 2
+            },
+            "applicable_counts": {
+              "exact": 4,
+              "partial": 2
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "qualifiers_preserved": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "no": 3,
+              "yes": 3
+            },
+            "applicable_counts": {
+              "no": 3,
+              "yes": 3
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "completeness": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "adequate": 2,
+              "missing": 4
+            },
+            "applicable_counts": {
+              "adequate": 2,
+              "missing": 4
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "overall_usable": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "no": 1,
+              "yes": 5
+            },
+            "applicable_counts": {
+              "no": 1,
+              "yes": 5
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          }
+        }
+      },
+      "9b-named-axes-first": {
+        "answer_count": 6,
+        "empty_answer_count": 1,
+        "criteria": {
+          "source_support": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "all": 5,
+              "none": 1
+            },
+            "applicable_counts": {
+              "all": 5,
+              "none": 1
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "question_scope": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "exact": 4,
+              "mismatch": 1,
+              "partial": 1
+            },
+            "applicable_counts": {
+              "exact": 4,
+              "mismatch": 1,
+              "partial": 1
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "qualifiers_preserved": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "no": 4,
+              "unknown": 1,
+              "yes": 1
+            },
+            "applicable_counts": {
+              "no": 4,
+              "yes": 1
+            },
+            "not_applicable_empty_count": 1,
+            "unknown_count": 0,
+            "judgeable_denominator": 5
+          },
+          "completeness": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "missing": 6
+            },
+            "applicable_counts": {
+              "missing": 6
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          },
+          "overall_usable": {
+            "total_answers": 6,
+            "raw_human_counts": {
+              "no": 2,
+              "yes": 4
+            },
+            "applicable_counts": {
+              "no": 2,
+              "yes": 4
+            },
+            "not_applicable_empty_count": 0,
+            "unknown_count": 0,
+            "judgeable_denominator": 6
+          }
+        }
+      }
+    },
+    "gates": {
+      "overall_usable": {
+        "status": "fail",
+        "known_unusable_cases": [
+          "p06-300-cold"
+        ],
+        "unknown_cases": []
+      },
+      "paired_completeness": {
+        "status": "pass",
+        "candidate_missing_baseline_adequate_cases": [],
+        "unknown_cases": [],
+        "baseline_adequate_count": 0,
+        "candidate_adequate_count": 2,
+        "candidate_missing_count": 4,
+        "interpretation": "No paired labeled loss is not proof that either answer is complete."
+      },
+      "combined": "fail"
+    }
+  },
+  "reviewer_native_speed": {
+    "median_paired_ratio_9b_over_4b": 2.2671560642383652,
+    "paired_inputs": 11,
+    "scope": "native reviewer generation calls on identical frozen prompt/token inputs; load, draft generation, retrieval/network and end-to-end latency excluded"
+  },
+  "decision": {
+    "selected_default_for_continuing_development": "4b",
+    "selection_basis": "current explicit user instruction",
+    "4b_zero_known_bad_acceptance_gate": "fail",
+    "9b_zero_known_bad_acceptance_gate": "fail",
+    "candidate_overall_usability_gate": "fail",
+    "quality_equivalence_established": false,
+    "automatic_judge_approved_by_this_assessment": false,
+    "independent_human_review_required": true
+  },
+  "interpretation": [
+    "All 30 factual_support labels are human-supported; the5 bad protocol claims fail comparison alignment, not factual source support as annotated.",
+    "Human-uncertain comparison remains separate and is not relabeled as a false fact.",
+    "A passed relative-recall or speed gate does not override safety/usability failure.",
+    "The formal paired-completeness gate had zero adequate 9B answers; its pass is not evidence of adequate completeness.",
+    "Both models are predictions; 9B is not ground truth. Two questions, six correlated contexts and one annotator do not establish general superiority or equivalence.",
+    "The user selected 4B for continuing development despite these recorded research limitations."
+  ],
+  "source_reports": {
+    "manual-human-assessment-001.json": "3376afd50624236a395fa892a78abccecd781ceabb31b6b2d104fb270fe51755",
+    "claim-results-manual-human-001.json": "5fc6532ca00a85478028c55047e8731d4faaa4b5899be42779abb669ddcaccf4",
+    "answer-assessment-final.json": "827662d1436b4c9302fe67cf0eb4883d1bf9662956303d73d6a301acc889fab0"
+  },
+  "evidence_package": "data/evaluation/qwen4b-manual-human-v1",
+  "evidence_provenance_sha256": "cc6b79e14bde420e669199630b7cc109b400953e75ad9fa5654011cb86e02fac",
+  "artifact_id": "ea03f42bac01b238380dc5412344f23942219e1300b4a9343374554df9e686f7"
+}

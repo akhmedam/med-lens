@@ -65,17 +65,17 @@ def main():
         ('live.py','pubmed_query.py','pipeline.py','reporting.py','ingestion/pubmed.py','ingestion/snapshots.py',
          'parsing/dataset.py','parsing/pubmed.py','retrieval/windows.py','retrieval/embeddings.py','retrieval/vector_cache.py',
          'generation/answers.py','generation/reviews.py','inference/qwen.py','inference/backends.py',
-         'inference/mlx.py','inference/mlx_worker.py')]]
+         'inference/mlx.py','inference/mlx_worker.py','inference/profiles.py','inference/structured.py','generation/compact.py')]]
     code={str(p.relative_to(ROOT)):sha(p) for p in code_files}
     report={'schema_version':1,'status':'running','started_at':datetime.now(timezone.utc).isoformat(),
         'scope':'Two fixed depression/anxiety development questions; 30/100/300 fresh candidates, one cold and one warm embedding-cache request per combination. Runtime, integrity and pipeline status only; no relevance or answer-quality scoring.',
         'heldout_used':False,'qrels_used':False,'quality_evaluation_performed':False,'queries_sha256':sha(queries_path),
-        'engine':args.engine,'query_ids':[q.query_id for q in chosen],'platform':platform.platform(),'machine':platform.machine(),
+        'engine':args.engine,'answer_model':args.answer_model,'query_ids':[q.query_id for q in chosen],'platform':platform.platform(),'machine':platform.machine(),
         'cache_scope':'Cold starts with an absent vector-cache directory; warm reuses it but searches and downloads PubMed anew. Model/OS caches are not flushed. Each request uses a new process and freshly generates/reviews drafts.',
         'timing_scope':'CLI request time excludes interpreter/import startup and final checkpoint write. Command wall time includes process startup and exit. Component times are nested, not additive.',
         'memory_scope':'Each child reports process RSS high-water, sampled MPS allocations and Qwen conversion samples separately. They overlap; do not sum them. No instantaneous device peak is claimed.',
         'code_sha256':code,'runs':[]}
-    engine_args=['--engine',args.engine]
+    engine_args=['--engine',args.engine,'--answer-model',args.answer_model]
     if args.mlx_model_dir is not None:engine_args+=['--mlx-model-dir',str(args.mlx_model_dir)]
     if args.mlx_python is not None:engine_args+=['--mlx-python',str(args.mlx_python)]
     write(args.output/'summary.json',report)

@@ -180,7 +180,7 @@ class PrepareTests(unittest.TestCase):
             value['artifact_id'] = hashlib.sha256(canonical(value)).hexdigest()
             (prepared/'medlens-source.json').write_bytes(canonical(value))
         with patch.object(module, 'ROOT', self.root), patch.object(module.subprocess, 'run', side_effect=fake_native):
-            self.assertEqual(module.main(['--worker-python', str(executable), '--output', str(output)]), 0)
+            self.assertEqual(module.main(['--model', '9b', '--worker-python', str(executable), '--output', str(output)]), 0)
         self.assertTrue((output/'medlens-source.json').is_file())
         states = list(self.root.glob('.converted.preparing-*/preparation-status.json'))
         self.assertEqual(len(states), 1)
@@ -191,6 +191,120 @@ class PrepareTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'declared policy'):
             write_manifest(self.root, {}, COVERAGES[0], {}, {})
         self.assertFalse((self.root/'medlens-source.json').exists())
+
+
+class Prepare4BTests(unittest.TestCase):
+    def setUp(self):
+        import copy
+        import medlens.inference.profiles as profiles
+        self.profiles=profiles
+        self.temporary=tempfile.TemporaryDirectory();self.addCleanup(self.temporary.cleanup)
+        self.root=Path(self.temporary.name)
+        script=Path(__file__).resolve().parents[1]/'scripts/prepare_mlx_4b.py'
+        spec=importlib.util.spec_from_file_location('prepare_4b_test',script)
+        self.module=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.module)
+        self.token_payload={'tokenizer.json':b'{"fictional":true}','tokenizer_config.json':b'{}','chat_template.jinja':b'template'}
+        self.token_files={n:{'bytes':len(v),'sha256':hashlib.sha256(v).hexdigest()}for n,v in self.token_payload.items()}
+        pins_patch=patch.object(profiles,'TOKENIZER_FILES',self.token_files);pins_patch.start();self.addCleanup(pins_patch.stop)
+        self.source=self.root/'raw';self.source.mkdir()
+        self.config={'model_type':'qwen3_5','quantization':{'bits':4,'group_size':64,'mode':'affine'},
+            'text_config':{'hidden_size':2560,'num_hidden_layers':32,'vocab_size':248320,'eos_token_id':248044,
+                           'dtype':'bfloat16','tie_word_embeddings':True}}
+        (self.source/'config.json').write_bytes(canonical(self.config));(self.source/'model.safetensors').write_bytes(b'FICTIONAL WEIGHTS')
+        self.token_source=self.root/'official-tokenizer';self.token_source.mkdir()
+        for name,body in self.token_payload.items():(self.token_source/name).write_bytes(body)
+        self.spec={**{k:profiles.get_profile()[k]for k in('model_id','revision','directory','dtype','quantization','tie_word_embeddings')},
+            'source_directory':'raw','upstream_revision':None,'official_source_revision_verified':False,
+            'files':{n:{'bytes':(self.source/n).stat().st_size,'sha256':sha_file(self.source/n)}for n in('config.json','model.safetensors')},
+            'tokenizer':{**profiles.get_profile()['tokenizer'],'files':self.token_files}}
+        (self.root/'configs').mkdir();self.save_pins()
+
+    def save_pins(self):
+        (self.root/'configs/mlx-assets.json').write_bytes(canonical({'schema_version':1,'models':{'4b':self.spec}}))
+
+    def test_standalone_preparation_copies_verified_raw_bytes_without9b_or_native(self):
+        with patch.object(self.module,'validate_model',return_value={'fictional':True}):
+            value=self.module.prepare(self.root,tokenizer_source=self.token_source)
+        output=self.root/self.spec['directory']
+        self.assertEqual(value['model']['model_id'],'mlx-community/Qwen3.5-4B-MLX-4bit')
+        self.assertEqual(value['dtype'],'bfloat16');self.assertIsNone(value['source']['upstream_revision'])
+        self.assertFalse(value['conversion']['performed'])
+        self.assertEqual((output/'model.safetensors').read_bytes(),b'FICTIONAL WEIGHTS')
+        self.assertTrue((self.root/'.cache/tokenizers/qwen3.5-4b/tokenizer-source.json').is_file())
+        self.assertFalse((self.root/'.cache/huggingface').exists());self.assertFalse((self.root/'.cache/venvs').exists())
+        self.assertFalse(any(p.is_symlink()for p in output.iterdir()))
+        identity=value.pop('artifact_id');self.assertEqual(hashlib.sha256(canonical(value)).hexdigest(),identity)
+
+    def test_bad_model_or_tokenizer_pins_and_source_escape_rejected(self):
+        import copy
+        original=copy.deepcopy(self.spec)
+        for change in (lambda s:s.update(revision='other'),lambda s:s['tokenizer'].update(revision='other'),
+                       lambda s:s.update(source_directory='../outside'),lambda s:s['files']['model.safetensors'].update(sha256='bad')):
+            self.spec=copy.deepcopy(original);change(self.spec);self.save_pins()
+            with self.assertRaises(ValueError):self.module.load_pins(self.root)
+
+    def test_existing_corrupt_or_linked_files_never_get_overwritten_or_downloaded(self):
+        file=self.source/'model.safetensors';old=file.read_bytes();file.write_bytes(b'CORRUPTED WEIGHTS')
+        with patch.object(self.module,'urlopen') as network:
+            with self.assertRaisesRegex(ValueError,'checksum'):
+                self.module.ensure_source(self.source,self.spec['files'],self.spec['model_id'],self.spec['revision'],download=True)
+            network.assert_not_called()
+        self.assertEqual(file.read_bytes(),b'CORRUPTED WEIGHTS')
+        file.unlink();target=self.root/'real';target.write_bytes(old);file.symlink_to(target)
+        with self.assertRaisesRegex(ValueError,'regular'):
+            self.module.ensure_source(self.source,self.spec['files'],self.spec['model_id'],self.spec['revision'])
+
+    def test_failed_preparation_never_publishes_complete_model(self):
+        with patch.object(self.module,'validate_model',side_effect=ValueError('bad tensor header')):
+            with self.assertRaisesRegex(ValueError,'bad tensor'):
+                self.module.prepare(self.root,tokenizer_source=self.token_source)
+        output=self.root/self.spec['directory'];self.assertFalse(output.exists())
+        states=list(output.parent.glob('.'+output.name+'.preparing-*/preparation-status.json'))
+        self.assertEqual(len(states),1);self.assertEqual(json.loads(states[0].read_bytes())['status'],'failed')
+
+    def test_download_requires_explicit_flag_checks_size_hash_and_pinned_url(self):
+        import io
+        target=self.root/'download';body=b'PUBLIC FICTIONAL ASSET'
+        files={'config.json':{'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()}}
+        with patch.object(self.module,'urlopen',return_value=io.BytesIO(body)) as network:
+            with self.assertRaisesRegex(ValueError,'--download'):
+                self.module.ensure_source(target,files,'repo/name','fixed-revision')
+            network.assert_not_called()
+            self.module.ensure_source(target,files,'repo/name','fixed-revision',download=True)
+            self.assertEqual(network.call_args.args[0],'https://huggingface.co/repo/name/resolve/fixed-revision/config.json')
+        self.assertEqual((target/'config.json').read_bytes(),body)
+        failed=self.root/'failed-download'
+        with patch.object(self.module,'urlopen',return_value=io.BytesIO(body+b'OVERFLOW')):
+            with self.assertRaisesRegex(ValueError,'pinned size'):
+                self.module.ensure_source(failed,files,'repo/name','fixed',download=True)
+        self.assertFalse((failed/'config.json').exists());self.assertEqual(list(failed.iterdir()),[])
+
+    def model_header(self, mutate=None):
+        header={};offset=0
+        def tensor(name,dtype,shape,width):
+            nonlocal offset
+            size=__import__('math').prod(shape)*width
+            header[name]={'dtype':dtype,'shape':shape,'data_offsets':[offset,offset+size]};offset+=size
+        tensor('language_model.model.embed_tokens.weight','U32',[248320,320],4)
+        for i in range(32):
+            if i%4!=3:
+                tensor(f'language_model.model.layers.{i}.linear_attn.A_log','F32',[32],4)
+                tensor(f'language_model.model.layers.{i}.linear_attn.dt_bias','BF16',[32],2)
+        if mutate:mutate(header)
+        encoded=canonical(header)
+        with(self.source/'model.safetensors').open('wb')as stream:
+            stream.write(struct.pack('<Q',len(encoded))+encoded);stream.truncate(8+len(encoded)+offset)
+
+    def test_header_checks_bfloat16_recurrent_precision_and_tied_quantized_head(self):
+        self.model_header();self.assertTrue(self.module.validate_model(self.source)['tie_word_embeddings'])
+        self.model_header(lambda h:h['language_model.model.layers.0.linear_attn.A_log'].update(dtype='BF16'))
+        with self.assertRaises(ValueError):self.module.validate_model(self.source)
+        self.model_header(lambda h:h['language_model.model.embed_tokens.weight'].update(dtype='BF16'))
+        with self.assertRaises(ValueError):self.module.validate_model(self.source)
+        self.config['text_config']['tie_word_embeddings']=False
+        (self.source/'config.json').write_bytes(canonical(self.config))
+        self.model_header()
+        with self.assertRaisesRegex(ValueError,'config'):self.module.validate_model(self.source)
 
 
 if __name__ == '__main__':

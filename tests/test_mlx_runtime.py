@@ -16,22 +16,29 @@ from medlens.inference import mlx as runtime_module
 from medlens.inference.mlx import MlxRuntime, _digest
 from medlens.inference.mlx_worker import _generate, _parameter_dtypes, _validate_request, require_finite_scores
 from medlens.inference.qwen import MODEL_ID, REVISION
+from medlens.inference.profiles import get_profile
 
 
 FAKE_WORKER = '''import argparse, hashlib, json, os, sys, time
 p = argparse.ArgumentParser()
 p.add_argument('--model-dir'); p.add_argument('--nonce')
+p.add_argument('--root'); p.add_argument('--model'); p.add_argument('--artifact-id')
 a = p.parse_args()
 root = a.model_dir
 mode = json.load(open(root + '/mode.json'))
+manifest = json.load(open(root + '/medlens-source.json'))
+identity = dict(manifest['model'],artifact_id=a.artifact_id,answer_policy='compact-v1' if a.model=='4b' else 'legacy-v6')
+dtype = 'bfloat16' if a.model=='4b' else 'float16'
+tokenizer_sha = hashlib.sha256(b'fixture-backend').hexdigest()
 open(root + '/worker.pid', 'w').write(str(os.getpid()))
 def send(x):
     print(json.dumps(x), flush=True)
-ready = dict(op='ready', protocol=1, nonce=a.nonce,
-    packages={n:'0.32.2' for n in ('mlx','mlx-lm','mlx-metal')},
+ready = dict(op='ready', protocol=2, nonce=a.nonce,
+    packages=dict({n:'0.32.2' for n in ('mlx','mlx-lm','mlx-metal')},**{'outlines-core':'0.2.14'}),
     vocab_size=248320, eos_token_ids=[248044,248046], load_seconds=0.01,
-    parameter_dtypes=['float16','float32','uint32'],
-    parameter_dtype_policy='float16-except-A_log-float32-packed-uint32')
+    model_profile=a.model,runtime_identity=identity,tokenizer_backend_sha256=tokenizer_sha,
+    parameter_dtypes=[dtype,'float32','uint32'],
+    parameter_dtype_policy=dtype+'-except-A_log-float32-packed-uint32')
 ready.update(mode.get('ready_override', {}))
 if mode.get('behavior') == 'load_timeout': time.sleep(30)
 send(ready)
@@ -55,11 +62,16 @@ for line in sys.stdin:
         send(dict(op='error', nonce=a.nonce, request_id=q['request_id'], error_type='FloatingPointError')); break
     output = mode.get('output_ids', [12,248046])
     r = dict(op='result', nonce=a.nonce, request_id=q['request_id'],
+        runtime_identity=identity,tokenizer_backend_sha256=tokenizer_sha,
         output_ids=output, new_tokens=len(output), input_tokens=len(q['input_ids']),
         input_ids_sha256=hashlib.sha256(json.dumps(q['input_ids'],sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest(),
         max_new_tokens=q['max_new_tokens'], stopped_on_eos=output[-1] in (248044,248046),
         hit_output_limit=len(output)>=q['max_new_tokens'], seconds=0.03,
         ttft_seconds=0.02, decode_seconds=0.01, peak_memory_bytes=100, rss_peak_bytes=200)
+    if 'decoding_schema' in q:
+        h=hashlib.sha256(json.dumps(q['decoding_schema'],sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+        r['constraint']=dict(original_schema_sha256=h,lowered_schema_sha256=h,kind=q['constraint_kind'],decode_relaxations=[],cache_hit=False,compile_seconds=0.001,compiled_cache_size=1,compiled_cache_maximum=8,regex_sha256='a'*64,whitespace_pattern='',object_property_order='required-list')
+        r['constraint_stats']=dict(accepting=True,eos_accepted=True,fresh_guide=True,accepted_generated_tokens=len(output),mask_seconds=0,advance_seconds=0,raw_validation_seconds=0,post_mask_validation_seconds=0)
     r.update(mode.get('result_override', {})); send(r)
 '''
 
@@ -75,17 +87,19 @@ class MlxFixture(unittest.TestCase):
         self.worker.write_text(FAKE_WORKER)
         self.ids = [100, 200, 300]
         self.tokenizer = SimpleNamespace(
+            backend_tokenizer=SimpleNamespace(to_str=lambda: 'fixture-backend'),
             apply_chat_template=Mock(side_effect=lambda *a, **k: list(self.ids)),
             decode=Mock(return_value="  original tokenizer output  "))
         self.mode({})
-        config = {"text_config": {"vocab_size": 248320, "eos_token_id": 248044},
+        config = {"text_config": {"vocab_size": 248320, "eos_token_id": 248044,
+            "hidden_size":4096,"dtype":"float16"},"tie_word_embeddings":False,
             "quantization": {"bits": 4, "group_size": 64, "mode": "affine"}}
         (self.model / "config.json").write_text(json.dumps(config))
         (self.model / "model.safetensors").write_bytes(b"fake-weights")
         self.manifest = {"schema_version": 1, "kind": "medlens-mlx-model", "status": "complete",
             "model": {"model_id": MODEL_ID, "revision": REVISION},
             "quantization": {"method": "mlx-affine", "bits": 4, "group_size": 64,
-                "coverage": "all-linear-and-embedding"}, "dtype": "float16", "fp32_exceptions": ["A_log"],
+                "coverage": "linear-only-except-lm-head"}, "dtype": "float16", "fp32_exceptions": ["A_log"],
             "files": {name: {"bytes": (self.model / name).stat().st_size,
                 "sha256": hashlib.sha256((self.model / name).read_bytes()).hexdigest()}
                 for name in ("config.json", "model.safetensors")}}
@@ -105,6 +119,7 @@ class MlxFixture(unittest.TestCase):
         (self.model / "mode.json").write_text(json.dumps(value))
 
     def runtime(self, **kwargs):
+        kwargs.setdefault('model','9b')
         result = MlxRuntime(self.model, sys.executable, root=self.root,
             stderr_path=self.root / "stderr.log", **kwargs)
         self.addCleanup(result.close)
@@ -116,6 +131,58 @@ class MlxFixture(unittest.TestCase):
 
 
 class MlxProtocolTests(MlxFixture):
+    def test_model_profile_metadata_and_generation_cache_identity(self):
+        runtime = self.runtime()
+        self.assertEqual(runtime.answer_policy, 'legacy-v6')
+        self.assertEqual(runtime.generate(self.prompt())['runtime_identity'],runtime.cache_identity)
+        self.assertEqual(runtime.metadata['model_profile'],'9b')
+
+    def test_4b_profile_preserves_community_precision_and_compact_policy(self):
+        profile=get_profile('4b')
+        self.manifest.update(model={key:profile[key] for key in ('model_id','revision')},
+            dtype=profile['dtype'],quantization=profile['quantization'],tie_word_embeddings=True)
+        config=json.loads((self.model/'config.json').read_text())
+        config['text_config'].update(hidden_size=2560,dtype='bfloat16')
+        config['tie_word_embeddings']=True
+        (self.model/'config.json').write_text(json.dumps(config))
+        self.manifest['files']['config.json']={'bytes':(self.model/'config.json').stat().st_size,
+            'sha256':hashlib.sha256((self.model/'config.json').read_bytes()).hexdigest()}
+        self.write_manifest()
+        runtime=MlxRuntime(self.model,sys.executable,root=self.root,stderr_path=self.root/'stderr.log')
+        self.addCleanup(runtime.close)
+        self.assertEqual(runtime.answer_policy,'compact-v1')
+        self.assertEqual(runtime.metadata['dtype'],'bfloat16')
+        self.assertEqual(runtime.cache_identity['model_id'],profile['model_id'])
+
+    def test_structured_identity_is_forwarded_and_checked(self):
+        runtime=self.runtime()
+        schema={'type':'array','items':{'enum':['a','b']},'minItems':1,'maxItems':3}
+        prompt=self.prompt()|{'decoding_schema':schema,'constraint_kind':'literal'}
+        result=runtime.generate(prompt)
+        self.assertEqual(result['constraint']['original_schema_sha256'],_digest(schema))
+        self.assertTrue(result['constraint_stats']['eos_accepted'])
+        request=json.loads((self.model/'request.json').read_text())
+        self.assertEqual(request['decoding_schema'],schema)
+        self.assertEqual(request['constraint_kind'],'literal')
+
+    def test_schema_budgets_and_pairing_rejected_before_ipc(self):
+        runtime=self.runtime()
+        for change in ({'constraint_kind':'literal'}, {'decoding_schema':{'const':'x'}},
+            {'decoding_schema':{'const':'x'*32769},'constraint_kind':'literal'},
+            {'decoding_schema':{'enum':['a']*513},'constraint_kind':'literal'},
+            {'decoding_schema':{},'constraint_kind':'unknown'}):
+            with self.subTest(change=list(change)),self.assertRaises(ValueError):
+                runtime.generate(self.prompt()|change)
+        self.assertFalse((self.model/'request.json').exists())
+
+    def test_structured_result_mismatch_closes_worker(self):
+        for update in ({'constraint':None},{'constraint_stats':None},
+            {'runtime_identity':{}},{'tokenizer_backend_sha256':'changed'}):
+            self.mode({'result_override':update})
+            runtime=self.runtime()
+            with self.subTest(update=update),self.assertRaises(RuntimeError):
+                runtime.generate(self.prompt()|{'decoding_schema':{'const':'x'},'constraint_kind':'literal'})
+            self.assertIsNotNone(runtime._process.poll())
     def test_worker_isolated_mode_excludes_sibling_native_package_shadow(self):
         # A script-directory import path would execute this instead of native mlx.
         (self.root / "mlx.py").write_text("raise RuntimeError('sibling module was imported')")
@@ -309,6 +376,15 @@ class ManifestTests(MlxFixture):
 
 
 class NativeWorkerContractTests(unittest.TestCase):
+    def test_4b_dtype_guard_preserves_bfloat16_remainder_and_float32_A_log(self):
+        bf16,fp32,u32,fp16=object(),object(),object(),object()
+        mx=SimpleNamespace(bfloat16=bf16,float32=fp32,uint32=u32)
+        values=[('block.A_log',SimpleNamespace(dtype=fp32)),('norm.weight',SimpleNamespace(dtype=bf16)),
+            ('linear.weight',SimpleNamespace(dtype=u32))]
+        self.assertEqual(_parameter_dtypes(mx,values,'bfloat16'),['bfloat16','float32','uint32'])
+        with self.assertRaises(RuntimeError):
+            _parameter_dtypes(mx,[*values,('other',SimpleNamespace(dtype=fp16))],'bfloat16')
+
     def test_parameter_dtype_contract_checks_exception_and_packed_weights(self):
         parameters = [("layer.A_log", np.zeros(1, dtype=np.float32)),
             ("layer.scales", np.zeros(1, dtype=np.float16)),

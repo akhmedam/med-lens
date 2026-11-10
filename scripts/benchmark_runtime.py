@@ -17,7 +17,7 @@ os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 from medlens.generation.context import canonical, locate_quote
 from medlens.generation.request_contexts import verify_context_sources
 from medlens.inference.backends import add_runtime_arguments, runtime_factory
-from medlens.inference.qwen import REVISION
+from medlens.inference.profiles import load_answer_tokenizer
 from medlens.pipeline import run_question
 from medlens.reporting import render_report
 from medlens.retrieval.dense import DenseIndex
@@ -41,15 +41,8 @@ def code_identity():
         "pipeline.py", "reporting.py", "generation/answers.py", "generation/context.py",
         "generation/request_contexts.py", "generation/reviews.py", "generation/contracts.py",
         "generation/quotes.py", "inference/backends.py", "inference/qwen.py", "inference/metal.py",
-        "inference/mlx.py", "inference/mlx_worker.py", "retrieval/dense.py", "retrieval/embeddings.py")]]
+        "inference/mlx.py", "inference/mlx_worker.py", "inference/profiles.py", "inference/structured.py", "generation/compact.py", "retrieval/dense.py", "retrieval/embeddings.py")]]
     return {name: sha_bytes((ROOT / name).read_bytes()) for name in names}
-
-
-def load_answer_tokenizer():
-    from transformers import AutoTokenizer
-    return AutoTokenizer.from_pretrained(
-        ROOT / ".cache/huggingface/hub/models--Qwen--Qwen3.5-9B/snapshots" / REVISION,
-        local_files_only=True, token=False, trust_remote_code=False)
 
 
 def release_accelerator():
@@ -199,9 +192,9 @@ def replay_source(path, directory, args):
         measurements["source_validation_seconds"] = perf_counter() - tick
         report.update(question=source["question"], input_paths=source["input_paths"])
         tick = perf_counter()
-        tokenizer = load_answer_tokenizer()
+        tokenizer = load_answer_tokenizer(ROOT, args.answer_model)
         measurements["answer_tokenizer_load_seconds"] = perf_counter() - tick
-        base = runtime_factory(args.engine, root=ROOT, model_dir=args.mlx_model_dir,
+        base = runtime_factory(args.engine, model=args.answer_model, root=ROOT, model_dir=args.mlx_model_dir,
                                worker_python=args.mlx_python)
         def make_runtime():
             runtime = OwnedRuntime(base())

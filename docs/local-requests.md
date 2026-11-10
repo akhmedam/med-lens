@@ -7,8 +7,10 @@ requests for offline replay and controlled experiments.
 `scripts/ask.py` runs a fresh English question against one verified local
 collection. It saves a human-readable `report.html` and a full `run.json` in a
 new directory. No pilot relevance labels or saved rankings enter this path.
-The [accepted primary workflow](adr/0003-primary-pipeline.md) uses Dense followed
-by Qwen9B generation: pass `--generate` and omit `--rerank`.
+The primary workflow uses Dense followed by native Qwen3.5-4B generation and
+same-model support review: pass `--generate` and omit `--rerank`. The
+[development-default decision](adr/0005-qwen4b-development-default.md) supersedes
+the earlier 9B default while preserving the retrieval/source architecture.
 
 ## Run
 
@@ -28,7 +30,10 @@ remains a required part of the primary product workflow.
 `--generate` enables experimental answer drafts; `--rerank` enables optional
 Qwen reranking of the dense results. These flags work independently. `--top-k`
 accepts one to ten articles and defaults to ten. `--device cpu` changes BGE only;
-Qwen generation and reranking require the recorded MPS runtime.
+Qwen generation and reranking require Apple GPU execution. The default is the
+[isolated native MLX 4B profile](native-mlx.md). Pass `--answer-model 9b` for native
+9B or `--answer-model 9b --engine transformers` for the original MPS comparison.
+Preparation of the default profile does not require 9B weights.
 
 Search covers only the supplied dataset. The frozen pilot's topic collections
 each contain at most thirty papers, selected by earlier PubMed queries. A new
@@ -48,12 +53,16 @@ outcome-section preference was developed for treatment-efficacy questions.
    permutations preserve the dense order. Repack evidence when the order changes.
 4. If requested, use that same instance to generate and review a cited draft.
    Empty contexts abstain without a model call. Otherwise the generator and
-   strict source/semantic gates remain active with the v6 string-ID contract.
+   strict source/semantic gates remain active. The default compact policy uses
+   `cited-answer-v7` and six named `claim-support-v4` review fields with
+   `axes-first-v1`. Logical review consistency and exact citations do not establish
+   factual support. Explicit 9B comparisons retain the legacy v6 policy.
 
 The default mode loads BGE and the cached Qwen tokenizer, but no Qwen weights.
-Retrieval/tokenizer-only operation can run with `HF_HUB_OFFLINE=1`. With Qwen,
-the normal Metal-kernel publisher/version check may need network access even
-though model weights load from the local cache.
+Retrieval/tokenizer-only operation can run with `HF_HUB_OFFLINE=1`. Native MLX
+uses the prepared local artifact. The explicit Transformers comparison may need
+network access for its Metal-kernel publisher/version check even though its
+model weights load from the local cache.
 
 Every completed stage checkpoints both files using atomic replacement. A run
 owns a new directory and cannot overwrite an existing request. If model loading
@@ -77,7 +86,10 @@ Search results, selected excerpts and model claims have separate sections.
 Visible generated claims are labeled research drafts requiring independent
 review. A format failure suppresses the answer while keeping the search useful.
 
-## Validation
+## Historical 9B validation
+
+The observations below predate the 4B default and use the original 9B runtime.
+Current 4B integration validation is [recorded separately](experiments/qwen4b-default-integration.json).
 
 The public [integration record](experiments/local-requests.json) contains timings,
 artifact identities and source checks, without article text or raw model output.
@@ -115,7 +127,7 @@ A license-gated PMC full-text experiment is documented in [pmc-fulltext.md](pmc-
 Abstract retrieval remains the primary workflow until full-text relevance and
 answer support receive independent assessment. A served API also remains open work.
 
-## Air recovery
+## Historical 9B Air recovery
 
 The [recovery guide](recovery-without-bundle.md) prepares public pinned assets and
 a separately versioned corpus without the lost archive. On the 24 GiB Air, the
@@ -135,8 +147,11 @@ The separate ten-question recovered baseline yielded nine visible drafts and
 one output-limit failure; both controls abstained. These are single developmental
 runs, not an independent answer-quality evaluation.
 
-The primary CLI retains baseline review v4. [Day 21 measurements](day21-semantic-reliability.md)
-found material support errors in both v4 and an experimental seven-axis v5
-reviewer; v5 regressed on controls and is available only through explicit research
-selection in `generate_answers.py` or `generate_answer`. Neither provides independent
-clinical validation.
+The 9B comparison retains baseline review v4. [Historical semantic-review measurements](day21-semantic-reliability.md)
+found material support errors in both that v4 prompt and an experimental seven-axis
+v5 reviewer; v5 regressed on controls and remains an explicit legacy research
+selection in `generate_answers.py` or `generate_answer`. The default 4B uses the
+named axes-first v4 prompt; it rejects an explicit v5 request. The user's separate
+[manual assessment](qwen4b-manual-human-assessment.md) found that both named model
+reviewers failed the zero-known-bad-acceptance gate. None of these reviewers
+provides independent clinical validation.

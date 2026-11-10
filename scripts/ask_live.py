@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault('HF_HOME', str(ROOT/'.cache/huggingface'))
 os.environ['HF_HUB_DISABLE_IMPLICIT_TOKEN'] = '1'
 
-from medlens.inference.qwen import REVISION
+from medlens.inference.profiles import load_answer_tokenizer
 from medlens.inference.backends import add_runtime_arguments, runtime_factory
 from medlens.live import local_encoder_policy, run_live_question
 from medlens.pubmed_query import plan_query
@@ -29,7 +29,7 @@ def main(argv=None):
     add_runtime_arguments(parser)
     args = parser.parse_args(argv)
     try:
-        make_runtime = runtime_factory(args.engine, root=ROOT, model_dir=args.mlx_model_dir,
+        make_runtime = runtime_factory(args.engine, model=args.answer_model, root=ROOT, model_dir=args.mlx_model_dir,
                                        worker_python=args.mlx_python)
     except ValueError as exc:parser.error(str(exc))
     try:
@@ -42,10 +42,7 @@ def main(argv=None):
         import torch
         if torch.backends.mps.is_available():torch.mps.empty_cache()
     def answer_tokenizer():
-        from transformers import AutoTokenizer
-        return AutoTokenizer.from_pretrained(
-            ROOT/'.cache/huggingface/hub/models--Qwen--Qwen3.5-9B/snapshots'/REVISION,
-            local_files_only=True, trust_remote_code=False)
+        return load_answer_tokenizer(ROOT, args.answer_model)
     last = None
     def progress(stage, status):
         nonlocal last

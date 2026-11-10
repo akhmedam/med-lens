@@ -4,6 +4,10 @@ Status: accepted for the development runtime, subject to independent answer
 quality validation. The user requested latency optimization and authorized
 architecture/runtime/model experiments on 2026-11-10.
 
+The 9B model/default choice below is superseded by
+[ADR 0005](0005-qwen4b-development-default.md). The isolated native runtime
+architecture remains selected; model-specific measurements here are historical.
+
 ## Problem and decision
 
 Live PubMed acquisition costs a few seconds; Qwen load/quantization and two model

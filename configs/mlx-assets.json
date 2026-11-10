@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "models": {
+    "4b": {
+      "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+      "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+      "directory": ".cache/models/qwen3.5-4b-mlx-4bit-g64",
+      "source_directory": ".cache/models/qwen3.5-4b-community-mlx-4bit",
+      "files": {
+        "config.json": {
+          "bytes": 3366,
+          "sha256": "f3efc81b2ea8d96a45301037d3ccccbcccdef44a961845c87f286aaddbc6eaaa"
+        },
+        "model.safetensors": {
+          "bytes": 3034300695,
+          "sha256": "5fb9acd0246866381cf8c5c354c6db1019f6498eec4ccb4f5edcc71ffeacb2db"
+        }
+      },
+      "dtype": "bfloat16",
+      "quantization": {
+        "method": "mlx-affine",
+        "bits": 4,
+        "group_size": 64,
+        "coverage": "all-linear-and-embedding"
+      },
+      "tie_word_embeddings": true,
+      "upstream_model_id": "Qwen/Qwen3.5-4B",
+      "upstream_revision": null,
+      "official_source_revision_verified": false,
+      "tokenizer": {
+        "model_id": "Qwen/Qwen3.5-4B",
+        "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+        "directory": ".cache/tokenizers/qwen3.5-4b",
+        "files": {
+          "chat_template.jinja": {
+            "bytes": 7756,
+            "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+          },
+          "tokenizer.json": {
+            "bytes": 12807982,
+            "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42"
+          },
+          "tokenizer_config.json": {
+            "bytes": 16710,
+            "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8"
+          }
+        }
+      }
+    },
+    "9b": {
+      "model_id": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "directory": ".cache/models/qwen3.5-9b-mlx-linear-4bit-g64",
+      "preparation": "convert-pinned-official-source",
+      "source_manifest": "configs/model-assets.json",
+      "source_key": "qwen",
+      "dtype": "float16",
+      "quantization": {
+        "method": "mlx-affine",
+        "bits": 4,
+        "group_size": 64,
+        "coverage": "linear-only-except-lm-head"
+      },
+      "tie_word_embeddings": false,
+      "tokenizer": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "directory": ".cache/huggingface/hub/models--Qwen--Qwen3.5-9B/snapshots/c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "files": {
+          "chat_template.jinja": {
+            "bytes": 7756,
+            "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+          },
+          "tokenizer.json": {
+            "bytes": 12807982,
+            "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42"
+          },
+          "tokenizer_config.json": {
+            "bytes": 16710,
+            "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8"
+          }
+        }
+      }
+    }
+  }
+}
