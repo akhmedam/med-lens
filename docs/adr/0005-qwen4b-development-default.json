@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "decision_status": "accepted-development-default",
+  "accepted_on": "2026-11-10",
+  "decision_by": "user",
+  "supersedes_model_selection": [
+    "docs/adr/0003-primary-pipeline.json",
+    "docs/adr/0004-native-mlx-runtime.md"
+  ],
+  "selected_retrieval": "dense",
+  "generation_required_for_primary_workflow": true,
+  "primary_cli": "scripts/ask_live.py",
+  "offline_cli": "scripts/ask.py",
+  "default_answer_model": "4b",
+  "default_engine": "mlx",
+  "generator_model": "mlx-community/Qwen3.5-4B-MLX-4bit",
+  "generator_revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+  "upstream_model_claimed": "Qwen/Qwen3.5-4B",
+  "upstream_revision": null,
+  "official_weight_source_revision_verified": false,
+  "tokenizer_model": "Qwen/Qwen3.5-4B",
+  "tokenizer_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+  "quantization": {
+    "method": "mlx-affine",
+    "bits": 4,
+    "group_size": 64,
+    "coverage": "all-linear-and-embedding"
+  },
+  "floating_dtype": "bfloat16",
+  "fp32_exceptions": [
+    "A_log"
+  ],
+  "tie_word_embeddings": true,
+  "answer_policy": "compact-v1",
+  "prompt_version": "cited-answer-v7",
+  "review_version": "claim-support-v4",
+  "review_prompt_version": "axes-first-v1",
+  "review_representation": "six explicit named fields; no positional arrays",
+  "support_review": "same model/instance; heuristic, not independent verification",
+  "clinical_or_general_equivalence_established": false,
+  "autonomous_answer_approval": false,
+  "display_role": "research draft requiring human review",
+  "comparison_profiles": {
+    "native9b": "--answer-model 9b",
+    "transformers9b": "--answer-model 9b --engine transformers"
+  },
+  "automatic_fallback": false,
+  "manual_evidence": {
+    "annotation_origin": "manual-human-user-filled and explicitly finalized",
+    "assistant_generated_semantic_labels": false,
+    "independent_questions": 2,
+    "source_contexts": 6,
+    "unique_claims": 30,
+    "claim_occurrences": 32,
+    "annotators": 1,
+    "human_eligible": 24,
+    "human_comparison_mismatched": 5,
+    "human_uncertain": 1,
+    "reviewer4b": {
+      "retained_eligible": 16,
+      "accepted_comparison_mismatched": 3,
+      "accepted_uncertain": 1,
+      "zero_known_bad_gate": "fail"
+    },
+    "reviewer9b": {
+      "retained_eligible": 15,
+      "accepted_comparison_mismatched": 4,
+      "accepted_uncertain": 0,
+      "zero_known_bad_gate": "fail"
+    },
+    "answers4b": {
+      "usable": 5,
+      "complete": 2,
+      "denominator": 6,
+      "all_context_usable_gate": "fail"
+    },
+    "answers9b": {
+      "usable": 4,
+      "complete": 0,
+      "denominator": 6
+    },
+    "quality_generalization_permitted": false,
+    "relevance_qrels_used": false,
+    "heldout_questions_used": false,
+    "provenance": {
+      "local_assessment_artifact_id": "e0f27991e3d2a5123e630ec5545e12398b983c18e6666989f1179ce977445f1d",
+      "local_assessment_file_sha256": "3376afd50624236a395fa892a78abccecd781ceabb31b6b2d104fb270fe51755",
+      "blind_claim_package_id": "06af0458aee29a32b95d802093459c272f29a6809c0b859c526b66c9a8cdc1ec",
+      "blind_answer_package_id": "9745781f3fe4adf4ae3d8ef889930d27869d4d2ecf119a8ed18465ea3eb7b124",
+      "manual_answer_export_sha256": "e5263b3ba8411cf9cad6f3f79c57577eb2eec5ff1112eb751cd4940ffee56374",
+      "raw_exports_versioned": true,
+      "tracked_path": "data/evaluation/qwen4b-manual-human-v1",
+      "versioned_export_scope": "Exact finalized human labels, bindings and rationale; no source/article or model text"
+    },
+    "assessment_document": "docs/qwen4b-manual-human-assessment.md",
+    "assessment_record": "docs/experiments/qwen4b-manual-human-assessment.json"
+  },
+  "historical_timing_scope": {
+    "paired_reviewer_median_9b_over_4b": 2.2671560642383652,
+    "input_sets": 11,
+    "includes": "native reviewer generation and per-call cleanup",
+    "excludes": [
+      "draft generation",
+      "model startup",
+      "grammar compilation",
+      "PubMed",
+      "BGE"
+    ],
+    "end_to_end_speed_guarantee": false
+  },
+  "historical_experiment_entry_points_unchanged": [
+    "scripts/generate_answers.py"
+  ],
+  "integration_validation_record": "docs/experiments/qwen4b-default-integration.json",
+  "integration_validation_scope": "Pipeline completion, fresh source/citation binding and runtime closure; no paired speed estimate or new human quality evaluation"
+}

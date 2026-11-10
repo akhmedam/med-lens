@@ -15,7 +15,8 @@ from medlens.reranking.listwise import apply_response, build_prompt
 
 
 def tokenizer_identity(tokenizer):
-    return {"model_id": MODEL_ID, "revision": REVISION,
+    source = getattr(tokenizer, "_medlens_tokenizer_source", {})
+    return {"model_id": source.get("model_id", MODEL_ID), "revision": source.get("revision", REVISION),
         "backend_sha256": hashlib.sha256(tokenizer.backend_tokenizer.to_str().encode()).hexdigest(),
         "chat_template_sha256": hashlib.sha256(
             str(getattr(tokenizer, "chat_template", None)).encode()).hexdigest(),
@@ -36,7 +37,8 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
         for name in ("pipeline.py", "reporting.py", "corpus.py", "pmc.py", "dates.py", "live.py", "pubmed_query.py", "retrieval/dense.py", "retrieval/embeddings.py",
             "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "inference/backends.py",
-            "inference/mlx.py", "inference/mlx_worker.py", "generation/context.py",
+            "inference/mlx.py", "inference/mlx_worker.py", "inference/profiles.py", "inference/structured.py",
+            "generation/compact.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],
@@ -135,7 +137,8 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         save("answer")
         if generate:
             # An empty context can abstain without constructing a language model.
-            instance = model() if report["context"]["sources"] else SimpleNamespace(tokenizer=tokenizer)
+            instance = model() if report["context"]["sources"] else SimpleNamespace(tokenizer=tokenizer,
+                answer_policy=getattr(runtime_factory, "identity", {}).get("answer_policy", "legacy-v6"))
             report["answer"] = generate_answer(question, report["context"], instance)
         else:
             report["answer"] = {"status": "not_requested", "claims": [], "reason": "generation-disabled"}

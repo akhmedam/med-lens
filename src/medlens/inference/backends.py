@@ -3,16 +3,19 @@
 import hashlib
 from pathlib import Path
 
-from .qwen import MODEL_ID, REVISION, STOP_TOKEN_IDS
+from .qwen import STOP_TOKEN_IDS
+from .profiles import DEFAULT_MODEL, get_profile
 
 
-def runtime_factory(engine, *, root=None, model_dir=None, worker_python=None):
+def runtime_factory(engine, *, model=DEFAULT_MODEL, root=None, model_dir=None, worker_python=None):
     root = Path(root) if root else Path(__file__).resolve().parents[3]
-    policy = {"engine": engine, "model_id": MODEL_ID, "revision": REVISION,
+    profile = get_profile(model)
+    policy = {"engine": engine, "model_id": profile["model_id"], "revision": profile["revision"],
+              "answer_model": model, "answer_policy": profile["answer_policy"],
               "eos_token_ids": list(STOP_TOKEN_IDS), "do_sample": False}
     if engine == "mlx":
         from .mlx import MlxRuntime
-        model_dir = Path(model_dir) if model_dir else root / ".cache/models/qwen3.5-9b-mlx-linear-4bit-g64"
+        model_dir = Path(model_dir) if model_dir else root / profile["directory"]
         # This identity lookup does not require model availability. Source retrieval
         # and empty/search-only requests must still work before MLX is prepared.
         try:
@@ -25,8 +28,10 @@ def runtime_factory(engine, *, root=None, model_dir=None, worker_python=None):
             current = hashlib.sha256((model_dir / "medlens-source.json").read_bytes()).hexdigest()
             if current != policy["artifact_manifest_sha256"]:
                 raise ValueError("MLX artifact manifest changed during request")
-            return MlxRuntime(root=root, model_dir=model_dir, worker_python=worker_python)
+            return MlxRuntime(model=model, root=root, model_dir=model_dir, worker_python=worker_python)
     elif engine == "transformers":
+        if model != "9b":
+            raise ValueError("Transformers comparison requires --answer-model 9b")
         if model_dir is not None or worker_python is not None:
             raise ValueError("MLX paths require --engine mlx")
         from .qwen import QwenRuntime
@@ -40,9 +45,11 @@ def runtime_factory(engine, *, root=None, model_dir=None, worker_python=None):
 
 
 def add_runtime_arguments(parser):
+    parser.add_argument("--answer-model", choices=("4b", "9b"), default=DEFAULT_MODEL,
+        help="Answer model profile (default: 4b; 9b is an explicit comparison)")
     parser.add_argument("--engine", choices=("mlx", "transformers"), default="mlx",
         help="Qwen backend; MLX requires the separately prepared native assets")
     parser.add_argument("--mlx-model-dir", type=Path,
-        help="Prepared MLX artifact directory (default: .cache/models/qwen3.5-9b-mlx-linear-4bit-g64)")
+        help="Prepared MLX artifact directory (default: selected answer-model profile)")
     parser.add_argument("--mlx-python", type=Path,
         help="Isolated MLX Python (default: .cache/venvs/mlx/bin/python)")

@@ -191,6 +191,16 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(len({first["request_id"], second["request_id"], third["request_id"]}), 3)
         self.assertNotEqual(second["tokenizer"], third["tokenizer"])
 
+
+    def test_tokenizer_identity_uses_verified_profile_source_even_for_identical_vocabularies(self):
+        from medlens.pipeline import tokenizer_identity
+        first = Tokenizer();second = Tokenizer()
+        first._medlens_tokenizer_source = {'model_id':'Qwen/Qwen3.5-4B','revision':'official4b'}
+        second._medlens_tokenizer_source = {'model_id':'Qwen/Qwen3.5-9B','revision':'official9b'}
+        self.assertEqual(tokenizer_identity(first)['backend_sha256'],tokenizer_identity(second)['backend_sha256'])
+        self.assertEqual(tokenizer_identity(first)['model_id'],'Qwen/Qwen3.5-4B')
+        self.assertNotEqual(tokenizer_identity(first),tokenizer_identity(second))
+
     def test_invalid_question_or_limit_rejected_before_factory(self):
         def forbidden():raise AssertionError('Factory must not run')
         for question,k in (('',10),('  ',10),('Question',0),('Question',11),('Question',True)):
@@ -227,3 +237,25 @@ class AskCLITests(unittest.TestCase):
             with self.assertRaises(SystemExit) as error:cli.main(argv)
             self.assertEqual(error.exception.code,2)
             self.assertEqual((output/'run.json').read_bytes(),before)
+
+
+class LiveModelPolicyTests(unittest.TestCase):
+    def test_live_runtime_wrapper_keeps_compact_answer_policy_and_constraints(self):
+        # The live adapter wraps the backend for memory sampling; policy must
+        # reach generate_answer exactly as it does in the direct local pipeline.
+        import test_live
+        fixture = test_live.LiveTests('test_fresh_query_generates_and_reviews_exact_citation_without_reranker')
+        fixture.setUp()
+        try:
+            fixture.runtime.answer_policy = 'compact-v1'
+            fixture.runtime.cache_identity = {'model_profile':'4b','artifact_id':'fixture'}
+            fixture.runtime_factory.identity = {'answer_model':'4b','answer_policy':'compact-v1'}
+            result = fixture.run_request('compact-live', [test_live.search_json(['1'],1),test_live.xml()])
+            self.assertEqual(result['status'],'complete')
+            self.assertEqual(result['answer']['answer_policy'],'compact-v1')
+            self.assertEqual(result['answer']['prompt_version'],'cited-answer-v7')
+            self.assertEqual([p['constraint_kind'] for p, _ in fixture.runtime.calls], ['draft','literal'])
+            self.assertTrue(all('decoding_schema' in p for p, _ in fixture.runtime.calls))
+            fixture.runtime.close.assert_called_once_with()
+        finally:
+            fixture.doCleanups()

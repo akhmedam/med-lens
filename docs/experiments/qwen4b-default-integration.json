@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "scope": "Two sequential fresh live PubMed requests, same in-scope development question, 100 candidates. Runtime, binding and pipeline status only; no new human quality evaluation.",
+  "answer_model": "4b",
+  "query_sha256": "6f51ab1dd9a55da9a838a7f809567f4e59c10e61ba450fab991de9347be9be1b",
+  "code_sha256": {
+    "scripts/benchmark_runtime.py": "1c1ab3aa2a8fc4f5680dbb001198fa1e158cc91a922432cdbce3f3991e5f439e",
+    "src/medlens/pipeline.py": "32db5e276de29bf0dab3d87caaf3dc1363b134408b6636d885715749cf2e1bad",
+    "src/medlens/reporting.py": "71a310e46b9a6497aacb9db5b3d5af5c5fe272295ec7949f19017a9c2113940d",
+    "src/medlens/generation/answers.py": "6a876217763ab32f07852bfcb950d4b4015299bd59016367ac4a7f85be50e58f",
+    "src/medlens/generation/context.py": "532fd1128d1a6518e37a32784808377fb492e23a064916bb25dc6ae7365a4301",
+    "src/medlens/generation/request_contexts.py": "a6282491623182d7884553881293276c2803620bf24f897fbd167c883e2167d5",
+    "src/medlens/generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412",
+    "src/medlens/generation/contracts.py": "ca556077259cc63d79ab3f1f689211d72cff41b5525557af3e680cd48bcdfcd3",
+    "src/medlens/generation/quotes.py": "ba45e527677c8499b217f62ac63dfc5c782ef4d2ebf461ce48b1f19c8ab302a9",
+    "src/medlens/inference/backends.py": "b9cba1dcb078a0ea6c1df964b7a26f801150f34d5c330bac42fecdedda491dcb",
+    "src/medlens/inference/qwen.py": "26634ceb4aec4e3a01648452a7380e26874325dc585682878b5b332069060d98",
+    "src/medlens/inference/metal.py": "5fcad25a5128a6fae8c61e9632f67f2b9ec0e4ca333c2e4988ad88bb47f32567",
+    "src/medlens/inference/mlx.py": "f1840f5c052378c9a32af316ca8cda9fe98b482513556e6eff70df69e3542d2f",
+    "src/medlens/inference/mlx_worker.py": "7cc4c0fb02cc6ec1608339bd2b755e66f7ab0998ce2e00a1ba0d80f70754b2e6",
+    "src/medlens/inference/profiles.py": "8149ea2a318b7305c2ce29155dc85f26a5c0a06b4258bbc75d50cb663ee0c174",
+    "src/medlens/inference/structured.py": "a87c763aab4a1b47034d00ff157cc840f23d07af7670d1446d3104711f55b051",
+    "src/medlens/generation/compact.py": "82b8ab2288be36b57506bc9c84a308c3e117bcbcfe4f86336593b67aa4274573",
+    "src/medlens/retrieval/dense.py": "257d97259a76a6d8c4eae43eada7291f5653ca7a9702863729e8afcd0d43b976",
+    "src/medlens/retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e",
+    "src/medlens/live.py": "9c78d8650ff4569841be4c154264357b6d382709e3edcb1589458029abacaf1e"
+  },
+  "runs": [
+    {
+      "status": "complete",
+      "runtime_load_count": 1,
+      "runtime_closed": true,
+      "timings": {
+        "query_encoder_constructor_seconds": 0.46409891700022854,
+        "query_encode_seconds": 0.029030958015937358,
+        "dense_search_seconds": 0.00030104198958724737,
+        "retrieval_seconds": 0.6609156670165248,
+        "context_seconds": 0.013412333995802328,
+        "reranking_seconds": 0.0007725000032223761,
+        "answer_seconds": 44.11498616600875,
+        "pipeline_seconds": 45.02487866600859
+      },
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 1.8848028329957742,
+        "pubmed_download_seconds": 4.586210250010481,
+        "parsing_seconds": 0.07957420800812542,
+        "windowing_seconds": 0.07098808299633674,
+        "passage_embeddings_seconds": 15.646857250016183,
+        "index_validation_seconds": 0.018620290997205302,
+        "answer_tokenizer_load_seconds": 0.2933910840074532
+      },
+      "runtime_policy": {
+        "engine": "mlx",
+        "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+        "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+        "answer_model": "4b",
+        "answer_policy": "compact-v1",
+        "eos_token_ids": [
+          248044,
+          248046
+        ],
+        "do_sample": false,
+        "artifact_manifest_sha256": "39306ac657515161ece2586a65850a8e05f15924fca79fb8acf953c3ed064921"
+      },
+      "runtime": {
+        "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+        "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+        "model_profile": "4b",
+        "answer_policy": "compact-v1",
+        "runtime": "mlx-lm-subprocess",
+        "device": "metal",
+        "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+        "quantization": {
+          "bits": 4,
+          "coverage": "all-linear-and-embedding",
+          "group_size": 64,
+          "method": "mlx-affine"
+        },
+        "dtype": "bfloat16",
+        "fp32_exceptions": [
+          "A_log"
+        ],
+        "parameter_dtypes": [
+          "bfloat16",
+          "float32",
+          "uint32"
+        ],
+        "parameter_dtype_policy": "bfloat16-except-A_log-float32-packed-uint32",
+        "packages": {
+          "mlx": "0.32.2",
+          "mlx-lm": "0.32.2",
+          "mlx-metal": "0.32.2",
+          "outlines-core": "0.2.14"
+        },
+        "load_seconds": 2.3679006659949664,
+        "worker_startup_seconds": 2.4472229999955744,
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false,
+          "input_token_limit": 12000,
+          "eos_token_ids": [
+            248044,
+            248046
+          ],
+          "stop_policy": "source-eos-and-chat-end-union",
+          "include_terminal_eos_in_token_count": true
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "artifact_validation": "manifest-identity-all-file-sizes-config-sha256",
+        "tokenizer_backend_sha256": "ffb7a28b27dabcc333662fd3e0b0005d9e79a1c22e31453ab5a3017fbd5f25c0",
+        "structured_decoding": {
+          "library": "outlines-core",
+          "version": "0.2.14",
+          "compiled_index_cache_maximum": 8,
+          "fresh_guide_per_call": true,
+          "raw_and_post_mask_score_validation": true
+        },
+        "prompt_cache_reuse": false,
+        "kv_quantization": null,
+        "prefill_step_size": 2048,
+        "release_cache_after_generation": true,
+        "ttft_scope": "first-generate-step-yield-including-native-one-step-lookahead"
+      },
+      "cache_state": "cold",
+      "command_wall_seconds": 68.62170154199703,
+      "request_seconds": 68.03339879200212,
+      "snapshot_id": "9c134c76-eb27-4403-a660-7dfecd299a76",
+      "dataset_id": "691b5401d61c0ca9a697720d6f19b2f8c0d04158de6a1f83abe0b96a40f8ce8b",
+      "passage_cache": {
+        "window_rows": 279,
+        "unique_inputs": 279,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 279,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.018429625022690743,
+        "model_constructor_seconds": 0.8958043750026263,
+        "encode_seconds": 14.542673957999796,
+        "cache_write_seconds": 0.17704199999570847,
+        "sampled_max_mps_tensor_bytes": 460199936,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.006510207982501015
+      },
+      "integrity_checks": {
+        "window_spans_checked": 279,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 279,
+        "vector_bytes": 857088
+      },
+      "answer_status": "partial",
+      "claim_count": 3,
+      "prompt_version": "cited-answer-v7",
+      "review_version": "claim-support-v4",
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 19.06962479199865,
+          "new_tokens": 181,
+          "hit_output_limit": false,
+          "runtime_identity": {
+            "answer_policy": "compact-v1",
+            "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+            "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+            "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+          },
+          "constraint": {
+            "cache_hit": false,
+            "compile_seconds": 4.463899791997392,
+            "compiled_cache_maximum": 8,
+            "compiled_cache_size": 1,
+            "decode_relaxations": [
+              "maxLength",
+              "uniqueItems"
+            ],
+            "kind": "draft",
+            "lowered_schema_sha256": "a3e32dca8ac11954c660606b609fee6328a1aa098653158d260a01199255b191",
+            "object_property_order": "required-list",
+            "original_schema_sha256": "d4c96eaa57c5cfe53d89634985b4b70e26882fe37e628445149aca1bcea9aab2",
+            "regex_sha256": "19dd6c7621cd14529e883c06d8f6d1c6e083ad50abf34c00c127352a1ae09a5e",
+            "status_condition_lowering": "disjoint-oneOf-branches",
+            "strict_post_validation_required": true,
+            "whitespace_pattern": ""
+          }
+        },
+        {
+          "stage": "support-review",
+          "seconds": 12.270651291997638,
+          "new_tokens": 100,
+          "hit_output_limit": false,
+          "runtime_identity": {
+            "answer_policy": "compact-v1",
+            "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+            "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+            "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+          },
+          "constraint": {
+            "cache_hit": false,
+            "compile_seconds": 5.280224540998461,
+            "compiled_cache_maximum": 8,
+            "compiled_cache_size": 2,
+            "decode_relaxations": [],
+            "kind": "literal",
+            "lowered_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+            "object_property_order": "required-list",
+            "original_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+            "regex_sha256": "00901e5f08d84ca140999b98fdc484d56b3f4f41f01a0d1d516eb99799076c6a",
+            "strict_post_validation_required": true,
+            "whitespace_pattern": ""
+          }
+        }
+      ],
+      "run_sha256": "4a3ad5da9078e2c83385b328551407fb3f79a3285c85f6d13e213d4ecc164104"
+    },
+    {
+      "status": "complete",
+      "runtime_load_count": 1,
+      "runtime_closed": true,
+      "timings": {
+        "query_encoder_constructor_seconds": 0.4242133749939967,
+        "query_encode_seconds": 0.019997208000859246,
+        "dense_search_seconds": 0.0002952080103568733,
+        "retrieval_seconds": 0.5985406669788063,
+        "context_seconds": 0.011264166998444125,
+        "reranking_seconds": 0.0008491250046063215,
+        "answer_seconds": 62.33674112497829,
+        "pipeline_seconds": 63.42051866601105
+      },
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.289411666977685,
+        "pubmed_download_seconds": 7.878000374999829,
+        "parsing_seconds": 0.07906591601204127,
+        "windowing_seconds": 0.0700667499913834,
+        "passage_embeddings_seconds": 1.1908568750077393,
+        "index_validation_seconds": 0.018296249996637926,
+        "answer_tokenizer_load_seconds": 0.27344287501182407
+      },
+      "runtime_policy": {
+        "engine": "mlx",
+        "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+        "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+        "answer_model": "4b",
+        "answer_policy": "compact-v1",
+        "eos_token_ids": [
+          248044,
+          248046
+        ],
+        "do_sample": false,
+        "artifact_manifest_sha256": "39306ac657515161ece2586a65850a8e05f15924fca79fb8acf953c3ed064921"
+      },
+      "runtime": {
+        "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+        "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+        "model_profile": "4b",
+        "answer_policy": "compact-v1",
+        "runtime": "mlx-lm-subprocess",
+        "device": "metal",
+        "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+        "quantization": {
+          "bits": 4,
+          "coverage": "all-linear-and-embedding",
+          "group_size": 64,
+          "method": "mlx-affine"
+        },
+        "dtype": "bfloat16",
+        "fp32_exceptions": [
+          "A_log"
+        ],
+        "parameter_dtypes": [
+          "bfloat16",
+          "float32",
+          "uint32"
+        ],
+        "parameter_dtype_policy": "bfloat16-except-A_log-float32-packed-uint32",
+        "packages": {
+          "mlx": "0.32.2",
+          "mlx-lm": "0.32.2",
+          "mlx-metal": "0.32.2",
+          "outlines-core": "0.2.14"
+        },
+        "load_seconds": 1.7601680000079796,
+        "worker_startup_seconds": 1.812365999998292,
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false,
+          "input_token_limit": 12000,
+          "eos_token_ids": [
+            248044,
+            248046
+          ],
+          "stop_policy": "source-eos-and-chat-end-union",
+          "include_terminal_eos_in_token_count": true
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "artifact_validation": "manifest-identity-all-file-sizes-config-sha256",
+        "tokenizer_backend_sha256": "ffb7a28b27dabcc333662fd3e0b0005d9e79a1c22e31453ab5a3017fbd5f25c0",
+        "structured_decoding": {
+          "library": "outlines-core",
+          "version": "0.2.14",
+          "compiled_index_cache_maximum": 8,
+          "fresh_guide_per_call": true,
+          "raw_and_post_mask_score_validation": true
+        },
+        "prompt_cache_reuse": false,
+        "kv_quantization": null,
+        "prefill_step_size": 2048,
+        "release_cache_after_generation": true,
+        "ttft_scope": "first-generate-step-yield-including-native-one-step-lookahead"
+      },
+      "cache_state": "warm",
+      "command_wall_seconds": 76.66031041697715,
+      "request_seconds": 75.81629183300538,
+      "snapshot_id": "645ceb43-8353-416b-926b-f20bcd2e3b88",
+      "dataset_id": "e967e9ed879a8e28d33be0b1504de453b78aa99a5d929b279da113e950bcbb35",
+      "passage_cache": {
+        "window_rows": 276,
+        "unique_inputs": 276,
+        "cache_hit_inputs": 274,
+        "encoded_inputs": 2,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.0462811250181403,
+        "model_constructor_seconds": 0.775932417018339,
+        "encode_seconds": 0.35705258301459253,
+        "cache_write_seconds": 0.0018245420069433749,
+        "sampled_max_mps_tensor_bytes": 441055232,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.005830624984810129
+      },
+      "integrity_checks": {
+        "window_spans_checked": 276,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 276,
+        "vector_bytes": 847872
+      },
+      "answer_status": "partial",
+      "claim_count": 3,
+      "prompt_version": "cited-answer-v7",
+      "review_version": "claim-support-v4",
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 24.05458150000777,
+          "new_tokens": 181,
+          "hit_output_limit": false,
+          "runtime_identity": {
+            "answer_policy": "compact-v1",
+            "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+            "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+            "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+          },
+          "constraint": {
+            "cache_hit": false,
+            "compile_seconds": 4.641442457999801,
+            "compiled_cache_maximum": 8,
+            "compiled_cache_size": 1,
+            "decode_relaxations": [
+              "maxLength",
+              "uniqueItems"
+            ],
+            "kind": "draft",
+            "lowered_schema_sha256": "a3e32dca8ac11954c660606b609fee6328a1aa098653158d260a01199255b191",
+            "object_property_order": "required-list",
+            "original_schema_sha256": "d4c96eaa57c5cfe53d89634985b4b70e26882fe37e628445149aca1bcea9aab2",
+            "regex_sha256": "19dd6c7621cd14529e883c06d8f6d1c6e083ad50abf34c00c127352a1ae09a5e",
+            "status_condition_lowering": "disjoint-oneOf-branches",
+            "strict_post_validation_required": true,
+            "whitespace_pattern": ""
+          }
+        },
+        {
+          "stage": "support-review",
+          "seconds": 24.68509295900003,
+          "new_tokens": 100,
+          "hit_output_limit": false,
+          "runtime_identity": {
+            "answer_policy": "compact-v1",
+            "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+            "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+            "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+          },
+          "constraint": {
+            "cache_hit": false,
+            "compile_seconds": 6.5624267919920385,
+            "compiled_cache_maximum": 8,
+            "compiled_cache_size": 2,
+            "decode_relaxations": [],
+            "kind": "literal",
+            "lowered_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+            "object_property_order": "required-list",
+            "original_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+            "regex_sha256": "00901e5f08d84ca140999b98fdc484d56b3f4f41f01a0d1d516eb99799076c6a",
+            "strict_post_validation_required": true,
+            "whitespace_pattern": ""
+          }
+        }
+      ],
+      "run_sha256": "e5175bf30e1b11e71653bd90d7ff0d8c182170a030e15aeab5f124f4ad24dd1b"
+    }
+  ],
+  "fixed_source_smoke": {
+    "scope": "One frozen development source context; newly generated compact-v1 draft and review, no human quality labels.",
+    "source_run_sha256": "1925dccd1b61869d269bdf98f92488a42af8005e66ff624ec4d59e8dd54118c1",
+    "load_and_answer_wall_seconds": 37.23669995801174,
+    "answer_status": "answered",
+    "claim_count": 3,
+    "draft_seconds": 15.273268916993402,
+    "draft_tokens": 176,
+    "review_seconds": 9.955848082987359,
+    "review_tokens": 100,
+    "runtime_closed": true
+  },
+  "explicit_9b_compatibility_smoke": {
+    "scope": "Synthetic short unstructured generation only; not an answer-quality comparison.",
+    "answer_model": "9b",
+    "answer_policy": "legacy-v6",
+    "new_tokens": 2,
+    "hit_output_limit": false,
+    "runtime_closed": true
+  },
+  "validation": {
+    "main_unittest_count": 377,
+    "main_unittest_skipped": 7,
+    "main_unittest_skipped_reason": "outlines-core is isolated in native environment",
+    "native_structured_cpu_tests": 11,
+    "pip_check_main": "pass",
+    "pip_check_native": "pass",
+    "fresh_live_requests_complete": 2,
+    "source_integrity_audit": "pass",
+    "new_human_quality_evaluation": false
+  },
+  "limits": [
+    "Only two sequential live observations on one development question; no latency distribution or causal model-speed estimate.",
+    "PubMed was searched and downloaded anew each time. The returned snapshot and selected evidence changed; the reused cache had274 hits and2 newly encoded inputs.",
+    "The reused-cache request was slower overall. Network, generated evidence, native generation and machine state were not held fixed.",
+    "Automatic answer status and exact quote binding do not establish factual support, comparator alignment or human usability.",
+    "Native compile time is included in worker wall, not the nested generation seconds. Parent/child memory counters overlap."
+  ]
+}

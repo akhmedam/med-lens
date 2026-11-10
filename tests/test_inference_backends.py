@@ -13,6 +13,8 @@ class BackendTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             make = runtime_factory("mlx", root=directory)
             self.assertEqual(make.identity["engine"], "mlx")
+            self.assertEqual(make.identity["answer_model"], "4b")
+            self.assertEqual(make.identity["answer_policy"], "compact-v1")
             self.assertIsNone(make.identity["artifact_manifest_sha256"])
             with self.assertRaises(FileNotFoundError):make()
 
@@ -29,12 +31,35 @@ class BackendTests(unittest.TestCase):
             path.write_text("changed")
             with self.assertRaisesRegex(ValueError, "manifest changed"):make()
 
+
+    def test_default4b_and_explicit9b_have_distinct_assets_and_constructor_profiles(self):
+        from medlens.inference.profiles import get_profile
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {}
+            for model in ('4b','9b'):
+                paths[model] = root/get_profile(model)['directory']
+                paths[model].mkdir(parents=True)
+                (paths[model]/'medlens-source.json').write_text(model)
+            with patch('medlens.inference.mlx.MlxRuntime',side_effect=lambda **kwargs:kwargs):
+                default = runtime_factory('mlx',root=root)
+                comparison = runtime_factory('mlx',model='9b',root=root)
+                self.assertEqual(default()['model'],'4b')
+                self.assertEqual(default()['model_dir'],paths['4b'])
+                self.assertEqual(comparison()['model'],'9b')
+                self.assertEqual(comparison()['model_dir'],paths['9b'])
+                self.assertNotEqual(default.identity['model_id'],comparison.identity['model_id'])
+                self.assertNotEqual(default.identity['artifact_manifest_sha256'],comparison.identity['artifact_manifest_sha256'])
+                (paths['4b']/'medlens-source.json').write_text('changed')
+                with self.assertRaisesRegex(ValueError,'manifest changed'):default()
+                self.assertEqual(comparison()['model'],'9b')
+
     def test_fallback_is_always_explicit_and_rejects_native_paths(self):
         with patch("medlens.inference.qwen.QwenRuntime", return_value="torch") as runtime:
-            make = runtime_factory("transformers")
+            make = runtime_factory("transformers", model="9b")
             self.assertEqual(make(), "torch")
             self.assertEqual(make.identity["eos_token_ids"], [248044, 248046])
             runtime.assert_called_once()
-        for engine, options in [("unknown", {}), ("transformers", {"model_dir": "unused"}),
+        for engine, options in [("unknown", {}), ("transformers", {}), ("mlx", {"model": "unknown"}), ("transformers", {"model_dir": "unused"}),
                                  ("transformers", {"worker_python": "unused"})]:
             with self.assertRaises(ValueError):runtime_factory(engine, **options)

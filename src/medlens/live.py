@@ -99,6 +99,8 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
         class Runtime:
             tokenizer = instance.tokenizer
             metadata = instance.metadata
+            def __getattr__(self, name):
+                return getattr(instance, name)
             def close(self):
                 close = getattr(instance, "close", None)
                 if callable(close):close()

@@ -28,3 +28,13 @@ results/
 !data/evaluation/pilot-v1/human-expanded-rrf-001.jsonl
 
 transfer/
+
+# Immutable manual-human Qwen4B assessment; all other evaluation payloads stay ignored.
+!data/evaluation/qwen4b-manual-human-v1/
+data/evaluation/qwen4b-manual-human-v1/*
+!data/evaluation/qwen4b-manual-human-v1/human-manual-claims-original.json
+!data/evaluation/qwen4b-manual-human-v1/human-manual-answers-original.json
+!data/evaluation/qwen4b-manual-human-v1/claim-audit.json
+!data/evaluation/qwen4b-manual-human-v1/answer-audit.json
+!data/evaluation/qwen4b-manual-human-v1/verify.py
+!data/evaluation/qwen4b-manual-human-v1/provenance.json

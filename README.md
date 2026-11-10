@@ -11,7 +11,7 @@ system.
 
 PubMed ingestion, verified snapshot replay, and structured XML parsing work.
 Search supports BM25, exact dense retrieval, and RRF. The recorded historical pilot uses
-`pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Local Qwen3.5-9B can
+`pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Historical Qwen3.5-9B experiments
 rerank frozen top-10 lists through
 Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
 for metrics and annotation provenance. Saved evidence contexts can feed
@@ -19,21 +19,34 @@ experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
 A [live request](docs/live-search.md) now searches PubMed and downloads current
 abstracts for each question, reuses unchanged passage vectors, and runs Dense,
-source selection and Qwen generation/review. [Native MLX inference](docs/native-mlx.md)
-uses an isolated runtime on Apple Silicon; the former Transformers/Metal path
-remains explicitly selectable. Local-collection replay remains available.
+source selection and Qwen generation/review. The user-selected development default
+is **Qwen3.5-4B in native MLX**, with short draft instructions and named axes-first
+support review. [Native inference](docs/native-mlx.md) runs in an isolated Apple
+Silicon environment. `--answer-model 9b` selects the explicit comparison; the
+Transformers/Metal comparison also requires `--engine transformers`.
+Local-collection replay remains available.
 The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
 (208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
 remains provisional because two pairs are unjudged.
 The [M3 Pro cost comparison](docs/retrieval-cost.md) covers 10/20/30-article pools
 and MedCPT depths: cached Dense is fastest; direct MedCPT avoids passage-embedding
-construction for fresh windows. The user selected **Dense → evidence context →
-Qwen3.5-9B generation** as the [primary pipeline](docs/adr/0003-primary-pipeline.md).
+construction for fresh windows. The primary chain is **Dense → exact evidence
+→ Qwen draft → same-model support review**. [ADR 0005](docs/adr/0005-qwen4b-development-default.md) records the new 4B
+development default; the original 9B choice remains historical in ADR 0003.
 
-The [Day 21 semantic checks](docs/day21-semantic-reliability.md) document
-remaining source-support errors. The seven-axis review candidate regressed on
-controlled development cases and remains opt-in; baseline review is preserved.
-Neither reviewer establishes clinical correctness.
+The user supplied the new blind human labels. Both reviewers failed the pilot
+safety gate: 4B admitted 3/5 human comparison-mismatched claims and 9B admitted
+4/5. Human answer usability was 5/6 for 4B and 4/6 for 9B, but the all-context
+4B usability gate still failed. Six related source pools cover only two
+independent questions. The development choice does not establish clinical or
+general biomedical equivalence; every generated answer remains a research draft
+requiring human review.
+
+The [historical semantic checks](docs/day21-semantic-reliability.md) document
+remaining source-support errors. The seven-axis v5 candidate regressed on
+controlled development cases and remains opt-in through the legacy route. The
+4B default uses the v4 taxonomy with named consistency constraints. Neither
+reviewer establishes clinical correctness.
 
 The [shared local corpus](docs/shared-corpus.md) pools the rebuilt topic collections
 into 277 unique articles and 850 windows, with an immutable embedding cache.
@@ -54,7 +67,8 @@ Follow the [handoff guide](docs/handoff.md) to clone the code, restore the check
 local-artifact bundle and rebuild Python 3.11 dependencies. Pilot labels and
 provenance are tracked; model weights, primary texts, vectors and raw runs are
 transferred separately. The [pipeline decision](docs/pipeline-options.md) is
-accepted: Dense search/ranking and Qwen9B generation. If the archive is lost,
+accepted for its retrieval/generation chain; the current model default is 4B
+under [ADR 0005](docs/adr/0005-qwen4b-development-default.md). If the archive is lost,
 follow [recovery without a bundle](docs/recovery-without-bundle.md). Pinned assets
 and a separate 277-paper/909-window corpus were recovered on the Air M3, 24 GiB;
 see the [Air recovery record](docs/experiments/air-recovery.json) for measured
@@ -76,14 +90,23 @@ PubMed ingestion uses the standard library. For the local model on Apple Silicon
 python -m pip install -r requirements-macos-arm64-day19.lock
 ```
 
-The request CLIs use the native MLX backend by default. Prepare its isolated
-environment and converted assets once as described in the
-[native runtime guide](docs/native-mlx.md), or pass `--engine transformers`
-to use the existing Metal backend explicitly.
+The request CLIs default to the native 4B profile. Prepare the isolated runtime
+and pinned assets:
+
+```sh
+python -m venv .cache/venvs/mlx
+.cache/venvs/mlx/bin/python -m pip install -r requirements-mlx-macos-arm64.lock
+python scripts/prepare_mlx.py --download
+```
+
+This setup needs no 9B weights. See the [native runtime guide](docs/native-mlx.md)
+for local asset reuse, provenance, and `prepare_mlx.py --model 9b` conversion.
+Use `--answer-model 9b` for native 9B, or add `--engine transformers` for the
+original 9B Metal backend. There is no automatic model/backend fallback.
 
 ## Ask a question
 
-Run the selected live PubMed → Dense → evidence → Qwen9B workflow:
+Run the selected live PubMed → Dense → exact evidence → Qwen4B draft/review workflow:
 
 ```sh
 python scripts/ask_live.py \
@@ -258,6 +281,9 @@ Citation IDs map to exact source spans. See the
 
 ## Generate cited drafts
 
+`scripts/generate_answers.py` is a frozen 9B experiment; its model and saved
+protocol do not switch with the current live/local CLI default.
+
 ```sh
 python scripts/generate_answers.py results/evidence/pilot-v1-dense-qwen-004.json \
   --include-controls \
@@ -288,7 +314,8 @@ For Dense top-10 → MedCPT, use `--mode dense-medcpt` and add
 eligible article and aggregate by maximum logit. Direct MedCPT needs no BGE
 model or embeddings at query time. See the [ranking contract and pilot
 preparation](docs/medcpt-ranking.md) and the [quality comparison](docs/medcpt-evaluation.md).
-`ask.py --rerank` continues to use Qwen until primary-pipeline selection.
+The primary workflow omits `--rerank`; historical Qwen reranking remains an
+explicit 9B comparison.
 
 ## MedCPT cross-encoder probe
 
@@ -303,7 +330,11 @@ and measures CPU/MPS batching on pilot source windows. The article-ranking
 commands above build on this scorer. See the [scorer contract and
 measurements](docs/medcpt.md) and the [frozen held-out protocol](benchmarks/heldout-v1/README.md).
 
-## Runtime check
+## Historical 9B runtime check
+
+These smoke commands exercise the frozen Transformers/Metal 9B experiment.
+They do not test the current 4B default; use the native setup and request above
+for that workflow.
 
 ```sh
 python scripts/smoke_inference.py --output results/preflight.json
@@ -322,8 +353,10 @@ The first runtime command checks MPS without downloading weights. The second
 probes the Metal kernel, loads Qwen3.5-9B, quantizes supported linear layers to
 4 bits, and runs two synthetic prompts on the same model. It records versions, timings, output, and memory observations.
 
-Model files stay in `.cache/`; snapshots stay in `data/`. Both are excluded from Git. Loading-time quantization
-still downloads the original checkpoint. First-run timing includes downloads.
+Model files stay in `.cache/`; snapshots stay in `data/`. Both are excluded from
+Git. The historical Transformers smoke can download the original 9B checkpoint
+before loading-time quantization; its first-run timing includes those downloads.
+The current 4B setup is described separately above.
 
 See [runtime notes](docs/experiments/runtime-smoke.md) for measured results and
 [architecture decisions](docs/adr/0001-scope.md) for scope.

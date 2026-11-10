@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("HF_HOME", str(ROOT / ".cache/huggingface"))
 os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 
-from medlens.inference.qwen import MODEL_ID, REVISION
+from medlens.inference.profiles import load_answer_tokenizer
 from medlens.inference.backends import add_runtime_arguments, runtime_factory
 from medlens.pipeline import run_question
 from medlens.reporting import render_report
@@ -38,7 +38,7 @@ def main(argv=None):
     add_runtime_arguments(parser)
     args = parser.parse_args(argv)
     try:
-        make_runtime = runtime_factory(args.engine, root=ROOT, model_dir=args.mlx_model_dir,
+        make_runtime = runtime_factory(args.engine, model=args.answer_model, root=ROOT, model_dir=args.mlx_model_dir,
                                        worker_python=args.mlx_python)
     except ValueError as exc:parser.error(str(exc))
     if not args.query.strip() or not 1 <= args.top_k <= 10:
@@ -72,9 +72,7 @@ def main(argv=None):
     try:
         index = DenseIndex(args.dataset, args.windows, args.embeddings,
             published_from=args.published_from, published_until=args.published_until)
-        from transformers import AutoTokenizer
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=REVISION, token=False,
-            trust_remote_code=False, local_files_only=True)
+        tokenizer = load_answer_tokenizer(ROOT, args.answer_model)
         def release_accelerator():
             if args.device == 'mps':
                 import torch

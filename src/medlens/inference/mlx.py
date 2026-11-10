@@ -19,13 +19,16 @@ import threading
 import time
 
 from .qwen import MODEL_ID, REVISION
+from .profiles import DEFAULT_MODEL, get_profile, load_answer_tokenizer
+from .structured import prepare_schema
 
-PROTOCOL = 1
+PROTOCOL = 2
 MAX_LINE_BYTES = 131072
 MAX_INPUT_TOKENS = 12000
 VOCAB_SIZE = 248320
 EOS_IDS = (248044, 248046)
 PACKAGES = {name: "0.32.2" for name in ("mlx", "mlx-lm", "mlx-metal")}
+PACKAGES["outlines-core"] = "0.2.14"
 WORKER_SCRIPT = Path(__file__).with_name("mlx_worker.py")
 
 
@@ -61,7 +64,8 @@ def _file_hash(path):
     return result.hexdigest()
 
 
-def _validate_manifest(model_dir, *, verify_weights):
+def _validate_manifest(model_dir, *, verify_weights, model="9b"):
+    profile = get_profile(model)
     manifest_path = model_dir / "medlens-source.json"
     if manifest_path.is_symlink() or not manifest_path.is_file():
         raise RuntimeError("Missing regular MLX source manifest")
@@ -73,15 +77,15 @@ def _validate_manifest(model_dir, *, verify_weights):
     if (manifest.get("schema_version") != 1 or type(manifest.get("schema_version")) is not int
             or manifest.get("kind") != "medlens-mlx-model" or manifest.get("status") != "complete"
             or manifest.get("artifact_id") != _digest(identity)
-            or manifest.get("model") != {"model_id": MODEL_ID, "revision": REVISION}
+            or manifest.get("model") != {key: profile[key] for key in ("model_id", "revision")}
             or not isinstance(quantization, dict)
             or quantization.get("method") != "mlx-affine"
             or type(quantization.get("bits")) is not int or quantization["bits"] != 4
             or type(quantization.get("group_size")) is not int or quantization["group_size"] != 64
-            or quantization.get("coverage") not in {
-                "linear-only-except-lm-head", "all-linear-and-embedding"}
-            or manifest.get("dtype") != "float16"
-            or manifest.get("fp32_exceptions") != ["A_log"]):
+            or quantization != profile["quantization"]
+            or manifest.get("dtype") != profile["dtype"]
+            or manifest.get("fp32_exceptions") != profile["fp32_exceptions"]
+            or (model == "4b" and manifest.get("tie_word_embeddings") is not True)):
         raise RuntimeError("Unrecognized or altered MLX artifact identity")
     files = manifest.get("files")
     if (not isinstance(files, dict) or "config.json" not in files
@@ -117,6 +121,9 @@ def _validate_manifest(model_dir, *, verify_weights):
     if (not isinstance(text, dict) or text.get("vocab_size") != VOCAB_SIZE
             or type(text.get("vocab_size")) is not int
             or text.get("eos_token_id") != EOS_IDS[0]
+            or text.get("hidden_size") != profile["hidden_size"]
+            or text.get("dtype") != profile["dtype"]
+            or config.get("tie_word_embeddings", text.get("tie_word_embeddings")) is not profile["tie_word_embeddings"]
             or not isinstance(quant, dict)
             or quant.get("bits") != 4 or quant.get("group_size") != 64
             or quant.get("mode", "affine") != "affine"):
@@ -124,11 +131,8 @@ def _validate_manifest(model_dir, *, verify_weights):
     return manifest
 
 
-def _load_tokenizer(root):
-    from transformers import AutoTokenizer
-    snapshot = root / ".cache/huggingface/hub/models--Qwen--Qwen3.5-9B/snapshots" / REVISION
-    return AutoTokenizer.from_pretrained(str(snapshot), local_files_only=True,
-        token=False, trust_remote_code=False)
+def _load_tokenizer(root, model=DEFAULT_MODEL):
+    return load_answer_tokenizer(root, model)
 
 
 def _ids(value, *, maximum, label):
@@ -144,7 +148,7 @@ def _seconds(value):
 
 class MlxRuntime:
     def __init__(self, model_dir=None, worker_python=None, *, root=None, timeout=180.0,
-                 load_timeout=180.0, stderr_path=None, verify_weights=False):
+                 load_timeout=180.0, stderr_path=None, verify_weights=False, model=DEFAULT_MODEL):
         self._lock = threading.RLock()
         self._process = None
         self._stderr = None
@@ -157,11 +161,17 @@ class MlxRuntime:
         if type(verify_weights) is not bool:
             raise ValueError("verify_weights must be boolean")
         self.timeout = timeout
+        profile = get_profile(model)
+        self.model_profile = model
+        self.answer_policy = profile["answer_policy"]
         root = Path(root).resolve() if root else Path(__file__).resolve().parents[3]
-        model_dir = Path(model_dir) if model_dir else root / ".cache/models/qwen3.5-9b-mlx-linear-4bit-g64"
+        model_dir = Path(model_dir) if model_dir else root / profile["directory"]
         worker_python = Path(worker_python) if worker_python else root / ".cache/venvs/mlx/bin/python"
-        manifest = _validate_manifest(model_dir, verify_weights=verify_weights)
-        self.tokenizer = _load_tokenizer(root)
+        manifest = _validate_manifest(model_dir, verify_weights=verify_weights, model=model)
+        self.tokenizer = _load_tokenizer(root, model)
+        self._tokenizer_sha256 = hashlib.sha256(self.tokenizer.backend_tokenizer.to_str().encode()).hexdigest()
+        self.cache_identity = {"model_id": profile["model_id"], "revision": profile["revision"],
+            "artifact_id": manifest["artifact_id"], "answer_policy": self.answer_policy}
         if stderr_path is None:
             descriptor, name = tempfile.mkstemp(prefix="medlens-mlx-", suffix=".stderr.log")
             self.stderr_path = Path(name)
@@ -174,7 +184,8 @@ class MlxRuntime:
             # Isolated mode excludes this script directory: sibling mlx.py must
             # never shadow the native third-party mlx package inside the worker.
             self._process = subprocess.Popen([str(worker_python), "-I", "-u", str(WORKER_SCRIPT),
-                "--model-dir", str(model_dir.resolve()), "--nonce", self._nonce],
+                "--model-dir", str(model_dir.resolve()), "--nonce", self._nonce,
+                "--root", str(root), "--model", model, "--artifact-id", manifest["artifact_id"]],
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self._stderr,
                 bufsize=0, start_new_session=True)
             os.set_blocking(self._process.stdout.fileno(), False)
@@ -185,13 +196,16 @@ class MlxRuntime:
                     or ready.get("nonce") != self._nonce or ready.get("packages") != PACKAGES
                     or ready.get("vocab_size") != VOCAB_SIZE
                     or ready.get("eos_token_ids") != list(EOS_IDS)
+                    or ready.get("model_profile") != model or ready.get("runtime_identity") != self.cache_identity
+                    or ready.get("tokenizer_backend_sha256") != self._tokenizer_sha256
                     or not _seconds(ready.get("load_seconds"))
                     or not isinstance(ready.get("parameter_dtypes"), list)
                     or any(not isinstance(value, str) for value in ready["parameter_dtypes"])
-                    or set(ready["parameter_dtypes"]) != {"float16", "float32", "uint32"}
-                    or ready.get("parameter_dtype_policy") != "float16-except-A_log-float32-packed-uint32"):
+                    or set(ready["parameter_dtypes"]) != {profile["dtype"], "float32", "uint32"}
+                    or ready.get("parameter_dtype_policy") != profile["dtype"] + "-except-A_log-float32-packed-uint32"):
                 raise RuntimeError("Invalid MLX worker readiness handshake")
-            self.metadata = {"model_id": MODEL_ID, "revision": REVISION,
+            self.metadata = {"model_id": profile["model_id"], "revision": profile["revision"],
+                "model_profile": model, "answer_policy": self.answer_policy,
                 "runtime": "mlx-lm-subprocess", "device": "metal",
                 "artifact_id": manifest["artifact_id"], "model_dir": str(model_dir.resolve()),
                 "quantization": manifest["quantization"], "dtype": manifest["dtype"],
@@ -207,7 +221,11 @@ class MlxRuntime:
                 "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
                 "artifact_validation": "all-file-sha256" if verify_weights else
                     "manifest-identity-all-file-sizes-config-sha256",
-                "tokenizer": "original-pinned-huggingface-snapshot",
+                "tokenizer": getattr(self.tokenizer, "_medlens_tokenizer_source", profile["tokenizer"]),
+                "tokenizer_backend_sha256": self._tokenizer_sha256,
+                "structured_decoding": {"library": "outlines-core", "version": "0.2.14",
+                    "compiled_index_cache_maximum": 8, "fresh_guide_per_call": True,
+                    "raw_and_post_mask_score_validation": True},
                 "prompt_cache_reuse": False, "kv_quantization": None, "prefill_step_size": 2048,
                 "release_cache_after_generation": True,
                 "ttft_scope": "first-generate-step-yield-including-native-one-step-lookahead",
@@ -276,18 +294,31 @@ class MlxRuntime:
                 maximum=MAX_INPUT_TOKENS, label="input")
             if type(prompt.get("input_tokens")) is not int or len(ids) != prompt["input_tokens"]:
                 raise ValueError("Prompt token count changed")
+            schema = prompt.get("decoding_schema")
+            kind = prompt.get("constraint_kind")
+            constraint_expected = None
+            if (schema is None) != (kind is None):
+                raise ValueError("Supply both decoding_schema and constraint_kind")
+            if schema is not None:
+                _, constraint_expected = prepare_schema(schema, kind, validate_regex=False)
+            request = {"op": "generate", "nonce": self._nonce,
+                "input_ids": ids, "max_new_tokens": max_new_tokens, "eos_token_ids": list(EOS_IDS)}
+            if schema is not None:
+                request.update(decoding_schema=schema, constraint_kind=kind)
             self._request_number += 1
             request_id = str(self._request_number)
+            request["request_id"] = request_id
             started = time.perf_counter()
             deadline = time.monotonic() + self.timeout
             try:
-                self._write({"op": "generate", "nonce": self._nonce, "request_id": request_id,
-                    "input_ids": ids, "max_new_tokens": max_new_tokens,
-                    "eos_token_ids": list(EOS_IDS)}, deadline)
+                self._write(request, deadline)
                 result = self._read(deadline)
                 if (not isinstance(result, dict) or result.get("op") != "result"
                         or result.get("nonce") != self._nonce or result.get("request_id") != request_id):
                     raise RuntimeError("Invalid MLX response identity or native generation failure")
+                if (result.get("runtime_identity") != self.cache_identity
+                        or result.get("tokenizer_backend_sha256") != self._tokenizer_sha256):
+                    raise RuntimeError("MLX model or tokenizer response identity changed")
                 try:
                     output = _ids(result.get("output_ids"), maximum=max_new_tokens, label="output")
                 except ValueError as exc:
@@ -310,6 +341,33 @@ class MlxRuntime:
                         raise RuntimeError("Invalid MLX generation metrics")
                 if result["ttft_seconds"] > result["seconds"] or result["decode_seconds"] > result["seconds"]:
                     raise RuntimeError("Inconsistent MLX generation timing")
+                constraint = result.get("constraint")
+                stats = result.get("constraint_stats")
+                if constraint_expected is None:
+                    if constraint is not None or stats is not None:
+                        raise RuntimeError("Unexpected decoding constraint response")
+                else:
+                    if (not isinstance(constraint, dict) or not isinstance(stats, dict)
+                            or any(constraint.get(key) != constraint_expected[key] for key in
+                                ("original_schema_sha256", "lowered_schema_sha256", "kind", "decode_relaxations"))
+                            or type(constraint.get("cache_hit")) is not bool
+                            or not _seconds(constraint.get("compile_seconds"))
+                            or type(constraint.get("compiled_cache_size")) is not int
+                            or not 1 <= constraint["compiled_cache_size"] <= 8
+                            or constraint.get("compiled_cache_maximum") != 8
+                            or not isinstance(constraint.get("regex_sha256"), str)
+                            or len(constraint["regex_sha256"]) != 64
+                            or constraint.get("whitespace_pattern") != ""
+                            or constraint.get("object_property_order") != "required-list"
+                            or stats.get("accepting") is not True or stats.get("eos_accepted") is not True
+                            or stats.get("fresh_guide") is not True
+                            or type(stats.get("accepted_generated_tokens")) is not int
+                            or stats["accepted_generated_tokens"] != len(output)
+                            or result["hit_output_limit"]):
+                        raise RuntimeError("Invalid constrained-generation identity or terminal state")
+                    for name in ("mask_seconds", "advance_seconds", "raw_validation_seconds", "post_mask_validation_seconds"):
+                        if not _seconds(stats.get(name)):
+                            raise RuntimeError("Invalid constrained-generation timing")
                 wall = time.perf_counter() - started
                 text = self.tokenizer.decode(output, skip_special_tokens=True).strip()
                 return {key: value for key, value in result.items() if key not in {"op", "nonce", "request_id"}} | {

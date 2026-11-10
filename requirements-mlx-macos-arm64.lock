@@ -18,6 +18,7 @@ mlx==0.32.2
 mlx-lm==0.32.2
 mlx-metal==0.32.2
 numpy==2.4.6
+outlines-core==0.2.14
 packaging==26.3
 protobuf==7.36.2
 pydantic==2.14.3

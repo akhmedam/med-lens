@@ -1,4 +1,4 @@
-"""Verify pinned local Qwen weights and prepare a native MLX model without downloads."""
+"""Prepare native 4B by default; use --model 9b for pinned offline 9B conversion."""
 
 import argparse
 import json
@@ -12,7 +12,7 @@ from medlens.inference.mlx_convert import COVERAGES, canonical, sha_file, verify
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main(argv=None):
+def prepare_9b(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT/'.cache/models/qwen3.5-9b-mlx-linear-4bit-g64')
     parser.add_argument('--worker-python', type=Path, default=ROOT/'.cache/venvs/mlx/bin/python')
@@ -70,6 +70,22 @@ def main(argv=None):
         print('Incomplete conversion retained at '+str(staging), flush=True)
         raise
     return 0
+
+
+def main(argv=None):
+    import sys
+    selector = argparse.ArgumentParser(add_help=False)
+    selector.add_argument('--model', choices=('4b', '9b'), default='4b')
+    selected, remainder = selector.parse_known_args(sys.argv[1:] if argv is None else argv)
+    if selected.model == '9b':
+        return prepare_9b(remainder)
+    # Keep4B preparation independent of the native interpreter and9B weights.
+    import importlib.util
+    path = Path(__file__).with_name('prepare_mlx_4b.py')
+    spec = importlib.util.spec_from_file_location('medlens_prepare_4b', path)
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    module.ROOT = ROOT
+    return module.main(remainder)
 
 
 if __name__ == '__main__':
