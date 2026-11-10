@@ -1,0 +1,2088 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "started_at": "2026-11-10T05:51:49.297929+00:00",
+  "scope": "Two fixed depression/anxiety development questions; 30/100/300 fresh candidates, one cold and one warm embedding-cache request per combination. Runtime, integrity and pipeline status only; no relevance or answer-quality scoring.",
+  "heldout_used": false,
+  "qrels_used": false,
+  "quality_evaluation_performed": false,
+  "queries_sha256": "fed7a9abf1ca83ba4562c55a1e82f0da9e6df2caad774c4281a03a36dc76ad44",
+  "query_ids": [
+    "p03",
+    "p06"
+  ],
+  "platform": "macOS-26.7.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "cache_scope": "Cold starts with an absent vector-cache directory; warm reuses it but searches and downloads PubMed anew. Model/OS caches are not flushed. Each request uses a new process and freshly generates/reviews drafts.",
+  "timing_scope": "CLI request time excludes interpreter/import startup and final checkpoint write. Command wall time includes process startup and exit. Component times are nested, not additive.",
+  "memory_scope": "Each child reports process RSS high-water, sampled MPS allocations and Qwen conversion samples separately. They overlap; do not sum them. No instantaneous device peak is claimed.",
+  "code_sha256": {
+    "scripts/ask_live.py": "035a0b30d8f2942afc55645f9c464e76b1bd7a3b7f974fa7c0abd32cddd93245",
+    "scripts/benchmark_live_search.py": "01dc060d2ce36c3d95cfd19b58567d6b978aca3a4b28d7a9a200e6fdd5b98d8e",
+    "src/medlens/live.py": "74b073abd955ea4dd1963ee38cd8bcc09a97d3139ecb328c9ab91fe4a7ea150f",
+    "src/medlens/pubmed_query.py": "9bb0adb78655dcb4958b72b4c4d4e7e9682da65078f450e0a4aa448497947fea",
+    "src/medlens/pipeline.py": "d459de34613b1d0be623f428c4f8ce0cfd89ca8fd8bdc24e46f2aae7207ed663",
+    "src/medlens/reporting.py": "71a310e46b9a6497aacb9db5b3d5af5c5fe272295ec7949f19017a9c2113940d",
+    "src/medlens/ingestion/pubmed.py": "f9d69eac54f9d07c5f0729f6bb451274b7b7f9b31653a7d1cd4d793da5d47e29",
+    "src/medlens/ingestion/snapshots.py": "540b4fb7860d82b00021db53c2692e957e664c1390f776cee90eed387c217947",
+    "src/medlens/parsing/dataset.py": "1c1808b086ea2e8067925659a39643ad1dce18d3f0480377f8d021cb51cdfd7b",
+    "src/medlens/parsing/pubmed.py": "d3f0356338970cad6ab0a084d760961b2d4877443f6d9746c6bda131ec245e6d",
+    "src/medlens/retrieval/windows.py": "9d593df503c82a0f83a47c4b46ddcfcb0c452dffa0094b1ca94701e884e2725e",
+    "src/medlens/retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e",
+    "src/medlens/retrieval/vector_cache.py": "4555312aadd58a9985dc319f34dbbe951fa9c1776d12c5dc3ceed0a1d9227420",
+    "src/medlens/generation/answers.py": "fd8501174f850f2483b922ed7ca424f360a7e52af6f715d5020498cef46db1e3",
+    "src/medlens/generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412",
+    "src/medlens/inference/qwen.py": "9212fec2f396b417fef0206be327498555d206363dd2d9974a62affb3e8eb806"
+  },
+  "runs": [
+    {
+      "query_id": "p03",
+      "limit": 30,
+      "cache_state": "cold",
+      "command_wall_seconds": 142.32995308400132,
+      "cli_request_seconds": 141.79736437500105,
+      "snapshot_id": "61c39a07-3362-45d3-9e09-04d2f2aa43d8",
+      "dataset_id": "97c81864c42860a21eb375ba666a773bffc037d447edce509ba1c96407dffae1",
+      "window_artifact_id": "19921ba1cc5b208c606c3a7c449b70d086f9562077bd0db0c818dd29ac26ada7",
+      "embedding_artifact_id": "0cd5ec55ba77b965c1da830b8a7b9bb5923eab2fef4d5aabac8b0a091d974f75",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 30,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 1.5278661669872236,
+        "pubmed_download_seconds": 2.201604417001363,
+        "parsing_seconds": 0.10320099999080412,
+        "windowing_seconds": 0.021264499984681606,
+        "passage_embeddings_seconds": 4.682052624993958,
+        "index_validation_seconds": 0.005776542006060481,
+        "answer_tokenizer_load_seconds": 0.25648625000030734
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.3877376670134254,
+        "query_encode_seconds": 0.01758054201491177,
+        "dense_search_seconds": 0.00016387499636039138,
+        "retrieval_seconds": 0.521563625021372,
+        "context_seconds": 0.011301459016976878,
+        "reranking_seconds": 0.0007173330232035369,
+        "answer_seconds": 131.92688975000056,
+        "pipeline_seconds": 132.46595612500096
+      },
+      "passage_cache": {
+        "window_rows": 96,
+        "unique_inputs": 96,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 96,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.005534416995942593,
+        "model_constructor_seconds": 0.5144627499976195,
+        "encode_seconds": 4.102319916011766,
+        "cache_write_seconds": 0.05347358400467783,
+        "sampled_max_mps_tensor_bytes": 460199936,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.002274208003655076
+      },
+      "runtime_load_count": 1,
+      "answer_status": "partial",
+      "validation_error": null,
+      "visible_claim_count": 2,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 68.80212437498267,
+          "new_tokens": 189,
+          "hit_output_limit": false,
+          "input_tokens": 3100
+        },
+        {
+          "stage": "support-review",
+          "seconds": 38.409674875001656,
+          "new_tokens": 105,
+          "hit_output_limit": false,
+          "input_tokens": 1766
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 24.466490666993195,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9690628096
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38731776
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 344391680,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 360939520,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 362233856,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 362594304,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 800587776,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 4360650752,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8533000192
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 4360650752,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 4360650752,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 4360650752,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 96,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 2,
+        "vector_rows": 96,
+        "vector_bytes": 294912
+      },
+      "local_run_sha256": "1925dccd1b61869d269bdf98f92488a42af8005e66ff624ec4d59e8dd54118c1"
+    },
+    {
+      "query_id": "p03",
+      "limit": 30,
+      "cache_state": "warm",
+      "command_wall_seconds": 163.3237812499865,
+      "cli_request_seconds": 162.77153733401792,
+      "snapshot_id": "6b22ab8f-ce37-457e-955d-c04ea10d0689",
+      "dataset_id": "711510196848dc5d7871a7b006af8d03a31e7beb37b66eb1d3665a4ae280b6b3",
+      "window_artifact_id": "b9992283b7e362c88de392729daedcd079df5bcf40cb6578dd5c21d8752bf474",
+      "embedding_artifact_id": "3fe9d7a9088a428fbb3e2d6d64a0595d65e52299cdfc48563fa90362875550f4",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 30,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.1078996660071425,
+        "pubmed_download_seconds": 1.93447633300093,
+        "parsing_seconds": 0.10314795802696608,
+        "windowing_seconds": 0.022180500003742054,
+        "passage_embeddings_seconds": 0.8998908330104314,
+        "index_validation_seconds": 0.00539599999319762,
+        "answer_tokenizer_load_seconds": 0.22741887500160374
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.3629677919961978,
+        "query_encode_seconds": 0.019888457987690344,
+        "dense_search_seconds": 0.001018458977341652,
+        "retrieval_seconds": 0.5040923339838628,
+        "context_seconds": 0.010544249991653487,
+        "reranking_seconds": 0.001056166016496718,
+        "answer_seconds": 156.50668979197508,
+        "pipeline_seconds": 157.02686770798755
+      },
+      "passage_cache": {
+        "window_rows": 95,
+        "unique_inputs": 95,
+        "cache_hit_inputs": 94,
+        "encoded_inputs": 1,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.01507120902533643,
+        "model_constructor_seconds": 0.632161375018768,
+        "encode_seconds": 0.2463710000156425,
+        "cache_write_seconds": 0.0009387079917360097,
+        "sampled_max_mps_tensor_bytes": 439311360,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.0023156669922173023
+      },
+      "runtime_load_count": 1,
+      "answer_status": "partial",
+      "validation_error": null,
+      "visible_claim_count": 2,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 78.83306962499046,
+          "new_tokens": 189,
+          "hit_output_limit": false,
+          "input_tokens": 3100
+        },
+        {
+          "stage": "support-review",
+          "seconds": 54.45183537498815,
+          "new_tokens": 105,
+          "hit_output_limit": false,
+          "input_tokens": 1766
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 22.993373917008284,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9706356736
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38060032
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 342605824,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 359301120,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 361299968,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 361807872,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 800260096,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 753664
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5000691712,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5000691712,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5000691712,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5000691712,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 95,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 2,
+        "vector_rows": 95,
+        "vector_bytes": 291840
+      },
+      "local_run_sha256": "82604944c7493b78f02b79fe6c7f32eb5e4426a4c7127745ec55db442d439ae7"
+    },
+    {
+      "query_id": "p03",
+      "limit": 100,
+      "cache_state": "cold",
+      "command_wall_seconds": 205.5666310839879,
+      "cli_request_seconds": 205.04737683400162,
+      "snapshot_id": "48546864-5315-4d79-b033-946785ac798b",
+      "dataset_id": "ee0326799a17b86a3b5eb2587a90ea1ea9906c39f05d6bf6eaed50615a8d041c",
+      "window_artifact_id": "257b89a074c91c2a35be02a5df37f2801f2bc75db8155f022c2ed0d8a5eabf8c",
+      "embedding_artifact_id": "c31dfb60f0fc4349e70eae3f6ddfc1d44315c07957d97fa83eb80ec561b4986f",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 100,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.1866110830160324,
+        "pubmed_download_seconds": 2.704475000005914,
+        "parsing_seconds": 0.07404283300274983,
+        "windowing_seconds": 0.06825008301530033,
+        "passage_embeddings_seconds": 14.35445924999658,
+        "index_validation_seconds": 0.01768395901308395,
+        "answer_tokenizer_load_seconds": 0.27716683299513534
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.361177457991289,
+        "query_encode_seconds": 0.02022862498415634,
+        "dense_search_seconds": 0.00025329197524115443,
+        "retrieval_seconds": 0.5054119999986142,
+        "context_seconds": 0.01088937500026077,
+        "reranking_seconds": 0.001088000019080937,
+        "answer_seconds": 184.35393125002156,
+        "pipeline_seconds": 184.87623841597815
+      },
+      "passage_cache": {
+        "window_rows": 289,
+        "unique_inputs": 289,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 289,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.01719249997404404,
+        "model_constructor_seconds": 0.6611368749872781,
+        "encode_seconds": 13.4878403749899,
+        "cache_write_seconds": 0.17554633299005218,
+        "sampled_max_mps_tensor_bytes": 460199936,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.007015582988969982
+      },
+      "runtime_load_count": 1,
+      "answer_status": "validation_failed",
+      "validation_error": {
+        "stage": "support-review",
+        "code": "review_enum"
+      },
+      "visible_claim_count": 0,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 112.40160866698716,
+          "new_tokens": 257,
+          "hit_output_limit": false,
+          "input_tokens": 2872
+        },
+        {
+          "stage": "support-review",
+          "seconds": 48.36856654199073,
+          "new_tokens": 103,
+          "hit_output_limit": false,
+          "input_tokens": 1613
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 23.35132570899441,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9690628096
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38666240
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 342884352,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 368459776,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 374898688,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 376356864,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 814333952,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5031624704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8533000192
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5031624704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5031624704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5031624704,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 289,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 0,
+        "vector_rows": 289,
+        "vector_bytes": 887808
+      },
+      "local_run_sha256": "c5127f78dc5d507a969c5ae53203b6c0b01ab0baf185ba2df2c4ab4a2abf3ef0"
+    },
+    {
+      "query_id": "p03",
+      "limit": 100,
+      "cache_state": "warm",
+      "command_wall_seconds": 188.04345183400437,
+      "cli_request_seconds": 187.52547241700813,
+      "snapshot_id": "d6ea09d8-9f00-42ce-99e7-272b12594640",
+      "dataset_id": "f6a7979cd57442c20b3954ee5b7b698ba8ab3f5f38ea1ed75c88ce2425cd0956",
+      "window_artifact_id": "6c892a3d02e7333920176670a2461367e32e0f29dd54108aeec931944dae0883",
+      "embedding_artifact_id": "c8e77dff3f5dace21b7221c49b3f2f8d46d73ac5bdaebd42922da810bb7cd413",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 100,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.1637147500005085,
+        "pubmed_download_seconds": 3.6005143329966813,
+        "parsing_seconds": 0.07060574999195524,
+        "windowing_seconds": 0.06438508300925605,
+        "passage_embeddings_seconds": 1.7246167089906521,
+        "index_validation_seconds": 0.015700999996624887,
+        "answer_tokenizer_load_seconds": 0.23109600000316277
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.34837708302075043,
+        "query_encode_seconds": 0.020652542007155716,
+        "dense_search_seconds": 0.00026333300047554076,
+        "retrieval_seconds": 0.4953279580222443,
+        "context_seconds": 0.010729834000812843,
+        "reranking_seconds": 0.00069570800405927,
+        "answer_seconds": 178.68739712500246,
+        "pipeline_seconds": 179.20008254100685
+      },
+      "passage_cache": {
+        "window_rows": 289,
+        "unique_inputs": 289,
+        "cache_hit_inputs": 268,
+        "encoded_inputs": 21,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.04740637500071898,
+        "model_constructor_seconds": 0.6538802919967566,
+        "encode_seconds": 1.0009258330101147,
+        "cache_write_seconds": 0.012319583009229973,
+        "sampled_max_mps_tensor_bytes": 459147264,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.00591504099429585
+      },
+      "runtime_load_count": 1,
+      "answer_status": "validation_failed",
+      "validation_error": {
+        "stage": "support-review",
+        "code": "review_enum"
+      },
+      "visible_claim_count": 0,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 106.58611654100241,
+          "new_tokens": 257,
+          "hit_output_limit": false,
+          "input_tokens": 2872
+        },
+        {
+          "stage": "support-review",
+          "seconds": 47.89441795798484,
+          "new_tokens": 103,
+          "hit_output_limit": false,
+          "input_tokens": 1613
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 23.97707341698697,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9689579520
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 37896192
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 342540288,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 366952448,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 371195904,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 371458048,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 809746432,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5014142976,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5014142976,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5014142976,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5014142976,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 289,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 0,
+        "vector_rows": 289,
+        "vector_bytes": 887808
+      },
+      "local_run_sha256": "19c09c3e22ecf15f8e7e1594a034563602384ec7e04f98b039cda429c16b09bf"
+    },
+    {
+      "query_id": "p03",
+      "limit": 300,
+      "cache_state": "cold",
+      "command_wall_seconds": 224.36541174998274,
+      "cli_request_seconds": 223.81004783298704,
+      "snapshot_id": "390ac712-906a-48b3-b320-3366c00b4168",
+      "dataset_id": "b1bb040b42b9b3b98c3fc0f146170f94b1941a4d8444212fe017e78c007042cd",
+      "window_artifact_id": "ce8388d7060424a83010558c365e5d9a8b73b695ee26b6d97c04841ea58be968",
+      "embedding_artifact_id": "594048fd214cda308829b1c8ad36772ed2458f4588def28ae8802bcddd62fd38",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 300,
+      "request_attempts": [
+        1,
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.141145333996974,
+        "pubmed_download_seconds": 4.250509375007823,
+        "parsing_seconds": 0.34249425001326017,
+        "windowing_seconds": 0.19516979201580398,
+        "passage_embeddings_seconds": 47.173958250001306,
+        "index_validation_seconds": 0.05530870798975229,
+        "answer_tokenizer_load_seconds": 0.2961407499969937
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.38307287500356324,
+        "query_encode_seconds": 0.01685733298654668,
+        "dense_search_seconds": 0.0004970830050297081,
+        "retrieval_seconds": 0.5466376249969471,
+        "context_seconds": 0.01094974999432452,
+        "reranking_seconds": 0.0007140410016290843,
+        "answer_seconds": 168.21509774998412,
+        "pipeline_seconds": 168.77947016601684
+      },
+      "passage_cache": {
+        "window_rows": 833,
+        "unique_inputs": 833,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 833,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.04936895798891783,
+        "model_constructor_seconds": 0.5883291669888422,
+        "encode_seconds": 45.8760077090119,
+        "cache_write_seconds": 0.6257246250170283,
+        "sampled_max_mps_tensor_bytes": 460199936,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.02259308402426541
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 90.81788587500341,
+          "new_tokens": 199,
+          "hit_output_limit": false,
+          "input_tokens": 2514
+        },
+        {
+          "stage": "support-review",
+          "seconds": 53.612964833009755,
+          "new_tokens": 105,
+          "hit_output_limit": false,
+          "input_tokens": 1610
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 23.59414800000377,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9707405312
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 37732352
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 341753856,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 379420672,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 402964480,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 409845760,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 848478208,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5078941696,
+          "mps_tensor_bytes": 8038287872,
+          "mps_driver_bytes": 9606742016
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5078941696,
+          "mps_tensor_bytes": 8038287872,
+          "mps_driver_bytes": 9608839168
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5078941696,
+          "mps_tensor_bytes": 8038287872,
+          "mps_driver_bytes": 9608839168
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5078941696,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 833,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 833,
+        "vector_bytes": 2558976
+      },
+      "local_run_sha256": "8982dcf57b047e887d89f033e79b0c2ec21a6b2b631dc23a7df703558fc9d14e"
+    },
+    {
+      "query_id": "p03",
+      "limit": 300,
+      "cache_state": "warm",
+      "command_wall_seconds": 188.1099264169752,
+      "cli_request_seconds": 187.59501258298405,
+      "snapshot_id": "6448930d-6fb1-42ca-b62d-7a46d2dbbb7a",
+      "dataset_id": "84ca32fe5017b2b49c12dff5e65fb36ae300f2f081e0a7b9faac0b93efeadc0c",
+      "window_artifact_id": "4d33c2414f8d2688f16b2144af80092c4c1ee615ecbb4d12a290e19b5abe21c1",
+      "embedding_artifact_id": "dc94d287ccd14168008eff6aebb56fdccd54f755bb4944d56e928a61fd5724f8",
+      "submitted_query": "((\"Depressive Disorder\"[MeSH Terms] OR depress*[Title/Abstract])) AND ((\"Exercise\"[MeSH Terms] OR exercise[Title/Abstract]))",
+      "query_translation": "(\"Depressive Disorder\"[MeSH Terms] OR \"depress*\"[Title/Abstract]) AND (\"Exercise\"[MeSH Terms] OR \"Exercise\"[Title/Abstract])",
+      "total_pubmed_matches": 28081,
+      "fetched_articles": 300,
+      "request_attempts": [
+        1,
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.1482680840126704,
+        "pubmed_download_seconds": 5.368952791992342,
+        "parsing_seconds": 0.35587816598126665,
+        "windowing_seconds": 0.19021587501629256,
+        "passage_embeddings_seconds": 1.094031124986941,
+        "index_validation_seconds": 0.042937332997098565,
+        "answer_tokenizer_load_seconds": 0.22658029201556928
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.37194283297867514,
+        "query_encode_seconds": 0.01784658301039599,
+        "dense_search_seconds": 0.0004983330145478249,
+        "retrieval_seconds": 0.522696707979776,
+        "context_seconds": 0.010759707976831123,
+        "reranking_seconds": 0.0007033330039121211,
+        "answer_seconds": 177.15463750000345,
+        "pipeline_seconds": 177.69390170901897
+      },
+      "passage_cache": {
+        "window_rows": 838,
+        "unique_inputs": 838,
+        "cache_hit_inputs": 832,
+        "encoded_inputs": 6,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.14035758300451562,
+        "model_constructor_seconds": 0.6057559170003515,
+        "encode_seconds": 0.3147381669841707,
+        "cache_write_seconds": 0.005321500007994473,
+        "sampled_max_mps_tensor_bytes": 444229632,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.021826124982908368
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 99.12408287500148,
+          "new_tokens": 199,
+          "hit_output_limit": false,
+          "input_tokens": 2514
+        },
+        {
+          "stage": "support-review",
+          "seconds": 54.89859112500562,
+          "new_tokens": 105,
+          "hit_output_limit": false,
+          "input_tokens": 1610
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 22.910012415988604,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9706356736
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38109184
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 342573056,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 379355136,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 405929984,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 414531584,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 855326720,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 753664
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5062344704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5062344704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5062344704,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5062344704,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 838,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 838,
+        "vector_bytes": 2574336
+      },
+      "local_run_sha256": "420fdc5e79bbd6d269a13dc4603121b1be29962f4d5b6f6a0f63608aeeef03ce"
+    },
+    {
+      "query_id": "p06",
+      "limit": 30,
+      "cache_state": "cold",
+      "command_wall_seconds": 196.06108870898606,
+      "cli_request_seconds": 195.427710457996,
+      "snapshot_id": "7363eec7-8bd8-421c-8b7a-db2d3b5cf60c",
+      "dataset_id": "92f25ae39ad37f42fbead279f58d0e24694d650324228f5db43c7ede1ca6997e",
+      "window_artifact_id": "15e225afb4d483e88822a7e3285d8cf1a315dc7ec7b71fee73d892dc0acd396f",
+      "embedding_artifact_id": "874121c292dfea58712ed27795bf0f80d76fb0cb7f06ee5564291ce7da12d96c",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 30,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.1876841250050347,
+        "pubmed_download_seconds": 2.097535125009017,
+        "parsing_seconds": 0.09865033399546519,
+        "windowing_seconds": 0.024747165996814147,
+        "passage_embeddings_seconds": 5.4674950830230955,
+        "index_validation_seconds": 0.007502916007069871,
+        "answer_tokenizer_load_seconds": 0.34966137498850003
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.5221089579863474,
+        "query_encode_seconds": 0.023048458999255672,
+        "dense_search_seconds": 0.00021016699611209333,
+        "retrieval_seconds": 0.7401312080037314,
+        "context_seconds": 0.011678666021907702,
+        "reranking_seconds": 0.0010922079964075238,
+        "answer_seconds": 183.86915770798805,
+        "pipeline_seconds": 184.63065920901136
+      },
+      "passage_cache": {
+        "window_rows": 104,
+        "unique_inputs": 104,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 104,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.006538249988807365,
+        "model_constructor_seconds": 0.5936347499955446,
+        "encode_seconds": 4.795577374985442,
+        "cache_write_seconds": 0.0644912080024369,
+        "sampled_max_mps_tensor_bytes": 459671552,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.0028692500200122595
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 95.9413736659917,
+          "new_tokens": 190,
+          "hit_output_limit": false,
+          "input_tokens": 2382
+        },
+        {
+          "stage": "support-review",
+          "seconds": 58.890946332976455,
+          "new_tokens": 104,
+          "hit_output_limit": false,
+          "input_tokens": 1696
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 28.794263791991398,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9690628096
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 37552128
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 340279296,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 356958208,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 360579072,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 360579072,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 798556160,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5017157632,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8533000192
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5017157632,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5017157632,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5017157632,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 104,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 5,
+        "vector_rows": 104,
+        "vector_bytes": 319488
+      },
+      "local_run_sha256": "b582c4da354666d456d80fd6a3ee1f0976f7baaaa0867e218758ef8bf00a8768"
+    },
+    {
+      "query_id": "p06",
+      "limit": 30,
+      "cache_state": "warm",
+      "command_wall_seconds": 191.18309812500956,
+      "cli_request_seconds": 190.50342470800388,
+      "snapshot_id": "e4553231-2b94-4ca1-b4bf-3b44a86487a1",
+      "dataset_id": "6638bb29fde3145be3e6d6da40c932aba4d3dfffbec5e18221555221e8d66cb6",
+      "window_artifact_id": "14870d90a0657abd2d4521bca0505a053721e71ccd1b440e80dfc1f8d6464c46",
+      "embedding_artifact_id": "04217b00f92c52ada10c2d6133ab84ff9396f0feba5e6e1b2c3f793ca3b8e18a",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 30,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.188033957994776,
+        "pubmed_download_seconds": 4.156786374980584,
+        "parsing_seconds": 0.09506045901798643,
+        "windowing_seconds": 0.024881374993128702,
+        "passage_embeddings_seconds": 0.02585937498952262,
+        "index_validation_seconds": 0.00631900000735186,
+        "answer_tokenizer_load_seconds": 0.24510500000906177
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.6255615830013994,
+        "query_encode_seconds": 0.151678082998842,
+        "dense_search_seconds": 0.0002890000178012997,
+        "retrieval_seconds": 0.9141747920075431,
+        "context_seconds": 0.00899662499432452,
+        "reranking_seconds": 0.000730458996258676,
+        "answer_seconds": 182.3440549579973,
+        "pipeline_seconds": 183.27289283301798
+      },
+      "passage_cache": {
+        "window_rows": 104,
+        "unique_inputs": 104,
+        "cache_hit_inputs": 104,
+        "encoded_inputs": 0,
+        "encoder_loads": 0,
+        "cache_lookup_seconds": 0.02302333401166834,
+        "model_constructor_seconds": 0.0,
+        "encode_seconds": 0.0,
+        "cache_write_seconds": 0.0,
+        "artifact_write_seconds": 0.0026518749946262687
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 96.59217991697369,
+          "new_tokens": 190,
+          "hit_output_limit": false,
+          "input_tokens": 2382
+        },
+        {
+          "stage": "support-review",
+          "seconds": 59.25000120900222,
+          "new_tokens": 104,
+          "hit_output_limit": false,
+          "input_tokens": 1696
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 26.234644209005637,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9605693440
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 37847040
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 339853312,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 354844672,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 355860480,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 356253696,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 356761600,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 4997955584,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 4997955584,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 4997955584,
+          "mps_tensor_bytes": 8033044992,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 4997955584,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 104,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 5,
+        "vector_rows": 104,
+        "vector_bytes": 319488
+      },
+      "local_run_sha256": "c8eb0724d140c8be105b225fe44a6a08ce8fbf27e88661bd6a514bb0cc3fa97a"
+    },
+    {
+      "query_id": "p06",
+      "limit": 100,
+      "cache_state": "cold",
+      "command_wall_seconds": 214.8425720000232,
+      "cli_request_seconds": 214.14627045797533,
+      "snapshot_id": "2d16417e-9d52-414a-97bc-c1729713002a",
+      "dataset_id": "adbefa935a5aebd4f282f7c6e91c729203142705a9d3ad226b2b4695b6a1172f",
+      "window_artifact_id": "66fd635e0dd2cefbd3897702f917109622bd88da76b37d064df1a20f8d62e0fd",
+      "embedding_artifact_id": "0bbc6f84d4cade1037e0d509ddd33a8f222771dcf1027e38e237788ff9539bfd",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 100,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.255651375016896,
+        "pubmed_download_seconds": 2.9073229169880506,
+        "parsing_seconds": 0.06918387502082624,
+        "windowing_seconds": 0.06762670798343606,
+        "passage_embeddings_seconds": 18.161928874993464,
+        "index_validation_seconds": 0.01631529099540785,
+        "answer_tokenizer_load_seconds": 0.2860563750145957
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.40232787499553524,
+        "query_encode_seconds": 0.031916583015117794,
+        "dense_search_seconds": 0.00030449999030679464,
+        "retrieval_seconds": 0.6060379589907825,
+        "context_seconds": 0.008329790987772867,
+        "reranking_seconds": 0.0009115000138990581,
+        "answer_seconds": 189.2433810410148,
+        "pipeline_seconds": 189.8645424169954
+      },
+      "passage_cache": {
+        "window_rows": 271,
+        "unique_inputs": 271,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 271,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.017298207996645942,
+        "model_constructor_seconds": 0.6608225000090897,
+        "encode_seconds": 17.285702916997252,
+        "cache_write_seconds": 0.1848005419888068,
+        "sampled_max_mps_tensor_bytes": 459671552,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.007374583015916869
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 102.96734954201384,
+          "new_tokens": 225,
+          "hit_output_limit": false,
+          "input_tokens": 2107
+        },
+        {
+          "stage": "support-review",
+          "seconds": 56.59410720897722,
+          "new_tokens": 102,
+          "hit_output_limit": false,
+          "input_tokens": 1494
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 29.421100999985356,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9673850880
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38535168
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 339902464,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 364773376,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 372785152,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 374603776,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 813563904,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5039620096,
+          "mps_tensor_bytes": 8035666432,
+          "mps_driver_bytes": 8533000192
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5039620096,
+          "mps_tensor_bytes": 8035666432,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5039620096,
+          "mps_tensor_bytes": 8035666432,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5039620096,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 271,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 271,
+        "vector_bytes": 832512
+      },
+      "local_run_sha256": "92166386199c6feef545146eef5a2d98cbaf81cd9b42d16e0e63bb06afa9babf"
+    },
+    {
+      "query_id": "p06",
+      "limit": 100,
+      "cache_state": "warm",
+      "command_wall_seconds": 202.84301520799636,
+      "cli_request_seconds": 201.9948284580023,
+      "snapshot_id": "c64cc735-b0d0-47b1-824c-c7fe9228e70d",
+      "dataset_id": "2df8cef9d2365311daee07a6d3cdef0c4e55812f81c40f776db46870fc69a1c9",
+      "window_artifact_id": "75d3eb1ac112936c687ffe92187d5408ca0e8e8b5021f30cdc5a04fba6092343",
+      "embedding_artifact_id": "c650ab14d75e0116a899b455f063ed8281878b8f553e84287a8afa23c4deee57",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 100,
+      "request_attempts": [
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.240728915989166,
+        "pubmed_download_seconds": 3.273164708982222,
+        "parsing_seconds": 0.06939833299838938,
+        "windowing_seconds": 0.06659520798712038,
+        "passage_embeddings_seconds": 1.0429097080195788,
+        "index_validation_seconds": 0.01544237497728318,
+        "answer_tokenizer_load_seconds": 0.2330869589932263
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.36568374998751096,
+        "query_encode_seconds": 0.019234250008594245,
+        "dense_search_seconds": 0.0002545829920563847,
+        "retrieval_seconds": 0.5124232500093058,
+        "context_seconds": 0.008265082986326888,
+        "reranking_seconds": 0.0008210419910028577,
+        "answer_seconds": 193.99052825002582,
+        "pipeline_seconds": 194.51743112501572
+      },
+      "passage_cache": {
+        "window_rows": 271,
+        "unique_inputs": 271,
+        "cache_hit_inputs": 267,
+        "encoded_inputs": 4,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.05118262500036508,
+        "model_constructor_seconds": 0.6752250829886179,
+        "encode_seconds": 0.30423195799812675,
+        "cache_write_seconds": 0.0029050830053165555,
+        "sampled_max_mps_tensor_bytes": 442115072,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.0059705000021494925
+      },
+      "runtime_load_count": 1,
+      "answer_status": "answered",
+      "validation_error": null,
+      "visible_claim_count": 3,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 104.9704830829869,
+          "new_tokens": 225,
+          "hit_output_limit": false,
+          "input_tokens": 2107
+        },
+        {
+          "stage": "support-review",
+          "seconds": 61.99309312502737,
+          "new_tokens": 102,
+          "hit_output_limit": false,
+          "input_tokens": 1494
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 26.77051883301465,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9706356736
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38895616
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 340344832,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 364773376,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 374046720,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 376242176,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 814432256,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 753664
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5026496512,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5026496512,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5026496512,
+          "mps_tensor_bytes": 8036715008,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5026496512,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 271,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 3,
+        "vector_rows": 271,
+        "vector_bytes": 832512
+      },
+      "local_run_sha256": "0ddc21bda396cac53f43271ca6e16334f29e0946eae8f7f7007b568672edfca9"
+    },
+    {
+      "query_id": "p06",
+      "limit": 300,
+      "cache_state": "cold",
+      "command_wall_seconds": 292.2141791250033,
+      "cli_request_seconds": 291.3338785840024,
+      "snapshot_id": "48b82f1f-2f62-434b-9fd5-8a8945a6faa1",
+      "dataset_id": "f64ce5ca8dfdff75d4ccf80282ea7dadde9b81bcc24107e0d0b84864acb783da",
+      "window_artifact_id": "83e420e3e0aff0d779408c6916366e9fcfc620dd844d8b75e7966c129b6cc131",
+      "embedding_artifact_id": "6d95d9df9243f17c5017da6f76a3b28cb95b593a8c421376845c546840ad0a17",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 300,
+      "request_attempts": [
+        1,
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.703570458019385,
+        "pubmed_download_seconds": 4.971265250002034,
+        "parsing_seconds": 0.376221832993906,
+        "windowing_seconds": 0.21620116601116024,
+        "passage_embeddings_seconds": 73.29040974998497,
+        "index_validation_seconds": 0.06231045798631385,
+        "answer_tokenizer_load_seconds": 0.28701283398550004
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.42456662497716025,
+        "query_encode_seconds": 0.019299584004329517,
+        "dense_search_seconds": 0.0005522919818758965,
+        "retrieval_seconds": 0.6288509579899255,
+        "context_seconds": 0.009719916997710243,
+        "reranking_seconds": 0.0009110420069191605,
+        "answer_seconds": 208.12560029199813,
+        "pipeline_seconds": 208.772218625003
+      },
+      "passage_cache": {
+        "window_rows": 883,
+        "unique_inputs": 880,
+        "cache_hit_inputs": 0,
+        "encoded_inputs": 880,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.0560480410058517,
+        "model_constructor_seconds": 0.6368184169987217,
+        "encode_seconds": 72.00552262499696,
+        "cache_write_seconds": 0.5554915000102483,
+        "sampled_max_mps_tensor_bytes": 459675136,
+        "sampled_max_mps_driver_bytes": 2156609536,
+        "artifact_write_seconds": 0.024507541995262727
+      },
+      "runtime_load_count": 1,
+      "answer_status": "insufficient_evidence",
+      "validation_error": null,
+      "visible_claim_count": 0,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 119.53331020800397,
+          "new_tokens": 240,
+          "hit_output_limit": false,
+          "input_tokens": 1990
+        },
+        {
+          "stage": "support-review",
+          "seconds": 59.419363958004396,
+          "new_tokens": 109,
+          "hit_output_limit": false,
+          "input_tokens": 1220
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 28.803503250004724,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9631907840
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38666240
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 347586560,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 385433600,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 409075712,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 419643392,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 859471872,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 737280
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5082791936,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 9606742016
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5082791936,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 9608839168
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5082791936,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 9608839168
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5082791936,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 883,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 0,
+        "vector_rows": 883,
+        "vector_bytes": 2712576
+      },
+      "local_run_sha256": "82fa88ef4a73fe0deabd7beb21a0ed063349d8f531f75ea4aaf74e15ebe6d9ec"
+    },
+    {
+      "query_id": "p06",
+      "limit": 300,
+      "cache_state": "warm",
+      "command_wall_seconds": 205.94243329201709,
+      "cli_request_seconds": 205.17699858397827,
+      "snapshot_id": "df970737-7b93-450d-afcd-57b4ec560e78",
+      "dataset_id": "7954b92881bd7f71bbca3b7370250092f55dc29a6961f1820d1efa14ed8aea27",
+      "window_artifact_id": "c10d1680e86589956ded17b3805f57816714dd4d38e9b4e185575611696b47cc",
+      "embedding_artifact_id": "7e7508fcccc194a968e175516aabce86f11ccf4acf4eb7c1164d96d004762aca",
+      "submitted_query": "(\"generalized anxiety disorder\"[Title/Abstract]) AND ((\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"cognitive behavioral therapy\"[Title/Abstract] OR CBT[Title/Abstract]))",
+      "query_translation": "\"generalized anxiety disorder\"[Title/Abstract] AND (\"Cognitive Behavioral Therapy\"[MeSH Terms] OR \"Cognitive Behavioral Therapy\"[Title/Abstract] OR \"CBT\"[Title/Abstract])",
+      "total_pubmed_matches": 1181,
+      "fetched_articles": 300,
+      "request_attempts": [
+        1,
+        1,
+        1
+      ],
+      "preparation_timings": {
+        "bge_tokenizer_load_seconds": 2.5046742080012336,
+        "pubmed_download_seconds": 4.8628781660227105,
+        "parsing_seconds": 0.35952462497516535,
+        "windowing_seconds": 0.21048562502255663,
+        "passage_embeddings_seconds": 1.3229532499972265,
+        "index_validation_seconds": 0.047669459017924964,
+        "answer_tokenizer_load_seconds": 0.24254495798959397
+      },
+      "timings": {
+        "query_encoder_constructor_seconds": 0.36179974998231046,
+        "query_encode_seconds": 0.018595250003272668,
+        "dense_search_seconds": 0.0005243750056251884,
+        "retrieval_seconds": 0.5227417919959407,
+        "context_seconds": 0.008722708007553592,
+        "reranking_seconds": 0.0006769590254407376,
+        "answer_seconds": 194.51730974999373,
+        "pipeline_seconds": 195.0554702919908
+      },
+      "passage_cache": {
+        "window_rows": 881,
+        "unique_inputs": 878,
+        "cache_hit_inputs": 869,
+        "encoded_inputs": 9,
+        "encoder_loads": 1,
+        "cache_lookup_seconds": 0.15499862498836592,
+        "model_constructor_seconds": 0.6181625830067787,
+        "encode_seconds": 0.5186987920023967,
+        "cache_write_seconds": 0.006325333990389481,
+        "sampled_max_mps_tensor_bytes": 449106432,
+        "sampled_max_mps_driver_bytes": 1082884096,
+        "artifact_write_seconds": 0.019822874979581684
+      },
+      "runtime_load_count": 1,
+      "answer_status": "insufficient_evidence",
+      "validation_error": null,
+      "visible_claim_count": 0,
+      "model_calls": [
+        {
+          "stage": "draft",
+          "seconds": 110.52611520900973,
+          "new_tokens": 240,
+          "hit_output_limit": false,
+          "input_tokens": 1990
+        },
+        {
+          "stage": "support-review",
+          "seconds": 55.48260725001455,
+          "new_tokens": 109,
+          "hit_output_limit": false,
+          "input_tokens": 1220
+        }
+      ],
+      "runtime": {
+        "model_id": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+        "device": "mps",
+        "quantization": {
+          "method": "metal",
+          "bits": 4,
+          "group_size": 64
+        },
+        "generation": {
+          "do_sample": false,
+          "max_new_tokens": 128,
+          "enable_thinking": false
+        },
+        "load_seconds": 28.22875395801384,
+        "loading": {
+          "strategy": "synchronize-and-release-conversion-cache",
+          "conversion_count": 248,
+          "sampled_conversion_driver_peak_bytes": 9605693440
+        },
+        "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+        "release_cache_after_generation": true,
+        "packages": {
+          "torch": "2.14.1",
+          "transformers": "5.20.1",
+          "accelerate": "1.15.0",
+          "kernels": "0.17.2",
+          "huggingface-hub": "2.2.0"
+        }
+      },
+      "memory_samples": [
+        {
+          "stage": "query-validation",
+          "process_peak_rss_bytes": 38748160
+        },
+        {
+          "stage": "pubmed-download",
+          "process_peak_rss_bytes": 344539136,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "parsing",
+          "process_peak_rss_bytes": 382287872,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "windowing",
+          "process_peak_rss_bytes": 408879104,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "passage-embeddings",
+          "process_peak_rss_bytes": 420167680,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 475136
+        },
+        {
+          "stage": "index-validation",
+          "process_peak_rss_bytes": 858243072,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 753664
+        },
+        {
+          "stage": "qwen-loaded",
+          "process_peak_rss_bytes": 5062426624,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 8531951616
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5062426624,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "qwen-call-complete",
+          "process_peak_rss_bytes": 5062426624,
+          "mps_tensor_bytes": 8033569280,
+          "mps_driver_bytes": 8535097344
+        },
+        {
+          "stage": "finished",
+          "process_peak_rss_bytes": 5062426624,
+          "mps_tensor_bytes": 0,
+          "mps_driver_bytes": 3883008
+        }
+      ],
+      "integrity_checks": {
+        "window_spans_checked": 881,
+        "selected_sources_checked": 6,
+        "visible_citations_checked": 0,
+        "vector_rows": 881,
+        "vector_bytes": 2706432
+      },
+      "local_run_sha256": "f1e0ba9e908e8dca58b5ee58de57908234b746a0038f219b7bb3c7aff9282d9a"
+    }
+  ],
+  "finished_at": "2026-11-10T06:32:04.861886+00:00"
+}

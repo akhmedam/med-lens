@@ -10,7 +10,11 @@ semantic errors and rejected promotion of the expanded reviewer. Reserve semanti
 work is required before the release conditions are met. Dense retrieval/ranking
 and Qwen3.5-9B generation remain the user-accepted primary pipeline; see the
 [ADR](adr/0003-primary-pipeline.md). Day numbers denote
-working sessions, not calendar deadlines. Target: portfolio v1.0 at Day 28,
+working sessions, not calendar deadlines. The live-search priority accepted on
+2026-11-09 schedules live search in the existing depression/anxiety scope for
+2026-11-10, followed by broader biomedical coverage and a new manual relevance
+annotation round from 2026-11-11. These add two sessions before the API.
+Target: portfolio v1.0 at Day 30, subject to annotation and quality gates,
 with two to four reserve sessions for generation, PMC and corpus scaling.
 
 The primary user interface will be an interactive command-line application.
@@ -30,11 +34,124 @@ interface; a web UI is outside this release plan.
 | 21 | Evaluate population/age, severity, intervention, comparator, outcome, null findings and contradictions. | [Paired review diagnostics and remaining-error record](day21-semantic-reliability.md); v5 remains experimental after regressions. |
 | 22 | Pool local collections, handle duplicate records and text versions, verify cache updates and start the Small → Medium transition. | [Shared collection and immutable cache](shared-corpus.md): 277 unique articles, 850 windows; preparation, cache lifecycle and resident search measured. Larger Medium and relevance validation remain open. |
 | 23 | Test a small explicitly licensed PMC subset, preserve JATS section/source provenance and date filters, and compare paired abstract/full-text costs and rankings. | [Feasibility result](pmc-fulltext.md): full text remains opt-in; no judged quality gain is established. |
-| 24 | Add a minimal programmatic API with request parameters, errors and model lifecycle management. | The integrated pipeline is callable through an API. |
-| 25 | Build the interactive CLI: question input, mode selection, progress, ranked articles, evidence, drafts/citations, errors and report export. | A usable terminal workflow without a web UI. |
-| 26 | Evaluate the frozen held-out questions, unsupported requests, empty evidence and repeated runs. | A final report on questions not used to tune the pipeline. |
-| 27 | Remove losing implementations and unused dependencies; finish necessary CI checks, README and experiment documentation. | One maintained pipeline with a traceable explanation of its selection. |
-| 28 | Follow setup from a clean checkout; prepare examples, limitations and the release. | A reproducible portfolio v1.0, subject to the quality checks below. |
+| 24 | Implement live PubMed retrieval within the existing depression/anxiety scope, using bounded candidate pools and cached unchanged embeddings, then run Dense, evidence selection and Qwen generation/review in one request. Implemented on 2026-11-10. | [Live pipeline and measured costs](live-search.md): twelve fresh cold/warm requests at 30/100/300 candidates; exact source checks and 288 passing tests. Format failures and abstentions remain visible; answer quality is not scored. |
+| 25 | Prepare broader biomedical cases and a blank manual annotation package from 2026-11-11. The user completes all judgments independently before quality evaluation begins. | Frozen questions/sources and a user-authored reference set; retrieval and answer quality are measured only after the required human annotations are complete and frozen. |
+| 26 | Add a minimal programmatic API with request parameters, errors and model lifecycle management. | The integrated live-search pipeline is callable through an API. |
+| 27 | Build the interactive CLI: question input, mode selection, progress, ranked articles, evidence, drafts/citations, errors and report export. | A usable terminal workflow without a web UI. |
+| 28 | Evaluate the frozen held-out questions, unsupported requests, empty evidence and repeated runs. | A final report on questions not used to tune the pipeline. |
+| 29 | Remove losing implementations and unused dependencies; finish necessary CI checks, README and experiment documentation. | One maintained pipeline with a traceable explanation of its selection. |
+| 30 | Follow setup from a clean checkout; prepare examples, limitations and the release. | A reproducible portfolio v1.0, subject to the quality checks below. |
+
+## Completed: live PubMed search on 2026-11-10
+
+Accepted by the user on 2026-11-09. The latest scheduling decision keeps this
+session within the existing depression/anxiety topic scope. The implementation
+and [runtime/integrity record](live-search.md) are complete. Broader biomedical
+coverage and its new manual annotation round begin in the following session on
+2026-11-11. The intended live request becomes:
+
+```text
+Question -> PubMed query -> fresh candidate search and abstract download
+         -> parsing and source windows -> cached/new BGE vectors -> Dense top-10
+         -> exact evidence -> Qwen draft and support review -> answer with citations
+```
+
+Completion criteria:
+
+- One command accepts a new question and performs a live PubMed search; a manually
+  selected local collection is no longer required for that mode. Existing local
+  artifacts remain usable for reproducible offline experiments.
+- Define and document question-to-PubMed-query construction, including any explicit
+  query override. Record the question, submitted query, PubMed query translation,
+  candidate count, retrieval timestamps and snapshot identity in the request report.
+- Fetch current candidate records for each live request. Apply an explicit candidate
+  cap rather than promising to retrieve every matching article. Compare 30, 100 and
+  300 candidates on fixed development questions and select a practical default from
+  the measurements; no latency target is claimed before that experiment.
+- Reuse exact unchanged token inputs from the verified embedding cache. New or
+  changed inputs are encoded with the pinned BGE policy. Keep model lifetimes
+  bounded on the Air M3, 24 GiB, through sequential BGE and Qwen execution.
+- Run the existing Dense, evidence, Qwen generation and default support-review
+  stages, retaining exact source citations, validation gates and explicit
+  insufficient-evidence outcomes. API errors and incomplete downloads are visible;
+  cached data must not be silently presented as a successful fresh search.
+- Measure the complete request with cold and warm embedding caches, separating
+  search/download, parsing/windowing, model loading, passage/query encoding,
+  ranking/evidence packing, generation and review. Report process and device
+  memory with their scopes. Preserve snapshots and raw runs locally and publish
+  only compact experiment records.
+- Demonstrate a sourced end-to-end answer on a suitable development request, plus
+  empty-result and upstream-error behavior. Keep held-out questions frozen and
+  do not transfer historical qrels to newly fetched candidate sets. PMC full text
+  remains an explicit experiment while the live default uses PubMed abstracts.
+
+Semantic-support errors remain a release blocker. Reserve work on development
+cases must precede final held-out confirmation if those errors remain material.
+The API and following sessions shift by two sessions to make room for live search
+and the separate broader-topic/manual-annotation stage.
+
+## Following priority: broader topics and manual annotation from 2026-11-11
+
+The user postponed arbitrary biomedical question support to the session after
+live search, explicitly to allow a new manual relevance-annotation round. The
+existing manual labels are retained for their original question/article pairs;
+AI-generated qrels v2/v3 are separate historical assessment sets, not a substitute
+for the user's new labels. Existing depression/anxiety development results do
+not establish quality on other specialties.
+
+The user explicitly requires annotation first, quality measurement afterward,
+and will perform all annotation independently. Codex prepares the source package,
+annotation interface/rubric and consistency checks, but supplies no prefilled
+labels, suggested grades or model-written annotation rationales. Pending labels
+are a gate, not permission to substitute AI judgments or publish interim quality
+scores. Runtime and integrity checks may proceed independently.
+
+Preparation and acceptance criteria:
+
+- Freeze a manageable cross-topic development question set and the relevance
+  intent for each question before tuning. Include several biomedical specialties,
+  question types and population scopes. Preserve the existing held-out set.
+- Fetch and freeze the article candidates and exact title/abstract versions. Build
+  a reusable annotation package with question, article text and source links,
+  consistent 0/1/2 relevance definitions, and an explicit unknown/unjudgeable option.
+  Hide retrieval method, score and rank during labeling where practical.
+- The user alone supplies every judgment and rationale. Store annotation provenance
+  and bind every label to question ID, PMID and text version. Do not autofill missing
+  labels with model assessments or treat unlabeled articles as irrelevant. Preserve
+  the user's originals; flag inconsistencies for the user rather than rewriting
+  their judgments.
+- First deliver the blank package; then wait for the user to complete and explicitly
+  finalize the required annotation round. Validate its structure and source bindings,
+  freeze its version/checksums, and only then run quality measurements against it.
+  Do not run scoring or use provisional labels to tune or select the pipeline.
+- Keep retrieval relevance and answer correctness as distinct assessment targets.
+  Article 0/1/2 relevance labels support retrieval metrics; they alone cannot label
+  a generated claim as supported, complete or correct. Define the answer-evaluation
+  rubric and required human reference evidence before measuring answer quality.
+  If additional answer/claim judgments are needed after draft generation, the user
+  also performs those independently, and answer metrics wait for their completion.
+  Report judgment coverage and remaining uncertainties for both evaluation stages.
+- Remove depression/anxiety-specific constraints from query construction, source
+  selection, prompts and user-facing product descriptions. Audit assumed adult
+  populations and treatment-efficacy framing: question scope must determine which
+  population, intervention, comparator and outcome restrictions apply.
+- Support question types beyond treatment efficacy where the available sources
+  permit, including diagnosis, prevention, prognosis and biological mechanisms.
+  Make evidence selection and review appropriate to the requested question rather
+  than applying an efficacy-only interpretation to all questions. Preserve strict
+  citation checks and the requirement to withhold unsupported statements; changes
+  to review behavior require explicit development evidence, not an automatic
+  switch to the previously rejected experimental reviewer.
+- Use the new manually annotated development cases (for example cardiovascular
+  disease, diabetes, infection and neurology) to inspect query construction,
+  retrieval and source mappings. Keep historical benchmark scope labels and
+  distinguish evidence of functionality from evidence of quality.
+
+The expanded scope covers biomedical questions supported by PubMed literature,
+not general web search. The new manual set is a development set unless a separate
+held-out protocol is agreed; publication of labels does not make it independent
+test data. Annotation availability may require reserve sessions beyond the nominal
+schedule.
 
 ## Comparison rules
 
@@ -70,5 +187,8 @@ and final checks. Model weights, source corpora, vectors and raw run outputs
 remain local artifacts rather than Git contents.
 
 PMC scope and the Medium profile must remain within measured laptop limits.
-Expansion to other biomedical areas follows the stable initial release and
-requires its own retrieval and answer evaluation.
+The latest 2026-11-09 decision separates live search on 2026-11-10 from broader
+biomedical coverage/manual annotation starting 2026-11-11, superseding the earlier
+same-session expansion plan and the original post-release expansion restriction. Broader topic support still requires its own retrieval and answer
+evaluation; depression/anxiety benchmark scores must not be generalized to other
+specialties.

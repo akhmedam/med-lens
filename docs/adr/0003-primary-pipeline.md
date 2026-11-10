@@ -53,11 +53,12 @@ a separate explicit decision.
 
 ## Existing integration and continuation
 
-The chosen chain already exists in `scripts/ask.py`: use **`--generate` and omit
-`--rerank`**. No inference code or transfer payload changed to record this choice.
-The current CLI keeps explicit generation activation for staged checks; the
-primary documented request includes it. The interactive CLI planned for Day 25
-should present the complete question-to-answer workflow as the primary path.
+The primary entry point is now `scripts/ask_live.py`: fetch current PubMed
+candidates for each question and run the selected chain, with generation enabled
+by default and no reranker. See [live requests](../live-search.md). This integrates
+source acquisition without changing the chosen models or support-review policy.
+For prepared-collection replay, `scripts/ask.py` still uses **`--generate` and
+omits `--rerank`**. The planned interactive CLI will expose the same full workflow.
 
 MedCPT, BM25/RRF and Qwen reranking remain historical comparison code until the
 planned Day 27 cleanup. Do not remove their experiment records. Continue on the

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "heldout_used": false,
+  "qrels_used": false,
+  "quality_evaluation_performed": false,
+  "unit_tests_passed": 288,
+  "dependency_check": "No broken requirements found.",
+  "independent_live_snapshots": 12,
+  "all_runtime_load_counts_one": true,
+  "all_cold_caches_empty": true,
+  "all_warm_runs_reused_vectors": true,
+  "all_source_code_hashes_match": true,
+  "window_spans_checked": 4954,
+  "selected_sources_checked": 72,
+  "visible_citations_checked": 26,
+  "answer_status_counts": {
+    "partial": 2,
+    "validation_failed": 2,
+    "answered": 6,
+    "insufficient_evidence": 2
+  },
+  "automatic_status_scope": "Describes pipeline/format/review outcomes, not correctness or clinical accuracy.",
+  "empty_result": {
+    "real_network_request": true,
+    "snapshot_id": "989a4348-944c-4af1-ad4b-235a7a961c6b",
+    "answer_status": "insufficient_evidence",
+    "model_weights_loaded": false,
+    "command_scope": "A valid scoped PubMed query with an intentionally absent title token.",
+    "local_run_sha256": "ea2ce5ee89178cbcd0f7fca6d669edb349d9d45111602f4ca38d08bdff185c48"
+  },
+  "upstream_error_behavior": "Covered by synthetic transport failure after a prior successful request; failed fresh request retains no old retrieval/answer. No real service outage was induced.",
+  "pairs": [
+    {
+      "query_id": "p03",
+      "limit": 30,
+      "shared_pmids": 29,
+      "warm_new_pmids": 1,
+      "cold_wall_seconds": 142.32995308400132,
+      "warm_wall_seconds": 163.3237812499865,
+      "cold_passage_preparation_seconds": 4.682052624993958,
+      "warm_passage_preparation_seconds": 0.8998908330104314,
+      "cold_answer_status": "partial",
+      "warm_answer_status": "partial"
+    },
+    {
+      "query_id": "p03",
+      "limit": 100,
+      "shared_pmids": 93,
+      "warm_new_pmids": 7,
+      "cold_wall_seconds": 205.5666310839879,
+      "warm_wall_seconds": 188.04345183400437,
+      "cold_passage_preparation_seconds": 14.35445924999658,
+      "warm_passage_preparation_seconds": 1.7246167089906521,
+      "cold_answer_status": "validation_failed",
+      "warm_answer_status": "validation_failed"
+    },
+    {
+      "query_id": "p03",
+      "limit": 300,
+      "shared_pmids": 299,
+      "warm_new_pmids": 1,
+      "cold_wall_seconds": 224.36541174998274,
+      "warm_wall_seconds": 188.1099264169752,
+      "cold_passage_preparation_seconds": 47.173958250001306,
+      "warm_passage_preparation_seconds": 1.094031124986941,
+      "cold_answer_status": "answered",
+      "warm_answer_status": "answered"
+    },
+    {
+      "query_id": "p06",
+      "limit": 30,
+      "shared_pmids": 30,
+      "warm_new_pmids": 0,
+      "cold_wall_seconds": 196.06108870898606,
+      "warm_wall_seconds": 191.18309812500956,
+      "cold_passage_preparation_seconds": 5.4674950830230955,
+      "warm_passage_preparation_seconds": 0.02585937498952262,
+      "cold_answer_status": "answered",
+      "warm_answer_status": "answered"
+    },
+    {
+      "query_id": "p06",
+      "limit": 100,
+      "shared_pmids": 99,
+      "warm_new_pmids": 1,
+      "cold_wall_seconds": 214.8425720000232,
+      "warm_wall_seconds": 202.84301520799636,
+      "cold_passage_preparation_seconds": 18.161928874993464,
+      "warm_passage_preparation_seconds": 1.0429097080195788,
+      "cold_answer_status": "answered",
+      "warm_answer_status": "answered"
+    },
+    {
+      "query_id": "p06",
+      "limit": 300,
+      "shared_pmids": 298,
+      "warm_new_pmids": 2,
+      "cold_wall_seconds": 292.2141791250033,
+      "warm_wall_seconds": 205.94243329201709,
+      "cold_passage_preparation_seconds": 73.29040974998497,
+      "warm_passage_preparation_seconds": 1.3229532499972265,
+      "cold_answer_status": "insufficient_evidence",
+      "warm_answer_status": "insufficient_evidence"
+    }
+  ],
+  "default_candidate_limit": 100,
+  "quality_optimal_default_established": false,
+  "test_log_sha256": "4c398457f64508e867c13d0ac781a171266d4d1add17a60443fe9f2a3fe03c71",
+  "experiment_sha256": "77712eea9af7a7680c48ae7fd6f5db3c4bea1624c19402187de7e0ad714afe4d"
+}

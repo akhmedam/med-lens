@@ -17,8 +17,9 @@ Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](do
 for metrics and annotation provenance. Saved evidence contexts can feed
 experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
-A single local request command now connects search, optional reranking, source
-selection and optional generation, and saves an inspectable HTML report.
+A [live request](docs/live-search.md) now searches PubMed and downloads current
+abstracts for each question, reuses unchanged passage vectors, and runs Dense,
+source selection and Qwen generation/review. Local-collection replay remains available.
 The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
 (208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
 remains provisional because two pairs are unjudged.
@@ -75,29 +76,28 @@ python -m pip install -r requirements-macos-arm64-day19.lock
 
 ## Ask a question
 
-Run the selected Dense → context → Qwen9B workflow against a prepared collection:
+Run the selected live PubMed → Dense → evidence → Qwen9B workflow:
 
 ```sh
-python scripts/ask.py data/parsed/recovery-20261106/p06 \
-  --windows data/windows/recovery-20261106/p06 \
-  --embeddings data/embeddings/recovery-20261106/p06 \
+python scripts/ask_live.py \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --generate --output-dir results/requests/gad-answer-example
-open results/requests/gad-answer-example/report.html
+  --limit 100 --output-dir results/requests/live-gad-example
+open results/requests/live-gad-example/report.html
 ```
 
-Generation is a required part of the primary workflow; `--generate` currently
-activates it explicitly. Omit that flag for diagnostic search/excerpts without
-Qwen weights. The cached tokenizer is still needed for evidence budgeting.
-`--rerank` invokes the historical Qwen reranker and is omitted from the selected
-pipeline. Use a fresh output directory for each run.
+Generation is enabled by default; `--search-only` runs diagnostic retrieval and
+excerpts. Every request searches and fetches PubMed anew; the embedding cache
+reuses unchanged inputs. The current English question scope is depression and
+anxiety/panic. PubMed candidate collection is bounded (1–300, initial default 100),
+and the exact submitted query and PubMed translation are recorded in the report.
+This does not search every PubMed article semantically. See the
+[live request guide](docs/live-search.md) for query overrides, timing and limits.
+Use a fresh output directory for each run.
 
-The topic collections contain up to thirty candidates each. To search the pooled
-277-article revision, use the three directories in the [shared-corpus guide](docs/shared-corpus.md).
-This command
-searches the collection you supply; it does not fetch new papers or search all
-of PubMed. Questions should be in English. See the [local request guide](docs/local-requests.md)
-for modes, failures, exit codes and measured examples.
+For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
+directories; pass `--generate` and omit `--rerank` for the same answer pipeline.
+See the [local request guide](docs/local-requests.md) and
+[shared-corpus guide](docs/shared-corpus.md).
 
 ## Download papers
 

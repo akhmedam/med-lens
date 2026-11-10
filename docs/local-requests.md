@@ -1,5 +1,9 @@
 # Local search-to-answer requests
 
+For a fresh PubMed search on each question, use the primary
+[live request command](live-search.md). This page documents prepared-collection
+requests for offline replay and controlled experiments.
+
 `scripts/ask.py` runs a fresh English question against one verified local
 collection. It saves a human-readable `report.html` and a full `run.json` in a
 new directory. No pilot relevance labels or saved rankings enter this path.
