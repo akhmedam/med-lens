@@ -90,6 +90,15 @@ cases must precede final held-out confirmation if those errors remain material.
 The API and following sessions shift by two sessions to make room for live search
 and the separate broader-topic/manual-annotation stage.
 
+## Native runtime optimization
+
+The user requested performance work after accepting live search. The
+[MLX runtime](native-mlx.md) targets Qwen load/prefill/decode, the dominant costs.
+Fixed-source replays and fresh live requests measure latency and integrity;
+they do not replace or prefill the user's independent annotations. The existing
+answer/review contracts, source gates and topic scope remain in force. A runtime
+or quantization change is not evidence of semantic equivalence.
+
 ## Following priority: broader topics and manual annotation from 2026-11-11
 
 The user postponed arbitrary biomedical question support to the session after

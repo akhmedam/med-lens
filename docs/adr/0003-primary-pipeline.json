@@ -10,7 +10,7 @@
   "embedding_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
   "generator_model": "Qwen/Qwen3.5-9B",
   "generator_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
-  "generator_runtime": "Transformers/MPS; Metal 4-bit, group 64",
+  "generator_runtime": "Native MLX-LM 0.32.2 in isolated subprocess; affine 4-bit group-64 linear layers, FP16 embedding/head, A_log FP32",
   "support_review": "same Qwen instance, sequentially; not independent verification",
   "primary_reranker": null,
   "primary_cli_flags": [],
@@ -32,5 +32,8 @@
   ],
   "live_search_integrated_on": "2026-11-10",
   "live_validation_record": "docs/experiments/live-search.json",
-  "live_validation_scope": "Two in-scope development questions, 30/100/300 fresh candidates with cold/warm embedding caches. Runtime/integrity only; 6 answered, 2 partial, 2 validation failures withheld, 2 abstentions. No relevance or answer-quality evaluation."
+  "live_validation_scope": "Two in-scope development questions, 30/100/300 fresh candidates with cold/warm embedding caches. Runtime/integrity only; 6 answered, 2 partial, 2 validation failures withheld, 2 abstentions. No relevance or answer-quality evaluation.",
+  "fallback_runtime": "Explicit --engine transformers; original Transformers/MPS Metal backend",
+  "runtime_decision": "docs/adr/0004-native-mlx-runtime.md",
+  "runtime_validation_record": "docs/experiments/native-mlx.json"
 }

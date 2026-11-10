@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import numpy as np
 
@@ -146,6 +146,50 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(result['status'],'failed')
         self.assertIn('tokenizers differ',result['error']['message'])
         self.assertEqual(runtime.calls,[])
+
+    def test_runtime_closes_after_success_failure_and_tokenizer_mismatch(self):
+        for mode in ("success", "generation-error", "tokenizer-mismatch"):
+            with self.subTest(mode=mode):
+                runtime = answers.FakeRuntime(['not json'])
+                runtime.tokenizer = Tokenizer()
+                runtime.metadata = {"fixture": True}
+                runtime.close = Mock()
+                if mode == "generation-error":
+                    runtime.generate = Mock(side_effect=RuntimeError("Inference failed"))
+                if mode == "tokenizer-mismatch":
+                    runtime.tokenizer = SimpleNamespace(backend_tokenizer=SimpleNamespace(to_str=lambda: "other"))
+                report = run_question(index_fixture(), "Question", encoder_factory=Encoder,
+                    tokenizer=Tokenizer(), runtime_factory=lambda: runtime, generate=True)
+                runtime.close.assert_called_once_with()
+                self.assertTrue(report["runtime_closed"])
+                self.assertEqual(report["status"], "complete" if mode == "success" else "failed")
+
+    def test_cleanup_error_preserves_primary_failure_and_fails_success(self):
+        for inference_error in (False, True):
+            runtime = answers.FakeRuntime(['not json'])
+            runtime.tokenizer, runtime.metadata = Tokenizer(), {"fixture": True}
+            runtime.close = Mock(side_effect=RuntimeError("Cleanup failed"))
+            if inference_error:runtime.generate = Mock(side_effect=ValueError("Inference failed"))
+            report = run_question(index_fixture(), "Question", encoder_factory=Encoder,
+                tokenizer=Tokenizer(), runtime_factory=lambda: runtime, generate=True)
+            self.assertEqual(report["status"], "failed")
+            self.assertFalse(report["runtime_closed"])
+            self.assertEqual(report["error"]["message"], "Inference failed" if inference_error else "Cleanup failed")
+            if inference_error:self.assertEqual(report["cleanup_error"]["message"], "Cleanup failed")
+
+    def test_runtime_policy_and_chat_template_change_request_identity(self):
+        def unavailable():raise AssertionError("Search only must not load model")
+        unavailable.identity = {"engine": "mlx", "artifact_manifest_sha256": "one"}
+        def run(tokenizer):
+            return run_question(index_fixture(), "Question", encoder_factory=Encoder,
+                tokenizer=tokenizer, runtime_factory=unavailable)
+        first = run(Tokenizer())
+        unavailable.identity = {"engine": "transformers"}
+        second = run(Tokenizer())
+        tokenizer = Tokenizer();tokenizer.chat_template = "different-template"
+        third = run(tokenizer)
+        self.assertEqual(len({first["request_id"], second["request_id"], third["request_id"]}), 3)
+        self.assertNotEqual(second["tokenizer"], third["tokenizer"])
 
     def test_invalid_question_or_limit_rejected_before_factory(self):
         def forbidden():raise AssertionError('Factory must not run')

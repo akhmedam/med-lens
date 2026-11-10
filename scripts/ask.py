@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("HF_HOME", str(ROOT / ".cache/huggingface"))
 os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 
-from medlens.inference.qwen import MODEL_ID, REVISION, QwenRuntime
+from medlens.inference.qwen import MODEL_ID, REVISION
+from medlens.inference.backends import add_runtime_arguments, runtime_factory
 from medlens.pipeline import run_question
 from medlens.reporting import render_report
 from medlens.retrieval.dense import DenseIndex
@@ -32,9 +33,14 @@ def main(argv=None):
     parser.add_argument('--rerank', action='store_true', help='Rerank dense hits with the same Qwen instance')
     parser.add_argument('--model', type=Path, default=ROOT / '.cache/models/bge-base-en-v1.5')
     parser.add_argument('--tokenizer', type=Path, default=ROOT / '.cache/tokenizers/bge-base-en-v1.5')
-    parser.add_argument('--device', choices=('mps', 'cpu'), default='mps', help='BGE device; Qwen requires MPS')
+    parser.add_argument('--device', choices=('mps', 'cpu'), default='mps', help='BGE device; Qwen uses the Apple GPU')
     parser.add_argument('--output-dir', type=Path, required=True)
+    add_runtime_arguments(parser)
     args = parser.parse_args(argv)
+    try:
+        make_runtime = runtime_factory(args.engine, root=ROOT, model_dir=args.mlx_model_dir,
+                                       worker_python=args.mlx_python)
+    except ValueError as exc:parser.error(str(exc))
     if not args.query.strip() or not 1 <= args.top_k <= 10:
         parser.error('Supply a nonempty query and top-k between one and ten')
     from medlens.dates import select_publication_dates
@@ -75,7 +81,7 @@ def main(argv=None):
                 torch.mps.empty_cache()
         report = run_question(index, args.query,
             encoder_factory=lambda: BGEEncoder(args.model, args.tokenizer, device=args.device),
-            tokenizer=tokenizer, runtime_factory=QwenRuntime, generate=args.generate,
+            tokenizer=tokenizer, runtime_factory=make_runtime, generate=args.generate,
             rerank=args.rerank, top_k=args.top_k, checkpoint=checkpoint,
             release_accelerator=release_accelerator)
     except (Exception, KeyboardInterrupt) as exc:

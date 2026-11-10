@@ -76,7 +76,11 @@ batch size 16 on MPS. On a cold vector cache, passage encoding and query encodin
 currently use separate sequential BGE instances. A request whose passage inputs are all cached skips the passage
 model entirely; fresh result changes can still require some new vectors. BGE is collected and unused MPS cache is released before loading
 Qwen. One Qwen instance generates and reviews the answer with the current v6/v4
-contracts, model revision, FP16/4-bit group-64 runtime and token budgets.
+contracts and token budgets. The default is now the [isolated native MLX
+backend](native-mlx.md); `--engine transformers` selects the original runtime.
+Both record their exact precision and stop policy. The measurements below
+remain the original Transformers/Metal baseline; see the native runtime record
+for the separate optimization experiment.
 
 Empty PubMed results complete with an explicit insufficient-evidence result and
 load no model weights. If all selected sources lack usable excerpts, the ordinary

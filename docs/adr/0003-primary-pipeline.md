@@ -69,3 +69,11 @@ The [current decision record](0003-primary-pipeline.json) is authoritative.
 [Pipeline options](../pipeline-options.md) retain the measured trade-offs. The
 Day 19 comparison packet and restore audit were captured before this choice;
 their `pending-user` fields are historical snapshots and do not override this ADR.
+
+## Native runtime refinement
+
+The [native MLX runtime decision](0004-native-mlx-runtime.md) replaces the default
+execution backend after the user requested performance optimization. It preserves
+the selected retrieval/generation chain and pinned 9B checkpoint, while explicitly
+recording arithmetic and stopping-policy differences. Independent answer quality
+validation remains required.
