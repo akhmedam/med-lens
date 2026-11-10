@@ -32,7 +32,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         raise ValueError("generate and rerank must be booleans")
     info = tokenizer_identity(tokenizer)
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
-        for name in ("pipeline.py", "reporting.py", "corpus.py", "pmc.py", "dates.py", "retrieval/dense.py", "retrieval/embeddings.py",
+        for name in ("pipeline.py", "reporting.py", "corpus.py", "pmc.py", "dates.py", "live.py", "pubmed_query.py", "retrieval/dense.py", "retrieval/embeddings.py",
             "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
@@ -70,12 +70,16 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         save("retrieval")
         tick = perf_counter()
         encoder = encoder_factory()
+        report["timings"]["query_encoder_constructor_seconds"] = perf_counter() - tick
         try:
             index.verify_encoder(encoder)
             vectors, encoding = encoder.encode_queries([question])
             if vectors.shape != (1, 768):
                 raise ValueError("Expected exactly one BGE query vector")
+            report["timings"]["query_encode_seconds"] = encoding["encode_seconds"]
+            search_started = perf_counter()
             hits = index.search(vectors[0], top_k)
+            report["timings"]["dense_search_seconds"] = perf_counter() - search_started
             scores = np.clip(index.vectors @ vectors[0], -1.0, 1.0)
             report["retrieval"] = {"method": "dense-cosine-max-window", "results": hits,
                 "query_vector_sha256": hashlib.sha256(vectors[0].astype(np.float32).tobytes()).hexdigest(),

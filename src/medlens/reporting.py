@@ -25,9 +25,19 @@ def render_report(report):
         '<title>MedLens search report</title><style>body{max-width:900px;margin:40px auto;padding:0 24px;font:16px/1.6 system-ui;color:#222}h1,h2{line-height:1.25}article{border-top:1px solid #ddd;padding:16px 0}blockquote{border-left:3px solid #bbb;margin-left:0;padding-left:16px;white-space:pre-wrap}aside{background:#fff3cf;padding:16px}.muted{color:#555}a{color:#175e9b}code{overflow-wrap:anywhere}</style>',
         '<h1>MedLens</h1><p>' + escape(report.get('question', '')) + '</p>']
     scope = report.get('scope', {})
-    parts.append('<p class="muted">Search scope: provided local collection · '
-        + escape(str(scope.get('candidate_count', '?'))) + ' articles. '
-        'These results do not cover all of PubMed. Questions work best in English.</p>')
+    live = report.get('live')
+    if live:
+        parts.append('<p class="muted">Fresh PubMed candidate search · '
+            + escape(str(live.get('fetched_article_count', '?'))) + ' fetched of '
+            + escape(str(live.get('total_pubmed_matches', '?'))) + ' reported matches · limit '
+            + escape(str(live['candidate_limit'])) + '. Questions currently cover depression and anxiety in English.</p>')
+        parts.append('<p>PubMed query: <code>' + escape(live['query_plan']['submitted_query']) + '</code></p>')
+        if not live.get('fresh_search_complete'):
+            parts.append('<p>Fresh source download has not completed successfully.</p>')
+    else:
+        parts.append('<p class="muted">Search scope: provided local collection · '
+            + escape(str(scope.get('candidate_count', '?'))) + ' articles. '
+            'These results do not cover all of PubMed. Questions work best in English.</p>')
     dates = scope.get('date_selection') or {}
     if dates.get('published_from') or dates.get('published_until'):
         parts.append('<p class="muted">Publication interval: ' + escape(dates.get('published_from') or 'unbounded')

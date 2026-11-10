@@ -13,9 +13,7 @@
   "generator_runtime": "Transformers/MPS; Metal 4-bit, group 64",
   "support_review": "same Qwen instance, sequentially; not independent verification",
   "primary_reranker": null,
-  "primary_cli_flags": [
-    "--generate"
-  ],
+  "primary_cli_flags": [],
   "historical_rerank_flag_in_primary_workflow": false,
   "search_only_role": "diagnostic mode and partial results after generation failure",
   "target_machine": "MacBook Air M3, 24 GiB",
@@ -24,5 +22,15 @@
   "transfer_payload_changed_by_decision": false,
   "heldout_used": false,
   "target_validation_scope": "Short smoke; primary CLI p01 partial draft with exact citations; primary CLI p06 overlong draft withheld; complete rebuilt development pilot (9/10 visible, 2/2 controls abstained)",
-  "target_validation_record": "docs/experiments/air-recovery.json"
+  "target_validation_record": "docs/experiments/air-recovery.json",
+  "primary_cli": "scripts/ask_live.py",
+  "primary_generation_enabled_by_default": true,
+  "source_acquisition": "Fresh bounded PubMed candidate search and abstract download per live request; unchanged exact passage inputs reuse embedding cache",
+  "offline_cli": "scripts/ask.py",
+  "offline_answer_flags": [
+    "--generate"
+  ],
+  "live_search_integrated_on": "2026-11-10",
+  "live_validation_record": "docs/experiments/live-search.json",
+  "live_validation_scope": "Two in-scope development questions, 30/100/300 fresh candidates with cold/warm embedding caches. Runtime/integrity only; 6 answered, 2 partial, 2 validation failures withheld, 2 abstentions. No relevance or answer-quality evaluation."
 }
