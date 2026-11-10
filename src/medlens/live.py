@@ -99,11 +99,15 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
         class Runtime:
             tokenizer = instance.tokenizer
             metadata = instance.metadata
+            def close(self):
+                close = getattr(instance, "close", None)
+                if callable(close):close()
             def generate(self, *args, **kwargs):
                 try:return instance.generate(*args, **kwargs)
                 finally:samples.append(sample_memory('qwen-call-complete'))
         return Runtime()
 
+    measured_runtime.identity = getattr(runtime_factory, "identity", {"engine": "custom"})
     save(report)
     try:
         stage('query-validation')
@@ -155,6 +159,6 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
         release()
     samples.append(sample_memory('finished'))
     report['finished_at'] = datetime.now(timezone.utc).isoformat()
-    report['memory_scope'] = 'Process RSS high-water and stage-boundary MPS samples overlap; do not add. Passage forward samples and Qwen conversion samples are reported separately, not instantaneous total device peaks.'
+    report['memory_scope'] = 'Parent process RSS high-water and stage-boundary MPS samples overlap; do not add. MLX worker RSS/Metal counters, when present in runtime metadata, are separate overlapping observations, not a system-wide or swap peak.'
     save(report)
     return report

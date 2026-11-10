@@ -19,7 +19,9 @@ experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
 A [live request](docs/live-search.md) now searches PubMed and downloads current
 abstracts for each question, reuses unchanged passage vectors, and runs Dense,
-source selection and Qwen generation/review. Local-collection replay remains available.
+source selection and Qwen generation/review. [Native MLX inference](docs/native-mlx.md)
+uses an isolated runtime on Apple Silicon; the former Transformers/Metal path
+remains explicitly selectable. Local-collection replay remains available.
 The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
 (208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
 remains provisional because two pairs are unjudged.
@@ -73,6 +75,11 @@ PubMed ingestion uses the standard library. For the local model on Apple Silicon
 ```sh
 python -m pip install -r requirements-macos-arm64-day19.lock
 ```
+
+The request CLIs use the native MLX backend by default. Prepare its isolated
+environment and converted assets once as described in the
+[native runtime guide](docs/native-mlx.md), or pass `--engine transformers`
+to use the existing Metal backend explicitly.
 
 ## Ask a question
 

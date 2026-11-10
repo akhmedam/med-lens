@@ -14,6 +14,7 @@ from time import perf_counter
 ROOT=Path(__file__).resolve().parents[1]
 os.environ.setdefault('HF_HOME',str(ROOT/'.cache/huggingface'))
 from medlens.evaluation.formats import parse_queries
+from medlens.inference.backends import add_runtime_arguments
 from medlens.generation.context import source_section,locate_quote
 from medlens.ingestion.snapshots import load_snapshot
 from medlens.retrieval.dense import DenseIndex
@@ -52,6 +53,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--summary',type=Path,required=True)
+    add_runtime_arguments(parser)
     args=parser.parse_args()
     if args.summary.exists():raise FileExistsError(args.summary)
     args.output.mkdir(parents=True,exist_ok=False)
@@ -62,16 +64,20 @@ def main():
     code_files=[ROOT/'scripts/ask_live.py',Path(__file__),*[ROOT/'src/medlens'/n for n in
         ('live.py','pubmed_query.py','pipeline.py','reporting.py','ingestion/pubmed.py','ingestion/snapshots.py',
          'parsing/dataset.py','parsing/pubmed.py','retrieval/windows.py','retrieval/embeddings.py','retrieval/vector_cache.py',
-         'generation/answers.py','generation/reviews.py','inference/qwen.py')]]
+         'generation/answers.py','generation/reviews.py','inference/qwen.py','inference/backends.py',
+         'inference/mlx.py','inference/mlx_worker.py')]]
     code={str(p.relative_to(ROOT)):sha(p) for p in code_files}
     report={'schema_version':1,'status':'running','started_at':datetime.now(timezone.utc).isoformat(),
         'scope':'Two fixed depression/anxiety development questions; 30/100/300 fresh candidates, one cold and one warm embedding-cache request per combination. Runtime, integrity and pipeline status only; no relevance or answer-quality scoring.',
         'heldout_used':False,'qrels_used':False,'quality_evaluation_performed':False,'queries_sha256':sha(queries_path),
-        'query_ids':[q.query_id for q in chosen],'platform':platform.platform(),'machine':platform.machine(),
+        'engine':args.engine,'query_ids':[q.query_id for q in chosen],'platform':platform.platform(),'machine':platform.machine(),
         'cache_scope':'Cold starts with an absent vector-cache directory; warm reuses it but searches and downloads PubMed anew. Model/OS caches are not flushed. Each request uses a new process and freshly generates/reviews drafts.',
         'timing_scope':'CLI request time excludes interpreter/import startup and final checkpoint write. Command wall time includes process startup and exit. Component times are nested, not additive.',
         'memory_scope':'Each child reports process RSS high-water, sampled MPS allocations and Qwen conversion samples separately. They overlap; do not sum them. No instantaneous device peak is claimed.',
         'code_sha256':code,'runs':[]}
+    engine_args=['--engine',args.engine]
+    if args.mlx_model_dir is not None:engine_args+=['--mlx-model-dir',str(args.mlx_model_dir)]
+    if args.mlx_python is not None:engine_args+=['--mlx-python',str(args.mlx_python)]
     write(args.output/'summary.json',report)
     try:
         for q in chosen:
@@ -84,7 +90,7 @@ def main():
                     tick=perf_counter()
                     with (args.output/(name+'.log')).open('w') as log:
                         result=subprocess.run([sys.executable,str(ROOT/'scripts/ask_live.py'),'--query',q.text,
-                            '--limit',str(limit),'--cache',str(cache),'--output-dir',str(directory)],
+                            '--limit',str(limit),'--cache',str(cache),'--output-dir',str(directory),*engine_args],
                             stdout=log,stderr=subprocess.STDOUT)
                     wall=perf_counter()-tick
                     if result.returncode not in (0,2):raise RuntimeError('Live request failed: '+name)
@@ -105,7 +111,7 @@ def main():
                         'visible_claim_count':len(r['answer'].get('claims',[])),
                         'model_calls':[{'stage':c['stage'],'seconds':c['seconds'],'new_tokens':c['new_tokens'],
                             'hit_output_limit':c['hit_output_limit'],'input_tokens':c['prompt']['input_tokens']} for c in calls],
-                        'runtime':r.get('runtime'),'memory_samples':r['memory_samples'],'integrity_checks':checks,
+                        'runtime':r.get('runtime'),'runtime_closed':r.get('runtime_closed'),'memory_samples':r['memory_samples'],'integrity_checks':checks,
                         'local_run_sha256':sha(directory/'run.json')}
                     if state=='cold' and row['passage_cache']['cache_hit_inputs']!=0:
                         raise ValueError('Unexpected cold vector-cache hit')

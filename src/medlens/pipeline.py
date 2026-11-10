@@ -17,6 +17,8 @@ from medlens.reranking.listwise import apply_response, build_prompt
 def tokenizer_identity(tokenizer):
     return {"model_id": MODEL_ID, "revision": REVISION,
         "backend_sha256": hashlib.sha256(tokenizer.backend_tokenizer.to_str().encode()).hexdigest(),
+        "chat_template_sha256": hashlib.sha256(
+            str(getattr(tokenizer, "chat_template", None)).encode()).hexdigest(),
         "special_tokens": False, "payload_format": "canonical-json-sources-v1"}
 
 
@@ -33,12 +35,14 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
     info = tokenizer_identity(tokenizer)
     implementation = {name: hashlib.sha256(Path(__file__).parent.joinpath(name).read_bytes()).hexdigest()
         for name in ("pipeline.py", "reporting.py", "corpus.py", "pmc.py", "dates.py", "live.py", "pubmed_query.py", "retrieval/dense.py", "retrieval/embeddings.py",
-            "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "generation/context.py",
+            "reranking/listwise.py", "inference/qwen.py", "inference/metal.py", "inference/backends.py",
+            "inference/mlx.py", "inference/mlx_worker.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],
         "embedding_artifact_id": index.embedding_manifest["artifact_id"],
         "top_k": top_k, "generate": generate, "rerank": rerank, "tokenizer": info,
+        "runtime_policy": getattr(runtime_factory, "identity", {"engine": "custom"}),
         "date_selection": getattr(index, "date_selection", None),
         "implementation_sha256": implementation}
     report = {"schema_version": 1, "request_id": digest(identity), **identity,
@@ -143,6 +147,19 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         report["error"] = {"type": type(exc).__name__, "message": str(exc), "stage": report["stage"]}
         # Preserve completed retrieval/context even when loading or running Qwen fails.
     finally:
+        # A native subprocess must be reaped on success, validation failure and error.
+        # Keep the primary failure when cleanup also fails.
+        if runtime is not None and callable(getattr(runtime, "close", None)):
+            try:
+                runtime.close()
+                report["runtime_closed"] = True
+            except Exception as exc:
+                error = {"type": type(exc).__name__, "message": str(exc), "stage": "runtime-cleanup"}
+                report["runtime_closed"] = False
+                if report["status"] in ("failed", "interrupted"):
+                    report["cleanup_error"] = error
+                else:
+                    report.update(status="failed", error=error)
         report["timings"]["pipeline_seconds"] = perf_counter() - started
         if checkpoint:
             checkpoint(report)

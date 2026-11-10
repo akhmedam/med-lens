@@ -46,7 +46,7 @@ def build_prompt(query, articles, tokenizer, *, document_tokens=768, input_token
             "documents": truncation, "prompt_version": PROMPT_VERSION,
             "document_token_limit": document_tokens, "input_token_limit": input_tokens,
             "prompt_sha256": hashlib.sha256(json.dumps(messages, ensure_ascii=False,
-                sort_keys=True).encode()).hexdigest()}
+                sort_keys=True, separators=(",", ":")).encode()).hexdigest()}
 
 
 def apply_response(text, mapping, *, hit_output_limit=False):

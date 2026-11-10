@@ -37,6 +37,7 @@ class LiveTests(unittest.TestCase):
             'population_match':'match','comparison_match':'not_requested','outcome_match':'match',
             'reason':'supported_by_excerpt'}]])
         self.runtime.tokenizer=AnswerTokenizer();self.runtime.metadata={'fixture':True}
+        self.runtime.close=Mock()
         def factory():self.loads.append('bge');return Encoder()
         self.factory=factory
         def runtime():self.loads.append('qwen');return self.runtime
@@ -57,6 +58,7 @@ class LiveTests(unittest.TestCase):
         self.assertEqual(r['runtime_load_count'],1);self.assertEqual(r['reranking']['status'],'skipped')
         self.assertEqual([limit for _,limit in self.runtime.calls],[768,512])
         self.assertLess(self.loads.index('release'),self.loads.index('qwen'))
+        self.assertTrue(r['runtime_closed']);self.runtime.close.assert_called_once_with()
         self.assertEqual(len(self.transport.calls),2)
         page=(self.root/'one/report.html').read_text();self.assertIn('Fresh PubMed',page)
         self.assertNotIn('provided local collection',page)
@@ -120,6 +122,7 @@ class LiveTests(unittest.TestCase):
         self.assertEqual(r['status'],'failed');self.assertEqual(r['error']['stage'],'answer')
         self.assertEqual(r['context']['sources'][0]['pmid'],'1')
         self.assertTrue(r['live']['fresh_search_complete'])
+        self.runtime.close.assert_called_once_with()
 
 
 class QueryTests(unittest.TestCase):

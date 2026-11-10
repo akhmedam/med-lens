@@ -8,7 +8,8 @@ ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault('HF_HOME', str(ROOT/'.cache/huggingface'))
 os.environ['HF_HUB_DISABLE_IMPLICIT_TOKEN'] = '1'
 
-from medlens.inference.qwen import REVISION, QwenRuntime
+from medlens.inference.qwen import REVISION
+from medlens.inference.backends import add_runtime_arguments, runtime_factory
 from medlens.live import local_encoder_policy, run_live_question
 from medlens.pubmed_query import plan_query
 from medlens.retrieval.bge_tokenizer import load_tokenizer
@@ -24,8 +25,13 @@ def main(argv=None):
     parser.add_argument('--search-only', action='store_true', help='Diagnostic search/evidence without Qwen inference')
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--cache', type=Path, default=ROOT/'.cache/embeddings/bge-input-v1')
-    parser.add_argument('--device', choices=('mps','cpu'), default='mps', help='BGE device only; Qwen requires MPS')
+    parser.add_argument('--device', choices=('mps','cpu'), default='mps', help='BGE device only; Qwen uses the Apple GPU')
+    add_runtime_arguments(parser)
     args = parser.parse_args(argv)
+    try:
+        make_runtime = runtime_factory(args.engine, root=ROOT, model_dir=args.mlx_model_dir,
+                                       worker_python=args.mlx_python)
+    except ValueError as exc:parser.error(str(exc))
     try:
         plan_query(args.query, args.pubmed_query)
         if not 1 <= args.limit <= 300 or not 1 <= args.top_k <= 10:raise ValueError('Invalid candidate limit or top-k')
@@ -48,7 +54,7 @@ def main(argv=None):
         tokenizer_loader=lambda:load_tokenizer(ROOT/'.cache/tokenizers/bge-base-en-v1.5'),
         encoder_info=policy, encoder_factory=lambda:BGEEncoder(ROOT/'.cache/models/bge-base-en-v1.5',
             ROOT/'.cache/tokenizers/bge-base-en-v1.5', device=args.device),
-        answer_tokenizer_loader=answer_tokenizer, runtime_factory=QwenRuntime,
+        answer_tokenizer_loader=answer_tokenizer, runtime_factory=make_runtime,
         limit=args.limit, pubmed_query=args.pubmed_query, generate=not args.search_only,
         top_k=args.top_k, progress=progress, release_accelerator=release)
     print((args.output_dir/'report.html').resolve())
