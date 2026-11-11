@@ -253,7 +253,7 @@ class LiveModelPolicyTests(unittest.TestCase):
             result = fixture.run_request('compact-live', [test_live.search_json(['1'],1),test_live.xml()])
             self.assertEqual(result['status'],'complete')
             self.assertEqual(result['answer']['answer_policy'],'compact-v1')
-            self.assertEqual(result['answer']['prompt_version'],'cited-answer-v7')
+            self.assertEqual(result['answer']['prompt_version'],'cited-answer-v8')
             self.assertEqual([p['constraint_kind'] for p, _ in fixture.runtime.calls], ['draft','literal'])
             self.assertTrue(all('decoding_schema' in p for p, _ in fixture.runtime.calls))
             fixture.runtime.close.assert_called_once_with()

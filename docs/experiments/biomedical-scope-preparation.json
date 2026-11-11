@@ -1,0 +1,785 @@
+{
+  "schema_version": 1,
+  "kind": "biomedical-scope-preparation-and-integrity-record",
+  "prepared_on": "2026-11-11",
+  "base_commit": "622c59c84c258b9a8236406f9225f31ee77391d5",
+  "scope": "Development input functionality, frozen sources and blank manual annotation preparation only. No cross-topic retrieval or answer quality estimates.",
+  "plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+  "implementation_sha256": {
+    "src/medlens/pubmed_query.py": "5e7749098f6fd88e5d8cbfd828274b0c55cd3cda069b5ba5c9ae2cd9a6ce4c19",
+    "src/medlens/generation/compact.py": "315fa090393b62d403fc94037145b73b205e56ecef2902cf531f1645d94ee1c2",
+    "src/medlens/evaluation/biomedical_annotation.py": "0ff360a8a9c38a764814a4ecce588691125485b85bf302c4a98f45691a9b7514",
+    "src/medlens/evaluation/biomedical_annotation.html": "26491979c4aae9f78a6a998e3b6118cb2d5f96c8fd56e38eff3a2661c4159929",
+    "scripts/prepare_biomedical_annotation.py": "5823786adeba78b6160c643e25e2d76ffa941044c0575005e7418ba000b422ea",
+    "scripts/prepare_biomedical_cases.py": "89aeab581ba4d29e4ded92a7558bc9390cb031cced82b3904cd70f0a71ef5883",
+    "scripts/ask_live.py": "d276672acdc1b6754f630a45403e68a8c1437a240cbd31e880390f48a6527f98",
+    "src/medlens/reporting.py": "7b877beed85c55c93f1b6f19dcf45566cd165d8b2884f978090841ad71345b6d"
+  },
+  "primary_answer_model": "4b",
+  "prompt_version": "cited-answer-v8",
+  "review_prompt_version": "axes-first-v2",
+  "human_labels_generated": false,
+  "human_labels_available": false,
+  "quality_evaluation_performed": false,
+  "heldout_used": false,
+  "query_planner": {
+    "method": "lexical-question-scaffold-pubmed-atm-v1",
+    "additional_model_calls": 0,
+    "disease_dictionary": false,
+    "explicit_override": "literal with no appended topic scope",
+    "counter_probe": {
+      "kind": "single-functional-search-counter-pass",
+      "started_at": "2026-11-11T07:37:06.247412+00:00",
+      "policy": "topic-independent-English-question-scaffold-v1",
+      "plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+      "helper_sha256": "dab9cbddf21a9700393a4daef1240e146d26f3f245cfa468141e1a2483e00c0e",
+      "article_fetches": false,
+      "quality_scored": false,
+      "human_labels_read": false,
+      "heldout_read": false,
+      "gpu_used": false,
+      "selection_policy": "One predeclared generic scaffold policy, all six frozen development questions, no relevance-based query selection.",
+      "requests_per_second": 2.5,
+      "runs": [
+        {
+          "query_id": "bm01",
+          "question": "Do SGLT2 inhibitors compared with placebo reduce heart failure hospitalization in adults with heart failure with preserved ejection fraction?",
+          "submitted_query": "SGLT2 inhibitors with placebo heart failure hospitalization in adults with heart failure with preserved ejection fraction",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 2,
+              "removed_text": "Do"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 20,
+              "char_end": 28,
+              "removed_text": "compared"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 42,
+              "char_end": 48,
+              "removed_text": "reduce"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 140,
+              "char_end": 141,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": 35,
+          "total_count": 66,
+          "query_translation": "(\"sodium glucose transporter 2 inhibitors\"[Pharmacological Action] OR \"sodium glucose transporter 2 inhibitors\"[Supplementary Concept] OR \"sodium glucose transporter 2 inhibitors\"[All Fields] OR \"sglt2 inhibitors\"[All Fields] OR \"sodium glucose transporter 2 inhibitors\"[MeSH Terms] OR (\"sglt2\"[All Fields] AND \"inhibitors\"[All Fields])) AND (\"placeboes\"[All Fields] OR \"placebos\"[Supplementary Concept] OR \"placebos\"[All Fields] OR \"placebo\"[All Fields] OR \"placebos\"[MeSH Terms]) AND (\"heart failure\"[MeSH Terms] OR (\"heart\"[All Fields] AND \"failure\"[All Fields]) OR \"heart failure\"[All Fields]) AND (\"hospital s\"[All Fields] OR \"hospitalisation\"[All Fields] OR \"hospitalization\"[MeSH Terms] OR \"hospitalization\"[All Fields] OR \"hospitalised\"[All Fields] OR \"hospitalising\"[All Fields] OR \"hospitality\"[All Fields] OR \"hospitalisations\"[All Fields] OR \"hospitalizations\"[All Fields] OR \"hospitalize\"[All Fields] OR \"hospitalized\"[All Fields] OR \"hospitalizing\"[All Fields] OR \"hospitals\"[MeSH Terms] OR \"hospitals\"[All Fields] OR \"hospital\"[All Fields]) AND (\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"heart failure\"[MeSH Terms] OR (\"heart\"[All Fields] AND \"failure\"[All Fields]) OR \"heart failure\"[All Fields]) AND (\"preservation, biological\"[MeSH Terms] OR (\"preservation\"[All Fields] AND \"biological\"[All Fields]) OR \"biological preservation\"[All Fields] OR \"preservation\"[All Fields] OR \"preserved\"[All Fields] OR \"preservations\"[All Fields] OR \"preserve\"[All Fields] OR \"preserves\"[All Fields] OR \"preserving\"[All Fields]) AND (\"eject\"[All Fields] OR \"ejected\"[All Fields] OR \"ejecting\"[All Fields] OR \"ejection\"[All Fields] OR \"ejectional\"[All Fields] OR \"ejections\"[All Fields] OR \"ejects\"[All Fields]) AND (\"dose fractionation, radiation\"[MeSH Terms] OR (\"dose\"[All Fields] AND \"fractionation\"[All Fields] AND \"radiation\"[All Fields]) OR \"radiation dose fractionation\"[All Fields] OR \"fractionation\"[All Fields] OR \"chemical fractionation\"[MeSH Terms] OR (\"chemical\"[All Fields] AND \"fractionation\"[All Fields]) OR \"chemical fractionation\"[All Fields] OR \"fraction\"[All Fields] OR \"fraction s\"[All Fields] OR \"fractionate\"[All Fields] OR \"fractionated\"[All Fields] OR \"fractionates\"[All Fields] OR \"fractionating\"[All Fields] OR \"fractionationed\"[All Fields] OR \"fractionations\"[All Fields] OR \"fractionator\"[All Fields] OR \"fractionators\"[All Fields] OR \"fractioned\"[All Fields] OR \"fractioning\"[All Fields] OR \"fractionized\"[All Fields] OR \"fractions\"[All Fields])",
+          "warnings": {
+            "phrasesignored": [
+              "with",
+              "in"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "cdf392a5c3cc3170395ff47f37c412194e802b7c1539341f94148174f1cb287b",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:06.773184+00:00"
+        },
+        {
+          "query_id": "bm02",
+          "question": "In adults with type 2 diabetes, how does semaglutide compare with insulin glargine for glycated hemoglobin reduction?",
+          "submitted_query": "In adults with type 2 diabetes, semaglutide with insulin glargine for glycated hemoglobin reduction",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 32,
+              "char_end": 40,
+              "removed_text": "how does"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 53,
+              "char_end": 60,
+              "removed_text": "compare"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 116,
+              "char_end": 117,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": 2,
+          "total_count": 13,
+          "query_translation": "(\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"diabetes mellitus, type 2\"[MeSH Terms] OR \"type 2 diabetes mellitus\"[All Fields] OR \"type 2 diabetes\"[All Fields]) AND (\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]) AND (\"insulin glargine\"[Supplementary Concept] OR \"insulin glargine\"[All Fields] OR \"insulin glargine\"[MeSH Terms] OR (\"insulin\"[All Fields] AND \"glargine\"[All Fields])) AND (\"glycated haemoglobin\"[All Fields] OR \"glycated hemoglobin\"[Supplementary Concept] OR \"glycated hemoglobin\"[All Fields] OR \"glycated hemoglobin\"[MeSH Terms] OR (\"glycated\"[All Fields] AND \"hemoglobin\"[All Fields])) AND (\"reduction\"[All Fields] OR \"reductions\"[All Fields])",
+          "warnings": {
+            "phrasesignored": [
+              "In",
+              "with",
+              "for"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "a26940a0d157edd401106f352a87b0d55d7e091569ac6585dbd9bd7ef1264648",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:07.489065+00:00"
+        },
+        {
+          "query_id": "bm03",
+          "question": "What is the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults using urine culture as the reference standard?",
+          "submitted_query": "the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults urine culture",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 7,
+              "removed_text": "What is"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 96,
+              "char_end": 101,
+              "removed_text": "using"
+            },
+            {
+              "rule": "reference-role-scaffold",
+              "char_start": 116,
+              "char_end": 141,
+              "removed_text": "as the reference standard"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 141,
+              "char_end": 142,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": 0,
+          "total_count": 44,
+          "query_translation": "(\"diagnosis\"[MeSH Terms] OR \"diagnosis\"[All Fields] OR \"diagnostic\"[All Fields] OR \"diagnostical\"[All Fields] OR \"diagnostically\"[All Fields] OR \"diagnostics\"[All Fields]) AND (\"accuracies\"[All Fields] OR \"accuracy\"[All Fields]) AND (\"bathroom equipment\"[MeSH Terms] OR (\"bathroom\"[All Fields] AND \"equipment\"[All Fields]) OR \"bathroom equipment\"[All Fields] OR \"urinal\"[All Fields] OR \"urinals\"[All Fields] OR \"urinate\"[All Fields] OR \"urinated\"[All Fields] OR \"urinates\"[All Fields] OR \"urinating\"[All Fields] OR \"urination\"[MeSH Terms] OR \"urination\"[All Fields] OR \"urinations\"[All Fields] OR \"urine\"[MeSH Subheading] OR \"urine\"[All Fields] OR \"urine\"[MeSH Terms] OR \"urines\"[All Fields]) AND (\"dipstick\"[All Fields] OR \"dipsticks\"[All Fields]) AND (\"test s\"[All Fields] OR \"tested\"[All Fields] OR \"testing\"[All Fields] OR \"testings\"[All Fields] OR \"tests\"[All Fields]) AND (\"urinary tract infections\"[MeSH Terms] OR (\"urinary\"[All Fields] AND \"tract\"[All Fields] AND \"infections\"[All Fields]) OR \"urinary tract infections\"[All Fields] OR (\"urinary\"[All Fields] AND \"tract\"[All Fields] AND \"infection\"[All Fields]) OR \"urinary tract infection\"[All Fields]) AND (\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"bathroom equipment\"[MeSH Terms] OR (\"bathroom\"[All Fields] AND \"equipment\"[All Fields]) OR \"bathroom equipment\"[All Fields] OR \"urinal\"[All Fields] OR \"urinals\"[All Fields] OR \"urinate\"[All Fields] OR \"urinated\"[All Fields] OR \"urinates\"[All Fields] OR \"urinating\"[All Fields] OR \"urination\"[MeSH Terms] OR \"urination\"[All Fields] OR \"urinations\"[All Fields] OR \"urine\"[MeSH Subheading] OR \"urine\"[All Fields] OR \"urine\"[MeSH Terms] OR \"urines\"[All Fields]) AND (\"culturability\"[All Fields] OR \"culturable\"[All Fields] OR \"culturalism\"[All Fields] OR \"culture\"[MeSH Terms] OR \"culture\"[All Fields] OR \"cultural\"[All Fields] OR \"culturally\"[All Fields] OR \"cultures\"[All Fields] OR \"culture s\"[All Fields] OR \"cultured\"[All Fields] OR \"culturing\"[All Fields] OR \"culturings\"[All Fields] OR \"ethnology\"[MeSH Subheading] OR \"ethnology\"[All Fields])",
+          "warnings": {
+            "phrasesignored": [
+              "the",
+              "of",
+              "for",
+              "in"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "b2487a16f56077592adf403d6b629a5df8df348b393943842f68425066e95cc9",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:09.054434+00:00"
+        },
+        {
+          "query_id": "bm04",
+          "question": "Is APOE epsilon4 associated with progression from mild cognitive impairment to Alzheimer disease?",
+          "submitted_query": "APOE epsilon4 with progression from mild cognitive impairment to Alzheimer disease",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 2,
+              "removed_text": "Is"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 17,
+              "char_end": 27,
+              "removed_text": "associated"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 96,
+              "char_end": 97,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": null,
+          "total_count": 458,
+          "query_translation": "(\"apolipoproteins e\"[Supplementary Concept] OR \"apolipoproteins e\"[All Fields] OR \"apoe\"[All Fields] OR \"apoe protein human\"[Supplementary Concept] OR \"apoe protein human\"[All Fields] OR \"apolipoproteins e\"[MeSH Terms]) AND \"epsilon4\"[All Fields] AND (\"disease progression\"[MeSH Terms] OR (\"disease\"[All Fields] AND \"progression\"[All Fields]) OR \"disease progression\"[All Fields] OR \"progression\"[All Fields] OR \"progress\"[All Fields] OR \"progressed\"[All Fields] OR \"progresses\"[All Fields] OR \"progressing\"[All Fields] OR \"progressions\"[All Fields] OR \"progressive\"[All Fields] OR \"progressively\"[All Fields] OR \"progressives\"[All Fields]) AND (\"cognitive dysfunction\"[MeSH Terms] OR (\"cognitive\"[All Fields] AND \"dysfunction\"[All Fields]) OR \"cognitive dysfunction\"[All Fields] OR (\"mild\"[All Fields] AND \"cognitive\"[All Fields] AND \"impairment\"[All Fields]) OR \"mild cognitive impairment\"[All Fields]) AND (\"alzheimer disease\"[MeSH Terms] OR (\"alzheimer\"[All Fields] AND \"disease\"[All Fields]) OR \"alzheimer disease\"[All Fields])",
+          "warnings": {
+            "phrasesignored": [
+              "with",
+              "from",
+              "to"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "b6663eb1e74eec2dcdb3b5db10653e0bd9a181a11c75dbaf8c67d423e72bb679",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:10.776386+00:00"
+        },
+        {
+          "query_id": "bm05",
+          "question": "How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?",
+          "submitted_query": "NLRP3 inflammasome activation to pancreatic beta-cell dysfunction in type 2 diabetes",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 8,
+              "removed_text": "How does"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 39,
+              "char_end": 49,
+              "removed_text": "contribute"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 104,
+              "char_end": 105,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": null,
+          "total_count": 19,
+          "query_translation": "(\"nlrp3 protein human\"[Supplementary Concept] OR \"nlrp3 protein human\"[All Fields] OR \"nlrp3\"[All Fields]) AND (\"inflammasomes\"[Supplementary Concept] OR \"inflammasomes\"[All Fields] OR \"inflammasome\"[All Fields] OR \"inflammasomes\"[MeSH Terms]) AND (\"activable\"[All Fields] OR \"activate\"[All Fields] OR \"activated\"[All Fields] OR \"activates\"[All Fields] OR \"activating\"[All Fields] OR \"activation\"[All Fields] OR \"activations\"[All Fields] OR \"activator\"[All Fields] OR \"activator s\"[All Fields] OR \"activators\"[All Fields] OR \"active\"[All Fields] OR \"actived\"[All Fields] OR \"actively\"[All Fields] OR \"actives\"[All Fields] OR \"activities\"[All Fields] OR \"activity s\"[All Fields] OR \"activitys\"[All Fields] OR \"exercise\"[MeSH Terms] OR \"exercise\"[All Fields] OR \"activity\"[All Fields]) AND (\"insulin secreting cells\"[MeSH Terms] OR (\"insulin secreting\"[All Fields] AND \"cells\"[All Fields]) OR \"insulin secreting cells\"[All Fields] OR (\"pancreatic\"[All Fields] AND \"beta\"[All Fields] AND \"cell\"[All Fields]) OR \"pancreatic beta cell\"[All Fields]) AND (\"dysfunctional\"[All Fields] OR \"dysfunctionals\"[All Fields] OR \"dysfunctioning\"[All Fields] OR \"dysfunctions\"[All Fields] OR \"physiopathology\"[MeSH Subheading] OR \"physiopathology\"[All Fields] OR \"dysfunction\"[All Fields]) AND (\"diabetes mellitus, type 2\"[MeSH Terms] OR \"type 2 diabetes mellitus\"[All Fields] OR \"type 2 diabetes\"[All Fields])",
+          "warnings": {
+            "phrasesignored": [
+              "to",
+              "in"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "346d71689ceded88e8865979855754156bbe849ddb70b19b36f8072834bbae01",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:11.301799+00:00"
+        },
+        {
+          "query_id": "bm06",
+          "question": "In children with acute otitis media, do antibiotics compared with placebo reduce ear pain after two to three days?",
+          "submitted_query": "In children with acute otitis media, antibiotics with placebo ear pain after two to three days",
+          "transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 37,
+              "char_end": 39,
+              "removed_text": "do"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 52,
+              "char_end": 60,
+              "removed_text": "compared"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 74,
+              "char_end": 80,
+              "removed_text": "reduce"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 113,
+              "char_end": 114,
+              "removed_text": "?"
+            }
+          ],
+          "previous_direct_question_count": null,
+          "total_count": 4,
+          "query_translation": "(\"child\"[MeSH Terms] OR \"child\"[All Fields] OR \"children\"[All Fields] OR \"child s\"[All Fields] OR \"children s\"[All Fields] OR \"childrens\"[All Fields] OR \"childs\"[All Fields]) AND (\"acute\"[All Fields] OR \"acutely\"[All Fields] OR \"acutes\"[All Fields]) AND (\"otitis media\"[MeSH Terms] OR (\"otitis\"[All Fields] AND \"media\"[All Fields]) OR \"otitis media\"[All Fields]) AND (\"anti bacterial agents\"[Pharmacological Action] OR \"anti bacterial agents\"[Supplementary Concept] OR \"anti bacterial agents\"[All Fields] OR \"antibiotic\"[All Fields] OR \"anti bacterial agents\"[MeSH Terms] OR (\"anti bacterial\"[All Fields] AND \"agents\"[All Fields]) OR \"antibiotics\"[All Fields] OR \"antibiotic s\"[All Fields] OR \"antibiotical\"[All Fields]) AND (\"placeboes\"[All Fields] OR \"placebos\"[Supplementary Concept] OR \"placebos\"[All Fields] OR \"placebo\"[All Fields] OR \"placebos\"[MeSH Terms]) AND (\"earache\"[MeSH Terms] OR \"earache\"[All Fields] OR (\"ear\"[All Fields] AND \"pain\"[All Fields]) OR \"ear pain\"[All Fields]) AND \"after\"[All Fields] AND \"two\"[All Fields] AND (\"three\"[All Fields] OR \"threes\"[All Fields]) AND \"days\"[All Fields]",
+          "warnings": {
+            "phrasesignored": [
+              "In",
+              "with",
+              "to"
+            ],
+            "quotedphrasesnotfound": [],
+            "outputmessages": []
+          },
+          "response_sha256": "b5a67eef79af3f3fd0b10262ad1c79ae766a0987c8619ca7bf3d1c1f86ef3621",
+          "attempts": 1,
+          "retrieved_at": "2026-11-11T07:37:12.069022+00:00"
+        }
+      ],
+      "finished_at": "2026-11-11T07:37:12.069450+00:00"
+    },
+    "failed_direct_question_attempt": {
+      "status": "failed",
+      "plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+      "counts": {
+        "bm01": 35,
+        "bm02": 2,
+        "bm03": 0
+      },
+      "reason": "Direct full question can be interpreted as restrictive search terms; compare mapped to a journal and bm03 returned zero. This attempt is preserved locally, not used as a successful annotation source."
+    },
+    "limits": "One generic scaffold policy was checked on six frozen questions for functional query interpretation/counts. Nonempty or more numerous results do not establish relevance or recall. No adaptive relevance grading was used."
+  },
+  "source_preparation": {
+    "status": "complete-awaiting-manual-human-annotation",
+    "plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+    "file_sha256": "4e8310e930268e3b0e91884a3faca86c3cad934907a3ae8b62ef404b72158e06",
+    "answer_generation_performed": false,
+    "record_count": 246,
+    "runs": [
+      {
+        "query_id": "bm01",
+        "status": "complete",
+        "snapshot_id": "35687e97-546e-4a03-81ea-d29204473120",
+        "dataset_id": "dc9e1880e045e0a348d0e187a5c0c97c7ff9425e24b89d479e8683b9d81bff3d",
+        "run_sha256": "80a42ebd59ede8a7ca795339d2d67044fb14cdab0f564955bc744a18965974f4",
+        "total_pubmed_matches": 66,
+        "fetched_article_count": 66,
+        "window_count": 311,
+        "command_wall_seconds": 14.894899124999938,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "Do SGLT2 inhibitors compared with placebo reduce heart failure hospitalization in adults with heart failure with preserved ejection fraction?",
+          "submitted_query": "SGLT2 inhibitors with placebo heart failure hospitalization in adults with heart failure with preserved ejection fraction",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 2,
+              "removed_text": "Do"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 20,
+              "char_end": 28,
+              "removed_text": "compared"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 42,
+              "char_end": 48,
+              "removed_text": "reduce"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 140,
+              "char_end": 141,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "  SGLT2 inhibitors   with placebo   heart failure hospitalization in adults with heart failure with preserved ejection fraction ",
+              "after": "SGLT2 inhibitors with placebo heart failure hospitalization in adults with heart failure with preserved ejection fraction"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"sodium glucose transporter 2 inhibitors\"[Pharmacological Action] OR \"sodium glucose transporter 2 inhibitors\"[Supplementary Concept] OR \"sodium glucose transporter 2 inhibitors\"[All Fields] OR \"sglt2 inhibitors\"[All Fields] OR \"sodium glucose transporter 2 inhibitors\"[MeSH Terms] OR (\"sglt2\"[All Fields] AND \"inhibitors\"[All Fields])) AND (\"placeboes\"[All Fields] OR \"placebos\"[Supplementary Concept] OR \"placebos\"[All Fields] OR \"placebo\"[All Fields] OR \"placebos\"[MeSH Terms]) AND (\"heart failure\"[MeSH Terms] OR (\"heart\"[All Fields] AND \"failure\"[All Fields]) OR \"heart failure\"[All Fields]) AND (\"hospital s\"[All Fields] OR \"hospitalisation\"[All Fields] OR \"hospitalization\"[MeSH Terms] OR \"hospitalization\"[All Fields] OR \"hospitalised\"[All Fields] OR \"hospitalising\"[All Fields] OR \"hospitality\"[All Fields] OR \"hospitalisations\"[All Fields] OR \"hospitalizations\"[All Fields] OR \"hospitalize\"[All Fields] OR \"hospitalized\"[All Fields] OR \"hospitalizing\"[All Fields] OR \"hospitals\"[MeSH Terms] OR \"hospitals\"[All Fields] OR \"hospital\"[All Fields]) AND (\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"heart failure\"[MeSH Terms] OR (\"heart\"[All Fields] AND \"failure\"[All Fields]) OR \"heart failure\"[All Fields]) AND (\"preservation, biological\"[MeSH Terms] OR (\"preservation\"[All Fields] AND \"biological\"[All Fields]) OR \"biological preservation\"[All Fields] OR \"preservation\"[All Fields] OR \"preserved\"[All Fields] OR \"preservations\"[All Fields] OR \"preserve\"[All Fields] OR \"preserves\"[All Fields] OR \"preserving\"[All Fields]) AND (\"eject\"[All Fields] OR \"ejected\"[All Fields] OR \"ejecting\"[All Fields] OR \"ejection\"[All Fields] OR \"ejectional\"[All Fields] OR \"ejections\"[All Fields] OR \"ejects\"[All Fields]) AND (\"dose fractionation, radiation\"[MeSH Terms] OR (\"dose\"[All Fields] AND \"fractionation\"[All Fields] AND \"radiation\"[All Fields]) OR \"radiation dose fractionation\"[All Fields] OR \"fractionation\"[All Fields] OR \"chemical fractionation\"[MeSH Terms] OR (\"chemical\"[All Fields] AND \"fractionation\"[All Fields]) OR \"chemical fractionation\"[All Fields] OR \"fraction\"[All Fields] OR \"fraction s\"[All Fields] OR \"fractionate\"[All Fields] OR \"fractionated\"[All Fields] OR \"fractionates\"[All Fields] OR \"fractionating\"[All Fields] OR \"fractionationed\"[All Fields] OR \"fractionations\"[All Fields] OR \"fractionator\"[All Fields] OR \"fractionators\"[All Fields] OR \"fractioned\"[All Fields] OR \"fractioning\"[All Fields] OR \"fractionized\"[All Fields] OR \"fractions\"[All Fields])"
+      },
+      {
+        "query_id": "bm02",
+        "status": "complete",
+        "snapshot_id": "71b0ffe8-9605-4539-8689-dc1672523d50",
+        "dataset_id": "b1b1493442af41329b738a3886c104b6aa9e60db4ca8c76955a637de73d762f1",
+        "run_sha256": "bed9f85368d4fd8b3070c74c95abb2639ade403ca51d159a712c31217e31ae8a",
+        "total_pubmed_matches": 13,
+        "fetched_article_count": 13,
+        "window_count": 62,
+        "command_wall_seconds": 8.373059999999896,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "In adults with type 2 diabetes, how does semaglutide compare with insulin glargine for glycated hemoglobin reduction?",
+          "submitted_query": "In adults with type 2 diabetes, semaglutide with insulin glargine for glycated hemoglobin reduction",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 32,
+              "char_end": 40,
+              "removed_text": "how does"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 53,
+              "char_end": 60,
+              "removed_text": "compare"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 116,
+              "char_end": 117,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "In adults with type 2 diabetes,   semaglutide   with insulin glargine for glycated hemoglobin reduction ",
+              "after": "In adults with type 2 diabetes, semaglutide with insulin glargine for glycated hemoglobin reduction"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"diabetes mellitus, type 2\"[MeSH Terms] OR \"type 2 diabetes mellitus\"[All Fields] OR \"type 2 diabetes\"[All Fields]) AND (\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]) AND (\"insulin glargine\"[Supplementary Concept] OR \"insulin glargine\"[All Fields] OR \"insulin glargine\"[MeSH Terms] OR (\"insulin\"[All Fields] AND \"glargine\"[All Fields])) AND (\"glycated haemoglobin\"[All Fields] OR \"glycated hemoglobin\"[Supplementary Concept] OR \"glycated hemoglobin\"[All Fields] OR \"glycated hemoglobin\"[MeSH Terms] OR (\"glycated\"[All Fields] AND \"hemoglobin\"[All Fields])) AND (\"reduction\"[All Fields] OR \"reductions\"[All Fields])"
+      },
+      {
+        "query_id": "bm03",
+        "status": "complete",
+        "snapshot_id": "9fde2a76-3ddd-47ab-9df5-2a02bd29a5b0",
+        "dataset_id": "d0c108c934162831c65948583060c4a5f61533d23f530b132e27f23759b0212b",
+        "run_sha256": "a73ebd8f4712b0b85768271acdcb57374253f75e791598932ef69af8100f5945",
+        "total_pubmed_matches": 44,
+        "fetched_article_count": 44,
+        "window_count": 183,
+        "command_wall_seconds": 14.153071041999283,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "What is the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults using urine culture as the reference standard?",
+          "submitted_query": "the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults urine culture",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 7,
+              "removed_text": "What is"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 96,
+              "char_end": 101,
+              "removed_text": "using"
+            },
+            {
+              "rule": "reference-role-scaffold",
+              "char_start": 116,
+              "char_end": 141,
+              "removed_text": "as the reference standard"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 141,
+              "char_end": 142,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "  the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults   urine culture   ",
+              "after": "the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults urine culture"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"diagnosis\"[MeSH Terms] OR \"diagnosis\"[All Fields] OR \"diagnostic\"[All Fields] OR \"diagnostical\"[All Fields] OR \"diagnostically\"[All Fields] OR \"diagnostics\"[All Fields]) AND (\"accuracies\"[All Fields] OR \"accuracy\"[All Fields]) AND (\"bathroom equipment\"[MeSH Terms] OR (\"bathroom\"[All Fields] AND \"equipment\"[All Fields]) OR \"bathroom equipment\"[All Fields] OR \"urinal\"[All Fields] OR \"urinals\"[All Fields] OR \"urinate\"[All Fields] OR \"urinated\"[All Fields] OR \"urinates\"[All Fields] OR \"urinating\"[All Fields] OR \"urination\"[MeSH Terms] OR \"urination\"[All Fields] OR \"urinations\"[All Fields] OR \"urine\"[MeSH Subheading] OR \"urine\"[All Fields] OR \"urine\"[MeSH Terms] OR \"urines\"[All Fields]) AND (\"dipstick\"[All Fields] OR \"dipsticks\"[All Fields]) AND (\"test s\"[All Fields] OR \"tested\"[All Fields] OR \"testing\"[All Fields] OR \"testings\"[All Fields] OR \"tests\"[All Fields]) AND (\"urinary tract infections\"[MeSH Terms] OR (\"urinary\"[All Fields] AND \"tract\"[All Fields] AND \"infections\"[All Fields]) OR \"urinary tract infections\"[All Fields] OR (\"urinary\"[All Fields] AND \"tract\"[All Fields] AND \"infection\"[All Fields]) OR \"urinary tract infection\"[All Fields]) AND (\"adult\"[MeSH Terms] OR \"adult\"[All Fields] OR \"adults\"[All Fields] OR \"adult s\"[All Fields]) AND (\"bathroom equipment\"[MeSH Terms] OR (\"bathroom\"[All Fields] AND \"equipment\"[All Fields]) OR \"bathroom equipment\"[All Fields] OR \"urinal\"[All Fields] OR \"urinals\"[All Fields] OR \"urinate\"[All Fields] OR \"urinated\"[All Fields] OR \"urinates\"[All Fields] OR \"urinating\"[All Fields] OR \"urination\"[MeSH Terms] OR \"urination\"[All Fields] OR \"urinations\"[All Fields] OR \"urine\"[MeSH Subheading] OR \"urine\"[All Fields] OR \"urine\"[MeSH Terms] OR \"urines\"[All Fields]) AND (\"culturability\"[All Fields] OR \"culturable\"[All Fields] OR \"culturalism\"[All Fields] OR \"culture\"[MeSH Terms] OR \"culture\"[All Fields] OR \"cultural\"[All Fields] OR \"culturally\"[All Fields] OR \"cultures\"[All Fields] OR \"culture s\"[All Fields] OR \"cultured\"[All Fields] OR \"culturing\"[All Fields] OR \"culturings\"[All Fields] OR \"ethnology\"[MeSH Subheading] OR \"ethnology\"[All Fields])"
+      },
+      {
+        "query_id": "bm04",
+        "status": "complete",
+        "snapshot_id": "704f9e54-e67b-4227-acf3-2bea9414e565",
+        "dataset_id": "11d8ba9c80d22c4f860cc9615a83c4adc383d75dbf7b197598a30ef6d970e726",
+        "run_sha256": "6f9de743185ca164a4ceec6b3ff82282660fa1b33f69ba1251f7944972ec26b4",
+        "total_pubmed_matches": 458,
+        "fetched_article_count": 100,
+        "window_count": 312,
+        "command_wall_seconds": 24.897596208000323,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "Is APOE epsilon4 associated with progression from mild cognitive impairment to Alzheimer disease?",
+          "submitted_query": "APOE epsilon4 with progression from mild cognitive impairment to Alzheimer disease",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 2,
+              "removed_text": "Is"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 17,
+              "char_end": 27,
+              "removed_text": "associated"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 96,
+              "char_end": 97,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "  APOE epsilon4   with progression from mild cognitive impairment to Alzheimer disease ",
+              "after": "APOE epsilon4 with progression from mild cognitive impairment to Alzheimer disease"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"apolipoproteins e\"[Supplementary Concept] OR \"apolipoproteins e\"[All Fields] OR \"apoe\"[All Fields] OR \"apoe protein human\"[Supplementary Concept] OR \"apoe protein human\"[All Fields] OR \"apolipoproteins e\"[MeSH Terms]) AND \"epsilon4\"[All Fields] AND (\"disease progression\"[MeSH Terms] OR (\"disease\"[All Fields] AND \"progression\"[All Fields]) OR \"disease progression\"[All Fields] OR \"progression\"[All Fields] OR \"progress\"[All Fields] OR \"progressed\"[All Fields] OR \"progresses\"[All Fields] OR \"progressing\"[All Fields] OR \"progressions\"[All Fields] OR \"progressive\"[All Fields] OR \"progressively\"[All Fields] OR \"progressives\"[All Fields]) AND (\"cognitive dysfunction\"[MeSH Terms] OR (\"cognitive\"[All Fields] AND \"dysfunction\"[All Fields]) OR \"cognitive dysfunction\"[All Fields] OR (\"mild\"[All Fields] AND \"cognitive\"[All Fields] AND \"impairment\"[All Fields]) OR \"mild cognitive impairment\"[All Fields]) AND (\"alzheimer disease\"[MeSH Terms] OR (\"alzheimer\"[All Fields] AND \"disease\"[All Fields]) OR \"alzheimer disease\"[All Fields])"
+      },
+      {
+        "query_id": "bm05",
+        "status": "complete",
+        "snapshot_id": "f8a72ec5-09ea-4ab5-b093-6e2f6252632f",
+        "dataset_id": "514737d1a7130b33cd0d5a2e38742a075533362fe22b40954b1464b351e9683b",
+        "run_sha256": "2ab68d3cf41f744ef9393631bba5969aa9cfb91fd22ea4e4c3d4ea99f0be60d1",
+        "total_pubmed_matches": 19,
+        "fetched_article_count": 19,
+        "window_count": 31,
+        "command_wall_seconds": 7.924359458000254,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?",
+          "submitted_query": "NLRP3 inflammasome activation to pancreatic beta-cell dysfunction in type 2 diabetes",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 0,
+              "char_end": 8,
+              "removed_text": "How does"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 39,
+              "char_end": 49,
+              "removed_text": "contribute"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 104,
+              "char_end": 105,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "  NLRP3 inflammasome activation   to pancreatic beta-cell dysfunction in type 2 diabetes ",
+              "after": "NLRP3 inflammasome activation to pancreatic beta-cell dysfunction in type 2 diabetes"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"nlrp3 protein human\"[Supplementary Concept] OR \"nlrp3 protein human\"[All Fields] OR \"nlrp3\"[All Fields]) AND (\"inflammasomes\"[Supplementary Concept] OR \"inflammasomes\"[All Fields] OR \"inflammasome\"[All Fields] OR \"inflammasomes\"[MeSH Terms]) AND (\"activable\"[All Fields] OR \"activate\"[All Fields] OR \"activated\"[All Fields] OR \"activates\"[All Fields] OR \"activating\"[All Fields] OR \"activation\"[All Fields] OR \"activations\"[All Fields] OR \"activator\"[All Fields] OR \"activator s\"[All Fields] OR \"activators\"[All Fields] OR \"active\"[All Fields] OR \"actived\"[All Fields] OR \"actively\"[All Fields] OR \"actives\"[All Fields] OR \"activities\"[All Fields] OR \"activity s\"[All Fields] OR \"activitys\"[All Fields] OR \"exercise\"[MeSH Terms] OR \"exercise\"[All Fields] OR \"activity\"[All Fields]) AND (\"insulin secreting cells\"[MeSH Terms] OR (\"insulin secreting\"[All Fields] AND \"cells\"[All Fields]) OR \"insulin secreting cells\"[All Fields] OR (\"pancreatic\"[All Fields] AND \"beta\"[All Fields] AND \"cell\"[All Fields]) OR \"pancreatic beta cell\"[All Fields]) AND (\"dysfunctional\"[All Fields] OR \"dysfunctionals\"[All Fields] OR \"dysfunctioning\"[All Fields] OR \"dysfunctions\"[All Fields] OR \"physiopathology\"[MeSH Subheading] OR \"physiopathology\"[All Fields] OR \"dysfunction\"[All Fields]) AND (\"diabetes mellitus, type 2\"[MeSH Terms] OR \"type 2 diabetes mellitus\"[All Fields] OR \"type 2 diabetes\"[All Fields])"
+      },
+      {
+        "query_id": "bm06",
+        "status": "complete",
+        "snapshot_id": "648467e0-5ab4-41fc-b49e-36e581c4e520",
+        "dataset_id": "d54e4ab8521a049caeed34b93f0b3560858f482ff88ff0e69e62faece17bcab4",
+        "run_sha256": "ca7430f33e1296d4e69511d7cb018f7eda5e55c58e3b086223e8a9d4e7800963",
+        "total_pubmed_matches": 4,
+        "fetched_article_count": 4,
+        "window_count": 36,
+        "command_wall_seconds": 7.248141832998954,
+        "query_plan": {
+          "method": "lexical-question-scaffold-pubmed-atm-v1",
+          "question": "In children with acute otitis media, do antibiotics compared with placebo reduce ear pain after two to three days?",
+          "submitted_query": "In children with acute otitis media, antibiotics with placebo ear pain after two to three days",
+          "override": null,
+          "conditions": [],
+          "interventions": [],
+          "sort": "PubMed Best Match",
+          "supported_scope": "English biomedical research questions",
+          "language_detection": "not-performed",
+          "topic_detection": "not-performed",
+          "automatic_translation": false,
+          "query_transformations": [
+            {
+              "rule": "question-clause-scaffold",
+              "char_start": 37,
+              "char_end": 39,
+              "removed_text": "do"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 52,
+              "char_end": 60,
+              "removed_text": "compared"
+            },
+            {
+              "rule": "generic-predicate-scaffold",
+              "char_start": 74,
+              "char_end": 80,
+              "removed_text": "reduce"
+            },
+            {
+              "rule": "terminal-question-punctuation",
+              "char_start": 113,
+              "char_end": 114,
+              "removed_text": "?"
+            },
+            {
+              "rule": "normalize-whitespace",
+              "before": "In children with acute otitis media,   antibiotics   with placebo   ear pain after two to three days ",
+              "after": "In children with acute otitis media, antibiotics with placebo ear pain after two to three days"
+            }
+          ],
+          "limitations": "Default candidate search removes only recorded generic English question/predicate and reference-role scaffolding, then normalizes whitespace. The unchanged original question is used for Dense ranking and answer review; no biomedical concepts are inferred or added. Quoted text, acronym-like tokens and identifier punctuation are protected, but this is a lexical heuristic, not a complete PICO or negation compiler. Remaining terms may still overconstrain retrieval. Explicit PubMed overrides are submitted exactly, without scaffold removal or appended filters. PubMed syntax/Automatic Term Mapping may map or ignore terms; the returned query_translation is saved with the fresh snapshot. English biomedical questions are the supported scope; language and topic are not classified or translated. Nonempty results do not establish relevance or exhaustive coverage."
+        },
+        "query_translation": "(\"child\"[MeSH Terms] OR \"child\"[All Fields] OR \"children\"[All Fields] OR \"child s\"[All Fields] OR \"children s\"[All Fields] OR \"childrens\"[All Fields] OR \"childs\"[All Fields]) AND (\"acute\"[All Fields] OR \"acutely\"[All Fields] OR \"acutes\"[All Fields]) AND (\"otitis media\"[MeSH Terms] OR (\"otitis\"[All Fields] AND \"media\"[All Fields]) OR \"otitis media\"[All Fields]) AND (\"anti bacterial agents\"[Pharmacological Action] OR \"anti bacterial agents\"[Supplementary Concept] OR \"anti bacterial agents\"[All Fields] OR \"antibiotic\"[All Fields] OR \"anti bacterial agents\"[MeSH Terms] OR (\"anti bacterial\"[All Fields] AND \"agents\"[All Fields]) OR \"antibiotics\"[All Fields] OR \"antibiotic s\"[All Fields] OR \"antibiotical\"[All Fields]) AND (\"placeboes\"[All Fields] OR \"placebos\"[Supplementary Concept] OR \"placebos\"[All Fields] OR \"placebo\"[All Fields] OR \"placebos\"[MeSH Terms]) AND (\"earache\"[MeSH Terms] OR \"earache\"[All Fields] OR (\"ear\"[All Fields] AND \"pain\"[All Fields]) OR \"ear pain\"[All Fields]) AND \"after\"[All Fields] AND \"two\"[All Fields] AND (\"three\"[All Fields] OR \"threes\"[All Fields]) AND \"days\"[All Fields]"
+      }
+    ],
+    "orchestrator_provenance": "Acquisition script was subsequently fixed to normalize caller-relative output/cache paths before subprocess cwd changes. The exact acquisition version is preserved locally; source bytes, queries and annotation pool are unchanged.",
+    "acquisition_implementation_sha256": {
+      "scripts/prepare_biomedical_cases.py": "dcd6ea3cf1785e1b7983ab40ba0caf4265387334b27e0338fcb84fcdd811c054",
+      "scripts/ask_live.py": "d276672acdc1b6754f630a45403e68a8c1437a240cbd31e880390f48a6527f98",
+      "src/medlens/pubmed_query.py": "5e7749098f6fd88e5d8cbfd828274b0c55cd3cda069b5ba5c9ae2cd9a6ce4c19"
+    }
+  },
+  "manual_annotation_package": {
+    "status": "verified-awaiting-manual-human-annotation",
+    "package_id": "8603f85b744d83f54f9fc3fbd42a6ad8aae2c8f8d88bf7d6539417651ca955a5",
+    "manifest_sha256": "f0950f62aafa27cf46a0fb72c080640f6361f1e84f531f354847275d790f8576",
+    "plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+    "source_bindings_sha256": "68e1e5ded4a61f12f7b77c957ba0cbe7beb57be86d48b375ad69959682d3d386",
+    "question_count": 6,
+    "pair_count": 84,
+    "pool_policy": "PubMed top10 union Dense top10 from each same frozen snapshot; deterministic blind order; no relevance preselection.",
+    "per_case_pool_counts": {
+      "bm01": 17,
+      "bm02": 12,
+      "bm03": 17,
+      "bm04": 20,
+      "bm05": 14,
+      "bm06": 4
+    },
+    "completed_human_decisions": 0,
+    "unjudgeable_is_not_pending_or_zero": true,
+    "human_export_received": false,
+    "source_articles_versioned_in_git": false,
+    "local_backup": {
+      "file": "manual-annotation-8603f85b744d.zip",
+      "bytes": 5997209,
+      "sha256": "bd588d0ccea5fdc1ab2022e789db2dbc5f516b36fa81785db976f0c369a4659c",
+      "contents": "Blank self-contained annotation package and frozen sources; no human decisions."
+    }
+  },
+  "fictional_native_integration": {
+    "scope": "Fictional synthetic source only. Native prompt/decoder/citation/cleanup integration, not a clinical quality estimate.",
+    "question_is_new_annotation_case": false,
+    "human_labels_used": false,
+    "quality_scores_computed": false,
+    "wall_seconds": 25.18258620800043,
+    "answer_status": "answered",
+    "prompt_version": "cited-answer-v8",
+    "review_prompt_version": "axes-first-v2",
+    "claim_count": 3,
+    "validation_error": null,
+    "model_calls": [
+      {
+        "stage": "draft",
+        "seconds": 5.981320750001032,
+        "new_tokens": 96,
+        "hit_output_limit": false,
+        "runtime_identity": {
+          "answer_policy": "compact-v1",
+          "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+          "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+          "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+        },
+        "constraint": {
+          "cache_hit": false,
+          "compile_seconds": 3.3424760420002713,
+          "compiled_cache_maximum": 8,
+          "compiled_cache_size": 1,
+          "decode_relaxations": [
+            "maxLength",
+            "uniqueItems"
+          ],
+          "kind": "draft",
+          "lowered_schema_sha256": "e2041dfff4207f14979b00fb90d9afbae1d081d9c810c4793df499e00e35aa36",
+          "object_property_order": "required-list",
+          "original_schema_sha256": "35458faed269b8a84000c5d27119c1ca0806b4c24f7b472d9c0e847d22459e2d",
+          "regex_sha256": "cc70abfc603d740d04eedce5a2ad0d8600884c4c7aa31fb25cb35e642db79d32",
+          "status_condition_lowering": "disjoint-oneOf-branches",
+          "strict_post_validation_required": true,
+          "whitespace_pattern": ""
+        }
+      },
+      {
+        "stage": "support-review",
+        "seconds": 7.143261166998855,
+        "new_tokens": 102,
+        "hit_output_limit": false,
+        "runtime_identity": {
+          "answer_policy": "compact-v1",
+          "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+          "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+          "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3"
+        },
+        "constraint": {
+          "cache_hit": false,
+          "compile_seconds": 4.237257041000703,
+          "compiled_cache_maximum": 8,
+          "compiled_cache_size": 2,
+          "decode_relaxations": [],
+          "kind": "literal",
+          "lowered_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+          "object_property_order": "required-list",
+          "original_schema_sha256": "a7ba81b5ef27615419d505d73f8e6b51ced9b764ee0fbad03b07e4b48674083f",
+          "regex_sha256": "00901e5f08d84ca140999b98fdc484d56b3f4f41f01a0d1d516eb99799076c6a",
+          "strict_post_validation_required": true,
+          "whitespace_pattern": ""
+        }
+      }
+    ],
+    "runtime_closed": true
+  },
+  "validation": {
+    "python_unittest_count": 401,
+    "python_unittest_passed": 394,
+    "python_unittest_skipped": 7,
+    "skipped_reason": "Native grammar dependency is isolated; main environment skips its seven optional cases.",
+    "pip_check_main": "pass",
+    "wheel_build": "pass",
+    "wheel_contains_annotation_template": true,
+    "blank_packet_verify": "pass",
+    "javascript_unit_checks": {
+      "status": "passed",
+      "scope": "Pure JavaScript unit checks in Node VM, no browser or real article labels",
+      "checks": [
+        "blank-no-default-grades",
+        "draft-distinguishes-pending-from-unjudgeable",
+        "finalization-rejects-pending",
+        "duplicate-json-key-rejected",
+        "duplicate-item-rejected",
+        "boolean-is-not-grade",
+        "changed-source-binding-rejected",
+        "explicit-unknown-allows-finalization"
+      ],
+      "script_sha256": "f688f4a8758796ad55df895b97d4939974c61f8de63c8dfbb736cd644205baf1"
+    },
+    "javascript_export_sha256_crosschecked_in_python": true,
+    "browser_visual_verification": {
+      "status": "not-performed",
+      "reason": "The browser tool blocks file:// navigation. No alternate browser route was used; form logic was tested separately in a Node VM on wholly fictional items."
+    }
+  },
+  "next_gate": "The owner must independently complete and explicitly finalize the 84 relevance decisions. Article relevance metrics wait for that reference; answer-quality metrics additionally require a separate finalized human claim/answer reference."
+}

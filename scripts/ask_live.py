@@ -18,8 +18,8 @@ from medlens.retrieval.embeddings import BGEEncoder
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--query', required=True, help='English depression/anxiety research question')
-    parser.add_argument('--pubmed-query', help='Explicit PubMed expression; the detected question condition is appended')
+    parser.add_argument('--query', required=True, help='English biomedical research question')
+    parser.add_argument('--pubmed-query', help='Exact PubMed expression to use instead of the question; no topic filter is appended')
     parser.add_argument('--limit', type=int, default=100, help='Fresh PubMed candidates, 1–300; default 100')
     parser.add_argument('--top-k', type=int, default=10)
     parser.add_argument('--search-only', action='store_true', help='Diagnostic search/evidence without Qwen inference')

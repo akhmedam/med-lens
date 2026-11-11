@@ -5,6 +5,10 @@ Status: selected by the user on 2026-11-10 for development. This supersedes the
 profile in [ADR 0004](0004-native-mlx-runtime.md). Their Dense/source-selection
 architecture and isolated native runtime remain in force.
 
+The later [biomedical-scope decision](0006-biomedical-scope-and-human-reference.md)
+updates the default prompts to v8 / axes-first-v2 and adds the new human-reference
+workflow. The v7 policy and measurements below describe this original model choice.
+
 ## Decision
 
 Default `ask_live.py` and `ask.py --generate` to native MLX Qwen3.5-4B. Keep
