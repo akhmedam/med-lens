@@ -1,21 +1,32 @@
 # Development plan
 
-Accepted on 2026-10-31. This replaces the earlier remaining-work schedule.
-Days 1–19 are complete. [Air recovery](experiments/air-recovery.json) validated
-short Qwen inference and the primary CLI on the Air M3 (24 GiB). The
-[Day 20 rebuilt-corpus baseline](day20-format-reliability.md) yielded nine visible
-drafts and one output-cap failure; the lost original corpus prevents a controlled
-Day 13 comparison. [Day 21](day21-semantic-reliability.md) measured remaining
-semantic errors and rejected promotion of the expanded reviewer. Reserve semantic
-work is required before the release conditions are met. Dense retrieval/ranking
-and Qwen3.5-9B generation remain the user-accepted primary pipeline; see the
-[ADR](adr/0003-primary-pipeline.md). Day numbers denote
-working sessions, not calendar deadlines. The live-search priority accepted on
-2026-11-09 schedules live search in the existing depression/anxiety scope for
-2026-11-10, followed by broader biomedical coverage and a new manual relevance
-annotation round from 2026-11-11. These add two sessions before the API.
-Target: portfolio v1.0 at Day 30, subject to annotation and quality gates,
-with two to four reserve sessions for generation, PMC and corpus scaling.
+The current development pipeline is live bounded PubMed acquisition → BGE Dense
+ranking → exact evidence → native MLX Qwen3.5-4B draft and same-model support
+review. The [4B development-default decision](adr/0005-qwen4b-development-default.md)
+supersedes the model choice in ADR 0003. The current broader biomedical prompts
+are `cited-answer-v8` and named `axes-first-v2` under the unchanged six-field v4
+taxonomy. Earlier 9B and 4B v7 measurements retain their original scope; they do
+not establish broader-topic quality or approve autonomous answers.
+
+The user requested annotation first and will personally supply all new judgments.
+The [broader biomedical stage](newbroader-biomedical.md) prepares six frozen English
+cross-topic development cases, source snapshots and a blank human relevance
+package. Preparation is complete: six search-only runs froze 246 candidate records
+and a verified 84-card blank package; all human decisions remain pending. See the
+[preparation/integrity record](experiments/biomedical-scope-preparation.json).
+Human article annotation and explicit finalization gate retrieval metrics.
+A separate human claim/answer reference gates later answer-quality metrics. No
+provisional labels, AI-written rationales or historical qrels substitute for either.
+The existing held-out set remains untouched.
+[ADR 0006](adr/0006-biomedical-scope-and-human-reference.md) records the new scope
+and separate human-reference gates.
+
+The remaining schedule below preserves the historical session numbering; it is
+not a calendar deadline or a readiness criterion. API and interactive CLI work
+follow source/annotation preparation. Human quality checks and unresolved semantic
+support errors can require reserve work before a portfolio release. The earlier
+Air recovery, live-search, PMC and ranking records remain useful functional and
+historical evidence within their documented limits.
 
 The primary user interface will be an interactive command-line application.
 HTML reports remain an optional export. The API is a separate programmatic
@@ -35,7 +46,7 @@ interface; a web UI is outside this release plan.
 | 22 | Pool local collections, handle duplicate records and text versions, verify cache updates and start the Small → Medium transition. | [Shared collection and immutable cache](shared-corpus.md): 277 unique articles, 850 windows; preparation, cache lifecycle and resident search measured. Larger Medium and relevance validation remain open. |
 | 23 | Test a small explicitly licensed PMC subset, preserve JATS section/source provenance and date filters, and compare paired abstract/full-text costs and rankings. | [Feasibility result](pmc-fulltext.md): full text remains opt-in; no judged quality gain is established. |
 | 24 | Implement live PubMed retrieval within the existing depression/anxiety scope, using bounded candidate pools and cached unchanged embeddings, then run Dense, evidence selection and Qwen generation/review in one request. Implemented on 2026-11-10. | [Live pipeline and measured costs](live-search.md): twelve fresh cold/warm requests at 30/100/300 candidates; exact source checks and 288 passing tests. Format failures and abstentions remain visible; answer quality is not scored. |
-| 25 | Prepare broader biomedical cases and a blank manual annotation package from 2026-11-11. The user completes all judgments independently before quality evaluation begins. | Frozen questions/sources and a user-authored reference set; retrieval and answer quality are measured only after the required human annotations are complete and frozen. |
+| 25 | Prepare broader English biomedical question handling and a blank source-bound manual annotation package. The user completes all judgments independently before quality evaluation begins. | [Frozen six-case plan and verified 84-card blank package](newbroader-biomedical.md) completed; independent human annotation remains pending. Retrieval and answer quality remain unmeasured until their separate required human references are finalized. |
 | 26 | Add a minimal programmatic API with request parameters, errors and model lifecycle management. | The integrated live-search pipeline is callable through an API. |
 | 27 | Build the interactive CLI: question input, mode selection, progress, ranked articles, evidence, drafts/citations, errors and report export. | A usable terminal workflow without a web UI. |
 | 28 | Evaluate the frozen held-out questions, unsupported requests, empty evidence and repeated runs. | A final report on questions not used to tune the pipeline. |
@@ -95,14 +106,25 @@ and the separate broader-topic/manual-annotation stage.
 The user requested performance work after accepting live search. The
 [MLX runtime](native-mlx.md) targets Qwen load/prefill/decode, the dominant costs.
 Fixed-source replays and fresh live requests measure latency and integrity;
-they do not replace or prefill the user's independent annotations. The existing
-answer/review contracts, source gates and topic scope remain in force. A runtime
-or quantization change is not evidence of semantic equivalence.
+they do not replace or prefill the user's independent annotations. Exact citation/source
+gates and bounded output contracts remain in force. Current
+question-driven biomedical prompts are versioned separately from the historical
+4B v7 and 9B measurements. A runtime, prompt or quantization change is not evidence
+of semantic equivalence.
 
-## Following priority: broader topics and manual annotation from 2026-11-11
+## Completed preparation; independent manual annotation pending
 
-The user postponed arbitrary biomedical question support to the session after
-live search, explicitly to allow a new manual relevance-annotation round. The
+The [integrity record](experiments/biomedical-scope-preparation.json) covers the
+verified six-question, 84-card package, source bindings and automated functional
+checks. The real annotation page remains blank. Visual browser QA was not completed
+because local-file navigation was rejected; this remains a QA limitation, not a
+quality acceptance or a substitute for user annotation. No Qwen answers were
+generated for the six source-preparation cases.
+
+The user placed broader English biomedical support after live search so a new
+independent manual relevance-annotation round could precede quality measurement.
+The frozen cases and operational workflow are documented in
+[newbroader-biomedical.md](newbroader-biomedical.md). The
 existing manual labels are retained for their original question/article pairs;
 AI-generated qrels v2/v3 are separate historical assessment sets, not a substitute
 for the user's new labels. Existing depression/anxiety development results do
@@ -196,8 +218,8 @@ and final checks. Model weights, source corpora, vectors and raw run outputs
 remain local artifacts rather than Git contents.
 
 PMC scope and the Medium profile must remain within measured laptop limits.
-The latest 2026-11-09 decision separates live search on 2026-11-10 from broader
-biomedical coverage/manual annotation starting 2026-11-11, superseding the earlier
-same-session expansion plan and the original post-release expansion restriction. Broader topic support still requires its own retrieval and answer
-evaluation; depression/anxiety benchmark scores must not be generalized to other
+The 2026-11-11 broader-topic stage separates code/source/package preparation
+from the pending human annotation and its later retrieval and answer evaluations.
+It supersedes the original post-release expansion restriction. Broader topic
+support still requires its own retrieval and answer evaluation; depression/anxiety benchmark scores must not be generalized to other
 specialties.

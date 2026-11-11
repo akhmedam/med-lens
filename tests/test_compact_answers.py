@@ -8,7 +8,7 @@ from medlens.generation.answers import (AnswerError, accepted_claim_ids, generat
     parse_draft, render_answer)
 from medlens.generation import compact
 from medlens.generation.contracts import LEGACY_REVIEW_VERSION, REVIEW_VERSION, draft_contract, review_values
-from medlens.generation.reviews import review_messages
+from medlens.generation.reviews import LEGACY_REVIEW_SYSTEM, review_messages
 import test_answers as fixtures
 
 
@@ -47,7 +47,7 @@ class CompactAnswerTests(unittest.TestCase):
         runtime = CompactRuntime([])
         result = generate_answer("Question", fixtures.context(True), runtime)
         self.assertEqual(result["reason"], "empty-context")
-        self.assertEqual(result["prompt_version"], "cited-answer-v7")
+        self.assertEqual(result["prompt_version"], "cited-answer-v8")
         self.assertEqual(runtime.calls, [])
 
     def test_valid_named_draft_review_preserve_exact_evidence_schema_and_caps(self):
@@ -57,7 +57,7 @@ class CompactAnswerTests(unittest.TestCase):
         self.assertEqual(context, before)
         self.assertEqual(result["status"], "partial")
         self.assertEqual(result["review_version"], LEGACY_REVIEW_VERSION)
-        self.assertEqual(result["review_prompt_version"], "axes-first-v1")
+        self.assertEqual(result["review_prompt_version"], "axes-first-v2")
         self.assertEqual(result["support_check"], "same-model-review-not-independent")
         self.assertEqual([cap for _, cap in runtime.calls], [768, 512])
         first, second = [prompt for prompt, _ in runtime.calls]
@@ -77,6 +77,76 @@ class CompactAnswerTests(unittest.TestCase):
         self.assertEqual(citation["quote"], "alpha beta gamma")
         self.assertEqual(citation["matches"], [{"char_start": 0, "char_end": 16}])
         self.assertIn("requires independent review", render_answer(result))
+
+    def test_biomedical_intents_keep_original_question_evidence_and_v4_contract(self):
+        # Fictional prompts exercise routing and evidence identity, not scientific truth.
+        questions = (
+            "Does fictional Z improve Q in adult humans compared with sham?",
+            "Does fictional Z prevent Q in children?",
+            "How accurately does fictional test Z detect Q?",
+            "Does fictional marker Z predict Q after twelve months?",
+            "How does fictional protein Z regulate pathway Q in mouse cells?",
+            "What is known about fictional pathway Q in vitro?",
+            "What is known about fictional pathway Q?",
+        )
+        context = fixtures.context();before = copy.deepcopy(context)
+        tokenizer = fixtures.Tokenizer()
+        baseline_catalog = None
+        for question in questions:
+            with self.subTest(question=question):
+                draft_prompt, indexed = compact.build_draft_prompt(question, context, tokenizer)
+                claims = parse_draft(json.dumps(fixtures.draft()), context,
+                    catalog=indexed["catalog"], citation_format="strings")["claims"]
+                review_prompt = compact.build_review_prompt(question, context, claims, indexed, tokenizer)
+                self.assertEqual(draft_prompt["messages"][1]["content"],
+                    "Question: " + compact.canonical(question) + "\nEvidence:\n" + indexed["payload"])
+                self.assertEqual(review_prompt["messages"][1]["content"],
+                    review_messages(question, context, claims, indexed, protocol=LEGACY_REVIEW_VERSION)[1])
+                self.assertEqual(draft_prompt["prompt_version"], "cited-answer-v8")
+                self.assertEqual(review_prompt["review_prompt_version"], "axes-first-v2")
+                self.assertEqual(review_prompt["review_version"], LEGACY_REVIEW_VERSION)
+                self.assertEqual(review_prompt["decoding_schema"], compact.review_schema(["C1"]))
+                if baseline_catalog is None:baseline_catalog = indexed
+                self.assertEqual(indexed, baseline_catalog)
+        self.assertEqual(context, before)
+
+    def test_biomedical_instructions_remove_unconditional_adult_and_treatment_defaults(self):
+        tokenizer = fixtures.Tokenizer();context = fixtures.context()
+        draft_prompt, indexed = compact.build_draft_prompt("What is fictional pathway Q?", context, tokenizer)
+        claims = parse_draft(json.dumps(fixtures.draft()), context,
+            catalog=indexed["catalog"], citation_format="strings")["claims"]
+        review_prompt = compact.build_review_prompt("What is fictional pathway Q?", context, claims, indexed, tokenizer)
+        draft_system = draft_prompt["messages"][0]["content"]
+        review_system = review_prompt["messages"][0]["content"]
+        self.assertNotIn("unspecified age is not adult", draft_system)
+        self.assertNotIn("If adult ages/eligibility are absent, use unclear", review_system)
+        self.assertNotIn(LEGACY_REVIEW_SYSTEM, review_system)
+        for system in (draft_system, review_system):
+            for intent in ("treatment", "prevention", "diagnosis", "prognosis", "mechanism"):
+                self.assertIn(intent, system)
+            self.assertIn("Do not require unasked adult age", system)
+            self.assertIn("human, animal or in-vitro", system)
+        self.assertIn("when the question asks no contrast", review_system)
+        self.assertIn("never invent a placebo/untreated control", review_system)
+        self.assertIn("Do not demand a restriction absent", review_system)
+        self.assertIn("every factual clause", review_system)
+
+    def test_previous_scope_prompt_cannot_replay_with_same_runtime_and_schema(self):
+        original = generate_answer("Question", fixtures.context(), CompactRuntime([fixtures.draft(), [supported()]]))
+        cache = {call["stage"]: copy.deepcopy(call) for call in original["model_calls"]}
+        for stage, call in cache.items():
+            prompt = call["prompt"]
+            prompt["messages"][0]["content"] = (LEGACY_REVIEW_SYSTEM if stage == "support-review"
+                else "Use requested treatment outcomes; unspecified age is not adult evidence.")
+            prompt["prompt_sha256"] = compact.digest(prompt["messages"])
+            if stage == "draft":prompt["prompt_version"] = "cited-answer-v7"
+            else:prompt["review_prompt_version"] = "axes-first-v1"
+        runtime = CompactRuntime([fixtures.draft(), [supported()]])
+        result = generate_answer("Question", fixtures.context(), runtime, cached_calls=cache)
+        self.assertEqual(len(runtime.calls), 2)
+        self.assertFalse(any(call["cache_reused"] for call in result["model_calls"]))
+        self.assertEqual(result["prompt_version"], "cited-answer-v8")
+        self.assertEqual(result["review_prompt_version"], "axes-first-v2")
 
     def test_contradictory_support_or_reason_withholds_whole_answer_without_repair(self):
         for row in (supported(population_match="mismatch"), supported(outcome_match="unclear"),

@@ -126,20 +126,99 @@ class LiveTests(unittest.TestCase):
 
 
 class QueryTests(unittest.TestCase):
-    def test_conditions_comparison_or_and_transparent_qualifier_policy(self):
-        r=plan_query('Compare CBT and SSRIs for adolescent depression')
-        self.assertEqual(r['conditions'],['depression'])
-        self.assertEqual(r['interventions'],['cbt','antidepressants'])
-        self.assertIn(' OR ',r['submitted_query']);self.assertNotIn('adolescent',r['submitted_query'])
-        self.assertIn('qualifiers',r['limitations'])
-        self.assertEqual(plan_query('CBT for GAD')['conditions'],['generalized-anxiety'])
-        self.assertEqual(plan_query('Exercise for anxiety')['conditions'],['anxiety'])
-    def test_explicit_override_remains_recorded_and_scoped(self):
-        r=plan_query(QUESTION,'"trial"[Title]')
-        self.assertEqual(r['override'],'"trial"[Title]');self.assertIn('AND',r['submitted_query'])
-        self.assertIn('Depressive Disorder',r['submitted_query'])
-    def test_unscoped_empty_and_invalid_override_rejected(self):
-        for q in ('','How to treat diabetes?','Депрессия и лечение'):
-            with self.assertRaises(ValueError):plan_query(q)
-        for override in ('','\nfoo'):
-            with self.assertRaises(ValueError):plan_query(QUESTION,override)
+    def test_original_question_and_every_lexical_transformation_are_recorded(self):
+        question='Compare CBT and SSRIs for adolescent depression at 12 weeks?'
+        result=plan_query(question)
+        self.assertEqual(result['question'],question)
+        self.assertEqual(result['submitted_query'],'CBT and SSRIs for adolescent depression at 12 weeks')
+        self.assertEqual(result['method'],'lexical-question-scaffold-pubmed-atm-v1')
+        self.assertEqual(result['conditions'],[])
+        self.assertEqual(result['interventions'],[])
+        removals=[change for change in result['query_transformations'] if 'char_start' in change]
+        self.assertEqual([change['removed_text'] for change in removals],['Compare','?'])
+        cursor=0;pieces=[]
+        for change in removals:
+            start,end=change['char_start'],change['char_end']
+            self.assertEqual(question[start:end],change['removed_text'])
+            pieces.extend((question[cursor:start],' '));cursor=end
+        pieces.append(question[cursor:])
+        self.assertEqual(' '.join(''.join(pieces).split()),result['submitted_query'])
+        self.assertIn('query_translation',result['limitations'])
+
+    def test_varied_biomedical_questions_do_not_need_a_disease_allowlist(self):
+        questions=(
+            'Does aspirin reduce myocardial infarction risk in older adults?',
+            'Does metformin reduce HbA1c in adults with type 2 diabetes?',
+            'Does remdesivir reduce hospitalization in adults with COVID-19?',
+            'Does exercise reduce migraine frequency in adolescents?',
+            'Does oral rehydration reduce diarrhea duration in children under 5?',
+            'How does TNF-α regulate NF-κB signaling in macrophages?',
+            'Is β-amyloid associated with cognitive decline in APOE ε4 carriers?',
+        )
+        for question in questions:
+            with self.subTest(question=question):
+                result=plan_query(question)
+                self.assertEqual(result['question'],question)
+                self.assertTrue(result['submitted_query'])
+                self.assertNotIn('Depressive Disorder',result['submitted_query'])
+        self.assertEqual(plan_query('How does TNF-α regulate NF-κB signaling?')['submitted_query'],
+            'TNF-α regulate NF-κB signaling')
+
+    def test_question_operators_are_not_required_pubmed_content_terms(self):
+        question='In adults, how does treatment X compare with treatment Y for outcome Z?'
+        result=plan_query(question)
+        self.assertEqual(result['submitted_query'],'In adults, treatment X with treatment Y for outcome Z')
+        self.assertEqual(result['question'],question)
+        self.assertIn('compare',[change.get('removed_text') for change in result['query_transformations']])
+
+    def test_reference_role_scaffolding_does_not_remove_the_named_reference(self):
+        result=plan_query('What is the accuracy of sensor X using assay Y as a gold standard?')
+        self.assertEqual(result['submitted_query'],'the accuracy of sensor X assay Y')
+        self.assertIn('assay Y',result['submitted_query'])
+        self.assertIn('as a gold standard',[change.get('removed_text') for change in result['query_transformations']])
+
+    def test_quotes_biomarkers_and_directly_negated_predicates_are_protected(self):
+        question='Does REDUCE-IT improve HER2+ and BRCA1/2 outcomes involving TNF‑associated signaling?'
+        term=plan_query(question)['submitted_query']
+        for token in ('REDUCE-IT','HER2+','BRCA1/2','TNF‑associated'):
+            self.assertIn(token,term)
+        self.assertEqual(plan_query('Does "compare" affect β-amyloid?')['submitted_query'],'"compare" β-amyloid')
+        self.assertEqual(plan_query('Does X not reduce Y?')['submitted_query'],'X not reduce Y')
+        self.assertEqual(plan_query('IS expression and DO concentration')['submitted_query'],'IS expression and DO concentration')
+
+    def test_explicit_override_is_exact_without_scaffold_or_boolean_injection(self):
+        expression='  (metformin[Title/Abstract] OR GLP-1[Title/Abstract]) AND HbA1c  '
+        result=plan_query(QUESTION,expression)
+        self.assertEqual(result['override'],expression)
+        self.assertEqual(result['submitted_query'],expression)
+        self.assertEqual(result['method'],'explicit-pubmed-query-v2')
+        self.assertEqual(result['query_transformations'],[])
+        self.assertEqual(plan_query(QUESTION,'"compare"[Journal]')['submitted_query'],'"compare"[Journal]')
+        self.assertEqual(plan_query(QUESTION,QUESTION)['submitted_query'],QUESTION)
+
+    def test_transport_validation_does_not_claim_language_or_topic_detection(self):
+        for question in ('What is the weather?', 'Лечение диабета', '  HER2+ breast cancer  '):
+            result=plan_query(question)
+            self.assertEqual(result['question'],question)
+            self.assertEqual(result['language_detection'],'not-performed')
+            self.assertEqual(result['topic_detection'],'not-performed')
+            self.assertFalse(result['automatic_translation'])
+            self.assertEqual(result['supported_scope'],'English biomedical research questions')
+
+    def test_question_and_override_boundaries_and_no_searchable_terms(self):
+        self.assertEqual(plan_query('a'*8000)['submitted_query'],'a'*8000)
+        self.assertEqual(plan_query(QUESTION,'β'*4000)['submitted_query'],'β'*4000)
+        for question in (None,True,42,'','   ','a'*8001,'Does compare reduce?'):
+            with self.subTest(question_type=type(question).__name__),self.assertRaises(ValueError):
+                plan_query(question)
+        for expression in (True,42,'','   ','a'*4001):
+            with self.subTest(override_type=type(expression).__name__),self.assertRaises(ValueError):
+                plan_query(QUESTION,expression)
+
+    def test_control_characters_are_rejected_without_changing_valid_unicode(self):
+        for character in ('\x00','\t','\n','\r','\x1f','\x7f','\x85','\u200b','\u202e','\u2028','\u2029','\ud800'):
+            with self.subTest(control=ascii(character)):
+                with self.assertRaises(ValueError):plan_query('IL-6'+character+' diabetes')
+                with self.assertRaises(ValueError):plan_query(QUESTION,'HER2'+character+' cancer')
+        expression='TNF-α[Title/Abstract] AND β-blockers AND HER2+'
+        self.assertEqual(plan_query('BRCA1/2 and HER2+ breast cancer',expression)['submitted_query'],expression)

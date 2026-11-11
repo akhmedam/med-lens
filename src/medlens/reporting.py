@@ -30,7 +30,7 @@ def render_report(report):
         parts.append('<p class="muted">Fresh PubMed candidate search · '
             + escape(str(live.get('fetched_article_count', '?'))) + ' fetched of '
             + escape(str(live.get('total_pubmed_matches', '?'))) + ' reported matches · limit '
-            + escape(str(live['candidate_limit'])) + '. Questions currently cover depression and anxiety in English.</p>')
+            + escape(str(live['candidate_limit'])) + '. English biomedical questions; relevance and answer quality require separate human evaluation.</p>')
         parts.append('<p>PubMed query: <code>' + escape(live['query_plan']['submitted_query']) + '</code></p>')
         if not live.get('fresh_search_complete'):
             parts.append('<p>Fresh source download has not completed successfully.</p>')

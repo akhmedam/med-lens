@@ -1,10 +1,11 @@
 # MedLens
 
-Retrieval experiments over PubMed papers on depression and anxiety.
+Experimental biomedical literature search over PubMed titles and abstracts.
 
-The project starts with BM25 and dense retrieval, then measures whether hybrid
-ranking, LLM reranking, and full text help. Experimental answer drafts link back
-to exact source quotations. This is a literature search tool, not a diagnostic
+The primary workflow retrieves a bounded live PubMed candidate set, ranks its
+articles with Dense search, and prepares source-grounded research drafts. Historical
+experiments compare BM25, hybrid ranking, LLM reranking and full text. Drafts link
+back to exact source quotations. This is a literature search tool, not a diagnostic
 system.
 
 ## Status
@@ -13,16 +14,17 @@ PubMed ingestion, verified snapshot replay, and structured XML parsing work.
 Search supports BM25, exact dense retrieval, and RRF. The recorded historical pilot uses
 `pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Historical Qwen3.5-9B experiments
 rerank frozen top-10 lists through
-Transformers/MPS with 4-bit Metal linear layers. See the [current evaluation](docs/pilot-qrels-v2.md)
+Transformers/MPS with 4-bit Metal linear layers. See the [historical pilot evaluation](docs/pilot-qrels-v2.md)
 for metrics and annotation provenance. Saved evidence contexts can feed
 experimental cited answer drafts with a separate model support review. These
 drafts require independent review; exact quotations do not prove claim support.
 A [live request](docs/live-search.md) now searches PubMed and downloads current
 abstracts for each question, reuses unchanged passage vectors, and runs Dense,
 source selection and Qwen generation/review. The user-selected development default
-is **Qwen3.5-4B in native MLX**, with short draft instructions and named axes-first
-support review. [Native inference](docs/native-mlx.md) runs in an isolated Apple
-Silicon environment. `--answer-model 9b` selects the explicit comparison; the
+is **Qwen3.5-4B in native MLX**, with question-driven `cited-answer-v8` draft
+instructions and named `axes-first-v2` support review using the six-field v4
+taxonomy. [Native inference](docs/native-mlx.md) runs in an isolated Apple Silicon
+environment. `--answer-model 9b` selects the explicit comparison; the
 Transformers/Metal comparison also requires `--engine transformers`.
 Local-collection replay remains available.
 The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
@@ -34,13 +36,25 @@ construction for fresh windows. The primary chain is **Dense → exact evidence
 → Qwen draft → same-model support review**. [ADR 0005](docs/adr/0005-qwen4b-development-default.md) records the new 4B
 development default; the original 9B choice remains historical in ADR 0003.
 
-The user supplied the new blind human labels. Both reviewers failed the pilot
+In the earlier 4B v7 / axes-first-v1 assessment, the user independently supplied
+blind human labels. Both reviewers failed the pilot
 safety gate: 4B admitted 3/5 human comparison-mismatched claims and 9B admitted
 4/5. Human answer usability was 5/6 for 4B and 4/6 for 9B, but the all-context
 4B usability gate still failed. Six related source pools cover only two
 independent questions. The development choice does not establish clinical or
 general biomedical equivalence; every generated answer remains a research draft
-requiring human review.
+requiring human review. These earlier labels do not assess the current broader
+biomedical v8 prompts.
+
+Broader English biomedical questions now have a separate
+[development and annotation workflow](docs/newbroader-biomedical.md). Six frozen
+cross-topic cases cover cardiology, endocrinology, infection, neurology, a biological
+mechanism and pediatrics. The user supplies all new relevance labels independently;
+retrieval quality waits for their explicit finalization. Answer correctness requires
+its own subsequent human claim/answer reference. No broader-topic quality scores or
+clinical-readiness claims follow from source preparation or successful execution.
+[ADR 0006](docs/adr/0006-biomedical-scope-and-human-reference.md) records the scope
+and human-reference gates.
 
 The [historical semantic checks](docs/day21-semantic-reliability.md) document
 remaining source-support errors. The seven-axis v5 candidate regressed on
@@ -58,8 +72,9 @@ paired abstract and narrative indexes. Full text adds source coverage and change
 rank order; the pilot has no independent relevance labels, so abstract retrieval
 remains primary.
 
-The accepted [development plan](docs/development-plan.md) covers Days 15–28,
-including the two MedCPT experiments and an interactive CLI as the primary UI.
+The accepted [development plan](docs/development-plan.md) separates broader-topic
+preparation from human annotation and quality evaluation, followed by an API and an
+interactive CLI as the primary UI.
 
 ## Moving to another Mac
 
@@ -110,18 +125,20 @@ Run the selected live PubMed → Dense → exact evidence → Qwen4B draft/revie
 
 ```sh
 python scripts/ask_live.py \
-  --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --limit 100 --output-dir results/requests/live-gad-example
-open results/requests/live-gad-example/report.html
+  --query "How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?" \
+  --limit 100 --output-dir results/requests/live-biomedical-example
+open results/requests/live-biomedical-example/report.html
 ```
 
 Generation is enabled by default; `--search-only` runs diagnostic retrieval and
 excerpts. Every request searches and fetches PubMed anew; the embedding cache
-reuses unchanged inputs. The current English question scope is depression and
-anxiety/panic. PubMed candidate collection is bounded (1–300, initial default 100),
+reuses unchanged inputs. The current development scope is English biomedical
+questions; broader-topic relevance and answer quality await separate independent
+manual annotation. PubMed candidate collection is bounded (1–300, default 100),
 and the exact submitted query and PubMed translation are recorded in the report.
 This does not search every PubMed article semantically. See the
-[live request guide](docs/live-search.md) for query overrides, timing and limits.
+[live request guide](docs/live-search.md) for query overrides, timing and limits,
+and the [broader-topic workflow](docs/newbroader-biomedical.md) for annotation gates.
 Use a fresh output directory for each run.
 
 For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
@@ -169,7 +186,7 @@ python scripts/bm25_search.py data/parsed/depression-cbt \
 Search runs offline over the selected dataset. Results include PMIDs, scores,
 titles, and PubMed links. See [BM25 settings and checks](docs/bm25.md).
 
-## Evaluate retrieval
+## Evaluate historical pilot retrieval
 
 ```sh
 python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
@@ -177,6 +194,7 @@ python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
   --output results/evaluation/pilot-001.json
 ```
 
+This historical command does not evaluate the new biomedical annotation package.
 The runner compares PubMed order and BM25 on the same candidates. Prepare query
 and judgment files using the [evaluation format](docs/evaluation.md). Reports
 include nDCG@10, binary metrics, and coverage; unjudged papers remain distinct

@@ -4,7 +4,8 @@ The live and local request CLIs default to the pinned **Qwen3.5-4B community MLX
 artifact**, selected by the user for development. They produce research drafts
 that require human review. The [model decision](adr/0005-qwen4b-development-default.md)
 does not assert clinical reliability or equivalence with 9B. Both model reviewers
-failed the zero-known-bad-acceptance gate in the manually annotated pilot.
+failed the zero-known-bad-acceptance gate in the earlier manually annotated pilot;
+that assessment does not validate the current broader biomedical prompts.
 
 MLX runs in an isolated Python subprocess. BGE and the pinned official answer
 tokenizer remain in the main environment. Qwen9B is an explicit comparison;
@@ -99,12 +100,22 @@ entry point; it does not inherit the live/local CLI's new default.
 
 ## Answer and runtime contracts
 
-The 4B `compact-v1` profile uses `cited-answer-v7`: a short draft instruction and
-the complete unchanged quote catalog. Review uses the six-field v4 taxonomy
-with the named `axes-first-v1` prompt. Population, comparison and outcome precede
+The 4B `compact-v1` profile now uses `cited-answer-v8`: question-driven biomedical
+draft instructions and the complete exact quote catalog. Review uses the six-field
+v4 taxonomy with the named `axes-first-v2` prompt. Population, comparison and outcome precede
 the explicit verdict and reason. The decoder and strict post-parser reject
 inconsistent combinations. Passing axes alone never implies factual support;
 `not_supported/overstatement` remains possible with passing axes.
+
+The question determines treatment, prevention, diagnosis, prognosis, mechanism or
+other biomedical intent. Age, condition, species, experimental system and comparator
+restrictions apply when requested or asserted in a claim. The current compact
+prompts do not require adult subjects, treatment improvement or an untreated control
+for every question. Source-scoped human, animal and in-vitro evidence retains its
+actual scope; it cannot establish unrestricted clinical applicability. A missing
+requested contrast remains missing, and separate comparisons do not create a direct
+comparison. This broader instruction contract is a development change awaiting the
+[new independent annotations](newbroader-biomedical.md), not a quality result.
 
 These are named JSON objects, not positional arrays. Draft constraints receive
 the original schema. The native worker explicitly lowers unsupported schema
@@ -140,7 +151,11 @@ file sizes and config/tokenizer hashes. Preparation hashes complete files;
 `MlxRuntime(verify_weights=True)` can repeat full weight verification without
 hashing gigabytes on every request.
 
-## Limited manual evidence
+## Historical limited manual evidence for the earlier 4B prompts
+
+This assessment covers the earlier `cited-answer-v7` / `axes-first-v1` development
+workflow. It is retained as history and is not an assessment of the current v8
+biomedical prompts or the new cross-topic sources.
 
 The user independently filled and finalized a blind 30-claim reference and six
 answer pairs. These cover 32 claim occurrences, six related source pools and
@@ -169,10 +184,12 @@ autonomous biomedical judge. See the [human assessment](qwen4b-manual-human-asse
 its [aggregate record](experiments/qwen4b-manual-human-assessment.json) and
 [ADR 0005](adr/0005-qwen4b-development-default.md).
 
-## Current 4B integration validation
+## Historical 4B v7 integration validation
 
 The [integration record](experiments/qwen4b-default-integration.json) covers the
-current compact profile. One fixed-source smoke generated a fresh three-claim
+2026-11-10 `cited-answer-v7` / `axes-first-v1` profile, before broader biomedical
+prompt changes. These measurements do not characterize the current v8 workflow.
+One fixed-source smoke generated a fresh three-claim
 answer and review in 37.24 s including runtime load and grammar work. The nested
 native draft call took 15.27 s for 176 tokens and review 9.96 s for 100 tokens;
 these call timings exclude grammar compilation and must not be added to the

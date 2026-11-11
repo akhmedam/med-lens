@@ -132,7 +132,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         code, summary, output = self.execute(compact=True)
         self.assertEqual(code,0)
         row = summary['runs'][0]
-        self.assertEqual(row['prompt_version'],'cited-answer-v7')
+        self.assertEqual(row['prompt_version'],'cited-answer-v8')
         runtime = self.runtimes[0]
         self.assertEqual([p['constraint_kind'] for p,_ in runtime.calls],['draft','literal'])
         self.assertTrue(all('decoding_schema' in p for p,_ in runtime.calls))

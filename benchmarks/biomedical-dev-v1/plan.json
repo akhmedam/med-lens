@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "kind": "biomedical-development-annotation-plan",
+  "created_on": "2026-11-11",
+  "split": "dev",
+  "status": "frozen-before-source-acquisition-and-human-annotation",
+  "purpose": "Prepare an independently user-annotated cross-topic development set; no quality scores before explicit human finalization.",
+  "language": "en",
+  "heldout_used": false,
+  "candidate_limit": 100,
+  "annotation_depth_per_method": 10,
+  "pool_methods": ["pubmed-best-match", "dense"],
+  "pool_policy": "Union of the first ten PubMed candidates and the first ten Dense articles from the same frozen snapshot; deterministic blind order; no relevance preselection.",
+  "annotation_policy": {
+    "origin": "MANUAL HUMAN ANNOTATION by the project owner",
+    "assistant_supplies_labels": false,
+    "assistant_supplies_rationales": false,
+    "grades": {
+      "2": "Directly relevant: the title/abstract reports findings that address the question's main target and every explicitly requested population, comparison and outcome restriction. A supported null finding is relevant. The grade is relevance, not study validity or effect direction.",
+      "1": "Partly relevant: useful evidence on the main topic, but it does not directly address the complete requested target, population, comparison or outcome. Missing abstract details may justify partial relevance only when useful topic evidence is actually present.",
+      "0": "Not relevant: the article does not provide useful evidence for the requested question or addresses a materially different topic/target.",
+      "unknown": "Cannot judge from the available title/abstract or cannot confidently interpret it. This is an explicit human decision, not an unfilled card or relevance zero."
+    },
+    "constraints": [
+      "No default grades, suggested labels, model answers or model-written annotation rationales.",
+      "Every pooled query/PMID/text-version pair must be explicitly rated or marked unjudgeable before finalization.",
+      "Preserve the owner's original exported bytes, rationale, unknown judgments and source bindings.",
+      "Labels describe retrieval relevance only; they do not establish scientific validity, factual claim support or completeness of a generated answer."
+    ]
+  },
+  "answer_evaluation_protocol": {
+    "status": "defined-before-generation; awaiting separate manual answer/claim reference",
+    "sequence": [
+      "Prepare and freeze source candidates and the blank relevance form.",
+      "The owner independently completes and explicitly finalizes article relevance judgments.",
+      "Validate and freeze that human export without modifying its values; report unknown coverage.",
+      "Only then measure retrieval quality on judged pooled pairs, with pool-limited recall and coverage explicitly identified.",
+      "For answer-quality measurement, first freeze generated outputs and a separate blank human claim/answer form; the owner independently labels and finalizes it.",
+      "Only then measure answer support, scope alignment, qualifier preservation, completeness and usability. Article relevance grades cannot substitute for these judgments."
+    ],
+    "human_claim_axes": ["factual_support", "requested_population_or_system", "requested_comparison", "requested_outcome_or_target", "qualifiers_preserved"],
+    "human_answer_axes": ["source_support", "question_scope", "qualifiers_preserved", "completeness", "overall_usable"],
+    "unjudgeable_policy": "Keep explicit uncertainty and missing judgments separate; neither is silently a negative or a positive label.",
+    "functional_checks": "Source/hash integrity, runtime and fictional contract tests can proceed without human labels. They do not produce quality estimates.",
+    "independence": "This is a development set. Once used for tuning, it is not an independent held-out test. The existing held-out questions remain untouched."
+  },
+  "cases": [
+    {
+      "query_id": "bm01",
+      "specialty": "cardiology",
+      "question_type": "prevention",
+      "question": "Do SGLT2 inhibitors compared with placebo reduce heart failure hospitalization in adults with heart failure with preserved ejection fraction?",
+      "relevance_intent": "Evidence on preventing heart-failure hospitalization in adults with preserved-ejection-fraction heart failure, comparing an SGLT2 inhibitor with placebo. Mortality alone, reduced-ejection-fraction-only populations, or diabetes-only populations without this heart-failure scope do not directly answer the complete question. Null hospitalization findings remain relevant."
+    },
+    {
+      "query_id": "bm02",
+      "specialty": "endocrinology",
+      "question_type": "treatment",
+      "question": "In adults with type 2 diabetes, how does semaglutide compare with insulin glargine for glycated hemoglobin reduction?",
+      "relevance_intent": "Evidence about HbA1c/glycated-hemoglobin reduction in adults with type 2 diabetes comparing semaglutide with insulin glargine. Weight loss, another comparator, or separate comparisons against placebo may provide partial context but do not directly establish this requested contrast. Do not infer equivalence from nonsignificance."
+    },
+    {
+      "query_id": "bm03",
+      "specialty": "infectious-diseases",
+      "question_type": "diagnosis",
+      "question": "What is the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults using urine culture as the reference standard?",
+      "relevance_intent": "Diagnostic-accuracy evidence for urine dipsticks in adults with suspected urinary tract infection, with urine culture as the reference standard. Sensitivity, specificity or related accuracy estimates can answer the question; treatment efficacy or pediatric-only accuracy does not directly answer the complete request."
+    },
+    {
+      "query_id": "bm04",
+      "specialty": "neurology",
+      "question_type": "prognosis",
+      "question": "Is APOE epsilon4 associated with progression from mild cognitive impairment to Alzheimer disease?",
+      "relevance_intent": "Longitudinal/prognostic evidence connecting APOE epsilon4 status to progression from mild cognitive impairment to Alzheimer disease. No adult-age restriction or treatment comparator is added. Cross-sectional disease prevalence or treatment-response studies alone do not directly establish the requested progression association; association is not causation."
+    },
+    {
+      "query_id": "bm05",
+      "specialty": "immunology-and-metabolism",
+      "question_type": "mechanism",
+      "question": "How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?",
+      "relevance_intent": "Mechanistic evidence connecting NLRP3 inflammasome activation to pancreatic beta-cell dysfunction in type 2 diabetes. Human, animal and cell-model evidence can be relevant when its actual experimental scope is explicit; no human-only or adult-only criterion is imposed. A mechanism or cellular finding does not establish clinical treatment benefit."
+    },
+    {
+      "query_id": "bm06",
+      "specialty": "pediatrics",
+      "question_type": "treatment",
+      "question": "In children with acute otitis media, do antibiotics compared with placebo reduce ear pain after two to three days?",
+      "relevance_intent": "Evidence on ear pain at two to three days in children with acute otitis media comparing antibiotics with placebo. Longer-term recurrence, hearing outcomes, another comparator or adult-only results may provide context but do not directly answer the complete target. A null pain difference is relevant evidence."
+    }
+  ]
+}
