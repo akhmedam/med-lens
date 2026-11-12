@@ -7,6 +7,10 @@ answer on this strict source-bound assessment: **two answers were partial and
 four required correction**. This is an AI assessment, not independent human or
 clinical validation. The 4B development default remains unchanged.
 
+The subsequent [scoped-findings repair experiment](biomedical-quality-improvement.md)
+is reported separately. It adds an opt-in quotation format; this baseline and its
+original judgments are preserved.
+
 The [machine-readable record](experiments/biomedical-quality.json) contains metric
 denominators, per-case judgments, model/prompt/source identities, timings and
 artifact hashes. Frozen titles/abstracts and original labels remain in the local

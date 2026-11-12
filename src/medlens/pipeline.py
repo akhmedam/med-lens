@@ -9,9 +9,17 @@ from types import SimpleNamespace
 import numpy as np
 
 from medlens.generation.answers import generate_answer
-from medlens.generation.context import build_context, digest
+from medlens.generation.context import ContextConfig, build_context, digest
 from medlens.inference.qwen import MODEL_ID, REVISION
 from medlens.reranking.listwise import apply_response, build_prompt
+
+
+ANSWER_STYLES = ("draft", "source-findings")
+
+
+def validate_answer_style(answer_style):
+    if not isinstance(answer_style, str) or answer_style not in ANSWER_STYLES:
+        raise ValueError("answer_style must be draft or source-findings")
 
 
 def tokenizer_identity(tokenizer):
@@ -24,9 +32,10 @@ def tokenizer_identity(tokenizer):
 
 
 def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory,
-                 generate=False, rerank=False, top_k=10, checkpoint=None,
+                 generate=False, rerank=False, top_k=10, answer_style="draft", checkpoint=None,
                  release_accelerator=None):
     """Factories keep BGE and Qwen lifetimes sequential; Qwen is loaded at most once."""
+    validate_answer_style(answer_style)
     if not isinstance(question, str) or not question.strip():
         raise ValueError("A nonempty research question is required")
     if type(top_k) is not int or not 1 <= top_k <= 10:
@@ -40,10 +49,15 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
             "inference/mlx.py", "inference/mlx_worker.py", "inference/profiles.py", "inference/structured.py",
             "generation/compact.py", "generation/context.py",
             "generation/answers.py", "generation/reviews.py", "generation/contracts.py", "generation/quotes.py")}
+    for name in ("generation/source_scope.py", "generation/source_findings.py"):
+        path = Path(__file__).parent / name
+        implementation[name] = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+    context_config = (ContextConfig(selection_mode="results-methods", max_articles=3)
+        if answer_style == "source-findings" else None)
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],
         "embedding_artifact_id": index.embedding_manifest["artifact_id"],
-        "top_k": top_k, "generate": generate, "rerank": rerank, "tokenizer": info,
+        "top_k": top_k, "generate": generate, "rerank": rerank, "answer_style": answer_style, "tokenizer": info,
         "runtime_policy": getattr(runtime_factory, "identity", {"engine": "custom"}),
         "date_selection": getattr(index, "date_selection", None),
         "implementation_sha256": implementation}
@@ -104,7 +118,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
         # Pack dense evidence before any optional model load, so a Qwen failure
         # still leaves inspectable source passages in the checkpoint.
         report["context"] = build_context(index.dataset, index.window_manifest, index.windows,
-            ranking, scores, tokenizer, info)
+            ranking, scores, tokenizer, info, config=context_config)
         report["timings"]["context_seconds"] = perf_counter() - tick
         save("context-complete")
 
@@ -129,7 +143,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
             tick = perf_counter()
             save("context")
             report["context"] = build_context(index.dataset, index.window_manifest, index.windows,
-                ranking, scores, tokenizer, info)
+                ranking, scores, tokenizer, info, config=context_config)
             report["timings"]["context_seconds"] += perf_counter() - tick
             save("context-complete")
 
@@ -139,7 +153,12 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
             # An empty context can abstain without constructing a language model.
             instance = model() if report["context"]["sources"] else SimpleNamespace(tokenizer=tokenizer,
                 answer_policy=getattr(runtime_factory, "identity", {}).get("answer_policy", "legacy-v6"))
-            report["answer"] = generate_answer(question, report["context"], instance)
+            if answer_style == "source-findings":
+                from medlens.generation.source_findings import generate_source_findings_answer
+                report["answer"] = generate_source_findings_answer(question, report["context"], instance,
+                    source_articles=index.articles)
+            else:
+                report["answer"] = generate_answer(question, report["context"], instance)
         else:
             report["answer"] = {"status": "not_requested", "claims": [], "reason": "generation-disabled"}
         report["timings"]["answer_seconds"] = perf_counter() - tick

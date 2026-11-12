@@ -1,0 +1,798 @@
+{
+  "schema_version": 1,
+  "kind": "biomedical-source-findings-quality-improvement",
+  "created_at": "2026-11-12T07:43:00.724780+00:00",
+  "origin": "assistant",
+  "human_authored": false,
+  "independent_human_validation": false,
+  "heldout_used": false,
+  "clinical_validity_established": false,
+  "default_generation_policy_changed": false,
+  "api_work_deferred": true,
+  "selected": {
+    "answer_style": "source-findings",
+    "policy": "source-findings-scoped-v2-candidate1",
+    "deployment": "explicit experimental opt-in only",
+    "selector_sha256": "91b9aaaf9b6f2a13ca1476a23524183521d6cd001c7fd0207826773602edaf88",
+    "source_scope_sha256": "3abb04d7ff53272431a93cf70c6e96664d2d8aeec4fe146a317de2d48d3f4925",
+    "protocol_sha256": "5c0c2a23ce83e6056d2a9f3363a94da5983cc62a186f92eccdad0e2accefe108",
+    "rubric_protocol_sha256": "495ed18b8a135d7c48556a0847766acb5ea258992db1e34f6103ae005571451e",
+    "verification_sha256": "fd69459f64d7ce321f84e75316dbb99bd08bdf7526592654bae15c7de77cbf58",
+    "implementation_sha256": {
+      "generation/context.py": "75613d2e16f8f6a71d1ece07142b98c9915c4df7ee90af2537438ea7d1835c05",
+      "generation/quotes.py": "b01c02d93c0425372e9d0c8f5945ecec2ab9b59e65ab459970d5852e3b9973bd",
+      "generation/request_contexts.py": "6f696b8eb1357f83505cc9b3d360213a7801bc89c9dfd43d44c08dd83da583bb",
+      "generation/source_scope.py": "3abb04d7ff53272431a93cf70c6e96664d2d8aeec4fe146a317de2d48d3f4925",
+      "reporting.py": "7cbff3c456e347ae3b9edcbffedcf58d740465ad04781497097ba62bb5f8750f",
+      "selector": "91b9aaaf9b6f2a13ca1476a23524183521d6cd001c7fd0207826773602edaf88"
+    },
+    "native_calls": 6,
+    "primary_six": {
+      "case_count": 6,
+      "answer_categories": {
+        "partial": 1,
+        "not_usable": 1,
+        "usable": 3,
+        "appropriate_abstention": 1
+      },
+      "usable_nonempty_answers": 3,
+      "visible_nonempty_answers": 4,
+      "all_visible_claims": 10,
+      "supported_for_exact_question": 7,
+      "factually_supported_visible_claims": 10,
+      "axes": {
+        "factual_support": {
+          "true": 10
+        },
+        "requested_population_or_system": {
+          "unknown": 3,
+          "true": 7
+        },
+        "requested_comparison": {
+          "true": 5,
+          "not_requested": 5
+        },
+        "requested_outcome_or_target": {
+          "true": 10
+        },
+        "qualifiers_preserved": {
+          "true": 10
+        }
+      },
+      "unknown_scope_claims": [
+        {
+          "case_id": "bm01",
+          "claim_id": "C1",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        },
+        {
+          "case_id": "bm01",
+          "claim_id": "C2",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        },
+        {
+          "case_id": "bm01",
+          "claim_id": "C3",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        }
+      ],
+      "factually_false_visible_claims": 0,
+      "any_false_axis_visible_claims": 0,
+      "validation_failures": 0
+    },
+    "supplement_separate": {
+      "case_count": 1,
+      "answer_categories": {
+        "usable": 1
+      },
+      "usable_nonempty_answers": 1,
+      "visible_nonempty_answers": 1,
+      "all_visible_claims": 1,
+      "supported_for_exact_question": 1,
+      "factually_supported_visible_claims": 1,
+      "axes": {
+        "factual_support": {
+          "true": 1
+        },
+        "requested_population_or_system": {
+          "true": 1
+        },
+        "requested_comparison": {
+          "true": 1
+        },
+        "requested_outcome_or_target": {
+          "true": 1
+        },
+        "qualifiers_preserved": {
+          "true": 1
+        }
+      },
+      "unknown_scope_claims": [],
+      "factually_false_visible_claims": 0,
+      "any_false_axis_visible_claims": 0,
+      "validation_failures": 0
+    },
+    "cases": [
+      {
+        "case_id": "bm01",
+        "supplementary": false,
+        "run_sha256": "2332713727373cbd6118c1bc0e923d3fb554b81aa7242f95ea4d99e5a22a6f55",
+        "source_run_sha256": "80a42ebd59ede8a7ca795339d2d67044fb14cdab0f564955bc744a18965974f4",
+        "context_id": "4325657ec85be591b4b23b235eca302c00d4fab67c8ab4682f84b175caf4fdd1",
+        "quote_catalog_sha256": "0a7aeb93409306dcbe2c0875b6a5f7c2daba9dc360b648fc1ba294a37c670ef2",
+        "prompt_sha256": "41c166a213bbbb2685e33c9f139196260952214cc00d5a52f1b6df9d2a088e81",
+        "schema_sha256": "dc97532257b657b83225fc40b61d4450d0d16fb524e5f0f18d0c8e214f2eaae0",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 3,
+        "raw_claim_count": 3,
+        "wall_seconds": 16.88674241699937,
+        "input_tokens": 2348,
+        "evidence_tokens": 1405,
+        "answer_category": "partial"
+      },
+      {
+        "case_id": "bm02",
+        "supplementary": false,
+        "run_sha256": "e643d601beea50a322366e2317e3331e303924759c01bd98c2f25c3b0ff774fa",
+        "source_run_sha256": "bed9f85368d4fd8b3070c74c95abb2639ade403ca51d159a712c31217e31ae8a",
+        "context_id": "72fbce8b059f2483f273971c8ab738da41b81020074c5c4cc517f8327780a50e",
+        "quote_catalog_sha256": "82b668aa5b20cab2b7b36f168c664c857ddd4a00e4c66d9788436979d594fbe4",
+        "prompt_sha256": "112e8722af10b4af97ae94cc3d37fb6a2987de8ed3bbcd6b82be33154eb890f9",
+        "schema_sha256": "c51c3a839d15e50823e19e0c2f006b035fe831a405743d1d0139335485fe848f",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 0,
+        "raw_claim_count": 1,
+        "wall_seconds": 15.432139417000144,
+        "input_tokens": 2331,
+        "evidence_tokens": 1405,
+        "answer_category": "not_usable"
+      },
+      {
+        "case_id": "bm03",
+        "supplementary": false,
+        "run_sha256": "6f4bc9058a919d1c98d8f5339f046f2d1db9182a82fe9aa3692d38e3ce7ec226",
+        "source_run_sha256": "a73ebd8f4712b0b85768271acdcb57374253f75e791598932ef69af8100f5945",
+        "context_id": "ca07f63f85dcd8aa8973e4bb92122dfbfcb66987dc05f218dc9eaec4a56cd606",
+        "quote_catalog_sha256": "0af4d9a3f91bdfc371b04926f43afd402b07314879802cde672c31daed7c8d73",
+        "prompt_sha256": "9562c39d4a17d2cfd59ffda3507a81471e2b0d16c0df82853bcecc99a518f5eb",
+        "schema_sha256": "0f8440e8cd8813f9a0cc4820944cbe72971ccff53aee645d0e7868a667d13d5a",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 2,
+        "raw_claim_count": 3,
+        "wall_seconds": 17.668547207999836,
+        "input_tokens": 2457,
+        "evidence_tokens": 1335,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm04",
+        "supplementary": false,
+        "run_sha256": "ef4b87409946eb0dacb454e8ec2e35d43b3187e740f7911aa6424fee9c15eeef",
+        "source_run_sha256": "6f9de743185ca164a4ceec6b3ff82282660fa1b33f69ba1251f7944972ec26b4",
+        "context_id": "0dc73e0bcd904d8888a4ac93384feef6cf81d0ba859223ebef79925fca99ebd2",
+        "quote_catalog_sha256": "9559368d14e77ebd67ac84316b2221c962dec4872d1ccad7f45761cb1d9fe23b",
+        "prompt_sha256": "854e7a0495799f1e8bf1975476673708284584ccbfde40cf423256fd185fa56c",
+        "schema_sha256": "be702c7654e9b60050a6873401caf61a73a7247ef3c128385d33466b5e70470d",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 2,
+        "raw_claim_count": 3,
+        "wall_seconds": 16.541860583000016,
+        "input_tokens": 2360,
+        "evidence_tokens": 1409,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm05",
+        "supplementary": false,
+        "run_sha256": "14a3063ca045c0084de1284846630e766c010541c0887a0406c1f20d9252e102",
+        "source_run_sha256": "2ab68d3cf41f744ef9393631bba5969aa9cfb91fd22ea4e4c3d4ea99f0be60d1",
+        "context_id": "30b167f542ae8ead89cc790dd2c9f2bdc273ed391263e9bd997a4715d14a044b",
+        "quote_catalog_sha256": "afb4f4c09b28347d96666b614f2bdd4e0c631653de7b5aa979c50c2c568015ed",
+        "prompt_sha256": "5c671c52fdcc7b0367813ce11aa6cedc7d1adda0ff7ced48bcbaf331de9b4709",
+        "schema_sha256": "3d7d1b6b0f003c9ce62362ad8cd3b4f43ab43955a95e1249bb5bc4b0c611bd3f",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 3,
+        "raw_claim_count": 3,
+        "wall_seconds": 15.134955084000467,
+        "input_tokens": 1955,
+        "evidence_tokens": 1047,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm06",
+        "supplementary": false,
+        "run_sha256": "637d9604a1f0232ff7e31325d7675a11517bcd9340d7bc2bff9b1af219dd48f6",
+        "source_run_sha256": "ca7430f33e1296d4e69511d7cb018f7eda5e55c58e3b086223e8a9d4e7800963",
+        "context_id": "3a837a9a9d1b59b82fde5c9e01e7ef9f85bf8d077a43edbb4f545fb957587d6c",
+        "quote_catalog_sha256": "0b59e13aa223ed3891f2a6464c890d572747f8d559d708eba1e48b2203557c18",
+        "prompt_sha256": "70c4eeb9bc896f97141bf933679f3aa43bb057a072a8bceb3f394fec6fe58644",
+        "schema_sha256": "ffa492f47900e073851749a79254f27f69aab62a835e278f2658edcc6723fd9d",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 0,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 0,
+        "raw_claim_count": 0,
+        "wall_seconds": 2.1801160409995646,
+        "input_tokens": 2472,
+        "evidence_tokens": 1845,
+        "answer_category": "appropriate_abstention"
+      },
+      {
+        "case_id": "bm06-override",
+        "supplementary": true,
+        "run_sha256": "5b7f334e242276ce48b5bbb15949cf7c8ae11252e1b0941e6a5893a975556845",
+        "source_run_sha256": "7a45c1fac30230d9e63ad36c171be3e83e14d32d99342cd49e8c7e2cae6c73aa",
+        "context_id": "21e08187a0c668a1eb86663eab778995b18151074e674add4d0986c8bc387448",
+        "quote_catalog_sha256": "cbe570c94c71c6c0f4524ea5551519ccefe2806731cfa59fe3c05dc20fc3ac20",
+        "prompt_sha256": "9b6ab1798c1c2b84e16f298773e893d8422be938d5f0292833d2bf0a0e03f76e",
+        "schema_sha256": "7e56f104f3b5514f29c4c0f5411d438e30291ee3c30e1b1db3e536ac067a81db",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 1,
+        "raw_claim_count": 3,
+        "wall_seconds": 15.93667758399988,
+        "input_tokens": 2335,
+        "evidence_tokens": 1473,
+        "answer_category": "usable"
+      }
+    ],
+    "reviews": [
+      {
+        "sha256": "bb230eac3f1cc252ea7ab1365dd41300597e0fbbd989b1f39c3e6f7980c0225c"
+      },
+      {
+        "sha256": "a39c9b6a3f167270c55b1cf622398030d06b0920ffdecca6b12d7f47e11e5b78"
+      }
+    ]
+  },
+  "baseline": {
+    "answer_categories": {
+      "usable": 0,
+      "partial": 2,
+      "not_usable": 4
+    },
+    "visible_claims": 17,
+    "exact_question_supported_claims": 5,
+    "factual_true": 14,
+    "factual_false": 1,
+    "factual_unknown": 2,
+    "reported_replay_range_seconds": [
+      33.87,
+      38.79
+    ],
+    "record": "biomedical-quality.json",
+    "original_judgments_preserved": true
+  },
+  "rejected_prefiltered_v3": {
+    "policy": "source-findings-scoped-v3-candidate1",
+    "selector_sha256": "0cb1b299bc4d8c0957eaeb5dd0626d4d603f58136799c96e6fd6eb616c8ed220",
+    "protocol_sha256": "129410c8e9577781d9d5a9e2d01f230a39f6faa6881674b32f4147054665efa9",
+    "verification_sha256": "76e3c110c032bcc5bdc23cd28d89657a17b5b639d1be2c17c6777d044b2a16ec",
+    "integrity_status": "passed",
+    "quality_promotion_passed": false,
+    "reason": "bm02:C2 answers a different comparison and outcome; V2 restored exactly",
+    "primary_six": {
+      "case_count": 6,
+      "answer_categories": {
+        "partial": 1,
+        "not_usable": 1,
+        "usable": 3,
+        "appropriate_abstention": 1
+      },
+      "usable_nonempty_answers": 3,
+      "visible_nonempty_answers": 5,
+      "all_visible_claims": 12,
+      "supported_for_exact_question": 8,
+      "factually_supported_visible_claims": 12,
+      "axes": {
+        "factual_support": {
+          "true": 12
+        },
+        "requested_population_or_system": {
+          "unknown": 3,
+          "true": 9
+        },
+        "requested_comparison": {
+          "true": 6,
+          "false": 1,
+          "not_requested": 5
+        },
+        "requested_outcome_or_target": {
+          "true": 11,
+          "false": 1
+        },
+        "qualifiers_preserved": {
+          "true": 12
+        }
+      },
+      "unknown_scope_claims": [
+        {
+          "case_id": "bm01",
+          "claim_id": "C1",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        },
+        {
+          "case_id": "bm01",
+          "claim_id": "C2",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        },
+        {
+          "case_id": "bm01",
+          "claim_id": "C3",
+          "axes": [
+            "requested_population_or_system"
+          ]
+        }
+      ],
+      "factually_false_visible_claims": 0,
+      "any_false_axis_visible_claims": 1,
+      "validation_failures": 0
+    },
+    "cases": [
+      {
+        "case_id": "bm01",
+        "supplementary": false,
+        "run_sha256": "2480c6d6487b28968b5f4227cd746bd926bf8fad7ae30c79a35bbb3039ddcf68",
+        "source_run_sha256": "80a42ebd59ede8a7ca795339d2d67044fb14cdab0f564955bc744a18965974f4",
+        "context_id": "4325657ec85be591b4b23b235eca302c00d4fab67c8ab4682f84b175caf4fdd1",
+        "quote_catalog_sha256": "0a7aeb93409306dcbe2c0875b6a5f7c2daba9dc360b648fc1ba294a37c670ef2",
+        "prompt_sha256": "41c166a213bbbb2685e33c9f139196260952214cc00d5a52f1b6df9d2a088e81",
+        "schema_sha256": "dc97532257b657b83225fc40b61d4450d0d16fb524e5f0f18d0c8e214f2eaae0",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 3,
+        "raw_claim_count": 3,
+        "wall_seconds": 17.86295341600089,
+        "input_tokens": 2348,
+        "evidence_tokens": 1405,
+        "answer_category": "partial"
+      },
+      {
+        "case_id": "bm02",
+        "supplementary": false,
+        "run_sha256": "9aa5a08ca6a5400b8f20ce642e66941ab1889a9130f03737fb473490ef5f1ce5",
+        "source_run_sha256": "bed9f85368d4fd8b3070c74c95abb2639ade403ca51d159a712c31217e31ae8a",
+        "context_id": "72fbce8b059f2483f273971c8ab738da41b81020074c5c4cc517f8327780a50e",
+        "quote_catalog_sha256": "82b668aa5b20cab2b7b36f168c664c857ddd4a00e4c66d9788436979d594fbe4",
+        "prompt_sha256": "8a193d206b7403f1d64675bac01705585b0ec36f58a7d662102da2f87eaf8b12",
+        "schema_sha256": "dee3fc7b74dd13884f50c2e6d6283026c0642bade4d685a14399c60f4c5d0570",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 2,
+        "raw_claim_count": 2,
+        "wall_seconds": 11.777175125000213,
+        "input_tokens": 1524,
+        "evidence_tokens": 1405,
+        "answer_category": "not_usable"
+      },
+      {
+        "case_id": "bm03",
+        "supplementary": false,
+        "run_sha256": "7e18abacc933c661285c7c03e82eb7006ada5999a72fd0e28519beb8ce79bce0",
+        "source_run_sha256": "a73ebd8f4712b0b85768271acdcb57374253f75e791598932ef69af8100f5945",
+        "context_id": "ca07f63f85dcd8aa8973e4bb92122dfbfcb66987dc05f218dc9eaec4a56cd606",
+        "quote_catalog_sha256": "0af4d9a3f91bdfc371b04926f43afd402b07314879802cde672c31daed7c8d73",
+        "prompt_sha256": "d8c87f549fa8936d4ec984c8e8b218aa7f3c54b7dd85cd1f649ff63efe5fefe2",
+        "schema_sha256": "2fdcbdd2859f989a2159178eed06eb307ccd6b67a00469a604387a773d15536c",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 2,
+        "raw_claim_count": 2,
+        "wall_seconds": 13.010780583999804,
+        "input_tokens": 1737,
+        "evidence_tokens": 1335,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm04",
+        "supplementary": false,
+        "run_sha256": "530d807c302d3fda152b56cf4a01b4a965d74142a956141529880aeddcf0b4df",
+        "source_run_sha256": "6f9de743185ca164a4ceec6b3ff82282660fa1b33f69ba1251f7944972ec26b4",
+        "context_id": "0dc73e0bcd904d8888a4ac93384feef6cf81d0ba859223ebef79925fca99ebd2",
+        "quote_catalog_sha256": "9559368d14e77ebd67ac84316b2221c962dec4872d1ccad7f45761cb1d9fe23b",
+        "prompt_sha256": "af2476d67e6a92547bdb1f7f5a92fbbcea71a961a8689aae237b32ab0a24906f",
+        "schema_sha256": "05f19d71c16a1c0a3e7d975b419af46e2df566f2a56789fb4e11b1c591d99c5e",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 2,
+        "raw_claim_count": 2,
+        "wall_seconds": 12.291153583000778,
+        "input_tokens": 1659,
+        "evidence_tokens": 1409,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm05",
+        "supplementary": false,
+        "run_sha256": "8b832fb8605920b0cabf733ce3dd5938796f3184fcb5ea35fa3f00eff292f7e3",
+        "source_run_sha256": "2ab68d3cf41f744ef9393631bba5969aa9cfb91fd22ea4e4c3d4ea99f0be60d1",
+        "context_id": "30b167f542ae8ead89cc790dd2c9f2bdc273ed391263e9bd997a4715d14a044b",
+        "quote_catalog_sha256": "afb4f4c09b28347d96666b614f2bdd4e0c631653de7b5aa979c50c2c568015ed",
+        "prompt_sha256": "5c671c52fdcc7b0367813ce11aa6cedc7d1adda0ff7ced48bcbaf331de9b4709",
+        "schema_sha256": "3d7d1b6b0f003c9ce62362ad8cd3b4f43ab43955a95e1249bb5bc4b0c611bd3f",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 3,
+        "raw_claim_count": 3,
+        "wall_seconds": 15.130778832999567,
+        "input_tokens": 1955,
+        "evidence_tokens": 1047,
+        "answer_category": "usable"
+      },
+      {
+        "case_id": "bm06",
+        "supplementary": false,
+        "run_sha256": "ba96e3ca2b9dd3b0390472eb620e70e7df6f801d715e5f5cef46292a03c4ad81",
+        "source_run_sha256": "ca7430f33e1296d4e69511d7cb018f7eda5e55c58e3b086223e8a9d4e7800963",
+        "context_id": "3a837a9a9d1b59b82fde5c9e01e7ef9f85bf8d077a43edbb4f545fb957587d6c",
+        "quote_catalog_sha256": "0b59e13aa223ed3891f2a6464c890d572747f8d559d708eba1e48b2203557c18",
+        "prompt_sha256": null,
+        "schema_sha256": null,
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 0,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 0,
+        "raw_claim_count": 0,
+        "wall_seconds": 2.293957457999568,
+        "input_tokens": 0,
+        "evidence_tokens": 1845,
+        "answer_category": "appropriate_abstention"
+      },
+      {
+        "case_id": "bm06-override",
+        "supplementary": true,
+        "run_sha256": "4409e66aebe799f49a81a45742370e424b710e44184112719e97a4c4012cad0d",
+        "source_run_sha256": "7a45c1fac30230d9e63ad36c171be3e83e14d32d99342cd49e8c7e2cae6c73aa",
+        "context_id": "21e08187a0c668a1eb86663eab778995b18151074e674add4d0986c8bc387448",
+        "quote_catalog_sha256": "cbe570c94c71c6c0f4524ea5551519ccefe2806731cfa59fe3c05dc20fc3ac20",
+        "prompt_sha256": "696535fc3d9fa34c1b75cd9b4c737acbb959970d27648d430c506d46d22cc143",
+        "schema_sha256": "d3337c7762d4d9582fc35ce42548b8b3df69d877a9cf2f36d9f23d7751bef346",
+        "runtime_closed": true,
+        "worker_reaped": true,
+        "native_calls": 1,
+        "native_output_cap_hit": false,
+        "json_repair": false,
+        "visible_claim_count": 1,
+        "raw_claim_count": 1,
+        "wall_seconds": 9.409824209000362,
+        "input_tokens": 1175,
+        "evidence_tokens": 1473,
+        "answer_category": "usable"
+      }
+    ],
+    "comparison_with_v2": {
+      "verification_kind": "independent bindings plus category comparison from immutable raw AI reviews; no new scientific judgment generated",
+      "v2_receipt_path": "results/biomedical-dev-v1/quality-improvement-20261112-v1/scoped-v2-verification.json",
+      "v2_receipt_sha256": "fd69459f64d7ce321f84e75316dbb99bd08bdf7526592654bae15c7de77cbf58",
+      "same_frozen_source_runs_and_contexts_all_seven": true,
+      "per_case": [
+        {
+          "case_id": "bm01",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "2332713727373cbd6118c1bc0e923d3fb554b81aa7242f95ea4d99e5a22a6f55",
+          "v3_run_sha256": "2480c6d6487b28968b5f4227cd746bd926bf8fad7ae30c79a35bbb3039ddcf68",
+          "v2_category": "partial",
+          "v3_category": "partial",
+          "v2_visible_claims": 3,
+          "v3_visible_claims": 3,
+          "v2_wall_seconds": 16.88674241699937,
+          "v3_wall_seconds": 17.86295341600089,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": null
+        },
+        {
+          "case_id": "bm02",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "e643d601beea50a322366e2317e3331e303924759c01bd98c2f25c3b0ff774fa",
+          "v3_run_sha256": "9aa5a08ca6a5400b8f20ce642e66941ab1889a9130f03737fb473490ef5f1ce5",
+          "v2_category": "not_usable",
+          "v3_category": "not_usable",
+          "v2_visible_claims": 0,
+          "v3_visible_claims": 2,
+          "v2_wall_seconds": 15.432139417000144,
+          "v3_wall_seconds": 11.777175125000213,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 1,
+          "v3_false_axis_visible_claims": [
+            {
+              "claim_id": "C2",
+              "false_axes": [
+                "requested_comparison",
+                "requested_outcome_or_target"
+              ]
+            }
+          ],
+          "new_observed_safety_regression": true,
+          "v2_usable_preserved": null
+        },
+        {
+          "case_id": "bm03",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "6f4bc9058a919d1c98d8f5339f046f2d1db9182a82fe9aa3692d38e3ce7ec226",
+          "v3_run_sha256": "7e18abacc933c661285c7c03e82eb7006ada5999a72fd0e28519beb8ce79bce0",
+          "v2_category": "usable",
+          "v3_category": "usable",
+          "v2_visible_claims": 2,
+          "v3_visible_claims": 2,
+          "v2_wall_seconds": 17.668547207999836,
+          "v3_wall_seconds": 13.010780583999804,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": true
+        },
+        {
+          "case_id": "bm04",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "ef4b87409946eb0dacb454e8ec2e35d43b3187e740f7911aa6424fee9c15eeef",
+          "v3_run_sha256": "530d807c302d3fda152b56cf4a01b4a965d74142a956141529880aeddcf0b4df",
+          "v2_category": "usable",
+          "v3_category": "usable",
+          "v2_visible_claims": 2,
+          "v3_visible_claims": 2,
+          "v2_wall_seconds": 16.541860583000016,
+          "v3_wall_seconds": 12.291153583000778,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": true
+        },
+        {
+          "case_id": "bm05",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "14a3063ca045c0084de1284846630e766c010541c0887a0406c1f20d9252e102",
+          "v3_run_sha256": "8b832fb8605920b0cabf733ce3dd5938796f3184fcb5ea35fa3f00eff292f7e3",
+          "v2_category": "usable",
+          "v3_category": "usable",
+          "v2_visible_claims": 3,
+          "v3_visible_claims": 3,
+          "v2_wall_seconds": 15.134955084000467,
+          "v3_wall_seconds": 15.130778832999567,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": true
+        },
+        {
+          "case_id": "bm06",
+          "supplementary": false,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "637d9604a1f0232ff7e31325d7675a11517bcd9340d7bc2bff9b1af219dd48f6",
+          "v3_run_sha256": "ba96e3ca2b9dd3b0390472eb620e70e7df6f801d715e5f5cef46292a03c4ad81",
+          "v2_category": "appropriate_abstention",
+          "v3_category": "appropriate_abstention",
+          "v2_visible_claims": 0,
+          "v3_visible_claims": 0,
+          "v2_wall_seconds": 2.1801160409995646,
+          "v3_wall_seconds": 2.293957457999568,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": null
+        },
+        {
+          "case_id": "bm06-override",
+          "supplementary": true,
+          "same_frozen_sources_context_and_ranking": true,
+          "v2_run_sha256": "5b7f334e242276ce48b5bbb15949cf7c8ae11252e1b0941e6a5893a975556845",
+          "v3_run_sha256": "4409e66aebe799f49a81a45742370e424b710e44184112719e97a4c4012cad0d",
+          "v2_category": "usable",
+          "v3_category": "usable",
+          "v2_visible_claims": 1,
+          "v3_visible_claims": 1,
+          "v2_wall_seconds": 15.93667758399988,
+          "v3_wall_seconds": 9.409824209000362,
+          "category_changed": false,
+          "ranked_material_regression": false,
+          "v2_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claim_count": 0,
+          "v3_false_axis_visible_claims": [],
+          "new_observed_safety_regression": false,
+          "v2_usable_preserved": true
+        }
+      ],
+      "primary_ranked_material_regressions": [],
+      "primary_new_observed_safety_regressions": [
+        {
+          "case_id": "bm02",
+          "false_axis_claims": [
+            {
+              "claim_id": "C2",
+              "false_axes": [
+                "requested_comparison",
+                "requested_outcome_or_target"
+              ]
+            }
+          ]
+        }
+      ],
+      "v2_usable_cases_not_preserved": [],
+      "prospective_selection_checks": {
+        "v2_three_usable_cases_preserved": true,
+        "original_bm06_abstention_preserved": true,
+        "no_explicit_false_visible_axis": false,
+        "bm02_visible_omission_corrected": false,
+        "no_new_ranked_material_regression": true,
+        "no_validation_failures": true,
+        "at_least_three_usable_nonempty_answers": true
+      },
+      "all_prospective_selection_checks_pass": false,
+      "interpretation": "Source-bound AI development labels, not human/clinical confirmation. Appropriate abstention is reported separately from usable nonempty answers."
+    }
+  },
+  "query_planner": {
+    "version": "lexical-question-scaffold-pubmed-atm-v2",
+    "changed_cases": [
+      "bm06"
+    ],
+    "original_question_retained": true,
+    "candidate_broadening_only": true,
+    "new_relevance_labels_transferred": false
+  },
+  "timings": {
+    "selected_v2_wall_seconds": [
+      16.88674241699937,
+      15.432139417000144,
+      17.668547207999836,
+      16.541860583000016,
+      15.134955084000467,
+      2.1801160409995646
+    ],
+    "selected_v2_wall_median": 15.98700000000008,
+    "selected_v2_model_case_range_seconds": [
+      15.134955084000467,
+      17.668547207999836
+    ],
+    "selected_v2_supplement_wall_seconds": 15.93667758399988,
+    "rejected_v3_wall_median": 12.65096708350029,
+    "controlled_speedup_claimed": false,
+    "fresh_live_latency_measured": false,
+    "scope": "Frozen-source replay with fresh model startup and cleanup; no fresh PubMed download/passage encoding. Contracts, inputs and orchestration differ from baseline."
+  },
+  "failed_research": [
+    {
+      "variant": "prompt-only/coverage prose",
+      "reason": "invented study name and reversed source result direction observed"
+    },
+    {
+      "variant": "source-extract-v1/v2 and unguarded source-findings",
+      "reason": "literal quotations did not ensure comparison/reference/endpoint match"
+    },
+    {
+      "variant": "native thinking",
+      "reason": "384-token 8/8 controls capped before JSON; tested 768-token variants also capped"
+    },
+    {
+      "variant": "brief-comparison note",
+      "source_review_correct": 5,
+      "controls": 8,
+      "positives_retained": 2,
+      "positive_controls": 4,
+      "negatives_accepted": 1,
+      "negative_controls": 4
+    },
+    {
+      "variant": "question-blind NLI",
+      "correct": 7,
+      "controls": 8,
+      "positives_retained": 3,
+      "positive_controls": 4,
+      "negatives_accepted": 0,
+      "negative_controls": 4
+    }
+  ],
+  "validation": {
+    "main_unit_tests": {
+      "total": 472,
+      "passed": 463,
+      "optional_native_skipped": 9
+    },
+    "native_cpu_unit_tests": {
+      "total": 22,
+      "passed": 22
+    },
+    "selected_v2_integrity": "passed",
+    "v2_source_response_files_verified": 14,
+    "v2_ai_review_proof_objects_verified": 62,
+    "real_cli_smoke": {
+      "status": "complete",
+      "answer_policy": "source-findings-scoped-v2-candidate1",
+      "model_calls": 1,
+      "visible_claims": 3,
+      "runtime_closed": true,
+      "run_sha256": "27e45d7291c10980706ac202db881881cb6ae3f3f6caf26ab903905fb064c2dd",
+      "pipeline_seconds": 15.485376333001113,
+      "visible_output_equals_reviewed_bm05": true,
+      "included_in_quality_aggregate": false
+    }
+  },
+  "local_artifacts": {
+    "root": "results/biomedical-dev-v1/quality-improvement-20261112-v1",
+    "selected_trial": "source-findings-scoped",
+    "rejected_trial": "source-findings-prefiltered",
+    "raw_sources_prompts_outputs_weights_committed": false
+  },
+  "limitations": [
+    "Repeated development tuning and expanded research beyond the initial small-ablation plan; not held-out evidence.",
+    "Three adult-scope unknown claims remain uncertified.",
+    "bm02 selection omission regresses from baseline partial to empty.",
+    "Lexical vetoes and model-selected study-role pools cannot certify scientific support or clinical safety.",
+    "Independent human-reference gates are not satisfied."
+  ]
+}

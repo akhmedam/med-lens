@@ -57,6 +57,14 @@ AI-origin, not independent human validation; historical genuine human labels and
 the blank human package are unchanged. [ADR 0006](docs/adr/0006-biomedical-scope-and-human-reference.md)
 retains the separate human-reference gates. No clinical-readiness claim follows.
 
+An [experimental scoped-findings mode](docs/biomedical-quality-improvement.md) now
+selects exact source quotations together with study context and explicit scope
+exclusions. On the same six tuned development cases, separate AI review found
+three usable answers, one partial, one unnecessary abstention and one appropriate
+abstention. The existing draft/review default is unchanged. A faster follow-up
+variant admitted a wrong-target finding and was rejected; neither variant
+establishes independent human or clinical validation.
+
 The [historical semantic checks](docs/day21-semantic-reliability.md) document
 remaining source-support errors. The seven-axis v5 candidate regressed on
 controlled development cases and remains opt-in through the legacy route. The
@@ -141,6 +149,11 @@ This does not search every PubMed article semantically. See the
 [live request guide](docs/live-search.md) for query overrides, timing and limits,
 and the [broader-topic workflow](docs/newbroader-biomedical.md) for annotation gates.
 Use a fresh output directory for each run.
+
+Add `--answer-style source-findings` to try the experimental quotation mode.
+It shows study context and findings verbatim with applicability cautions; it does
+not generate a synthesis or claim a model factual-review step. The default remains
+`--answer-style draft`. See [measured results and limits](docs/biomedical-quality-improvement.md).
 
 For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
 directories; pass `--generate` and omit `--rerank` for the same answer pipeline.

@@ -13,7 +13,7 @@ from medlens.generation.context import digest, source_section
 from medlens.ingestion.pubmed import PubMedClient
 from medlens.ingestion.snapshots import download_snapshot
 from medlens.parsing.dataset import build_dataset
-from medlens.pipeline import run_question
+from medlens.pipeline import run_question, validate_answer_style
 from medlens.pubmed_query import plan_query
 from medlens.reporting import render_report
 from medlens.retrieval.bge_tokenizer import MODEL_ID, REVISION
@@ -48,8 +48,9 @@ def sample_memory(stage):
 
 def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder_info,
                       encoder_factory, answer_tokenizer_loader, runtime_factory,
-                      client=None, limit=100, pubmed_query=None, generate=True, top_k=10,
+                      client=None, limit=100, pubmed_query=None, generate=True, top_k=10, answer_style='draft',
                       progress=None, release_accelerator=None):
+    validate_answer_style(answer_style)
     plan = plan_query(question, pubmed_query)
     if type(limit) is not int or not 1 <= limit <= 300:
         raise ValueError('Live candidate limit must be between 1 and 300')
@@ -65,7 +66,7 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
     prep, samples = {}, []
     paths = {key: str((output/key).resolve()) for key in ('dataset', 'windows', 'embeddings')}
     report = {'schema_version': 1, 'question': question, 'status': 'running', 'stage': 'setup',
-              'runtime_load_count': 0, 'created_at': datetime.now(timezone.utc).isoformat()}
+              'runtime_load_count': 0, 'answer_style': answer_style, 'created_at': datetime.now(timezone.utc).isoformat()}
 
     def save(value):
         nonlocal report
@@ -128,7 +129,7 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
         live['dataset_id'] = dm['dataset_id']
         if not sm['pmids']:
             report.update(status='complete', stage='complete',
-                request_id=digest({'plan':plan, 'snapshot_id':sm['snapshot_id'], 'generate':generate}),
+                request_id=digest({'plan':plan, 'snapshot_id':sm['snapshot_id'], 'generate':generate, 'answer_style':answer_style}),
                 scope={'source':'live-pubmed-candidate-subset','candidate_count':0,'searchable_count':0,
                        'window_count':0,'missing_vector_pmids':[]},
                 retrieval={'results':[]}, context={'sources':[],'status':'no-source-excerpts'},
@@ -152,7 +153,7 @@ def run_live_question(question, output, cache_root, *, tokenizer_loader, encoder
             answer_tokenizer = measure('answer_tokenizer_load', answer_tokenizer_loader)
             report = run_question(index, question, encoder_factory=encoder_factory,
                 tokenizer=answer_tokenizer, runtime_factory=measured_runtime,
-                generate=generate, rerank=False, top_k=top_k, checkpoint=save,
+                generate=generate, rerank=False, top_k=top_k, answer_style=answer_style, checkpoint=save,
                 release_accelerator=release)
     except (Exception, KeyboardInterrupt) as exc:
         report.update(status='interrupted' if isinstance(exc, KeyboardInterrupt) else 'failed',

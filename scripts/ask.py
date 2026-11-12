@@ -14,7 +14,7 @@ os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
 
 from medlens.inference.profiles import load_answer_tokenizer
 from medlens.inference.backends import add_runtime_arguments, runtime_factory
-from medlens.pipeline import run_question
+from medlens.pipeline import ANSWER_STYLES, run_question
 from medlens.reporting import render_report
 from medlens.retrieval.dense import DenseIndex
 from medlens.retrieval.embeddings import BGEEncoder
@@ -27,6 +27,8 @@ def main(argv=None):
     parser.add_argument('--embeddings', type=Path, required=True)
     parser.add_argument('--query', required=True, help='Research question in English')
     parser.add_argument('--top-k', type=int, default=10)
+    parser.add_argument('--answer-style', choices=ANSWER_STYLES, default='draft',
+        help='Answer format: draft (default) or experimental model-selected source quotations')
     parser.add_argument('--published-from', help='Inclusive publication lower bound, YYYY-MM-DD')
     parser.add_argument('--published-until', help='Inclusive publication upper bound, YYYY-MM-DD')
     parser.add_argument('--generate', action='store_true', help='Enable experimental Qwen draft generation')
@@ -53,7 +55,7 @@ def main(argv=None):
         parser.error('Output directory already exists; choose a fresh path')
     started = perf_counter()
     created = datetime.now(timezone.utc).isoformat()
-    report = {'schema_version': 1, 'question': args.query, 'status': 'running', 'stage': 'setup'}
+    report = {'schema_version': 1, 'question': args.query, 'answer_style': args.answer_style, 'status': 'running', 'stage': 'setup'}
     paths = {name: str(getattr(args, name).resolve()) for name in ('dataset', 'windows', 'embeddings')}
     last_state = None
     def checkpoint(value):
@@ -80,7 +82,7 @@ def main(argv=None):
         report = run_question(index, args.query,
             encoder_factory=lambda: BGEEncoder(args.model, args.tokenizer, device=args.device),
             tokenizer=tokenizer, runtime_factory=make_runtime, generate=args.generate,
-            rerank=args.rerank, top_k=args.top_k, checkpoint=checkpoint,
+            rerank=args.rerank, top_k=args.top_k, answer_style=args.answer_style, checkpoint=checkpoint,
             release_accelerator=release_accelerator)
     except (Exception, KeyboardInterrupt) as exc:
         report.update(status='interrupted' if isinstance(exc, KeyboardInterrupt) else 'failed',

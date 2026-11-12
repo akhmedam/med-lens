@@ -28,6 +28,14 @@ human-reference gates recorded in
 [ADR 0006](adr/0006-biomedical-scope-and-human-reference.md).
 The existing held-out set remains untouched.
 
+On 2026-11-12 the user deferred merging and prioritized quality repair before the
+API. The [scoped-findings experiment](biomedical-quality-improvement.md) adds an
+explicit opt-in source-quotation mode with three usable development answers;
+current draft/review defaults are unchanged. Selection omissions and unreliable
+semantic relation judgments remain open. API work is paused behind this quality
+repair; the remaining schedule below is contingent on accepting the repair and
+does not imply that the next delivery stage has started.
+
 The schedule continues the historical numbering through development days 26–31.
 The assessment on day 26 is complete; days 27–31 remain.
 It is a planning estimate, not a readiness guarantee. The quality-assessment stage
@@ -64,7 +72,7 @@ They are working sessions, not calendar deadlines.
 | Working day | Work | Deliverable |
 | --- | --- | --- |
 | 26 | Assess quality on the six frozen broader-topic development questions within one day. Completed 2026-11-12. | [Exploratory AI assessment](biomedical-quality.md): Dense nDCG@10 0.7888 versus PubMed 0.5376 (5 defined cases); two partial answers, four requiring correction. Fixed-source replay 33.87–38.79 s; separate query-override live request 44.75 s. Human-reference gates remain unsatisfied; semantic-support defects are explicit release blockers. |
-| 27 | Add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. | The existing live PubMed → BGE → Qwen3.5-4B/MLX pipeline is callable through an API on the MVP platform. |
+| 27 | After the quality repair is accepted, add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. | The existing live PubMed → BGE → Qwen3.5-4B/MLX pipeline is callable through an API on the MVP platform. |
 | 28 | Build the interactive CLI: question input, progress, ranked articles, evidence, answers/citations, errors and optional report export. | A usable terminal workflow on macOS/Apple Silicon. |
 | 29 | Run final checks on the untouched held-out questions, unsupported requests, empty evidence, upstream failures and repeated requests. Check latency and memory. | A final validation report with reference coverage and unresolved defects disclosed; no tuning against held-out results. |
 | 30 | Remove obsolete implementations and unused dependencies after the comparisons; complete required tests/CI, README, setup instructions and limitations. | One maintained MVP pipeline with a documented setup and traceable selection. |

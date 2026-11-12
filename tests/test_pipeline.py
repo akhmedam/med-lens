@@ -72,6 +72,24 @@ class PipelineTests(unittest.TestCase):
         self.assertTrue(result['context']['sources'])
         self.assertIn('Generation was not requested',render_report(result))
 
+    def test_source_findings_display_context_quotes_and_scope_caution_honestly(self):
+        result = self.run_pipeline()
+        source = result['context']['sources'][0]
+        result['answer'] = {'status': 'partial', 'answer_style': 'source-findings',
+            'claims': [{'text': 'This synthetic prose must not replace source quotations.',
+                'scope_cautions': [{'code': 'adult_eligibility_not_explicit'}],
+                'citations': [{**source, 'quote': 'Study context <model>.'},
+                              {**source, 'quote': 'Result <finding>.'}]}],
+            'limitations': ['limited_excerpts']}
+        page = render_report(result)
+        self.assertIn('Source findings — model-selected quotations with study context', page)
+        self.assertNotIn('The same model generated and reviewed these claims', page)
+        self.assertNotIn('This synthetic prose', page)
+        self.assertIn('applicability to adults is uncertain', page)
+        self.assertIn('Study context &lt;model&gt;.', page)
+        self.assertIn('Result &lt;finding&gt;.', page)
+        self.assertLess(page.index('Study context &lt;model&gt;.'), page.index('Result &lt;finding&gt;.'))
+
     def test_selected_dense_qwen_path_keeps_order_and_only_drafts_then_reviews(self):
         review = [{'claim_id':'C1','verdict':'supported','population_match':'match',
             'comparison_match':'not_requested','outcome_match':'match','reason':'supported_by_excerpt'}]
