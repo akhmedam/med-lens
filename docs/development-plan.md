@@ -8,31 +8,39 @@ are `cited-answer-v8` and named `axes-first-v2` under the unchanged six-field v4
 taxonomy. Earlier 9B and 4B v7 measurements retain their original scope; they do
 not establish broader-topic quality or approve autonomous answers.
 
-The user requested annotation first and will personally supply all new judgments.
-The [broader biomedical stage](newbroader-biomedical.md) prepares six frozen English
-cross-topic development cases, source snapshots and a blank human relevance
-package. Preparation is complete: six search-only runs froze 246 candidate records
-and a verified 84-card blank package; all human decisions remain pending. See the
+The [broader biomedical stage](newbroader-biomedical.md) prepared six frozen
+English cross-topic development cases, 246 candidate records and a verified
+84-card blank human relevance package. See the
 [preparation/integrity record](experiments/biomedical-scope-preparation.json).
-Human article annotation and explicit finalization gate retrieval metrics.
-A separate human claim/answer reference gates later answer-quality metrics. No
-provisional labels, AI-written rationales or historical qrels substitute for either.
-The existing held-out set remains untouched.
-[ADR 0006](adr/0006-biomedical-scope-and-human-reference.md) records the new scope
-and separate human-reference gates.
+The user subsequently requested assistant annotation of all questions. A separate
+local assistant package now contains all 84 judgments; it is explicitly
+`human_authored=false`, not an independent human reference. The original blank
+human package and historical genuine human labels remain unchanged.
 
-The remaining schedule below preserves the historical session numbering; it is
-not a calendar deadline or a readiness criterion. API and interactive CLI work
-follow source/annotation preparation. Human quality checks and unresolved semantic
-support errors can require reserve work before a portfolio release. The earlier
-Air recovery, live-search, PMC and ranking records remain useful functional and
-historical evidence within their documented limits.
+On 2026-11-11 the user allocated one working day to broader-topic development
+quality assessment, completed on 2026-11-12 in the
+[exploratory assessment](biomedical-quality.md): two partial answers, four requiring
+correction, and material semantic-support errors still open. Retrieval diagnostics
+use the completed assistant labels with their provenance disclosed. Generated answers require a separate claim-level
+review against the exact source abstracts; article relevance alone cannot score
+answer correctness. This exploratory assessment does not satisfy the independent
+human-reference gates recorded in
+[ADR 0006](adr/0006-biomedical-scope-and-human-reference.md).
+The existing held-out set remains untouched.
+
+The schedule continues the historical numbering through development days 26–31.
+The assessment on day 26 is complete; days 27–31 remain.
+It is a planning estimate, not a readiness guarantee. The quality-assessment stage
+is time-boxed to one day; substantial defects found there become explicit repair
+work rather than silently extending evaluation. Material unresolved support
+errors can delay release. The earlier Air recovery, live-search, PMC and ranking
+records remain useful evidence within their documented limits.
 
 The primary user interface will be an interactive command-line application.
 HTML reports remain an optional export. The API is a separate programmatic
 interface; a web UI is outside this release plan.
 
-## Remaining sessions
+## Historical development sessions
 
 | Day | Work | Deliverable |
 | --- | --- | --- |
@@ -46,12 +54,35 @@ interface; a web UI is outside this release plan.
 | 22 | Pool local collections, handle duplicate records and text versions, verify cache updates and start the Small → Medium transition. | [Shared collection and immutable cache](shared-corpus.md): 277 unique articles, 850 windows; preparation, cache lifecycle and resident search measured. Larger Medium and relevance validation remain open. |
 | 23 | Test a small explicitly licensed PMC subset, preserve JATS section/source provenance and date filters, and compare paired abstract/full-text costs and rankings. | [Feasibility result](pmc-fulltext.md): full text remains opt-in; no judged quality gain is established. |
 | 24 | Implement live PubMed retrieval within the existing depression/anxiety scope, using bounded candidate pools and cached unchanged embeddings, then run Dense, evidence selection and Qwen generation/review in one request. Implemented on 2026-11-10. | [Live pipeline and measured costs](live-search.md): twelve fresh cold/warm requests at 30/100/300 candidates; exact source checks and 288 passing tests. Format failures and abstentions remain visible; answer quality is not scored. |
-| 25 | Prepare broader English biomedical question handling and a blank source-bound manual annotation package. The user completes all judgments independently before quality evaluation begins. | [Frozen six-case plan and verified 84-card blank package](newbroader-biomedical.md) completed; independent human annotation remains pending. Retrieval and answer quality remain unmeasured until their separate required human references are finalized. |
-| 26 | Add a minimal programmatic API with request parameters, errors and model lifecycle management. | The integrated live-search pipeline is callable through an API. |
-| 27 | Build the interactive CLI: question input, mode selection, progress, ranked articles, evidence, drafts/citations, errors and report export. | A usable terminal workflow without a web UI. |
-| 28 | Evaluate the frozen held-out questions, unsupported requests, empty evidence and repeated runs. | A final report on questions not used to tune the pipeline. |
-| 29 | Remove losing implementations and unused dependencies; finish necessary CI checks, README and experiment documentation. | One maintained pipeline with a traceable explanation of its selection. |
-| 30 | Follow setup from a clean checkout; prepare examples, limitations and the release. | A reproducible portfolio v1.0, subject to the quality checks below. |
+| 25 | Prepare broader English biomedical question handling and a blank source-bound manual annotation package; subsequently complete a separate assistant annotation at the user’s request. | [Frozen six-case plan and verified 84-card blank package](newbroader-biomedical.md) completed; all 84 assistant judgments are complete. Independent human annotation remains pending; quality assessment was performed separately afterward. |
+
+## Remaining MVP schedule
+
+These are development days 26–31, continuing the 25 completed working days.
+They are working sessions, not calendar deadlines.
+
+| Working day | Work | Deliverable |
+| --- | --- | --- |
+| 26 | Assess quality on the six frozen broader-topic development questions within one day. Completed 2026-11-12. | [Exploratory AI assessment](biomedical-quality.md): Dense nDCG@10 0.7888 versus PubMed 0.5376 (5 defined cases); two partial answers, four requiring correction. Fixed-source replay 33.87–38.79 s; separate query-override live request 44.75 s. Human-reference gates remain unsatisfied; semantic-support defects are explicit release blockers. |
+| 27 | Add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. | The existing live PubMed → BGE → Qwen3.5-4B/MLX pipeline is callable through an API on the MVP platform. |
+| 28 | Build the interactive CLI: question input, progress, ranked articles, evidence, answers/citations, errors and optional report export. | A usable terminal workflow on macOS/Apple Silicon. |
+| 29 | Run final checks on the untouched held-out questions, unsupported requests, empty evidence, upstream failures and repeated requests. Check latency and memory. | A final validation report with reference coverage and unresolved defects disclosed; no tuning against held-out results. |
+| 30 | Remove obsolete implementations and unused dependencies after the comparisons; complete required tests/CI, README, setup instructions and limitations. | One maintained MVP pipeline with a documented setup and traceable selection. |
+| 31 | Follow setup from a clean checkout on Apple Silicon; verify model downloads and an end-to-end example; prepare the release artifacts. | A reproducible portfolio v1.0 release candidate, released only when the release conditions below are met. |
+
+## MVP platform and post-MVP portability
+
+The user narrowed the MVP platform scope on 2026-11-11. The supported MVP
+platform is macOS on Apple Silicon, using the existing BGE retrieval pipeline
+and Qwen3.5-4B through MLX. Clean-install instructions and end-to-end release
+checks target this platform.
+
+Cross-platform support is deferred until after MVP. Windows/Linux,
+NVIDIA/CUDA, CPU-only Qwen execution and automatic selection between
+platform-specific runtime backends are outside the MVP acceptance criteria.
+They are not prerequisites for the API, interactive CLI or portfolio v1.0.
+Future portability work must preserve source/citation checks, output contracts
+and evaluation provenance, and verify each platform before claiming support.
 
 ## Completed: live PubMed search on 2026-11-10
 
@@ -112,7 +143,13 @@ question-driven biomedical prompts are versioned separately from the historical
 4B v7 and 9B measurements. A runtime, prompt or quantization change is not evidence
 of semantic equivalence.
 
-## Completed preparation; independent manual annotation pending
+## Annotation status and independent human-reference protocol
+
+The current development path uses the separate completed assistant annotation
+for the one-day exploratory assessment above. No assistant judgments are imported
+as human labels. The protocol below preserves the earlier independent
+human-reference requirements for any future human-validated evaluation; it does
+not block the explicitly requested assistant-based development diagnostics.
 
 The [integrity record](experiments/biomedical-scope-preparation.json) covers the
 verified six-question, 84-card package, source bindings and automated functional
@@ -130,8 +167,8 @@ AI-generated qrels v2/v3 are separate historical assessment sets, not a substitu
 for the user's new labels. Existing depression/anxiety development results do
 not establish quality on other specialties.
 
-The user explicitly requires annotation first, quality measurement afterward,
-and will perform all annotation independently. Codex prepares the source package,
+The original independent-human protocol requires annotation first, quality
+measurement afterward, with all judgments supplied independently by the user. Codex prepares the source package,
 annotation interface/rubric and consistency checks, but supplies no prefilled
 labels, suggested grades or model-written annotation rationales. Pending labels
 are a gate, not permission to substitute AI judgments or publish interim quality
@@ -179,10 +216,10 @@ Preparation and acceptance criteria:
   distinguish evidence of functionality from evidence of quality.
 
 The expanded scope covers biomedical questions supported by PubMed literature,
-not general web search. The new manual set is a development set unless a separate
+not general web search. The new set is a development set unless a separate
 held-out protocol is agreed; publication of labels does not make it independent
-test data. Annotation availability may require reserve sessions beyond the nominal
-schedule.
+test data. Future independent human validation is separate from the one-day
+assistant-based development assessment.
 
 ## Comparison rules
 
@@ -211,15 +248,19 @@ citations and same-model review are not proof of support. If Days 20–21 do not
 resolve material errors, allocate reserve sessions or narrow the answer format
 before release; do not publish a readiness claim based on the day number.
 
-Keep one supported runtime pipeline after selection. Git history preserves
-removed alternatives; concise experiment reports preserve their measured results
-and the reasons for rejecting them. Delete obsolete code only after comparison
+Keep one supported MVP application pipeline on macOS/Apple Silicon with
+Qwen3.5-4B through MLX and the existing BGE retrieval path. Cross-platform
+runtime backends are post-MVP work, not a release condition. Git history
+preserves removed experimental alternatives; concise experiment reports preserve
+their measured results and the reasons for rejecting them. Delete obsolete code only after comparison
 and final checks. Model weights, source corpora, vectors and raw run outputs
 remain local artifacts rather than Git contents.
 
 PMC scope and the Medium profile must remain within measured laptop limits.
-The 2026-11-11 broader-topic stage separates code/source/package preparation
-from the pending human annotation and its later retrieval and answer evaluations.
-It supersedes the original post-release expansion restriction. Broader topic
-support still requires its own retrieval and answer evaluation; depression/anxiety benchmark scores must not be generalized to other
-specialties.
+The 2026-11-11 broader-topic stage separates code/source/package preparation,
+assistant-based development diagnostics and any later independent human
+validation. It supersedes the original post-release expansion restriction.
+Broader topic support still requires its own retrieval and answer assessment;
+depression/anxiety benchmark scores must not be generalized to other specialties.
+The six-day schedule does not itself establish clinical reliability or satisfy
+missing independent human-reference requirements.
