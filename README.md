@@ -46,15 +46,24 @@ general biomedical equivalence; every generated answer remains a research draft
 requiring human review. These earlier labels do not assess the current broader
 biomedical v8 prompts.
 
-Broader English biomedical questions now have a separate
+Broader English biomedical questions have a separate
 [development and annotation workflow](docs/newbroader-biomedical.md). Six frozen
 cross-topic cases cover cardiology, endocrinology, infection, neurology, a biological
-mechanism and pediatrics. The user supplies all new relevance labels independently;
-retrieval quality waits for their explicit finalization. Answer correctness requires
-its own subsequent human claim/answer reference. No broader-topic quality scores or
-clinical-readiness claims follow from source preparation or successful execution.
-[ADR 0006](docs/adr/0006-biomedical-scope-and-human-reference.md) records the scope
-and human-reference gates.
+mechanism and pediatrics. The user subsequently requested separate AI annotation
+and a [source-bound exploratory quality assessment](docs/biomedical-quality.md).
+Dense outperformed PubMed on the judged pool, but the six answer assessments found
+two partial answers and four requiring correction. All new judgments are explicitly
+AI-origin, not independent human validation; historical genuine human labels and
+the blank human package are unchanged. [ADR 0006](docs/adr/0006-biomedical-scope-and-human-reference.md)
+retains the separate human-reference gates. No clinical-readiness claim follows.
+
+An [experimental scoped-findings mode](docs/biomedical-quality-improvement.md) now
+selects exact source quotations together with study context and explicit scope
+exclusions. On the same six tuned development cases, separate AI review found
+three usable answers, one partial, one unnecessary abstention and one appropriate
+abstention. The existing draft/review default is unchanged. A faster follow-up
+variant admitted a wrong-target finding and was rejected; neither variant
+establishes independent human or clinical validation.
 
 The [historical semantic checks](docs/day21-semantic-reliability.md) document
 remaining source-support errors. The seven-axis v5 candidate regressed on
@@ -72,9 +81,9 @@ paired abstract and narrative indexes. Full text adds source coverage and change
 rank order; the pilot has no independent relevance labels, so abstract retrieval
 remains primary.
 
-The accepted [development plan](docs/development-plan.md) separates broader-topic
-preparation from human annotation and quality evaluation, followed by an API and an
-interactive CLI as the primary UI.
+The accepted [development plan](docs/development-plan.md) records the completed
+broader-topic exploratory assessment and remaining API, interactive CLI and release
+work. The MVP platform is macOS on Apple Silicon; portability is deferred.
 
 ## Moving to another Mac
 
@@ -133,13 +142,18 @@ open results/requests/live-biomedical-example/report.html
 Generation is enabled by default; `--search-only` runs diagnostic retrieval and
 excerpts. Every request searches and fetches PubMed anew; the embedding cache
 reuses unchanged inputs. The current development scope is English biomedical
-questions; broader-topic relevance and answer quality await separate independent
-manual annotation. PubMed candidate collection is bounded (1–300, default 100),
+questions; the exploratory AI assessment does not replace separate independent
+human validation. PubMed candidate collection is bounded (1–300, default 100),
 and the exact submitted query and PubMed translation are recorded in the report.
 This does not search every PubMed article semantically. See the
 [live request guide](docs/live-search.md) for query overrides, timing and limits,
 and the [broader-topic workflow](docs/newbroader-biomedical.md) for annotation gates.
 Use a fresh output directory for each run.
+
+Add `--answer-style source-findings` to try the experimental quotation mode.
+It shows study context and findings verbatim with applicability cautions; it does
+not generate a synthesis or claim a model factual-review step. The default remains
+`--answer-style draft`. See [measured results and limits](docs/biomedical-quality-improvement.md).
 
 For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
 directories; pass `--generate` and omit `--rerank` for the same answer pipeline.

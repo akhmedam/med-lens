@@ -1,11 +1,15 @@
 # Broader biomedical development and human annotation
 
-The development workflow now accepts English biomedical questions beyond the
-historical depression/anxiety cases. This is a functional scope change. Retrieval
-relevance and answer quality on the new topics remain unmeasured until the user
-independently completes and explicitly finalizes the required human annotations.
-The [scope and human-reference decision](adr/0006-biomedical-scope-and-human-reference.md)
-records these separate gates.
+The development workflow accepts English biomedical questions beyond the
+historical depression/anxiety cases. Source preparation was followed by a separate,
+user-requested AI annotation and [exploratory quality assessment](biomedical-quality.md)
+on 2026-11-12. Those judgments are explicitly assistant-origin, not independent
+human validation. Dense improved the judged-pool ranking, but none of six answers
+was fully usable under the source-bound assessment. The original blank human
+packet and frozen source plan are unchanged. The
+[scope and human-reference decision](adr/0006-biomedical-scope-and-human-reference.md)
+retains the independent human-reference gates; the human protocol below documents
+that distinct route, not a claim that AI labels satisfy it.
 
 The source is PubMed titles and abstracts, with a bounded candidate set per
 request; this is not unrestricted web search or a multilingual evaluation. The
@@ -13,7 +17,7 @@ primary chain remains fresh PubMed acquisition → cached/new BGE passage vector
 → Dense article ranking → exact evidence → native MLX Qwen3.5-4B draft and
 same-model review. PMC full text remains a separate opt-in experiment.
 
-## Prepared package and current status
+## Original source-preparation and human-package status
 
 Source and blank-package preparation completed on 2026-11-11. The verified local
 package is `results/biomedical-dev-v1/manual-annotation-20261111-v1`, with package ID
@@ -54,7 +58,8 @@ sources completed in 25.18 s. None of these checks supplies biomedical quality l
 `file://` navigation, and no alternate browser route was attempted. The JavaScript
 checks verify logic rather than rendered layout. The real 84-card form remains
 untouched. This is a documented QA limitation; annotation preparation is complete,
-while human annotation and both quality-evaluation gates remain pending.
+while independent human annotation and both human-reference gates remain pending.
+The later AI assessment is separate and linked above.
 
 ## Query construction and limits
 
@@ -215,15 +220,15 @@ coverage counts. It produces no quality score and does not change human values.
 A validation error requires investigation or a corrected export by the user,
 not an assistant-authored semantic correction.
 
-## Quality evaluation follows its own human references
+## Independent human-reference evaluation
 
-Only a completed and explicitly finalized article reference can support later
-retrieval evaluation. Unknown decisions remain separate, judgment coverage must
+For independent human-validated retrieval estimates, require a completed and
+explicitly finalized human article reference. Unknown decisions remain separate, judgment coverage must
 be reported, and any recall denominator must be identified as pool-limited.
 No provisional, absent or unjudgeable label silently becomes irrelevant.
 
-Answer quality is a separate stage. First freeze the outputs and a separate blank
-human claim/answer form; the user then independently judges factual support,
+Independent human-validated answer quality is a separate stage. First freeze the
+outputs and a separate blank human claim/answer form; the user then independently judges factual support,
 requested population/system, comparison, outcome/target and preserved qualifiers,
 plus answer support, scope, completeness and usability. Freeze that explicitly
 finalized reference before computing answer-quality metrics. Article relevance

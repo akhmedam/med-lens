@@ -9,7 +9,7 @@ from medlens.evaluation.formats import parse_queries
 from medlens.resources import load_collection_profile
 from medlens.retrieval.dense import DenseIndex
 from .answers import check_context
-from .context import canonical, source_section
+from .context import COVERAGE_POLICY, canonical, source_section, verify_source_sentence_spans
 
 
 def verify_context_sources(context, index):
@@ -25,6 +25,8 @@ def verify_context_sources(context, index):
             raise ValueError('Context differs from saved source window')
         article = index.articles[source['pmid']]
         source_section(article, window)
+        verify_source_sentence_spans(source, article, window,
+            required=context.get('selection_policy') == COVERAGE_POLICY)
         date = next((d['iso_date'] for d in article.get('dates', [])
                      if d['kind'] == 'journal_issue' and d.get('iso_date')), None)
         if (source['title'] != article.get('title') or source['section'] != window['section_label']

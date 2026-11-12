@@ -1,0 +1,1858 @@
+{
+  "schema_version": 1,
+  "kind": "exploratory-biomedical-quality-assessment",
+  "assessed_on": "2026-11-12",
+  "split": "dev",
+  "heldout_used": false,
+  "judgments_origin": "assistant",
+  "human_authored": false,
+  "independent_human_validation": false,
+  "quality_sample": "six frozen questions; AI relevance labels and separate AI source-bound claim/answer review; not an independent clinical benchmark",
+  "frozen_plan_sha256": "eaece352cff4dc483d242dab22c9b32eba657a28e36be9f9c8dc41ec95ed497e",
+  "source_package_id": "8603f85b744d83f54f9fc3fbd42a6ad8aae2c8f8d88bf7d6539417651ca955a5",
+  "assistant_annotation_artifact_id": "7463080a4e23f113d4f3b284085a81bdf8ecf23fa753f32d6624954e3db28664",
+  "quality_protocol_sha256": "495ed18b8a135d7c48556a0847766acb5ea258992db1e34f6103ae005571451e",
+  "local_artifacts_sha256": {
+    "protocol.json": "495ed18b8a135d7c48556a0847766acb5ea258992db1e34f6103ae005571451e",
+    "retrieval.json": "334e36d138ad98d1cc1e711649a2e3a5f9adf36c15a155a8be095abc6afcbb6b",
+    "answers.json": "fbc15f6c295b8da0ed35b902de5c4264248c3428eeb8ad2f25986d572ee287c9",
+    "answer-judgments.json": "2ea254418361ddf200a8633dcdd86bd2caf737087093a1860e89f8b6bac293c6",
+    "runtime/summary.json": "304b02fb1c3a498dc1b2a9468feb7885ed0558c7580df73e078fe03e7dd6e4e0",
+    "query-override-protocol.json": "dd159afd40271d77b72af9a1f7acfd33d027cc7aae83303005f42ea1ee2f3995",
+    "query-override/run.json": "7a45c1fac30230d9e63ad36c171be3e83e14d32d99342cd49e8c7e2cae6c73aa",
+    "review-query-override.json": "28ef3be6128cad75d2137eb529f50e15baebc23a29eb3f2241bb2e35411b7ed2"
+  },
+  "implementation_sha256": {
+    "scripts/evaluate_biomedical_retrieval.py": "378e3728587c5d8a8b285d4bd1719e979100d39e76da718140bb02198cccd49d",
+    "scripts/benchmark_runtime.py": "1c1ab3aa2a8fc4f5680dbb001198fa1e158cc91a922432cdbce3f3991e5f439e",
+    "src/medlens/pipeline.py": "32db5e276de29bf0dab3d87caaf3dc1363b134408b6636d885715749cf2e1bad",
+    "src/medlens/reporting.py": "7b877beed85c55c93f1b6f19dcf45566cd165d8b2884f978090841ad71345b6d",
+    "src/medlens/generation/answers.py": "6a876217763ab32f07852bfcb950d4b4015299bd59016367ac4a7f85be50e58f",
+    "src/medlens/generation/context.py": "532fd1128d1a6518e37a32784808377fb492e23a064916bb25dc6ae7365a4301",
+    "src/medlens/generation/request_contexts.py": "a6282491623182d7884553881293276c2803620bf24f897fbd167c883e2167d5",
+    "src/medlens/generation/reviews.py": "370463d1541a103b337ec6faf2011528371600a5ed4c93dcf1c91edce4031412",
+    "src/medlens/generation/contracts.py": "ca556077259cc63d79ab3f1f689211d72cff41b5525557af3e680cd48bcdfcd3",
+    "src/medlens/generation/quotes.py": "ba45e527677c8499b217f62ac63dfc5c782ef4d2ebf461ce48b1f19c8ab302a9",
+    "src/medlens/inference/backends.py": "b9cba1dcb078a0ea6c1df964b7a26f801150f34d5c330bac42fecdedda491dcb",
+    "src/medlens/inference/qwen.py": "26634ceb4aec4e3a01648452a7380e26874325dc585682878b5b332069060d98",
+    "src/medlens/inference/metal.py": "5fcad25a5128a6fae8c61e9632f67f2b9ec0e4ca333c2e4988ad88bb47f32567",
+    "src/medlens/inference/mlx.py": "f1840f5c052378c9a32af316ca8cda9fe98b482513556e6eff70df69e3542d2f",
+    "src/medlens/inference/mlx_worker.py": "7cc4c0fb02cc6ec1608339bd2b755e66f7ab0998ce2e00a1ba0d80f70754b2e6",
+    "src/medlens/inference/profiles.py": "8149ea2a318b7305c2ce29155dc85f26a5c0a06b4258bbc75d50cb663ee0c174",
+    "src/medlens/inference/structured.py": "a87c763aab4a1b47034d00ff157cc840f23d07af7670d1446d3104711f55b051",
+    "src/medlens/generation/compact.py": "315fa090393b62d403fc94037145b73b205e56ecef2902cf531f1645d94ee1c2",
+    "src/medlens/retrieval/dense.py": "257d97259a76a6d8c4eae43eada7291f5653ca7a9702863729e8afcd0d43b976",
+    "src/medlens/retrieval/embeddings.py": "b7caaa3b5f929240e3a4659d2deca3760e6f0484283fdb99b98b38762a01cf5e"
+  },
+  "retrieval": {
+    "metric_policy": {
+      "k": 10,
+      "graded_gain": "2**grade - 1",
+      "discount": "log2(rank + 1)",
+      "ndcg_denominator": "IDCG from the judged union pool, not all PubMed literature",
+      "useful_threshold": "grade >= 1",
+      "direct_threshold": "grade == 2",
+      "precision_at_10_denominator": "fixed 10, including short lists",
+      "precision_among_returned_denominator": "actual returned length",
+      "pool_recall_denominator": "relevant judged pairs in the union pool only",
+      "empty_relevant_pool": "nDCG, recall and MRR are null; precision remains defined",
+      "missing_top_judgments": "fail rather than treat unjudged as zero",
+      "macro_policy": "unweighted mean of defined queries, with counts",
+      "limits": [
+        "Six development cases; no independent clinical validation or significance claim",
+        "Pool-limited recall does not measure candidate acquisition recall",
+        "Unjudged candidates outside both top-10 lists remain unjudged",
+        "A pool with no known relevant article cannot establish absence of an effect"
+      ]
+    },
+    "coverage": {
+      "question_count": 6,
+      "judged_pairs": 84,
+      "candidate_pairs": 246,
+      "judged_candidate_fraction_micro": 0.34146341463414637,
+      "all_returned_top10_pairs_judged": true
+    },
+    "verification": {
+      "status": "passed",
+      "packet_files_checked": 85,
+      "assistant_files_checked": 24,
+      "original_source_files_checked": 79,
+      "label_source_pairs_checked": 84
+    },
+    "aggregate": {
+      "pubmed": {
+        "ndcg@10": {
+          "mean": 0.5376183019230034,
+          "defined_queries": 5,
+          "total_queries": 6
+        },
+        "useful": {
+          "precision@10": {
+            "mean": 0.5500000000000002,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "precision_among_returned": {
+            "mean": 0.5500000000000002,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "pool_recall@10": {
+            "mean": 0.5383585858585858,
+            "defined_queries": 5,
+            "total_queries": 6
+          },
+          "mrr@10": {
+            "mean": 1.0,
+            "defined_queries": 5,
+            "total_queries": 6
+          }
+        },
+        "direct": {
+          "precision@10": {
+            "mean": 0.16666666666666666,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "precision_among_returned": {
+            "mean": 0.16666666666666666,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "pool_recall@10": {
+            "mean": 0.5133333333333333,
+            "defined_queries": 5,
+            "total_queries": 6
+          },
+          "mrr@10": {
+            "mean": 0.3888888888888889,
+            "defined_queries": 5,
+            "total_queries": 6
+          }
+        }
+      },
+      "dense": {
+        "ndcg@10": {
+          "mean": 0.7888205872215399,
+          "defined_queries": 5,
+          "total_queries": 6
+        },
+        "useful": {
+          "precision@10": {
+            "mean": 0.7666666666666666,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "precision_among_returned": {
+            "mean": 0.7666666666666666,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "pool_recall@10": {
+            "mean": 0.7674242424242423,
+            "defined_queries": 5,
+            "total_queries": 6
+          },
+          "mrr@10": {
+            "mean": 1.0,
+            "defined_queries": 5,
+            "total_queries": 6
+          }
+        },
+        "direct": {
+          "precision@10": {
+            "mean": 0.30000000000000004,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "precision_among_returned": {
+            "mean": 0.30000000000000004,
+            "defined_queries": 6,
+            "total_queries": 6
+          },
+          "pool_recall@10": {
+            "mean": 0.7933333333333332,
+            "defined_queries": 5,
+            "total_queries": 6
+          },
+          "mrr@10": {
+            "mean": 0.5222222222222223,
+            "defined_queries": 5,
+            "total_queries": 6
+          }
+        }
+      }
+    },
+    "per_case": [
+      {
+        "query_id": "bm01",
+        "candidate_count": 66,
+        "judged_pool_count": 17,
+        "pool_grade_counts": {
+          "0": 1,
+          "1": 14,
+          "2": 2
+        },
+        "source": {
+          "snapshot_id": "35687e97-546e-4a03-81ea-d29204473120",
+          "dataset_id": "dc9e1880e045e0a348d0e187a5c0c97c7ff9425e24b89d479e8683b9d81bff3d",
+          "window_artifact_id": "52bb91e8e9047265e6fc0f291f91d6ef047b77dc97826b7a22249fd81bd2a44b",
+          "embedding_artifact_id": "e7f972b9be926fba194033c61ea8752370a7cdf3b2cbcd0981ca0e730f8d51b1",
+          "run_sha256": "80a42ebd59ede8a7ca795339d2d67044fb14cdab0f564955bc744a18965974f4",
+          "submitted_query": "SGLT2 inhibitors with placebo heart failure hospitalization in adults with heart failure with preserved ejection fraction",
+          "total_pubmed_matches": 66,
+          "retrieved_finished_at": "2026-11-11T07:41:23.402446+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": 0.6592367983634905,
+            "dcg@10": 5.145619329416308,
+            "pooled_idcg@10": 7.80541884523126,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 17,
+            "candidate_count": 66,
+            "candidate_judged_coverage": 0.25757575757575757,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 10,
+              "known_relevant_in_pool": 16,
+              "precision@10": 1.0,
+              "precision_among_returned": 1.0,
+              "pool_recall@10": 0.625,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 1,
+              "known_relevant_in_pool": 2,
+              "precision@10": 0.1,
+              "precision_among_returned": 0.1,
+              "pool_recall@10": 0.5,
+              "mrr@10": 0.1111111111111111
+            }
+          },
+          "pubmed": {
+            "ndcg@10": 0.613600914604908,
+            "dcg@10": 4.789412142308286,
+            "pooled_idcg@10": 7.80541884523126,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 17,
+            "candidate_count": 66,
+            "candidate_judged_coverage": 0.25757575757575757,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 9,
+              "known_relevant_in_pool": 16,
+              "precision@10": 0.9,
+              "precision_among_returned": 0.9,
+              "pool_recall@10": 0.5625,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 1,
+              "known_relevant_in_pool": 2,
+              "precision@10": 0.1,
+              "precision_among_returned": 0.1,
+              "pool_recall@10": 0.5,
+              "mrr@10": 0.1111111111111111
+            }
+          }
+        }
+      },
+      {
+        "query_id": "bm02",
+        "candidate_count": 13,
+        "judged_pool_count": 12,
+        "pool_grade_counts": {
+          "0": 3,
+          "1": 8,
+          "2": 1
+        },
+        "source": {
+          "snapshot_id": "71b0ffe8-9605-4539-8689-dc1672523d50",
+          "dataset_id": "b1b1493442af41329b738a3886c104b6aa9e60db4ca8c76955a637de73d762f1",
+          "window_artifact_id": "145c357bdfd5b2b65e18d92e6da6ddad603d8d691bd4cb450f5d205b36bfbdd1",
+          "embedding_artifact_id": "1f3a9a74e715a24658903057b0acc9b1d5c25f380e7115db52b4913112620cf4",
+          "run_sha256": "bed9f85368d4fd8b3070c74c95abb2639ade403ca51d159a712c31217e31ae8a",
+          "submitted_query": "In adults with type 2 diabetes, semaglutide with insulin glargine for glycated hemoglobin reduction",
+          "total_pubmed_matches": 13,
+          "retrieved_finished_at": "2026-11-11T07:41:36.745663+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": 0.8800693388104283,
+            "dcg@10": 5.504388849567278,
+            "pooled_idcg@10": 6.254494511770457,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 12,
+            "candidate_count": 13,
+            "candidate_judged_coverage": 0.9230769230769231,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 9,
+              "known_relevant_in_pool": 9,
+              "precision@10": 0.9,
+              "precision_among_returned": 0.9,
+              "pool_recall@10": 1.0,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 1,
+              "known_relevant_in_pool": 1,
+              "precision@10": 0.1,
+              "precision_among_returned": 0.1,
+              "pool_recall@10": 1.0,
+              "mrr@10": 0.5
+            }
+          },
+          "pubmed": {
+            "ndcg@10": 0.7415466798463735,
+            "dcg@10": 4.637999639320747,
+            "pooled_idcg@10": 6.254494511770457,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 12,
+            "candidate_count": 13,
+            "candidate_judged_coverage": 0.9230769230769231,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 7,
+              "known_relevant_in_pool": 9,
+              "precision@10": 0.7,
+              "precision_among_returned": 0.7,
+              "pool_recall@10": 0.7777777777777778,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 1,
+              "known_relevant_in_pool": 1,
+              "precision@10": 0.1,
+              "precision_among_returned": 0.1,
+              "pool_recall@10": 1.0,
+              "mrr@10": 0.3333333333333333
+            }
+          }
+        }
+      },
+      {
+        "query_id": "bm03",
+        "candidate_count": 44,
+        "judged_pool_count": 17,
+        "pool_grade_counts": {
+          "0": 2,
+          "1": 10,
+          "2": 5
+        },
+        "source": {
+          "snapshot_id": "9fde2a76-3ddd-47ab-9df5-2a02bd29a5b0",
+          "dataset_id": "d0c108c934162831c65948583060c4a5f61533d23f530b132e27f23759b0212b",
+          "window_artifact_id": "dbfab35cfeaf8124c9a4efe39f7a4037809a89fe0cd70e143c6d8d9b944fc704",
+          "embedding_artifact_id": "1b7a69617deb01ab29452d99bd206e54432c1151b14f808cebc6cb55b7401705",
+          "run_sha256": "a73ebd8f4712b0b85768271acdcb57374253f75e791598932ef69af8100f5945",
+          "submitted_query": "the diagnostic accuracy of urine dipstick testing for urinary tract infection in adults urine culture",
+          "total_pubmed_matches": 44,
+          "retrieved_finished_at": "2026-11-11T07:41:45.170216+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": 0.7836025116278735,
+            "dcg@10": 8.181184451028306,
+            "pooled_idcg@10": 10.440477575847133,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 17,
+            "candidate_count": 44,
+            "candidate_judged_coverage": 0.38636363636363635,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 10,
+              "known_relevant_in_pool": 15,
+              "precision@10": 1.0,
+              "precision_among_returned": 1.0,
+              "pool_recall@10": 0.6666666666666666,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 4,
+              "known_relevant_in_pool": 5,
+              "precision@10": 0.4,
+              "precision_among_returned": 0.4,
+              "pool_recall@10": 0.8,
+              "mrr@10": 0.5
+            }
+          },
+          "pubmed": {
+            "ndcg@10": 0.5264793349442635,
+            "dcg@10": 5.496695690632495,
+            "pooled_idcg@10": 10.440477575847133,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 17,
+            "candidate_count": 44,
+            "candidate_judged_coverage": 0.38636363636363635,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 8,
+              "known_relevant_in_pool": 15,
+              "precision@10": 0.8,
+              "precision_among_returned": 0.8,
+              "pool_recall@10": 0.5333333333333333,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 2,
+              "known_relevant_in_pool": 5,
+              "precision@10": 0.2,
+              "precision_among_returned": 0.2,
+              "pool_recall@10": 0.4,
+              "mrr@10": 0.5
+            }
+          }
+        }
+      },
+      {
+        "query_id": "bm04",
+        "candidate_count": 100,
+        "judged_pool_count": 20,
+        "pool_grade_counts": {
+          "0": 9,
+          "1": 5,
+          "2": 6
+        },
+        "source": {
+          "snapshot_id": "704f9e54-e67b-4227-acf3-2bea9414e565",
+          "dataset_id": "11d8ba9c80d22c4f860cc9615a83c4adc383d75dbf7b197598a30ef6d970e726",
+          "window_artifact_id": "03250545b51bdda682682f94fbd95bffdc9cf4e52d71d7c540178313b785b88e",
+          "embedding_artifact_id": "2499009daafa23aed6e908285eefb43f67e6b5545f3cbe7e316f3f94eebddaa5",
+          "run_sha256": "6f9de743185ca164a4ceec6b3ff82282660fa1b33f69ba1251f7944972ec26b4",
+          "submitted_query": "APOE epsilon4 with progression from mild cognitive impairment to Alzheimer disease",
+          "total_pubmed_matches": 458,
+          "retrieved_finished_at": "2026-11-11T07:42:03.777318+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": 0.8303729855736403,
+            "dcg@10": 9.261060186354179,
+            "pooled_idcg@10": 11.152891950063177,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 20,
+            "candidate_count": 100,
+            "candidate_judged_coverage": 0.2,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 9,
+              "known_relevant_in_pool": 11,
+              "precision@10": 0.9,
+              "precision_among_returned": 0.9,
+              "pool_recall@10": 0.8181818181818182,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 6,
+              "known_relevant_in_pool": 6,
+              "precision@10": 0.6,
+              "precision_among_returned": 0.6,
+              "pool_recall@10": 1.0,
+              "mrr@10": 0.5
+            }
+          },
+          "pubmed": {
+            "ndcg@10": 0.11558121714884773,
+            "dcg@10": 1.2890648263178879,
+            "pooled_idcg@10": 11.152891950063177,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 20,
+            "candidate_count": 100,
+            "candidate_judged_coverage": 0.2,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 2,
+              "known_relevant_in_pool": 11,
+              "precision@10": 0.2,
+              "precision_among_returned": 0.2,
+              "pool_recall@10": 0.18181818181818182,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 0,
+              "known_relevant_in_pool": 6,
+              "precision@10": 0.0,
+              "precision_among_returned": 0.0,
+              "pool_recall@10": 0.0,
+              "mrr@10": 0.0
+            }
+          }
+        }
+      },
+      {
+        "query_id": "bm05",
+        "candidate_count": 19,
+        "judged_pool_count": 14,
+        "pool_grade_counts": {
+          "0": 3,
+          "1": 2,
+          "2": 9
+        },
+        "source": {
+          "snapshot_id": "f8a72ec5-09ea-4ab5-b093-6e2f6252632f",
+          "dataset_id": "514737d1a7130b33cd0d5a2e38742a075533362fe22b40954b1464b351e9683b",
+          "window_artifact_id": "0faab815a23c060abad5294bf266328302cc5388c5ce3c80ae1c0e4c610dadd3",
+          "embedding_artifact_id": "f204863c349b180d60a87d800a418204c41be5ebe53b7804151df9663b4cd646",
+          "run_sha256": "2ab68d3cf41f744ef9393631bba5969aa9cfb91fd22ea4e4c3d4ea99f0be60d1",
+          "submitted_query": "NLRP3 inflammasome activation to pancreatic beta-cell dysfunction in type 2 diabetes",
+          "total_pubmed_matches": 19,
+          "retrieved_finished_at": "2026-11-11T07:42:24.765246+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": 0.7908213017322674,
+            "dcg@10": 10.322233286267029,
+            "pooled_idcg@10": 13.052548361629263,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 14,
+            "candidate_count": 19,
+            "candidate_judged_coverage": 0.7368421052631579,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 8,
+              "known_relevant_in_pool": 11,
+              "precision@10": 0.8,
+              "precision_among_returned": 0.8,
+              "pool_recall@10": 0.7272727272727273,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 6,
+              "known_relevant_in_pool": 9,
+              "precision@10": 0.6,
+              "precision_among_returned": 0.6,
+              "pool_recall@10": 0.6666666666666666,
+              "mrr@10": 1.0
+            }
+          },
+          "pubmed": {
+            "ndcg@10": 0.6908833630706245,
+            "dcg@10": 9.017788508724395,
+            "pooled_idcg@10": 13.052548361629263,
+            "returned_count": 10,
+            "judged_returned_count": 10,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 14,
+            "candidate_count": 19,
+            "candidate_judged_coverage": 0.7368421052631579,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 7,
+              "known_relevant_in_pool": 11,
+              "precision@10": 0.7,
+              "precision_among_returned": 0.7,
+              "pool_recall@10": 0.6363636363636364,
+              "mrr@10": 1.0
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 6,
+              "known_relevant_in_pool": 9,
+              "precision@10": 0.6,
+              "precision_among_returned": 0.6,
+              "pool_recall@10": 0.6666666666666666,
+              "mrr@10": 1.0
+            }
+          }
+        }
+      },
+      {
+        "query_id": "bm06",
+        "candidate_count": 4,
+        "judged_pool_count": 4,
+        "pool_grade_counts": {
+          "0": 4,
+          "1": 0,
+          "2": 0
+        },
+        "source": {
+          "snapshot_id": "648467e0-5ab4-41fc-b49e-36e581c4e520",
+          "dataset_id": "d54e4ab8521a049caeed34b93f0b3560858f482ff88ff0e69e62faece17bcab4",
+          "window_artifact_id": "1057e383a40cf93c06529012e7d151f845e2f0e84d03d3d8592b94162d7e154d",
+          "embedding_artifact_id": "3141254a871d2e60aa575347b8138e8d52aa09a47bbf747129584b58c27a8525",
+          "run_sha256": "ca7430f33e1296d4e69511d7cb018f7eda5e55c58e3b086223e8a9d4e7800963",
+          "submitted_query": "In children with acute otitis media, antibiotics with placebo ear pain after two to three days",
+          "total_pubmed_matches": 4,
+          "retrieved_finished_at": "2026-11-11T07:42:31.835859+00:00"
+        },
+        "methods": {
+          "dense": {
+            "ndcg@10": null,
+            "dcg@10": 0.0,
+            "pooled_idcg@10": 0.0,
+            "returned_count": 4,
+            "judged_returned_count": 4,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 4,
+            "candidate_count": 4,
+            "candidate_judged_coverage": 1.0,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 0,
+              "known_relevant_in_pool": 0,
+              "precision@10": 0.0,
+              "precision_among_returned": 0.0,
+              "pool_recall@10": null,
+              "mrr@10": null
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 0,
+              "known_relevant_in_pool": 0,
+              "precision@10": 0.0,
+              "precision_among_returned": 0.0,
+              "pool_recall@10": null,
+              "mrr@10": null
+            }
+          },
+          "pubmed": {
+            "ndcg@10": null,
+            "dcg@10": 0.0,
+            "pooled_idcg@10": 0.0,
+            "returned_count": 4,
+            "judged_returned_count": 4,
+            "unjudged_returned_count": 0,
+            "judged_coverage@10": 1.0,
+            "candidate_judged_count": 4,
+            "candidate_count": 4,
+            "candidate_judged_coverage": 1.0,
+            "useful": {
+              "grade_threshold": 1,
+              "hits@10": 0,
+              "known_relevant_in_pool": 0,
+              "precision@10": 0.0,
+              "precision_among_returned": 0.0,
+              "pool_recall@10": null,
+              "mrr@10": null
+            },
+            "direct": {
+              "grade_threshold": 2,
+              "hits@10": 0,
+              "known_relevant_in_pool": 0,
+              "precision@10": 0.0,
+              "precision_among_returned": 0.0,
+              "pool_recall@10": null,
+              "mrr@10": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "answers": {
+    "schema_version": 1,
+    "kind": "exploratory-biomedical-answer-assessment",
+    "judgments_origin": "assistant",
+    "human_authored": false,
+    "independent_human_validation": false,
+    "heldout_used": false,
+    "protocol_sha256": "495ed18b8a135d7c48556a0847766acb5ea258992db1e34f6103ae005571451e",
+    "question_count": 6,
+    "counts": {
+      "raw_claims": 18,
+      "visible_claims": 17,
+      "rejected_claims": 1,
+      "visible_factual_true": 14,
+      "visible_fully_scope_supported": 5,
+      "visible_with_axis_failure_or_unknown": 12,
+      "strict_supported_rejected": 0,
+      "visible_factual_false": 1,
+      "visible_factual_unknown": 2
+    },
+    "answer_categories": {
+      "appropriate_abstention": 0,
+      "not_usable": 4,
+      "partial": 2,
+      "unjudgeable": 0,
+      "usable": 0
+    },
+    "quality_scope": "Six development questions; AI source review, no population accuracy claim. Factual truth, requested scope and completeness are distinct.",
+    "cases": [
+      {
+        "query_id": "bm01",
+        "answer_status": "answered",
+        "answer_category": "partial",
+        "packed_evidence_sufficient": false,
+        "answer_rationale_ru": "Все три видимых утверждения фактически подтверждены, но повторяют комбинированные конечные точки. Отдельный запрошенный результат HF-госпитализаций не сформулирован; placebo не назван и взрослое ограничение не установлено по выбранным фрагментам. В полных abstract отдельный результат и placebo есть, что указывает на потерю информации при выборе evidence/синтезе. Оценка partial означает неполноту, а не три ложных факта.",
+        "missing_elements": [
+          "Отдельный результат по госпитализации из-за HF, вместо одного composite endpoint.",
+          "Явное сравнение с placebo.",
+          "Явная возрастная/популяционная применимость и разграничение mixed HFmrEF/HFpEF источника.",
+          "Существенные ограничения/подгрупповые исключения источников."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "unknown",
+              "requested_comparison": "true",
+              "requested_outcome_or_target": "false",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Утверждение о комбинированной конечной точке соответствует заключению и результатам метаанализа. Оно не сообщает отдельно запрошенное снижение госпитализаций. Сравнение с placebo есть в полном abstract, но не в выбранном E1; исключительно взрослая выборка явно не установлена: средний возраст сам по себе не доказывает возрастную границу. Это неполнота/неопределённость охвата, а не выдуманный результат.",
+            "claim_text_sha256": "cedf059ef46c3f1bc928bf0d9c6bd4c2a53d11a0ae3c914d7ba08017e2ae6516"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "unknown",
+              "requested_comparison": "true",
+              "requested_outcome_or_target": "false",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Дословно передаёт вывод EMPEROR-Preserved о комбинированной конечной точке и наличии/отсутствии диабета. Отдельное снижение HF-госпитализаций и placebo подтверждаются полным abstract, но не сообщены в утверждении. В abstract методы не задают взрослую возрастную границу; её не додумываю.",
+            "claim_text_sha256": "51a4c8ca7ab58511662bd50e50b7ec3b531b8a28cf5ae94dc8aef3099b2c3671"
+          },
+          {
+            "claim_id": "C3",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "false",
+              "requested_comparison": "true",
+              "requested_outcome_or_target": "false",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Источник подтверждает общий результат для HF и LVEF >40%, однако это смешанная mildly-reduced/preserved популяция и комбинированная конечная точка. Утверждение честно сохраняет широкий LVEF >40% и не выдаёт отдельный подгрупповой эффект, поэтому фактически верно; оно не полностью отвечает более узкому вопросу. Отсутствие эффекта в некоторых подгруппах — важная недостающая оговорка ответа, но pooled-эффект не превращается от этого в выдумку.",
+            "claim_text_sha256": "9cd6b3406841229e96c0fc69045dce35043d8b249de096b21bba0f15efb7d2d6"
+          }
+        ],
+        "raw_run_sha256": "6df3602c28c036f499f05acceaeed1d09216a48b89cc40e7170b71db51baef14",
+        "evidence_quotes_checked": 11
+      },
+      {
+        "query_id": "bm02",
+        "answer_status": "partial",
+        "answer_category": "partial",
+        "packed_evidence_sufficient": true,
+        "answer_rationale_ru": "C2 даёт фактически подтверждённый качественный ответ про semaglutide против insulin glargine. Однако основная количественная цифра C1 относится к другому, add-on/titration, дизайну; ответ не отделяет количественный результат этого дизайна от качественного ответа на исходный контраст. Видимой фактической выдумки не нашла; C3 с перепутанными 62% не показан. Partial здесь — ограниченность/смешение уровня прямоты доказательств, а не ложность C1/C2.",
+        "missing_elements": [
+          "Явное пояснение, что ETD -0.74% относится к add-on semaglutide плюс dose-reduced glargine, а не прямой замене glargine на semaglutide.",
+          "Прямой количественный эффект semaglutide-vs-glargine по HbA1c не установлен данным ответом/этими выбранными сравнительными abstracts."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "Число -0.74% и доверительный интервал верны, а add-on semaglutide+glargine назван явно. Но это комбинация с dose-reduced glargine против dose-titrated glargine, не прямое semaglutide-versus-glargine сравнение, запрошенное вопросом. Взрослая T2D-популяция подтверждается полными методами, а не выбранным E1 results. Отдельно не интерпретировать эту цифру как эффект semaglutide против insulin glargine. Дополнительно: потеряно существенное условие dose-reduced glargine и overweight; qualifier axis=false.",
+            "claim_text_sha256": "c82c7ee7835f67baea2db48d050b7522568cfe7cb03584cd24f22750cd8c5e93"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "true",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": true,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Корректно оговаривает review-источник и передаёт его качественный вывод: semaglutide превосходит active comparators, включая insulin glargine, по HbA1c. Это прямой качественный ответ на запрошенный контраст; не следует приписывать ему числовую разницу из C1.",
+            "claim_text_sha256": "444ebf54739592c2358e577f0a87abfe61696fe7f44fd3fa0ffdc1d372b555dc"
+          },
+          {
+            "claim_id": "C3",
+            "visible": false,
+            "axes": {
+              "factual_support": "false",
+              "requested_population_or_system": "unknown",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "false",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "Существенная числовая ошибка: 62% в источнике относится к insulin degludec, а tirzepatide в 52-недельных исследованиях соответствует 77%–85%. Помимо этого, tirzepatide вместо semaglutide и доля времени HbA1c ниже порога вместо величины HbA1c-снижения не отвечают исходному вопросу. Утверждение отсутствует среди видимых claims, поэтому это ошибка сырого draft, а не опубликованного ответа.",
+            "claim_text_sha256": "7b2a9a122fe8b966abe7112426509c4ef66c4c84a5cabfc1485450fc32cc4d76"
+          }
+        ],
+        "raw_run_sha256": "8a8b90f3dfc7adbe7f381c7292caf0780121d552645baeba27e8e5ab1a917ed6",
+        "evidence_quotes_checked": 6
+      },
+      {
+        "query_id": "bm03",
+        "answer_status": "partial",
+        "answer_category": "not_usable",
+        "packed_evidence_sufficient": true,
+        "answer_rationale_ru": "C2 правильно отвечает на вопрос для одной взрослой симптоматической выборки. Но C1 не раскрывает, что reference стандарт consensus-based, а C3 явно называет urine culture вместо симптомов плюс culture. Для вопроса о диагностической точности выбор reference standard определяет смысл показателей; смешение стандартов без разграничения делает полный ответ ненадёжным.",
+        "missing_elements": [
+          "Разграничить culture-only, consensus-based и symptom-plus-culture reference standards.",
+          "Для показателей 87%/45% сохранить определение UTI через симптомы плюс положительную culture."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Утверждение достоверно пересказывает вывод про older adults. Однако исследование использует consensus-based reference standard, а не запрошенный urine-culture reference; факт выполнения urine culture не делает её единственным стандартом. Без указания этого различия данный источник не подтверждает точный контекст вопроса.",
+            "claim_text_sha256": "e1caa83d64936dc2c4014931d0328423437c002e928f64b7608d166eaf2be030"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "true",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": true,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Все четыре числа и взрослый симптоматический контекст точно соответствуют источнику. Полный выбранный E3 явно задаёт urine culture как gold standard. Корректный ответ в пределах конкретного cross-sectional исследования, без переноса на все взрослые популяции.",
+            "claim_text_sha256": "868728b43ed728f7204b7dfb8eb8c479ecf1fb11042d7cc5f4bd58c429dc5872"
+          },
+          {
+            "claim_id": "C3",
+            "visible": true,
+            "axes": {
+              "factual_support": "false",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "87% и 45% скопированы верно, но фраза «when compared against urine culture» упрощает основной reference outcome: UTI определена как симптом плюс положительная culture, не просто culture-positive результат. Это существенная потеря определения диагностической конечной точки, а не числовая ошибка. Методы с этим определением отсутствуют в выбранном E5 results. Данное видимое утверждение не подтверждено в сформулированном culture-only смысле.",
+            "claim_text_sha256": "414471e64073588b334ddffe4a002db69cd9ee5f29d0ed8bf8906ff6b03cae9c"
+          }
+        ],
+        "raw_run_sha256": "27d76075857ef7d30a7109622f2eca1b81ad476ea6cb4969979f48d525adccd5",
+        "evidence_quotes_checked": 11
+      },
+      {
+        "query_id": "bm04",
+        "answer_status": "answered",
+        "answer_category": "not_usable",
+        "packed_evidence_sufficient": true,
+        "answer_rationale_ru": "Основной положительный ответ на вопрос об ассоциации подтверждён C2 и C3; выбранных материалов достаточно. Однако видимый C1 связывает AD с численной оценкой, полученной для деменции без выделения AD, и не сохраняет возрастную область исходной когорты. По строгому правилу отсутствия видимых неподтверждённых расширений итог пока not_usable. Это локальная проблема источника и квалификаторов, а не отрицание подтверждённой связи APOE ε4 с прогрессией к AD.",
+        "missing_elements": [
+          "Разделить результаты по деменции любой этиологии из E1 и по AD-specific progression из E2–E4.",
+          "Указать, что численная оценка E1 относится к когорте ≥75 лет, если её сохранять.",
+          "При обсуждении прогноза полезно отметить гетерогенность pooled RR и ограниченную индивидуальную прогностическую ценность генотипирования."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "unknown",
+              "requested_population_or_system": "true",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "unknown",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "Числа HR 2.89 и ускорение на 3.36 года верно взяты из E1, но исследование E1 оценивало деменцию без указания AD и включало людей ≥75 лет. Первая часть утверждения называет именно Alzheimer disease и связывает с ней этот результат. Другие выбранные статьи действительно подтверждают ассоциацию APOE ε4 с AD, однако цитируемый для данного количественного утверждения источник не позволяет отождествить его общий dementia endpoint с AD. Это недостаточная привязка и потеря ограничений, а не выдуманные числа; отсутствующее подтверждение AD отмечено unknown.",
+            "claim_text_sha256": "93780e6ae2fa33c880878909379b78b2cbf6386517899f2fc3e8fa16553fa679"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": true,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Метаанализ проспективных исследований прямо исследует развитие AD у людей с MCI и сообщает pooled RR 2.09, 95% CI 1.52–2.88. Утверждение сохраняет ассоциативный характер и не превращает риск в причинность или индивидуальный прогноз. Неоднородность исследований заслуживает отдельного упоминания в ответе, но приведённый объединённый показатель передан верно.",
+            "claim_text_sha256": "289d6c19931b7114a514285f6e6f599143eac2b2aae8da5f4e51d6fe385a8e1a"
+          },
+          {
+            "claim_id": "C3",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": true,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Прямой пересказ вывода E4: CSF tau и конкретно APOE ε4/ε4 связаны с более быстрым переходом MCI→AD. Сохранён генотип homozygote и связь, без утверждения причинности. Добавление tau не подменяет запрошенную ассоциацию, поскольку она для ε4/ε4 названа явно.",
+            "claim_text_sha256": "192f01b543a941b64cf181d57895657c23d1d544dc17c5911a17e27867b99371"
+          }
+        ],
+        "raw_run_sha256": "56790384ee89977617ff4a4f67db810adf0ea131bd956164b783267ef208802c",
+        "evidence_quotes_checked": 8
+      },
+      {
+        "query_id": "bm05",
+        "answer_status": "partial",
+        "answer_category": "not_usable",
+        "packed_evidence_sufficient": true,
+        "answer_rationale_ru": "Материалы позволяют дать аккуратный модель-зависимый механистический ответ: IL-1β и fibrosis/β-cell damage при diet-induced obesity, отсутствие эффекта в db/db и mouse-islet stress моделях, отдельно человеческие IL-1 observations. Видимый ответ сохраняет отрицательный db/db результат, но C1 теряет модельную границу, а C3 переносит клиническое IL-1 доказательство на NLRP3-specific человеческую связь. Из-за этих видимых неподтверждённых расширений ответ требует исправления перед использованием.",
+        "missing_elements": [
+          "Явно отделить mouse high-fat obesity, db/db и изолированные mouse islets от человеческих данных.",
+          "Различать показанное клиническое участие IL-1-воспаления и предлагаемый upstream NLRP3 механизм.",
+          "Назвать отрицательные стрессовые эксперименты как результаты с конкретной областью, а не только как неопределённую дискуссию."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "Базовая цепочка NLRP3→созревание IL-1β→панкреатическое повреждение и гибель β-клеток поддержана E1, а различие стрессовых механизмов отражено E3. Но прямое доказательство гибели β-клеток в E1 получено у хронически ожиревших knockout-мышей на high-fat feeding; в утверждении оно обобщено на T2D без обозначения мышиной модели. E3 сообщает именно отрицательный результат в mouse islets, а не только фоновую дискуссию. Нарушение касается сохранения экспериментальной области, а не отсутствия любого механистического доказательства.",
+            "claim_text_sha256": "93ce2e7a2805b080565872f45510f168ef6cc76a0b6d102cb178127b8ab07c29"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": true,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Отрицательный результат прямо ограничен db/db murine model, как в заключении E2. Противопоставление диет-индуцированному ожирению обосновано E1; оно не объявляет механизм опровергнутым во всех моделях или у людей.",
+            "claim_text_sha256": "3e32f33425600e666f731155f8d8f4ab87c460829e6abb3661a0e96a567b3dd5"
+          },
+          {
+            "claim_id": "C3",
+            "visible": true,
+            "axes": {
+              "factual_support": "unknown",
+              "requested_population_or_system": "unknown",
+              "requested_comparison": "not_requested",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "false"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": false,
+            "rationale_ru": "Клиническая фраза E4 подтверждает вклад воспаления/IL-1 в β-cell failure у людей, но не доказывает отдельно специфическую активацию NLRP3 у людей с T2D и ожирением. В том же абстракте авторы называют NLRP3-triggered macrophage mechanism предлагаемым механизмом и отмечают неопределённость триггеров. E5 — повествовательный обзор с общим механизмом, без приведённого человеческого исследования β-клеток. Утверждение сшивает клиническое IL-1 доказательство и NLRP3-гипотезу в прямую человеческую связь. Точная поддержка этой спецификации unknown, а её экспериментальные ограничения не сохранены; оговорка о controversy касается уже другого звена beta-cell death.",
+            "claim_text_sha256": "9dec80f1575bec58d09f57fdf08bd1a103265c82d0200f027283bfe4fa4194b7"
+          }
+        ],
+        "raw_run_sha256": "5a1e2a5fe07f7983a8c3f6cb9d1098986207bc366864e0ebacb2c7b86494207e",
+        "evidence_quotes_checked": 13
+      },
+      {
+        "query_id": "bm06",
+        "answer_status": "partial",
+        "answer_category": "not_usable",
+        "packed_evidence_sufficient": false,
+        "answer_rationale_ru": "В выбранных материалах нет исследования нужного контраста antibiotics versus placebo с болью на 2–3 днях. Все три видимые фразы в основном правдиво пересказывают другие вмешательства, но ни одна не отвечает указанному интервенционному сравнению. Это подмена цели ответа, а не фабрикация преимуществ антибиотиков. Следовало явно отказаться от вывода по антибиотикам из этой выдачи; отсутствие нужного материала не доказывает их неэффективность.",
+        "missing_elements": [
+          "Данные antibiotics versus placebo в детском AOM.",
+          "Явная оценка ear pain именно на 2–3 днях для этого контраста.",
+          "Честный insufficient-evidence исход вместо ответа про другие лекарства."
+        ],
+        "claims": [
+          {
+            "claim_id": "C1",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "true",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Точный по смыслу пересказ результата об анальгетиках paracetamol/ibuprofen у детей с AOM; low quality сохранено, в исходнике имеются результаты на 48 часах. Но это другой интервенционный контраст, не antibiotics versus placebo: в ключевом RCT антибиотики получали все дети. В самом утверждении short-term также не фиксирует запрошенные 2–3 дня. Поэтому факт поддержан, а запрошенное сравнение — нет. Для outcome axis исходник явно даёт pain at 48 hours, поэтому целевой исход/срок установлен; неправильное вмешательство отдельно остаётся comparison=false.",
+            "claim_text_sha256": "521250b8a668cc50389616cda238f83bac5f449a864ac652bf93c50ba59587db"
+          },
+          {
+            "claim_id": "C2",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "unknown",
+              "qualifiers_preserved": "true"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Утверждение верно передаёт недостаточность доказательств для ibuprofen versus paracetamol и их комбинации; оно не превращает nonsignificance в equivalence. Однако это явно другой comparator/intervention, и short-term объединяет сроки, не отвечая конкретному antibiotics/placebo вопросу на 2–3 днях.",
+            "claim_text_sha256": "a55376cb35767547a54ae20ccd32d8580f4fb5f0b4fb1ac74f223e25ffb456e4"
+          },
+          {
+            "claim_id": "C3",
+            "visible": true,
+            "axes": {
+              "factual_support": "true",
+              "requested_population_or_system": "true",
+              "requested_comparison": "false",
+              "requested_outcome_or_target": "false",
+              "qualifiers_preserved": "unknown"
+            },
+            "fully_scope_supported": false,
+            "packed_excerpt_support": true,
+            "rationale_ru": "Текст действительно сообщает отсутствие новых relevant trials после 2003 года и ongoing studies для decongestants/antihistamines в этом обзоре. Это не antibiotics/placebo и не pain after 2–3 days. Кроме того, currently должно быть привязано к поиску обзора в феврале 2025 года; данные не устанавливают состояние исследований на любую последующую дату. Фактический пересказ обзора отделён от непопадания в вопрос.",
+            "claim_text_sha256": "0ee8bc0464f3f6d000582c8f3e71f47a021cf3ac4ed84aaafdb118cbaaa10d12"
+          }
+        ],
+        "raw_run_sha256": "78e90c043edb20fa29310a6ccba66f7be678f7157d60d7cf56cd427c078aac34",
+        "evidence_quotes_checked": 9
+      }
+    ],
+    "judgments_sha256": "2ea254418361ddf200a8633dcdd86bd2caf737087093a1860e89f8b6bac293c6",
+    "evaluator_sha256": "378301d57af69d9130ac620e0512ddbb8cfb369916ddb294b533d5c8d76c2666"
+  },
+  "review_process": {
+    "process": "Two disjoint primary batches, isolated secondary conversation, then root source review and adjudication. Agreement is not accuracy. Primary a inherited parent context; verdicts were hidden in packets but complete primary blinding is not claimed.",
+    "axis_disagreement_claim_count": 7,
+    "answer_category_disagreement_count": 1,
+    "rubric_clarification": "Strict claim support requires all applicable question axes. Factual support is separate. Partial denotes accurate but incomplete/narrower target context; unrelated interventions without an answer to the target are not_usable. No full answer judged clinically reliable.",
+    "decisions": [
+      {
+        "query_id": "bm01",
+        "field": "claims.C1/C2.requested_population_or_system",
+        "chosen": "unknown",
+        "reason_ru": "В предоставленных abstract нет явного adult-only ограничения. Средний возраст около69 лет не доказывает нижнюю возрастную границу; внешние критерии trial не подставляем."
+      },
+      {
+        "query_id": "bm01",
+        "field": "packed_evidence_sufficient",
+        "chosen": false,
+        "reason_ru": "Полный исходный abstract содержит отдельный hospitalization effect и placebo; выбранные фрагменты не устанавливают весь запрошенный охват. Положительный composite нельзя автоматически трактовать как эффект каждого компонента."
+      },
+      {
+        "query_id": "bm02",
+        "field": "claims.C1.qualifiers_preserved",
+        "chosen": "false",
+        "reason_ru": "Для приведённого ETD существенны dose-reduced add-on regimen и overweight eligibility. Слова combination/titration не полностью сохраняют эти ограничения."
+      },
+      {
+        "query_id": "bm05",
+        "field": "claims.C1.requested_population_or_system",
+        "chosen": "true",
+        "reason_ru": "Вопрос допускает животные и клеточные модели. Экспериментальная область источника релевантна; её отсутствие в итоговой фразе отдельно отмечено qualifier=false, без выдуманного human-only требования."
+      },
+      {
+        "query_id": "bm06",
+        "field": "claims.C1.requested_outcome_or_target",
+        "chosen": "true",
+        "reason_ru": "Полный и выбранный results задают pain at48hours, соответствующий временному исходу; вмешательства остаются неверными."
+      },
+      {
+        "query_id": "bm06",
+        "field": "claims.C2.requested_outcome_or_target",
+        "chosen": "unknown",
+        "reason_ru": "Фраза short-term не разделяет несколько сроков в исходнике и не фиксирует2–3days. Исход pain есть, но целевой срок в утверждении не установлен."
+      },
+      {
+        "query_id": "bm06",
+        "field": "claims.C3.qualifiers_preserved",
+        "chosen": "unknown",
+        "reason_ru": "Currently без привязки к search February2025 нельзя подтвердить как состояние на дату запроса2026; отсутствующую актуальность не выдаём за факт."
+      },
+      {
+        "query_id": "bm06",
+        "field": "answer_category",
+        "chosen": "not_usable",
+        "reason_ru": "Ни одна видимая фраза не отвечает запрошенному antibiotic-vs-placebo контрасту. Корректный пересказ других лекарств не является полезным частичным ответом на этот точный вопрос; необходим явный отказ по отсутствию доказательств."
+      }
+    ]
+  },
+  "runtime": {
+    "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+    "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+    "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+    "quantization": {
+      "bits": 4,
+      "coverage": "all-linear-and-embedding",
+      "group_size": 64,
+      "method": "mlx-affine"
+    },
+    "platform": "macOS-26.7.2-arm64-arm-64bit",
+    "scope": "Each run loads tokenizer, BGE then a new Qwen runtime; wall includes source checks and cleanup, excluding the final artifact write. Stage wall includes raw checkpoint writes. Model/OS caches are not flushed.",
+    "excluded": "PubMed download and passage-embedding construction; do not compare to full live request as a speedup",
+    "replay_wall_seconds": {
+      "min": 33.869625499999984,
+      "max": 38.78856354199996,
+      "mean": 36.746959604166655,
+      "median": 37.23285941649999
+    },
+    "all_sources_rankings_and_evidence_unchanged": true,
+    "all_calls_fresh": true,
+    "all_workers_closed_and_reaped": true,
+    "runs": [
+      {
+        "source_run_sha256": "80a42ebd59ede8a7ca795339d2d67044fb14cdab0f564955bc744a18965974f4",
+        "request_id": "2ccc11269e70fdfe2c77018dee4e8c9c39ba2f8893978cd539f35515e9b1b9cf",
+        "source_request_id": "500cf6682163455a15c00c6c2587e8b18cbcca58603c3e8ed27a33cdc185bf4b",
+        "status": "complete",
+        "answer_status": "answered",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 3,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 1745,
+            "input_ids_sha256": "39fa6d99d9f5f145334ffcbb21783833e9c5afe96113566fb9344632322f28af",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 10.457480834000023,
+            "ttft_seconds": 5.166223584000022,
+            "decode_seconds": 5.291257250000001,
+            "worker_wall_seconds": 14.058467250000007,
+            "new_tokens": 145,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3822745996,
+            "rss_peak_bytes": 3012313088,
+            "output_text_sha256": "6c90dc056d90c559fd9918b5270983b23dbfefd0c3a8651fd919668412f4a74e"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 1530,
+            "input_ids_sha256": "83e407e4c98a4fe6cb6c1e147a41c17f213f2adb53c878fafde36c65b39438b7",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 8.08645820800001,
+            "ttft_seconds": 4.50233350000002,
+            "decode_seconds": 3.5841247079999903,
+            "worker_wall_seconds": 12.014345832999993,
+            "new_tokens": 100,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3741136434,
+            "rss_peak_bytes": 3101474816,
+            "output_text_sha256": "f9eba89937bd0e4086298d575904739bce94bf623eae078e323195d36fa612ce"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "dc9e1880e045e0a348d0e187a5c0c97c7ff9425e24b89d479e8683b9d81bff3d",
+          "window_artifact_id": "52bb91e8e9047265e6fc0f291f91d6ef047b77dc97826b7a22249fd81bd2a44b",
+          "embedding_artifact_id": "e7f972b9be926fba194033c61ea8752370a7cdf3b2cbcd0981ca0e730f8d51b1"
+        },
+        "context_id": "e97f07aba4e4867b8d2e9501ba56d284c59612190e27ca6b76170569e4e06e1d",
+        "source_context_id": "e97f07aba4e4867b8d2e9501ba56d284c59612190e27ca6b76170569e4e06e1d",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.750881000000021,
+          "query_encode_seconds": 0.23690245800000298,
+          "dense_search_seconds": 0.0007424170000263075,
+          "retrieval_seconds": 1.1201433330000157,
+          "context_seconds": 0.006840041999993218,
+          "reranking_seconds": 0.0005570409999791082,
+          "answer_seconds": 29.174451250000033,
+          "pipeline_seconds": 30.605472125000034
+        },
+        "source_pipeline_seconds": 0.5564192090005236,
+        "source_validation_seconds": 0.017540958000012097,
+        "answer_tokenizer_load_seconds": 5.320613165999987,
+        "pipeline_wall_seconds": 30.70331220899999,
+        "wall_seconds": 36.048703875,
+        "stage_wall_seconds": {
+          "retrieval": 1.1204909580000049,
+          "retrieval-complete": 0.0007536249999873235,
+          "context": 0.006840208999989272,
+          "context-complete": 0.0006435829999986709,
+          "reranking": 0.0005572500000141645,
+          "reranking-complete": 0.0005102080000085607,
+          "answer": 29.174468291999972,
+          "complete": 0.3161153330000275
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "6df3602c28c036f499f05acceaeed1d09216a48b89cc40e7170b71db51baef14",
+        "run_directory": "run-001",
+        "runtime_load_seconds": 2.584310125000002,
+        "worker_startup_seconds": 2.647387583000011
+      },
+      {
+        "source_run_sha256": "bed9f85368d4fd8b3070c74c95abb2639ade403ca51d159a712c31217e31ae8a",
+        "request_id": "015658730b5eacba5bbbb5e1bd0c7221a617cdeaad328d52596ec1ef264c7097",
+        "source_request_id": "ea31fbaa26a13343b303f52eb8d2224df28782b8cc03b3d82795484f055366a5",
+        "status": "complete",
+        "answer_status": "partial",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 2,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 2616,
+            "input_ids_sha256": "75a5e25551bcb11fdfbda5aff41e48a0a071a3273c6f6fa7706164ec1a98b09e",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 15.517851749999977,
+            "ttft_seconds": 7.739361499999973,
+            "decode_seconds": 7.778490250000004,
+            "worker_wall_seconds": 19.032474499999978,
+            "new_tokens": 210,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817700,
+            "rss_peak_bytes": 3024683008,
+            "output_text_sha256": "f4cf9fa11cd4316caa50893eb9f61e5dd0e84cbc9e760e13f2304cc3b2172829"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 2597,
+            "input_ids_sha256": "9f7eb2aa7d0a612f4116bae430f971c6f77a337222bda7d908ec5bbe3371501d",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 11.409987333000004,
+            "ttft_seconds": 7.732449499999973,
+            "decode_seconds": 3.677537833000031,
+            "worker_wall_seconds": 15.363383582999973,
+            "new_tokens": 102,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817624,
+            "rss_peak_bytes": 3113779200,
+            "output_text_sha256": "21e2cf531cfc5543c4d217c46cbde9235b74b70cdc4559d6284b93097df160d4"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "b1b1493442af41329b738a3886c104b6aa9e60db4ca8c76955a637de73d762f1",
+          "window_artifact_id": "145c357bdfd5b2b65e18d92e6da6ddad603d8d691bd4cb450f5d205b36bfbdd1",
+          "embedding_artifact_id": "1f3a9a74e715a24658903057b0acc9b1d5c25f380e7115db52b4913112620cf4"
+        },
+        "context_id": "8034034cf80721b34b7073deaa477c5815b5f5a729f14a6c903a500749fe577d",
+        "source_context_id": "8034034cf80721b34b7073deaa477c5815b5f5a729f14a6c903a500749fe577d",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.4131588750000219,
+          "query_encode_seconds": 0.020371749999981148,
+          "dense_search_seconds": 0.00034508300001334646,
+          "retrieval_seconds": 0.5584471249999865,
+          "context_seconds": 0.009704915999975583,
+          "reranking_seconds": 0.0006242499999871143,
+          "answer_seconds": 36.19600824999998,
+          "pipeline_seconds": 36.95256895899996
+        },
+        "source_pipeline_seconds": 0.5398792080013664,
+        "source_validation_seconds": 0.006637749999981679,
+        "answer_tokenizer_load_seconds": 0.2332852910000156,
+        "pipeline_wall_seconds": 37.061723374999985,
+        "wall_seconds": 37.30914587500001,
+        "stage_wall_seconds": {
+          "retrieval": 0.5587972089999766,
+          "retrieval-complete": 0.0008310410000262891,
+          "context": 0.009705042000007325,
+          "context-complete": 0.0006971669999984442,
+          "reranking": 0.0006244580000043243,
+          "reranking-complete": 0.0006099169999629339,
+          "answer": 36.19601591600002,
+          "complete": 0.20408212600000297
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "8a8b90f3dfc7adbe7f381c7292caf0780121d552645baeba27e8e5ab1a917ed6",
+        "run_directory": "run-002",
+        "runtime_load_seconds": 1.291917082999987,
+        "worker_startup_seconds": 1.3415831669999534
+      },
+      {
+        "source_run_sha256": "a73ebd8f4712b0b85768271acdcb57374253f75e791598932ef69af8100f5945",
+        "request_id": "9c5851003810a965859d7a00d1b77518562b6c186034e80f4dfe0c04d457d3f5",
+        "source_request_id": "562f686c1dfa45b0d95b5a5928503c858d36e967c3e8cf64ac7506126c763210",
+        "status": "complete",
+        "answer_status": "partial",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 3,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 2463,
+            "input_ids_sha256": "75e63ad43ba3671a8fe4be4f4bcb960d16721a28c54831696742ff8ac4f6c556",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 13.150725583999986,
+            "ttft_seconds": 7.287281000000007,
+            "decode_seconds": 5.8634445839999785,
+            "worker_wall_seconds": 16.710469416000024,
+            "new_tokens": 157,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817088,
+            "rss_peak_bytes": 3016392704,
+            "output_text_sha256": "de9381693a374c6de44c8f1ce2055ab9371868687ea99257f1edf545e028d1b4"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 2200,
+            "input_ids_sha256": "19b1fd0122d4d518c42d1e0e320ada91b5436b562af447e840a337076f5be70b",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 10.171252874999993,
+            "ttft_seconds": 6.488529500000027,
+            "decode_seconds": 3.6827233749999664,
+            "worker_wall_seconds": 14.211212334000038,
+            "new_tokens": 103,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988816036,
+            "rss_peak_bytes": 3103801344,
+            "output_text_sha256": "4dfd62741b713c48959cc3b1d290ef926cc5dd48c7b9e6020d23a3b9594700ce"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "d0c108c934162831c65948583060c4a5f61533d23f530b132e27f23759b0212b",
+          "window_artifact_id": "dbfab35cfeaf8124c9a4efe39f7a4037809a89fe0cd70e143c6d8d9b944fc704",
+          "embedding_artifact_id": "1b7a69617deb01ab29452d99bd206e54432c1151b14f808cebc6cb55b7401705"
+        },
+        "context_id": "351f6d7274f959c2ae5de9d095e30d6cbc117b8a719284991d37795cd6b7c0d2",
+        "source_context_id": "351f6d7274f959c2ae5de9d095e30d6cbc117b8a719284991d37795cd6b7c0d2",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.4488253750000126,
+          "query_encode_seconds": 0.01782137499998271,
+          "dense_search_seconds": 0.0001713749999794345,
+          "retrieval_seconds": 0.5970312499999864,
+          "context_seconds": 0.008926999999971486,
+          "reranking_seconds": 0.0005840000000034706,
+          "answer_seconds": 32.707897,
+          "pipeline_seconds": 33.50483704199996
+        },
+        "source_pipeline_seconds": 0.5684093330000906,
+        "source_validation_seconds": 0.011492041999986213,
+        "answer_tokenizer_load_seconds": 0.23564933400001564,
+        "pipeline_wall_seconds": 33.614273500000024,
+        "wall_seconds": 33.869625499999984,
+        "stage_wall_seconds": {
+          "retrieval": 0.5973737079999637,
+          "retrieval-complete": 0.0007761250000157816,
+          "context": 0.008927167000024383,
+          "context-complete": 0.0006446669999604637,
+          "reranking": 0.0005841660000101001,
+          "reranking-complete": 0.0007937089999927593,
+          "answer": 32.70790629100003,
+          "complete": 0.20786612599999899
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "27d76075857ef7d30a7109622f2eca1b81ad476ea6cb4969979f48d525adccd5",
+        "run_directory": "run-003",
+        "runtime_load_seconds": 1.2748510840000336,
+        "worker_startup_seconds": 1.3217652499999986
+      },
+      {
+        "source_run_sha256": "6f9de743185ca164a4ceec6b3ff82282660fa1b33f69ba1251f7944972ec26b4",
+        "request_id": "e13f1d2c7aaec0881e8cda94baa7dea8a8dc682aeee2e14ff9e837bf9fcee8a1",
+        "source_request_id": "0b1cbf49bb5c68d8069532470193d0fad3c8b7bfe39f67c8e7cef63e809ce43e",
+        "status": "complete",
+        "answer_status": "answered",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 3,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 2670,
+            "input_ids_sha256": "501a6f1f43f00901cbddbe7caeab2561908ed72b5729de0d28315648922e385e",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 16.245214750000002,
+            "ttft_seconds": 7.931353124999987,
+            "decode_seconds": 8.313861625000015,
+            "worker_wall_seconds": 19.814666208000006,
+            "new_tokens": 222,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817916,
+            "rss_peak_bytes": 3018227712,
+            "output_text_sha256": "1f883ae1bb3f8fbb204c6fafd3df9c36c00caeb0a5d9baa9c363aac8aa442a73"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 2263,
+            "input_ids_sha256": "bc141ce62f49d472c98d35cc6ab2f29142878d3b8d49ddf0b99986f0bed88fc3",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 10.39678737500003,
+            "ttft_seconds": 6.719658250000009,
+            "decode_seconds": 3.6771291250000218,
+            "worker_wall_seconds": 14.52305312499999,
+            "new_tokens": 100,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988816288,
+            "rss_peak_bytes": 3098017792,
+            "output_text_sha256": "f9eba89937bd0e4086298d575904739bce94bf623eae078e323195d36fa612ce"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "11d8ba9c80d22c4f860cc9615a83c4adc383d75dbf7b197598a30ef6d970e726",
+          "window_artifact_id": "03250545b51bdda682682f94fbd95bffdc9cf4e52d71d7c540178313b785b88e",
+          "embedding_artifact_id": "2499009daafa23aed6e908285eefb43f67e6b5545f3cbe7e316f3f94eebddaa5"
+        },
+        "context_id": "6b8ed2f3046569ba96004717ee7e93f4d157587e2179b7c52a779bfdc2df06d7",
+        "source_context_id": "6b8ed2f3046569ba96004717ee7e93f4d157587e2179b7c52a779bfdc2df06d7",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.4457582919999936,
+          "query_encode_seconds": 0.0177534580000156,
+          "dense_search_seconds": 0.0002565419999882579,
+          "retrieval_seconds": 0.5981294169999956,
+          "context_seconds": 0.01100883399999475,
+          "reranking_seconds": 0.0005801249999990432,
+          "answer_seconds": 36.14004987499999,
+          "pipeline_seconds": 36.94103845799998
+        },
+        "source_pipeline_seconds": 0.5108640830003424,
+        "source_validation_seconds": 0.02453308299999435,
+        "answer_tokenizer_load_seconds": 0.23041833399997813,
+        "pipeline_wall_seconds": 37.03639183299998,
+        "wall_seconds": 37.299102000000005,
+        "stage_wall_seconds": {
+          "retrieval": 0.5985034170000176,
+          "retrieval-complete": 0.0006727499999783504,
+          "context": 0.011008916000037061,
+          "context-complete": 0.0006477499999846259,
+          "reranking": 0.0005802919999950973,
+          "reranking-complete": 0.0005744169999957194,
+          "answer": 36.14005683300002,
+          "complete": 0.2081699169999638
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "56790384ee89977617ff4a4f67db810adf0ea131bd956164b783267ef208802c",
+        "run_directory": "run-004",
+        "runtime_load_seconds": 1.293593666999982,
+        "worker_startup_seconds": 1.3440887500000258
+      },
+      {
+        "source_run_sha256": "2ab68d3cf41f744ef9393631bba5969aa9cfb91fd22ea4e4c3d4ea99f0be60d1",
+        "request_id": "e1a0ac8397fad8941d276641a2e6aee9cd772cf13f511ee41e8307a7b54ac96d",
+        "source_request_id": "91ececbebb77bee739c8ef6a5272f2bc59f43cd19510cf265945fd9ea6cb3c83",
+        "status": "complete",
+        "answer_status": "partial",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 3,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 2588,
+            "input_ids_sha256": "08ea62cb385c9c4bacf7f09be0b57ee7185e51fc037d34afce79d160796fcdda",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 15.96982645899999,
+            "ttft_seconds": 7.816603624999971,
+            "decode_seconds": 8.153222834000019,
+            "worker_wall_seconds": 19.60409895800001,
+            "new_tokens": 215,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817588,
+            "rss_peak_bytes": 3011952640,
+            "output_text_sha256": "d012f303315d020d32bc124436442666f4b91701bf0a12d67094a5f7fa791291"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 2763,
+            "input_ids_sha256": "37076595ec7671d1019def09fef716e011da52b777b96be54ba74fd06d4834d9",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 12.247707459000026,
+            "ttft_seconds": 8.474608917000012,
+            "decode_seconds": 3.773098542000014,
+            "worker_wall_seconds": 16.242945374999977,
+            "new_tokens": 102,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988818288,
+            "rss_peak_bytes": 3098017792,
+            "output_text_sha256": "377c9a1294c6ed040747d11dcbbf05f1b066468d7c6828659ed971d6c4deec9c"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "514737d1a7130b33cd0d5a2e38742a075533362fe22b40954b1464b351e9683b",
+          "window_artifact_id": "0faab815a23c060abad5294bf266328302cc5388c5ce3c80ae1c0e4c610dadd3",
+          "embedding_artifact_id": "f204863c349b180d60a87d800a418204c41be5ebe53b7804151df9663b4cd646"
+        },
+        "context_id": "4e7e1636e1d8e7538fb4d2a6b5f6f74e5bda11b59de4c301ab889f99788a9c72",
+        "source_context_id": "4e7e1636e1d8e7538fb4d2a6b5f6f74e5bda11b59de4c301ab889f99788a9c72",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.4495319170000016,
+          "query_encode_seconds": 0.01958554200001572,
+          "dense_search_seconds": 0.00013429199998427066,
+          "retrieval_seconds": 0.6039625419999766,
+          "context_seconds": 0.010239624999996977,
+          "reranking_seconds": 0.0007793750000359978,
+          "answer_seconds": 37.63889112499999,
+          "pipeline_seconds": 38.44188762499999
+        },
+        "source_pipeline_seconds": 0.5058461660009925,
+        "source_validation_seconds": 0.006267959000012979,
+        "answer_tokenizer_load_seconds": 0.2318810419999977,
+        "pipeline_wall_seconds": 38.54070166700001,
+        "wall_seconds": 38.78856354199996,
+        "stage_wall_seconds": {
+          "retrieval": 0.6042935420000504,
+          "retrieval-complete": 0.0007468749999475222,
+          "context": 0.010240042000020821,
+          "context-complete": 0.0008509580000009009,
+          "reranking": 0.0007795829999963644,
+          "reranking-complete": 0.0007204170000250087,
+          "answer": 37.638897457999974,
+          "complete": 0.20913545799999156
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "5a1e2a5fe07f7983a8c3f6cb9d1098986207bc366864e0ebacb2c7b86494207e",
+        "run_directory": "run-005",
+        "runtime_load_seconds": 1.294391915999995,
+        "worker_startup_seconds": 1.3428077909999843
+      },
+      {
+        "source_run_sha256": "ca7430f33e1296d4e69511d7cb018f7eda5e55c58e3b086223e8a9d4e7800963",
+        "request_id": "b6a6ea3a3c14ddda8f8d9e476182059bf4f7aa40c1afe2357b17aa96003c878f",
+        "source_request_id": "bf881de4f6e40130589f77089e1e68baf125694d5402aceecf03e822c8f479fa",
+        "status": "complete",
+        "answer_status": "partial",
+        "validation_error": null,
+        "prompt_version": "cited-answer-v8",
+        "review_version": "claim-support-v4",
+        "claim_count": 3,
+        "model_calls": [
+          {
+            "stage": "draft",
+            "input_tokens": 2617,
+            "input_ids_sha256": "153588cc3d16489f9a905bafc0d927a62fbee1578ae4c36fd8e14473d561be7a",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 15.143961458000035,
+            "ttft_seconds": 7.877192374999993,
+            "decode_seconds": 7.266769083000042,
+            "worker_wall_seconds": 18.70522408300002,
+            "new_tokens": 198,
+            "max_new_tokens": 768,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817704,
+            "rss_peak_bytes": 3024175104,
+            "output_text_sha256": "4fca88d549a0cd34a3d181cf3124c292f6d1cd8f9cef1d2ac1d69268607cde21"
+          },
+          {
+            "stage": "support-review",
+            "input_tokens": 2458,
+            "input_ids_sha256": "5c233fa41ba798483f3efbf1a076af8608c0c2fd7408d0e5ddb95c96f07d070a",
+            "source_input_ids_sha256": null,
+            "same_input_ids_as_source": null,
+            "seconds": 11.170273167000005,
+            "ttft_seconds": 7.5340343329999655,
+            "decode_seconds": 3.6362388340000393,
+            "worker_wall_seconds": 15.131268791000025,
+            "new_tokens": 101,
+            "max_new_tokens": 512,
+            "hit_output_limit": false,
+            "cache_reused": false,
+            "peak_memory_bytes": 3988817068,
+            "rss_peak_bytes": 3110715392,
+            "output_text_sha256": "e7ff854b6977a5c1687b8486780525a4e701d94afebbcd630176d8efe8909dc1"
+          }
+        ],
+        "all_calls_fresh": true,
+        "runtime_load_count": 1,
+        "runtime_closed": true,
+        "identities": {
+          "dataset_id": "d54e4ab8521a049caeed34b93f0b3560858f482ff88ff0e69e62faece17bcab4",
+          "window_artifact_id": "1057e383a40cf93c06529012e7d151f845e2f0e84d03d3d8592b94162d7e154d",
+          "embedding_artifact_id": "3141254a871d2e60aa575347b8138e8d52aa09a47bbf747129584b58c27a8525"
+        },
+        "context_id": "3830fefd73eed936ef780a0676b195d8c9a207127943d2b8a2eaeb8e2a384e2a",
+        "source_context_id": "3830fefd73eed936ef780a0676b195d8c9a207127943d2b8a2eaeb8e2a384e2a",
+        "same_sources": true,
+        "same_evidence_payload": true,
+        "same_dense_ranking": true,
+        "timings": {
+          "query_encoder_constructor_seconds": 0.44991383299998233,
+          "query_encode_seconds": 0.01472795799998039,
+          "dense_search_seconds": 0.00010758300004454213,
+          "retrieval_seconds": 0.58569212499998,
+          "context_seconds": 0.009082166000041525,
+          "reranking_seconds": 0.0005102500000475629,
+          "answer_seconds": 36.035981917000015,
+          "pipeline_seconds": 36.82126783299998
+        },
+        "source_pipeline_seconds": 0.529265832999954,
+        "source_validation_seconds": 0.004325832999995782,
+        "answer_tokenizer_load_seconds": 0.24083441699997366,
+        "pipeline_wall_seconds": 36.91331116599997,
+        "wall_seconds": 37.16661683299998,
+        "stage_wall_seconds": {
+          "retrieval": 0.5860365000000343,
+          "retrieval-complete": 0.000553874999980053,
+          "context": 0.009082208999984687,
+          "context-complete": 0.0005604579999953785,
+          "reranking": 0.0005103750000330365,
+          "reranking-complete": 0.00045824999995147664,
+          "answer": 36.035993792000056,
+          "complete": 0.20783033299994713
+        },
+        "owned_runtimes_closed": true,
+        "worker_reaped": true,
+        "raw_run_sha256": "78e90c043edb20fa29310a6ccba66f7be678f7157d60d7cf56cd427c078aac34",
+        "run_directory": "run-006",
+        "runtime_load_seconds": 1.7010502909999445,
+        "worker_startup_seconds": 1.755541959000027
+      }
+    ],
+    "metadata": {
+      "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+      "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+      "runtime": "mlx-lm-subprocess",
+      "device": "metal",
+      "artifact_id": "afb1952635743bb7e8c5b055ad9e5bb951f9570b409b65df424ee6d222bf9359",
+      "quantization": {
+        "bits": 4,
+        "coverage": "all-linear-and-embedding",
+        "group_size": 64,
+        "method": "mlx-affine"
+      },
+      "dtype": "bfloat16",
+      "fp32_exceptions": [
+        "A_log"
+      ],
+      "packages": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.2",
+        "mlx-metal": "0.32.2",
+        "outlines-core": "0.2.14"
+      },
+      "generation": {
+        "do_sample": false,
+        "max_new_tokens": 128,
+        "enable_thinking": false,
+        "input_token_limit": 12000,
+        "eos_token_ids": [
+          248044,
+          248046
+        ],
+        "stop_policy": "source-eos-and-chat-end-union",
+        "include_terminal_eos_in_token_count": true
+      },
+      "load_seconds": 2.584310125000002,
+      "worker_startup_seconds": 2.647387583000011,
+      "parameter_dtype_policy": "bfloat16-except-A_log-float32-packed-uint32",
+      "artifact_validation": "manifest-identity-all-file-sizes-config-sha256",
+      "score_validation": "reject-nan-positive-infinity-and-fully-masked-rows",
+      "prompt_cache_reuse": false,
+      "kv_quantization": null,
+      "prefill_step_size": 2048,
+      "ttft_scope": "first-generate-step-yield-including-native-one-step-lookahead"
+    },
+    "policy": {
+      "engine": "mlx",
+      "model_id": "mlx-community/Qwen3.5-4B-MLX-4bit",
+      "revision": "32f3e8ecf65426fc3306969496342d504bfa13f3",
+      "answer_model": "4b",
+      "answer_policy": "compact-v1",
+      "eos_token_ids": [
+        248044,
+        248046
+      ],
+      "do_sample": false,
+      "artifact_manifest_sha256": "39306ac657515161ece2586a65850a8e05f15924fca79fb8acf953c3ed064921"
+    }
+  },
+  "targeted_query_diagnostic": {
+    "baseline_candidate_count": 4,
+    "without_time_phrase_count": 25,
+    "broad_query_count": 169,
+    "count_probe_artifact_sha256": "44f456583f80118490ebec7ff4a036752a92571c791d78f78c6b388e86ebb1f4",
+    "override_query": "In children with acute otitis media, antibiotics with placebo ear pain",
+    "original_question_preserved": true,
+    "fetched_candidate_count": 25,
+    "request_seconds": 44.747231332999945,
+    "preparation_timings": {
+      "bge_tokenizer_load_seconds": 2.0190761249999696,
+      "pubmed_download_seconds": 1.8805617919999804,
+      "parsing_seconds": 0.09809316700000181,
+      "windowing_seconds": 0.04013816599990605,
+      "passage_embeddings_seconds": 6.109691915999974,
+      "index_validation_seconds": 0.00794616700000006,
+      "answer_tokenizer_load_seconds": 0.24392954099994313
+    },
+    "pipeline_timings": {
+      "query_encoder_constructor_seconds": 0.3627351659999931,
+      "query_encode_seconds": 0.024467041999969297,
+      "dense_search_seconds": 0.0001664169999457954,
+      "retrieval_seconds": 0.513937833,
+      "context_seconds": 0.010399666000012076,
+      "reranking_seconds": 0.0008547909999379044,
+      "answer_seconds": 33.30275570800006,
+      "pipeline_seconds": 34.01969829199993
+    },
+    "answer_status": "partial",
+    "raw_claim_count": 3,
+    "visible_claim_count": 2,
+    "ai_review_category": "partial",
+    "paired_quality_comparison": false,
+    "labels_transferred": false,
+    "finding": "New query retrieves antibiotic trials, but generated answer gives 2–7 days/first2days instead of exact2–3days. Exact2–3 result exists in full source abstracts and was omitted by selected evidence. No default query or evidence policy changed."
+  },
+  "validation": {
+    "unit_tests_total": 408,
+    "unit_tests_passed": 401,
+    "unit_tests_skipped": 7,
+    "skip_reason": "optional native-grammar dependencies absent from main environment",
+    "new_retrieval_guard_tests": 7,
+    "baseline_draft_review_calls": 12,
+    "baseline_contract_failures": 0,
+    "json_repair_used": false,
+    "original_human_packet_unchanged": true,
+    "independent_human_reference_gate_satisfied": false
+  },
+  "prioritized_defects": [
+    {
+      "priority": "P0",
+      "issue": "Same-model reviewer accepts unrelated interventions or unsupported requested scope; exact citations are insufficient.",
+      "examples": [
+        "bm03 reference standard",
+        "bm04 dementia versus AD",
+        "bm05 mouse/IL1 versus human NLRP3 scope",
+        "bm06 other medicines versus antibiotics"
+      ]
+    },
+    {
+      "priority": "P1",
+      "issue": "Six-fragment evidence selection can omit source methods and specific outcomes while preserving composite/conclusion text.",
+      "examples": [
+        "bm01 separate HF hospitalization",
+        "bm03 diagnostic case definition",
+        "bm06 override precise2–3days"
+      ]
+    },
+    {
+      "priority": "P1",
+      "issue": "Default lexical PubMed query overconstrains temporal prose as mandatory words; explicit existing override is only a local workaround.",
+      "examples": [
+        "bm06 after two to three days"
+      ]
+    }
+  ],
+  "decision": "Keep 4B development default and existing product policy unchanged. One-day exploratory evaluation completed. No autonomous-answer readiness claim; material semantic defects remain release blockers. API work may proceed with explicit research-draft status.",
+  "local_artifact_id": "9d5db6ae57715771248cb8457f5428a0334a2bd74276d2ebf23219f2e054b841",
+  "local_archive": {
+    "filename": "quality-20261112-v1.zip",
+    "bytes": 1132004,
+    "sha256": "3d8544351b3afef7edfd63ad21fef54eebd173a3c09c26fd0a012f8dd6a5ec0c"
+  }
+}

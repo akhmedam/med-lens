@@ -131,7 +131,7 @@ class QueryTests(unittest.TestCase):
         result=plan_query(question)
         self.assertEqual(result['question'],question)
         self.assertEqual(result['submitted_query'],'CBT and SSRIs for adolescent depression at 12 weeks')
-        self.assertEqual(result['method'],'lexical-question-scaffold-pubmed-atm-v1')
+        self.assertEqual(result['method'],'lexical-question-scaffold-pubmed-atm-v2')
         self.assertEqual(result['conditions'],[])
         self.assertEqual(result['interventions'],[])
         removals=[change for change in result['query_transformations'] if 'char_start' in change]

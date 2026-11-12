@@ -57,11 +57,26 @@ def render_report(report):
     if status in messages:
         parts.append('<p>' + messages[status] + '</p>')
     elif status in {'answered', 'partial'}:
-        parts.append('<aside>' + ('Partial research draft' if status == 'partial' else 'Research draft')
-            + ' — requires independent review. Exact quotations do not guarantee that a claim follows from them. '
-            'The same model generated and reviewed these claims.</aside>')
+        findings = answer.get('answer_style') == 'source-findings'
+        if findings:
+            parts.append('<aside>Source findings — model-selected quotations with study context. '
+                'The program checks quotation identity and applies limited scope exclusions. '
+                'Scientific support and completeness have not been independently verified.</aside>')
+        else:
+            parts.append('<aside>' + ('Partial research draft' if status == 'partial' else 'Research draft')
+                + ' — requires independent review. Exact quotations do not guarantee that a claim follows from them. '
+                'The same model generated and reviewed these claims.</aside>')
+        source_titles = {source['pmid']: source.get('title') for source in report.get('context', {}).get('sources', [])}
         for claim in answer['claims']:
-            parts.append('<article><p>' + escape(claim['text']) + '</p>')
+            if findings:
+                first = claim['citations'][0]
+                title = source_titles.get(first['pmid']) or claim.get('source_title') or 'Source study'
+                parts.append('<article><p>' + source_link(first, title) + '</p>')
+                if any(caution.get('code') == 'adult_eligibility_not_explicit'
+                       for caution in claim.get('scope_cautions', [])):
+                    parts.append('<p>Adult eligibility is not explicit in this abstract; applicability to adults is uncertain.</p>')
+            else:
+                parts.append('<article><p>' + escape(claim['text']) + '</p>')
             for citation in claim['citations']:
                 parts.append(source_link(citation, citation['citation_id'])
                     + '<blockquote>' + escape(citation['quote']) + '</blockquote>')

@@ -1,21 +1,27 @@
 """Assign quote IDs to exact sentence spans so the model never retypes source text."""
 
-import re
-
-from .context import canonical, digest, locate_quote
+from .context import (COVERAGE_POLICY, canonical, digest, locate_quote,
+                      section_sentence_spans, source_quote_spans)
 
 
 def quote_catalog(context, tokenizer):
     sources, catalog = [], {}
     for source in context['sources']:
         text = source['text']
-        # This is a transparent boundary heuristic, not a biomedical sentence parser.
-        boundaries = [0, *[m.end() for m in re.finditer(r'(?<=[.!?])\s+(?=[A-Z(])', text)], len(text)]
+        spans = source_quote_spans(source)
+        if spans is None:
+            if context.get('selection_policy') == COVERAGE_POLICY:
+                raise ValueError('Complete-source-sentence metadata is required')
+            # Historical contexts intentionally preserve the old window-local
+            # boundary behavior; they are not relabeled as complete sentences.
+            spans = [{'char_start': source['char_start'] + s['char_start'],
+                      'char_end': source['char_start'] + s['char_end']}
+                     for s in section_sentence_spans(text)]
+        elif not spans:
+            raise ValueError('Selected source has no complete source sentence')
         sentences = []
-        for start, end in zip(boundaries, boundaries[1:]):
-            while start < end and text[start].isspace():start += 1
-            while end > start and text[end-1].isspace():end -= 1
-            if start == end:continue
+        for span in spans:
+            start, end = span['char_start'] - source['char_start'], span['char_end'] - source['char_start']
             quote_id = f'{source["citation_id"]}.Q{len(sentences)+1}'
             quote = text[start:end]
             entry = {'quote_id':quote_id, 'citation_id':source['citation_id'], 'quote':quote,
@@ -39,4 +45,8 @@ def resolve_quote(context, catalog, quote_id):
     span = {'char_start':entry['char_start'],'char_end':entry['char_end']}
     if span not in location['matches']:
         raise ValueError('Quote catalog span differs from source')
+    source = next(s for s in context['sources'] if s['citation_id'] == entry['citation_id'])
+    allowed = source_quote_spans(source)
+    if allowed is not None and span not in allowed:
+        raise ValueError('Quote is not a complete original source sentence')
     return {**location,'quote_id':quote_id,'matches':[span],'ambiguous':False}
