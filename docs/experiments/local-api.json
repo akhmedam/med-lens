@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "kind": "local-http-api-integration",
+  "created_at": "2026-11-13T10:16:27.789817+00:00",
+  "base_commit": "07cbf03ae297a82ca288979053ad1f13cb578519",
+  "platform": "macOS Apple Silicon",
+  "backend": "BGE/MPS and Qwen3.5-4B MLX four-bit",
+  "model_generation_policy_changed": false,
+  "new_answer_quality_evaluation": false,
+  "independent_quality_validation": false,
+  "heldout_used": false,
+  "clinical_validation": false,
+  "implementation_sha256": {
+    "src/medlens/api.py": "e07cef116540cfedc74f44c00bf5a2ce1e8879b49605c24e10fe62bea409ec6d",
+    "src/medlens/api_server.py": "2e77f95fc95a9c7006d534c63ff1c5db0ac7930bf0e6d741f3555a4e19ae61b1",
+    "src/medlens/api_service.py": "5e372c0601f7d7b1f5476e3e9811042de880ab12696b657a49c07e67360f2e9c",
+    "src/medlens/api_contract.py": "cd85a34ebc647d25e6feab47e878b57ab3debe138a62343b0db595e6872a668b",
+    "src/medlens/api_backend.py": "b1870bc95128083edc49b405fa81c776a4af0f45692733656535fc7ea32811a7",
+    "scripts/serve_api.py": "bf590211f1cd3e75f008d754ef4420f707c322701de11c000ec1bbd223a4dcc2",
+    "requirements-api.lock": "7278fa67c3b4dca390d3998f24cbacf5c7fe8224c0c97fcc95dd907bebb0f3c6"
+  },
+  "validation": {
+    "main_tests": {
+      "total": 521,
+      "passed": 512,
+      "optional_native_skipped": 9
+    },
+    "new_api_tests": 49,
+    "real_http_status": "passed",
+    "invalid_request_no_job": true,
+    "accepted_http_status": 202,
+    "submission_seconds": 0.005775249999715015,
+    "busy_http_status": 409,
+    "busy_response_seconds": 0.0010348750001867302,
+    "health_during_request_seconds": 0.001382542002829723,
+    "native_worker_observed_and_reaped": true,
+    "server_graceful_exit_code": 0,
+    "public_quotes_equal_private_quotes": true,
+    "private_paths_prompts_model_calls_in_public_json": false,
+    "public_citation_text_ids_offsets_versions_match_private": true,
+    "clean_api_only_bootstrap": {
+      "status": "passed",
+      "locked_api_packages": 17,
+      "ml_packages_installed": [],
+      "ml_modules_loaded": [],
+      "console_help": "passed",
+      "health": "ready",
+      "missing_ml_job_status": "failed",
+      "missing_ml_error_code": "search_setup_failed",
+      "runtime_load_count": 0,
+      "outbound_attempts": 0,
+      "pip_check": "passed",
+      "lock_versions_match": true,
+      "source_files_match": true,
+      "receipt_sha256": "ff4ddea795a36280ba61e0a66c7537e31e2fd6b618d0b8619c5482520c00e2b1",
+      "artifacts": "results/api-packaging-20261113/final-backend-v2",
+      "receipt_file": "probe-receipt-v2.json",
+      "source_overlay_explicit": true,
+      "final_backend_sha256": "b1870bc95128083edc49b405fa81c776a4af0f45692733656535fc7ea32811a7"
+    },
+    "ncbi_limiter_shared_across_jobs": {
+      "client_scope": "one lazy sequential client per API runner",
+      "rate": 2.5,
+      "fake_clock_request_times": [
+        0.0,
+        0.4
+      ],
+      "network_in_regression_test": false
+    }
+  },
+  "requests": [
+    {
+      "request_id": "1c7a1ab1bd404cecb7d7109a9e56afdf",
+      "job_status": "succeeded",
+      "pipeline_status": "complete",
+      "answer_status": "partial",
+      "answer_style": "source-findings",
+      "generate": true,
+      "request_seconds": 18.737280125002144,
+      "runtime_load_count": 1,
+      "runtime_closed": true,
+      "fresh_search_complete": true,
+      "fetched_articles": 10,
+      "passage_cache": {
+        "window_rows": 14,
+        "unique_inputs": 14,
+        "cache_hit_inputs": 14,
+        "encoded_inputs": 0,
+        "encoder_loads": 0,
+        "cache_lookup_seconds": 0.0030594579948228784,
+        "model_constructor_seconds": 0.0,
+        "encode_seconds": 0.0,
+        "cache_write_seconds": 0.0,
+        "artifact_write_seconds": 0.0008300420013256371
+      },
+      "run_sha256": "a42e73989d38b241c7fd90b8e017e6bf5beb365aadb17c73a649d4f2fd1498a3",
+      "public_response_sha256": "6c41b8ddef7fd83b9e610ce6c2a86b0e1ce2690c4c1cf47efff71e7bc8944767"
+    },
+    {
+      "request_id": "026fc3c544a8450cbfad1597a3f3e984",
+      "job_status": "succeeded",
+      "pipeline_status": "complete",
+      "answer_status": "not_requested",
+      "answer_style": "draft",
+      "generate": false,
+      "request_seconds": 2.415824750001775,
+      "runtime_load_count": 0,
+      "runtime_closed": null,
+      "fresh_search_complete": true,
+      "fetched_articles": 10,
+      "passage_cache": {
+        "window_rows": 14,
+        "unique_inputs": 14,
+        "cache_hit_inputs": 14,
+        "encoded_inputs": 0,
+        "encoder_loads": 0,
+        "cache_lookup_seconds": 0.004745416998048313,
+        "model_constructor_seconds": 0.0,
+        "encode_seconds": 0.0,
+        "cache_write_seconds": 0.0,
+        "artifact_write_seconds": 0.0011039590026484802
+      },
+      "run_sha256": "59e4825a827665c03a49c927ddfb3ab5ff4f9bd88b23374b81085ee3259cbdeb",
+      "public_response_sha256": "9a722f0d63120720c66a41962c345a05e61055b84841b41d500e4d8e14c28c9e"
+    }
+  ],
+  "measurement_scope": "Two fresh PubMed requests, both using warm passage cache; one with generation and one search-only. This single smoke run is not a latency SLA or answer-quality assessment. POST acceptance time is distinct from total processing time.",
+  "initial_smoke_oracle_correction": {
+    "first_pipeline_job": "succeeded",
+    "first_controller": "failed because it treated a normal persistent Python resource-tracker as an unclosed model worker",
+    "product_fix_required": false,
+    "corrected_check": "Identify the native MLX process, observe its PID during inference, confirm it is reaped before the job finishes; idle Python resource-tracker is separate",
+    "first_artifacts": "results/api-smoke-20261113",
+    "final_artifacts": "results/api-smoke-20261113-v3"
+  },
+  "service_contract": {
+    "max_active_jobs": 1,
+    "queue": false,
+    "default_answer_style": "draft",
+    "experimental_style": "source-findings",
+    "disconnect_cancels_job": false,
+    "shutdown": "Stop admission, wait for active pipeline cleanup, then close service",
+    "cleanup_failure": "Mark unavailable and reject new jobs",
+    "health_loads_models": false,
+    "completed_job_persistence": true,
+    "abrupt_restart_resumes_jobs": false,
+    "pubmed_rate_limiter_scope": "shared across sequential jobs of one runner; not a shared ML runtime"
+  },
+  "raw_sources_outputs_and_logs_committed": false,
+  "origin": "assistant",
+  "human_authored": false
+}

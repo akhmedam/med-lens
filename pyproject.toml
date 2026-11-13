@@ -10,6 +10,8 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
+api = ["fastapi==0.162.5", "uvicorn==0.54.0"]
+test-api = ["httpx==0.28.1"]
 reranking = ["torch==2.14.1", "transformers==5.20.1"]
 embeddings = ["torch==2.14.1", "transformers==5.20.1", "numpy==2.4.6"]
 tokenization = ["transformers==5.20.1"]
@@ -21,6 +23,9 @@ inference = [
     "kernels==0.17.2",
     "psutil==7.2.2",
 ]
+
+[project.scripts]
+medlens-api = "medlens.api_server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
