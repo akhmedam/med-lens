@@ -32,12 +32,18 @@ On 2026-11-12 the user deferred merging and prioritized quality repair before th
 API. The [scoped-findings experiment](biomedical-quality-improvement.md) adds an
 explicit opt-in source-quotation mode with three usable development answers;
 current draft/review defaults are unchanged. Selection omissions and unreliable
-semantic relation judgments remain open. API work is paused behind this quality
-repair; the remaining schedule below is contingent on accepting the repair and
-does not imply that the next delivery stage has started.
+semantic relation judgments remain open. API work was paused behind this quality
+repair until that change was reviewed. Its unresolved semantic issues remain
+release constraints.
+
+The quality-repair PR was subsequently merged. On 2026-11-13 the next delivery
+stage implemented the [local asynchronous API](local-api.md), with one active
+job, persisted progress/results, explicit errors and verified runtime cleanup.
+The API exposes the existing experimental workflow; remaining semantic-quality
+issues and independent-human gates remain release constraints.
 
 The schedule continues the historical numbering through development days 26–31.
-The assessment on day 26 is complete; days 27–31 remain.
+The assessment on day 26 and API implementation on day 27 are complete; days 28–31 remain.
 It is a planning estimate, not a readiness guarantee. The quality-assessment stage
 is time-boxed to one day; substantial defects found there become explicit repair
 work rather than silently extending evaluation. Material unresolved support
@@ -72,7 +78,7 @@ They are working sessions, not calendar deadlines.
 | Working day | Work | Deliverable |
 | --- | --- | --- |
 | 26 | Assess quality on the six frozen broader-topic development questions within one day. Completed 2026-11-12. | [Exploratory AI assessment](biomedical-quality.md): Dense nDCG@10 0.7888 versus PubMed 0.5376 (5 defined cases); two partial answers, four requiring correction. Fixed-source replay 33.87–38.79 s; separate query-override live request 44.75 s. Human-reference gates remain unsatisfied; semantic-support defects are explicit release blockers. |
-| 27 | After the quality repair is accepted, add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. | The existing live PubMed → BGE → Qwen3.5-4B/MLX pipeline is callable through an API on the MVP platform. |
+| 27 | Add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. Completed 2026-11-13. | [Local asynchronous API](local-api.md): one live job, progress/results, explicit busy/error/abstention states, graceful cleanup; fresh PubMed/Qwen4B HTTP smoke verified. |
 | 28 | Build the interactive CLI: question input, progress, ranked articles, evidence, answers/citations, errors and optional report export. | A usable terminal workflow on macOS/Apple Silicon. |
 | 29 | Run final checks on the untouched held-out questions, unsupported requests, empty evidence, upstream failures and repeated requests. Check latency and memory. | A final validation report with reference coverage and unresolved defects disclosed; no tuning against held-out results. |
 | 30 | Remove obsolete implementations and unused dependencies after the comparisons; complete required tests/CI, README, setup instructions and limitations. | One maintained MVP pipeline with a documented setup and traceable selection. |

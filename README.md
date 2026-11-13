@@ -82,8 +82,8 @@ rank order; the pilot has no independent relevance labels, so abstract retrieval
 remains primary.
 
 The accepted [development plan](docs/development-plan.md) records the completed
-broader-topic exploratory assessment and remaining API, interactive CLI and release
-work. The MVP platform is macOS on Apple Silicon; portability is deferred.
+broader-topic exploratory assessment, quality repair and local API. Interactive
+CLI and release work remain. The MVP platform is macOS on Apple Silicon; portability is deferred.
 
 ## Moving to another Mac
 
@@ -159,6 +159,23 @@ For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
 directories; pass `--generate` and omit `--rerank` for the same answer pipeline.
 See the [local request guide](docs/local-requests.md) and
 [shared-corpus guide](docs/shared-corpus.md).
+
+## Local API
+
+The [local research API](docs/local-api.md) accepts a job immediately and exposes
+progress and structured results over HTTP. It runs one live PubMed/BGE/Qwen4B
+job at a time, retains answer verification/abstention statuses, and waits for model
+cleanup during shutdown. The generation default remains unchanged.
+
+```sh
+python -m pip install -r requirements-api.lock
+python -m pip install --no-deps -e .
+medlens-api
+```
+
+Submit JSON to `POST http://127.0.0.1:8000/v1/requests` and poll the returned
+`links.self`; `GET /health` remains available during processing. See the
+[API guide](docs/local-api.md) for the request contract, examples and measured limits.
 
 ## Download papers
 
