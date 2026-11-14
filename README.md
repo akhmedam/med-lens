@@ -82,8 +82,8 @@ rank order; the pilot has no independent relevance labels, so abstract retrieval
 remains primary.
 
 The accepted [development plan](docs/development-plan.md) records the completed
-broader-topic exploratory assessment, quality repair and local API. Interactive
-CLI and release work remain. The MVP platform is macOS on Apple Silicon; portability is deferred.
+broader-topic exploratory assessment, quality repair, local API and interactive
+CLI. Final validation and release work remain. The MVP platform is macOS on Apple Silicon; portability is deferred.
 
 ## Moving to another Mac
 
@@ -159,6 +159,21 @@ For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
 directories; pass `--generate` and omit `--rerank` for the same answer pipeline.
 See the [local request guide](docs/local-requests.md) and
 [shared-corpus guide](docs/shared-corpus.md).
+
+## Interactive CLI
+
+The [interactive CLI](docs/interactive-cli.md) provides a plain-text session for
+questions, progress, cited answers, ranked articles and optional public reports.
+It uses the existing local workflow without a separate HTTP server.
+
+```sh
+.venv/bin/python -m pip install --no-deps -e .
+.venv/bin/medlens
+```
+
+Use `/help`, `/evidence`, `/export [PATH]` and `/quit`. Search settings are normal
+startup flags; `medlens --help` lists them. Generation defaults and answer-quality
+limits are unchanged.
 
 ## Local API
 
