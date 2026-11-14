@@ -42,15 +42,21 @@ job, persisted progress/results, explicit errors and verified runtime cleanup.
 The API exposes the existing experimental workflow; remaining semantic-quality
 issues and independent-human gates remain release constraints.
 
+On 2026-11-14 the [interactive CLI](interactive-cli.md) added a plain-text question
+loop, stage progress, cited results, evidence display and public HTML/JSON export.
+It reuses the same local service and model policy without an HTTP server or a new
+CLI dependency. Real input/export and graceful Ctrl+C checks passed; final
+held-out validation remains a separate stage.
+
 The schedule continues the historical numbering through development days 26–31.
-The assessment on day 26 and API implementation on day 27 are complete; days 28–31 remain.
+The assessment on day 26, API on day 27 and interactive CLI on day 28 are complete; days 29–31 remain.
 It is a planning estimate, not a readiness guarantee. The quality-assessment stage
 is time-boxed to one day; substantial defects found there become explicit repair
 work rather than silently extending evaluation. Material unresolved support
 errors can delay release. The earlier Air recovery, live-search, PMC and ranking
 records remain useful evidence within their documented limits.
 
-The primary user interface will be an interactive command-line application.
+The primary user interface is a plain-text interactive command-line application.
 HTML reports remain an optional export. The API is a separate programmatic
 interface; a web UI is outside this release plan.
 
@@ -79,7 +85,7 @@ They are working sessions, not calendar deadlines.
 | --- | --- | --- |
 | 26 | Assess quality on the six frozen broader-topic development questions within one day. Completed 2026-11-12. | [Exploratory AI assessment](biomedical-quality.md): Dense nDCG@10 0.7888 versus PubMed 0.5376 (5 defined cases); two partial answers, four requiring correction. Fixed-source replay 33.87–38.79 s; separate query-override live request 44.75 s. Human-reference gates remain unsatisfied; semantic-support defects are explicit release blockers. |
 | 27 | Add a minimal programmatic API with request parameters, structured results, visible errors and model lifecycle management. Completed 2026-11-13. | [Local asynchronous API](local-api.md): one live job, progress/results, explicit busy/error/abstention states, graceful cleanup; fresh PubMed/Qwen4B HTTP smoke verified. |
-| 28 | Build the interactive CLI: question input, progress, ranked articles, evidence, answers/citations, errors and optional report export. | A usable terminal workflow on macOS/Apple Silicon. |
+| 28 | Build the interactive CLI: question input, progress, ranked articles, evidence, answers/citations, errors and optional report export. Completed 2026-11-14. | [Plain-text interactive CLI](interactive-cli.md): one command, visible statuses/citations, public HTML/JSON export and verified graceful shutdown on macOS/Apple Silicon. |
 | 29 | Run final checks on the untouched held-out questions, unsupported requests, empty evidence, upstream failures and repeated requests. Check latency and memory. | A final validation report with reference coverage and unresolved defects disclosed; no tuning against held-out results. |
 | 30 | Remove obsolete implementations and unused dependencies after the comparisons; complete required tests/CI, README, setup instructions and limitations. | One maintained MVP pipeline with a documented setup and traceable selection. |
 | 31 | Follow setup from a clean checkout on Apple Silicon; verify model downloads and an end-to-end example; prepare the release artifacts. | A reproducible portfolio v1.0 release candidate, released only when the release conditions below are met. |
