@@ -21,7 +21,7 @@ class Request:
     limit: int = 100
     top_k: int = 10
     generate: bool = True
-    answer_style: str = "draft"
+    answer_style: str = "source-findings"
 
 
 class BackendTests(unittest.TestCase):

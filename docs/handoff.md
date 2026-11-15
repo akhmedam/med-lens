@@ -1,5 +1,13 @@
 # Continue on the MacBook Air M3
 
+> Historical Day 19 transfer procedure, retained with its original bundle hashes,
+> commands and measurements. It is not the current setup or model selection.
+> The described archive was subsequently lost; see [recovery history](recovery-without-bundle.md).
+> For a new installation use [README setup](../README.md#setup), the
+> [supported MVP](mvp.md) and [interactive CLI](interactive-cli.md). Native 4B on
+> the Air and the CLI/API have since been exercised; the historical 9B/future-work
+> statements below describe the original handoff snapshot.
+
 Target: macOS arm64, M3, 24 GiB unified memory. Python 3.11. The source machine is
 an M3 Pro with 36 GiB; Qwen inference on the Air has not been validated.
 

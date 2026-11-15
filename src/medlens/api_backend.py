@@ -11,6 +11,8 @@ import os
 from pathlib import Path
 from types import SimpleNamespace
 
+from .mvp import ANSWER_MODEL, INFERENCE_ENGINE, EMBEDDING_DEVICE
+
 
 def _load_pipeline():
     """Import the existing implementations only when a queued job starts."""
@@ -80,10 +82,10 @@ def make_local_runner(root, cache_root):
             os.environ.setdefault("HF_HOME", str(root / ".cache/huggingface"))
             os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"] = "1"
             pipeline = _load_pipeline()
-            make_runtime = pipeline.runtime_factory("mlx", model="4b", root=root)
+            make_runtime = pipeline.runtime_factory(INFERENCE_ENGINE, model=ANSWER_MODEL, root=root)
             model_dir = root / ".cache/models/bge-base-en-v1.5"
             tokenizer_dir = root / ".cache/tokenizers/bge-base-en-v1.5"
-            policy = pipeline.local_encoder_policy(model_dir, device="mps")
+            policy = pipeline.local_encoder_policy(model_dir, device=EMBEDDING_DEVICE)
             if client is None:
                 client = pipeline.PubMedClient()
         except Exception as exc:
@@ -101,8 +103,8 @@ def make_local_runner(root, cache_root):
         return pipeline.run_live_question(request.question, output, cache_root,
             tokenizer_loader=lambda: pipeline.load_tokenizer(tokenizer_dir),
             encoder_info=policy,
-            encoder_factory=lambda: pipeline.BGEEncoder(model_dir, tokenizer_dir, device="mps"),
-            answer_tokenizer_loader=lambda: pipeline.load_answer_tokenizer(root, "4b"),
+            encoder_factory=lambda: pipeline.BGEEncoder(model_dir, tokenizer_dir, device=EMBEDDING_DEVICE),
+            answer_tokenizer_loader=lambda: pipeline.load_answer_tokenizer(root, ANSWER_MODEL),
             runtime_factory=make_runtime, client=client, limit=request.limit, pubmed_query=request.pubmed_query,
             generate=request.generate, top_k=request.top_k, answer_style=request.answer_style,
             progress=progress, release_accelerator=_release_mps)

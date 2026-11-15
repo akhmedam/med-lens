@@ -1,5 +1,12 @@
 # Pipeline decision: Dense and Qwen9B
 
+> Historical retrieval/model comparison and original 9B decision. All tables,
+> timings and source scopes below retain their original meaning. The current
+> supported application is [BGE → native Qwen4B source findings](mvp.md), selected
+> in [ADR 0007](adr/0007-unified-mvp-policy.md); current setup and primary CLI are
+> documented in the [README](../README.md). Earlier future-work/day references
+> below are historical rather than the current remaining schedule.
+
 Status: accepted by the user on 2026-11-05: **Dense → evidence context →
 Qwen3.5-9B answer generation and support review**, with no additional reranker.
 Generation is required in the primary product workflow; search-only is diagnostic.

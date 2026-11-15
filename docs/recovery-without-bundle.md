@@ -1,5 +1,11 @@
 # Recovery without the Day 19 bundle
 
+> Historical recovery/replay workflow for the lost pilot and original research
+> assets. It does not select the current application or require those assets for
+> MVP operation. Use [README setup](../README.md#setup) and the
+> [supported MVP](mvp.md) for BGE plus native Qwen4B. The explicit research asset
+> profile below includes the old 9B, MedCPT and Metal-kernel payloads.
+
 The original archive parts and old Mac are unavailable. Public pinned models can
 be downloaded exactly; live PubMed searches produce a **new corpus**, not a replay
 of the lost pilot. Keep the frozen benchmark profiles and historical reports.
@@ -14,7 +20,7 @@ python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements-macos-arm64-day19.lock
 .venv/bin/python -m pip install --no-deps -e .
 .venv/bin/python -m pip check
-.venv/bin/python scripts/prepare_models.py --download \
+.venv/bin/python scripts/prepare_models.py --profile research --download \
   --output results/recovery/setup-assets.json
 ```
 

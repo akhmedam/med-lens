@@ -15,6 +15,7 @@ from .api_backend import make_local_runner
 from .api_contract import RequestValidationError, SearchRequest
 from .api_service import JobService, ServiceBusy, ServiceUnavailable, UnknownRequest
 from .cli_output import render_evidence, render_result, safe_text
+from .mvp import ANSWER_STYLE, DEFAULT_CANDIDATE_LIMIT, DEFAULT_TOP_K
 
 
 HELP = """Введите биомедицинский вопрос на английском и нажмите Enter.
@@ -34,7 +35,7 @@ STAGES = {
     'retrieval-complete': 'Статьи ранжированы', 'context': 'Отбор доказательств',
     'context-complete': 'Доказательства отобраны', 'reranking': 'Переранжирование',
     'reranking-complete': 'Переранжирование завершено',
-    'answer': 'Подготовка ответа и проверка цитат',
+    'answer': 'Отбор цитат из источников',
     'complete': 'Завершение задания и освобождение ресурсов',
     'runtime-cleanup': 'Освобождение модели', 'unknown': 'Выполнение запроса',
 }
@@ -101,9 +102,9 @@ def run_session(service, options, *, question=None, read=None, output=None,
     try:
         if not one_shot:
             say('MedLens — поиск биомедицинской литературы. /help — справка; /quit — выход.')
-            say('Вопросы — на английском. Ответы исследовательские; независимая проверка не выполнена.')
+            say('Вопросы — на английском. Подборка цитат не прошла независимую научную проверку.')
             say(f"До {options['limit']} статей; top-{options['top_k']}; "
-                + ('только поиск.' if not options['generate'] else f"режим {options['answer_style']}."))
+                + ('только поиск.' if not options['generate'] else 'подборка цитат из источников.'))
         while True:
             if not one_shot:
                 try:
@@ -191,13 +192,11 @@ def run_session(service, options, *, question=None, read=None, output=None,
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description='Простой интерактивный поиск MedLens на macOS/Apple Silicon.')
+    parser = argparse.ArgumentParser(description='Поиск MedLens и подборка цитат на macOS/Apple Silicon.')
     parser.add_argument('--question', help='Один вопрос на английском; затем выход вместо диалога')
-    parser.add_argument('--limit', type=int, default=100, help='Кандидатов PubMed: 1–300 (100)')
-    parser.add_argument('--top-k', type=int, default=10, help='Статей в выдаче: 1–10 (10)')
+    parser.add_argument('--limit', type=int, default=DEFAULT_CANDIDATE_LIMIT, help='Кандидатов PubMed: 1–300 (100)')
+    parser.add_argument('--top-k', type=int, default=DEFAULT_TOP_K, help='Статей в выдаче: 1–10 (10)')
     parser.add_argument('--search-only', action='store_true', help='Поиск и фрагменты без генерации ответа')
-    parser.add_argument('--answer-style', choices=('draft', 'source-findings'), default='draft',
-                        help='Режим ответа; source-findings — экспериментальный')
     parser.add_argument('--pubmed-query', help='Точное поисковое выражение PubMed для этой сессии')
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[2], help='Корень проекта с ресурсами')
     parser.add_argument('--storage-dir', type=Path, help='Хранилище запросов; ROOT/results/cli-requests')
@@ -208,7 +207,7 @@ def main(argv=None):
     logging.getLogger('torch.distributed.elastic.multiprocessing.redirects').addFilter(
         lambda record: record.levelno >= logging.ERROR)
     options = {'limit': args.limit, 'top_k': args.top_k, 'generate': not args.search_only,
-               'answer_style': args.answer_style, 'pubmed_query': args.pubmed_query}
+               'answer_style': ANSWER_STYLE, 'pubmed_query': args.pubmed_query}
     # Validate flags before starting the REPL, even when no question is supplied.
     try:
         SearchRequest.from_payload({'question': args.question if args.question is not None else

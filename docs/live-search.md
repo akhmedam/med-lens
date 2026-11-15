@@ -1,101 +1,107 @@
-# Live PubMed search-to-answer requests
+# Live PubMed acquisition
 
-`scripts/ask_live.py` performs a fresh PubMed search and fetches current abstract
-records for each request, then runs the selected Dense → evidence → Qwen draft
-and support-review pipeline. It does not require a prebuilt local collection.
-The current scope remains English questions about depression, anxiety and panic;
-broader biomedical evaluation follows the user's independent manual annotation.
-Prepare the pinned default 4B assets with the [native MLX guide](native-mlx.md)
-and the main environment/BGE assets with the [recovery guide](recovery-without-bundle.md).
-Restoring an old source collection is not required for this mode.
+The [supported MVP](mvp.md) performs a fresh bounded PubMed title/abstract search
+for each English biomedical research question. The primary command is `medlens`;
+no prepared local collection is required. The optional local API uses the same
+acquisition and source-findings policy.
 
 ```sh
-.venv/bin/python scripts/ask_live.py \
-  --query "Does exercise reduce depressive symptoms in adults with depression?" \
-  --limit 100 --output-dir results/requests/live-exercise-example
-open results/requests/live-exercise-example/report.html
+.venv/bin/medlens --question 'How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?' --limit 100
 ```
 
-Generation is enabled by default. `--search-only` runs diagnostic retrieval and
-source selection without Qwen inference. `--top-k` accepts 1–10 articles. The live
-candidate cap is 1–300; the initial default of 100 is a bounded runtime choice,
-not a relevance optimum. It needs reassessment after the user's new labels exist.
-The existing `ask.py` continues to accept verified local collections for replay
-and experiments. PMC full text remains a separate opt-in experiment.
+Use [README setup](../README.md#setup) for the main BGE environment and isolated
+native Qwen4B runtime. Neither original 9B weights nor a historical source bundle
+is required. The default is 100 fresh candidates and ten Dense-ranked articles;
+request bounds remain 1–300 and 1–10. These are bounded runtime settings, not a
+claim of exhaustive retrieval or an optimal relevance cutoff. `--search-only`
+returns articles and fragments without Qwen generation. PMC full text and larger
+prepared collections remain separate research work.
 
 ## Question and PubMed query
 
-The original question serves BGE and Qwen. A separate, deterministic query planner
-extracts supported condition and intervention concepts for PubMed Best Match:
+The original question serves BGE ranking and Qwen source selection. A separate
+deterministic lexical planner prepares PubMed candidate-search wording:
 
-- Conditions: depression, generalized anxiety/GAD, social anxiety and panic, with
-  a generic anxiety fallback.
-- Intervention terms: CBT, antidepressants/SSRIs, exercise, mindfulness/MBCT and
-  exposure. Detected interventions form an OR group so comparison questions can
-  retrieve evidence mentioning either intervention.
-- Age, severity, outcomes and delivery qualifiers remain in the original question.
-  They are not automatically added as retrieval filters. This is broad candidate
-  collection followed by semantic ranking and source review, not a comprehensive
-  clinical query compiler or a validated topic classifier.
+- It removes only recorded generic English question/predicate scaffolding,
+  reference-role scaffolding and conservative terminal outcome-follow-up wording.
+- Quoted terms, acronym-like tokens, identifier punctuation, negation and
+  ambiguous timing relations remain protected. The original question is never
+  replaced with the shortened candidate expression for ranking or findings.
+- No biomedical concept/disease dictionary, topic allowlist, LLM query compiler,
+  language classifier or automatic translation is used. English biomedical
+  questions are the supported input scope; accepting text is not language/topic
+  validation.
 
-Use `--pubmed-query '<PubMed expression>'` for concepts the fixed vocabulary does
-not capture. The submitted expression is combined with the condition detected in
-the question and is recorded verbatim. The report displays the submitted query,
-PubMed's translation, total reported matches, fetched count, limit and timestamps.
-There is no claim to fetch every matching paper. Bad syntax, upstream failures or
-incomplete responses fail the request with its saved source checkpoint. The
-existing client sends requests sequentially at 2.5/s, with a 20 s socket timeout
-and at most three attempts. Its limiter is per client, not an IP-wide coordinator;
-concurrent request orchestration belongs to the later API lifecycle work.
+`--pubmed-query 'EXPRESSION'` submits the exact expression unchanged. No detected
+condition, topic restriction or additional filter is appended. The public JSON
+records the submitted expression and transformations, PubMed's query translation,
+reported total matches, actual fetched count, candidate cap and timestamps.
+Nonempty candidates do not establish relevance or search completeness.
+
+Bad input, upstream failure and incomplete downloads are explicit failures;
+no older collection is silently substituted. The PubMed client is sequential at
+2.5 requests/second, with a 20-second socket timeout and at most three attempts.
+One CLI/API service reuses its lazy client across sequential jobs. Its limiter
+is per client rather than a global coordinator across separate processes.
 
 ## Freshness and local artifacts
 
-Each fresh request owns a new directory:
+The CLI stores jobs under `results/cli-requests`; the API uses
+`results/api-requests`. Each accepted request owns a new ID directory:
 
 ```text
-request/
-  run.json, report.html
-  snapshot/     # raw current ESearch and EFetch responses and manifest
-  dataset/      # verified current parsed records with metadata/provenance
-  windows/      # native title + section windows and exact offsets
-  embeddings/   # current vector rows mapped to current windows
+REQUEST_ID/
+  job.json           # public job envelope
+  run/
+    run.json, report.html
+    snapshot/        # raw ESearch/EFetch responses and manifest
+    dataset/         # parsed current records, versions and provenance
+    windows/         # title/section windows and exact offsets
+    embeddings/      # vectors mapped to current windows
 ```
 
-PubMed is contacted again even when all passage vectors exist. The cache stores
-only vectors keyed by exact unpadded token inputs and the pinned encoder/tokenizer
-policy; new metadata/provenance create new window mappings without unnecessary
-inference. Changed inputs cause new encoding. Corrupt/conflicting cache entries
-fail closed, and request failure never silently substitutes an older collection.
-Output and cache roots must be disjoint. Existing request directories are refused.
-Snapshots, source text, vectors and raw model outputs stay ignored by Git.
-The saved dataset/windows/embeddings directories can be passed to the existing
-offline `ask.py` to keep evidence fixed for later manual annotation and evaluation.
+PubMed is contacted even when all passage vectors are cached. Cache keys bind
+exact unpadded token inputs to the pinned encoder/tokenizer policy. New metadata
+can produce new mappings while unchanged inputs reuse vectors. Changed inputs
+are encoded; corrupt/conflicting cache entries fail closed. Output and cache
+roots must be disjoint. Source texts, vectors, weights and raw outputs stay local.
 
-The default passage cache is `.cache/embeddings/bge-input-v1`. BGE remains pinned
-to `BAAI/bge-base-en-v1.5` with normalized float32 CLS vectors, eager attention and
-batch size 16 on MPS. On a cold vector cache, passage encoding and query encoding
-currently use separate sequential BGE instances. A request whose passage inputs are all cached skips the passage
-model entirely; fresh result changes can still require some new vectors. BGE is collected and unused MPS cache is released before loading
-Qwen. One Qwen instance generates and reviews the answer. The current default is
-native Qwen3.5-4B with the compact `cited-answer-v7` draft and named six-field
-`claim-support-v4` review using `axes-first-v1`. Token budgets and exact citation
-checks remain bounded; model review does not establish factual support. See the
-[native MLX guide](native-mlx.md) and [development-default decision](adr/0005-qwen4b-development-default.md).
-Pass `--answer-model 9b` for native 9B or both `--answer-model 9b --engine transformers`
-for the original runtime; both comparisons retain the legacy v6 policy. Every
-profile records its exact precision and stop policy. The measurements below
-remain the historical Transformers/Metal baseline; current 4B integration
-observations are [recorded separately](experiments/qwen4b-default-integration.json).
+Public HTML/JSON export is explicit in the CLI. It does not copy private
+`run/report.html`, prompts, diagnostic exceptions or runtime paths. The saved
+source artifacts can feed the [offline research/replay wrapper](local-requests.md)
+when a fixed-source experiment is needed.
 
-Empty PubMed results complete with an explicit insufficient-evidence result and
-load no model weights. If all selected sources lack usable excerpts, the ordinary
-context stage can also abstain without Qwen. Upstream/model errors retain completed
-source/retrieval stages and identify the failed stage. Passing format/citation or
-same-model review gates does not establish semantic correctness.
+## Ranking and findings
 
-Exit codes follow the existing request CLI: 0 for a completed request including
-abstention, 1 for execution/source errors, 2 for a completed validation failure or
-argument error (inspect `run.json`), and 130 for interruption.
+BGE-base-en-v1.5 uses normalized float32 CLS vectors, eager attention and batch
+size 16 on MPS. Articles are ranked by maximum window cosine similarity. A fully
+cached passage phase skips its model load; the query still needs encoding. BGE
+is released before Qwen. No additional reranker is part of the application.
+
+The pinned native Qwen3.5-4B runtime selects study-context and finding quotation
+IDs. Exact source text, applicability cautions and original question scope remain
+visible. There is no free factual synthesis or same-model factual-review stage
+in this answer format. Nonempty outputs remain `partial`; identity checks do not
+prove semantic support or completeness. Empty candidates/evidence abstain
+explicitly without a Qwen call. Model failures retain completed source stages.
+
+## Research wrapper and historical evidence
+
+`scripts/ask_live.py` remains an explicit research wrapper with a fresh output
+directory and experimental model/backend choices. To reproduce the separate
+prose draft/review route, request it explicitly:
+
+```sh
+.venv/bin/python scripts/ask_live.py \
+  --query 'How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?' \
+  --answer-style draft --limit 100 --output-dir results/requests/research-draft-NEW
+```
+
+That route uses the current 4B compact v8/axes-first-v2 draft policy unless an
+explicit historical model comparison is requested. It is not an application
+answer-format switch. `--answer-model 9b`, Transformers and CPU BGE are research
+options outside MVP support. Frozen measurements below keep their original
+models, inputs and protocols; they are not updated with current defaults.
 
 ## Historical runtime measurements and verification
 

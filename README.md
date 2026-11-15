@@ -1,196 +1,136 @@
 # MedLens
 
-Experimental biomedical literature search over PubMed titles and abstracts.
+A local biomedical literature search tool for macOS on Apple Silicon.
 
-The primary workflow retrieves a bounded live PubMed candidate set, ranks its
-articles with Dense search, and prepares source-grounded research drafts. Historical
-experiments compare BM25, hybrid ranking, LLM reranking and full text. Drafts link
-back to exact source quotations. This is a literature search tool, not a diagnostic
-system.
+The supported application is one workflow: **fresh PubMed titles/abstracts →
+BGE Dense ranking → exact evidence → Qwen3.5-4B/MLX source-findings cards**.
+The primary interface is a simple terminal session. Cards contain source
+quotations and applicability cautions, not a generated factual synthesis.
+See the [MVP contract](docs/mvp.md) and [policy decision](docs/adr/0007-unified-mvp-policy.md).
 
 ## Status
 
-PubMed ingestion, verified snapshot replay, and structured XML parsing work.
-Search supports BM25, exact dense retrieval, and RRF. The recorded historical pilot uses
-`pilot-qrels-v2`: 198 of 200 query/article pairs are judged. Historical Qwen3.5-9B experiments
-rerank frozen top-10 lists through
-Transformers/MPS with 4-bit Metal linear layers. See the [historical pilot evaluation](docs/pilot-qrels-v2.md)
-for metrics and annotation provenance. Saved evidence contexts can feed
-experimental cited answer drafts with a separate model support review. These
-drafts require independent review; exact quotations do not prove claim support.
-A [live request](docs/live-search.md) now searches PubMed and downloads current
-abstracts for each question, reuses unchanged passage vectors, and runs Dense,
-source selection and Qwen generation/review. The user-selected development default
-is **Qwen3.5-4B in native MLX**, with question-driven `cited-answer-v8` draft
-instructions and named `axes-first-v2` support review using the six-field v4
-taxonomy. [Native inference](docs/native-mlx.md) runs in an isolated Apple Silicon
-environment. `--answer-model 9b` selects the explicit comparison; the
-Transformers/Metal comparison also requires `--engine transformers`.
-Local-collection replay remains available.
-The [expanded MedCPT comparison](docs/medcpt-evaluation.md) now uses 210 pairs
-(208 judged). Neither MedCPT mode improves pilot nDCG over Dense; the comparison
-remains provisional because two pairs are unjudged.
-The [M3 Pro cost comparison](docs/retrieval-cost.md) covers 10/20/30-article pools
-and MedCPT depths: cached Dense is fastest; direct MedCPT avoids passage-embedding
-construction for fresh windows. The primary chain is **Dense → exact evidence
-→ Qwen draft → same-model support review**. [ADR 0005](docs/adr/0005-qwen4b-development-default.md) records the new 4B
-development default; the original 9B choice remains historical in ADR 0003.
+The CLI and optional local HTTP API use the same pinned model, source-findings
+format and bounded search policy. Defaults are 100 PubMed candidates and ten
+ranked articles. Every question performs a fresh source search; unchanged
+passage inputs reuse cached vectors. There is no additional reranker or
+model/backend fallback.
 
-In the earlier 4B v7 / axes-first-v1 assessment, the user independently supplied
-blind human labels. Both reviewers failed the pilot
-safety gate: 4B admitted 3/5 human comparison-mismatched claims and 9B admitted
-4/5. Human answer usability was 5/6 for 4B and 4/6 for 9B, but the all-context
-4B usability gate still failed. Six related source pools cover only two
-independent questions. The development choice does not establish clinical or
-general biomedical equivalence; every generated answer remains a research draft
-requiring human review. These earlier labels do not assess the current broader
-biomedical v8 prompts.
+English biomedical questions are the supported scope. Language and topic are
+not classified, and inputs are not translated automatically. Nonempty search
+results do not prove relevance or exhaustive PubMed coverage.
 
-Broader English biomedical questions have a separate
-[development and annotation workflow](docs/newbroader-biomedical.md). Six frozen
-cross-topic cases cover cardiology, endocrinology, infection, neurology, a biological
-mechanism and pediatrics. The user subsequently requested separate AI annotation
-and a [source-bound exploratory quality assessment](docs/biomedical-quality.md).
-Dense outperformed PubMed on the judged pool, but the six answer assessments found
-two partial answers and four requiring correction. All new judgments are explicitly
-AI-origin, not independent human validation; historical genuine human labels and
-the blank human package are unchanged. [ADR 0006](docs/adr/0006-biomedical-scope-and-human-reference.md)
-retains the separate human-reference gates. No clinical-readiness claim follows.
-
-An [experimental scoped-findings mode](docs/biomedical-quality-improvement.md) now
-selects exact source quotations together with study context and explicit scope
-exclusions. On the same six tuned development cases, separate AI review found
-three usable answers, one partial, one unnecessary abstention and one appropriate
-abstention. The existing draft/review default is unchanged. A faster follow-up
-variant admitted a wrong-target finding and was rejected; neither variant
-establishes independent human or clinical validation.
-
-The [historical semantic checks](docs/day21-semantic-reliability.md) document
-remaining source-support errors. The seven-axis v5 candidate regressed on
-controlled development cases and remains opt-in through the legacy route. The
-4B default uses the v4 taxonomy with named consistency constraints. Neither
-reviewer establishes clinical correctness.
-
-The [shared local corpus](docs/shared-corpus.md) pools the rebuilt topic collections
-into 277 unique articles and 850 windows, with an immutable embedding cache.
-Measured preparation and search costs cover the start of the Small → Medium
-transition; retrieval and clinical-answer quality are not revalidated by pooling.
-
-A six-article [PMC full-text feasibility study](docs/pmc-fulltext.md) compares
-paired abstract and narrative indexes. Full text adds source coverage and changes
-rank order; the pilot has no independent relevance labels, so abstract retrieval
-remains primary.
-
-The accepted [development plan](docs/development-plan.md) records the completed
-broader-topic exploratory assessment, quality repair, local API and interactive
-CLI. Final validation and release work remain. The MVP platform is macOS on Apple Silicon; portability is deferred.
-
-## Moving to another Mac
-
-Follow the [handoff guide](docs/handoff.md) to clone the code, restore the checked
-local-artifact bundle and rebuild Python 3.11 dependencies. Pilot labels and
-provenance are tracked; model weights, primary texts, vectors and raw runs are
-transferred separately. The [pipeline decision](docs/pipeline-options.md) is
-accepted for its retrieval/generation chain; the current model default is 4B
-under [ADR 0005](docs/adr/0005-qwen4b-development-default.md). If the archive is lost,
-follow [recovery without a bundle](docs/recovery-without-bundle.md). Pinned assets
-and a separate 277-paper/909-window corpus were recovered on the Air M3, 24 GiB;
-see the [Air recovery record](docs/experiments/air-recovery.json) for measured
-runtime scope and format failures. Historical raw experiments remain lost.
+Exact source quotations are checked, but their scientific support and answer
+completeness are not independently verified. Nonempty source-findings results
+remain `partial`. Known selection/semantic limitations and missing independent
+human references remain release conditions, as documented in the
+[development assessment](docs/biomedical-quality.md),
+[source-findings assessment](docs/biomedical-quality-improvement.md) and
+[development plan](docs/development-plan.md) and [final validation](docs/final-validation.md). Historical human labels and later
+AI annotations have separate provenance; neither is silently transferred to new
+questions or source versions.
 
 ## Setup
 
-Python 3.11:
+Use Python 3.11 on macOS/Apple Silicon. The main environment and isolated MLX
+runtime have separate locks:
 
 ```sh
 python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install -e .
-```
-
-PubMed ingestion uses the standard library. For the local model on Apple Silicon:
-
-```sh
-python -m pip install -r requirements-macos-arm64-day19.lock
-```
-
-The request CLIs default to the native 4B profile. Prepare the isolated runtime
-and pinned assets:
-
-```sh
-python -m venv .cache/venvs/mlx
+.venv/bin/python -m pip install -r requirements-mvp-macos-arm64.lock
+.venv/bin/python -m pip install --no-deps --no-build-isolation -e .
+.venv/bin/python -m venv .cache/venvs/mlx
 .cache/venvs/mlx/bin/python -m pip install -r requirements-mlx-macos-arm64.lock
-python scripts/prepare_mlx.py --download
+.venv/bin/python scripts/prepare_models.py --profile mvp --download --output results/setup-bge.json
+.venv/bin/python scripts/prepare_mlx.py --download
 ```
 
-This setup needs no 9B weights. See the [native runtime guide](docs/native-mlx.md)
-for local asset reuse, provenance, and `prepare_mlx.py --model 9b` conversion.
-Use `--answer-model 9b` for native 9B, or add `--engine transformers` for the
-original 9B Metal backend. There is no automatic model/backend fallback.
+The MVP asset profile prepares BGE and its saved tokenizer. `prepare_mlx.py`
+prepares the pinned native Qwen4B model and official tokenizer. No original 9B,
+MedCPT or Metal-kernel asset is required. Existing conflicting assets fail
+verification rather than being overwritten. Use a fresh `--output` report name
+when repeating asset preparation. See [native assets and provenance](docs/native-mlx.md).
+
+The historical Day 1/Day 19 environment locks and the full research asset profile
+are retained for experiments; they are not the supported application's setup.
 
 ## Ask a question
 
-Run the selected live PubMed → Dense → exact evidence → Qwen4B draft/review workflow:
-
 ```sh
-python scripts/ask_live.py \
-  --query "How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?" \
-  --limit 100 --output-dir results/requests/live-biomedical-example
-open results/requests/live-biomedical-example/report.html
-```
-
-Generation is enabled by default; `--search-only` runs diagnostic retrieval and
-excerpts. Every request searches and fetches PubMed anew; the embedding cache
-reuses unchanged inputs. The current development scope is English biomedical
-questions; the exploratory AI assessment does not replace separate independent
-human validation. PubMed candidate collection is bounded (1–300, default 100),
-and the exact submitted query and PubMed translation are recorded in the report.
-This does not search every PubMed article semantically. See the
-[live request guide](docs/live-search.md) for query overrides, timing and limits,
-and the [broader-topic workflow](docs/newbroader-biomedical.md) for annotation gates.
-Use a fresh output directory for each run.
-
-Add `--answer-style source-findings` to try the experimental quotation mode.
-It shows study context and findings verbatim with applicability cautions; it does
-not generate a synthesis or claim a model factual-review step. The default remains
-`--answer-style draft`. See [measured results and limits](docs/biomedical-quality-improvement.md).
-
-For offline replay, `scripts/ask.py` still accepts dataset/window/embedding
-directories; pass `--generate` and omit `--rerank` for the same answer pipeline.
-See the [local request guide](docs/local-requests.md) and
-[shared-corpus guide](docs/shared-corpus.md).
-
-## Interactive CLI
-
-The [interactive CLI](docs/interactive-cli.md) provides a plain-text session for
-questions, progress, cited answers, ranked articles and optional public reports.
-It uses the existing local workflow without a separate HTTP server.
-
-```sh
-.venv/bin/python -m pip install --no-deps -e .
 .venv/bin/medlens
 ```
 
-Use `/help`, `/evidence`, `/export [PATH]` and `/quit`. Search settings are normal
-startup flags; `medlens --help` lists them. Generation defaults and answer-quality
-limits are unchanged.
+Enter a biomedical research question in English. The CLI shows stage messages,
+source findings with citations, and ranked PubMed articles. Commands are
+`/help`, `/evidence`, `/export [PATH]` and `/quit`.
+
+For one question instead of a session:
+
+```sh
+.venv/bin/medlens --question 'How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?'
+```
+
+`--search-only` returns articles and selected fragments without Qwen inference.
+`--limit` and `--top-k` are bounded search settings; `--pubmed-query` supplies an
+exact PubMed expression. The public CLI has no answer-style/model/backend switch.
+[CLI usage](docs/interactive-cli.md) covers export, errors and graceful Ctrl+C.
 
 ## Local API
 
-The [local research API](docs/local-api.md) accepts a job immediately and exposes
-progress and structured results over HTTP. It runs one live PubMed/BGE/Qwen4B
-job at a time, retains answer verification/abstention statuses, and waits for model
-cleanup during shutdown. The generation default remains unchanged.
+The optional API exposes the same policy on loopback HTTP, one job at a time:
 
 ```sh
-python -m pip install -r requirements-api.lock
-python -m pip install --no-deps -e .
-medlens-api
+.venv/bin/python -m pip install -r requirements-api.lock
+.venv/bin/python -m pip install --no-deps --no-build-isolation -e .
+.venv/bin/medlens-api
 ```
 
-Submit JSON to `POST http://127.0.0.1:8000/v1/requests` and poll the returned
-`links.self`; `GET /health` remains available during processing. See the
-[API guide](docs/local-api.md) for the request contract, examples and measured limits.
+Submit JSON to `POST http://127.0.0.1:8000/v1/requests`, then poll its returned
+`links.self`. `GET /health` remains responsive during processing. API
+`answer_style`, if provided, must be `source-findings`; `draft` returns 422.
+See the [request/result contract](docs/local-api.md).
+
+## Local artifacts and moving machines
+
+Git contains code, policies, compact reports and labeled evaluation artifacts.
+Model weights, source snapshots, vectors and raw outputs remain local. Back them
+up with the exact checkout/manifest; Git alone cannot restore them. A fresh
+PubMed download has new source identities and cannot reconstruct the lost
+historical pilot byte for byte.
+
+The [old handoff](docs/handoff.md) and [bundle-loss recovery](docs/recovery-without-bundle.md)
+pages preserve historical transfer/replay procedures. For a new MVP installation,
+use the setup above. [MVP scope and remaining work](docs/mvp.md#research-and-remaining-work)
+distinguish release gates from post-MVP portability, full text and scale work.
+
+## Checks
+
+The full offline regression suite also exercises historical retrieval tools.
+In the prepared development environment, install API/test dependencies and the
+pinned BM25 fixture dependency as well (BM25 is not an MVP runtime dependency):
+
+```sh
+.venv/bin/python -m pip install -r requirements-api.lock
+.venv/bin/python -m pip install bm25s==0.3.14
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+Functional checks, exact citations and successful model execution do not replace
+source-bound semantic assessment. Optional native-grammar checks use the
+separate MLX environment. See the [frozen final results](docs/final-validation.md)
+for current coverage, measured limits and unresolved release gates.
+
+## Research commands and historical benchmarks
+
+The commands below are research/replay tools. Their optional 9B, Transformers,
+MedCPT, BM25/RRF, reranking and prose-draft paths are outside the supported
+application. Research prose generation uses explicit `--answer-style draft` in
+`ask_live.py` or `ask.py --generate`; frozen older experiment entry points retain
+their original contracts. Their historical metrics do not describe the current
+source-findings application. Original measurements and provenance remain in the
+linked reports. Use a separate research environment with its recorded dependency
+lock; the minimal MVP lock does not install every historical experiment. The
+legacy `python` examples below assume that research environment is activated.
 
 ## Download papers
 

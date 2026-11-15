@@ -1,4 +1,4 @@
-"""Verify or download pinned public assets; never overwrite conflicting files."""
+"""Prepare pinned BGE assets for MVP; other model assets require --profile research."""
 
 import argparse
 import hashlib
@@ -63,12 +63,14 @@ def save_metadata(path, value):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--profile', choices=('mvp', 'research'), default='mvp',
+                        help='mvp: BGE model/tokenizer only; research: all historical assets')
     parser.add_argument('--download', action='store_true', help='Allow downloads of missing public assets')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error('Choose a fresh output path')
-    report = {'status': 'running', 'model_inference': False, 'models': []}
+    report = {'status': 'running', 'profile': args.profile, 'model_inference': False, 'models': []}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     def save():
         temp = args.output.with_suffix('.json.tmp')
@@ -78,6 +80,13 @@ def main(argv=None):
         pins = json.loads((ROOT/'configs/model-assets.json').read_bytes())
         if pins['schema_version'] != 1:
             raise ValueError('Unsupported asset pins')
+        if args.profile == 'mvp':
+            names = ('bge', 'bge_tokenizer')
+            if any(name not in pins['models'] for name in names):
+                raise ValueError('MVP requires pinned BGE model and tokenizer assets')
+            models = {name: pins['models'][name] for name in names}
+        else:
+            models = pins['models']
         if args.download:
             # The HTTP transport avoids the stalled Xet route seen during recovery.
             # It changes transfer only, not the model or inference runtime.
@@ -89,12 +98,12 @@ def main(argv=None):
                 if value is not None: request.headers['user-agent'] = value.rstrip()
             get_session().event_hooks['request'].append(trim)
         # Check every existing payload before starting any download.
-        missing = {name: inspect_files(ROOT, spec) for name, spec in pins['models'].items()}
-        kernel = pins.get('metal_kernel')
+        missing = {name: inspect_files(ROOT, spec) for name, spec in models.items()}
+        kernel = pins.get('metal_kernel') if args.profile == 'research' else None
         missing_kernel = inspect_files(ROOT, kernel) if kernel else []
         if (any(missing.values()) or missing_kernel) and not args.download:
             raise ValueError('Missing assets; rerun with --download: '+json.dumps({**missing, 'metal_kernel': missing_kernel}))
-        for name, spec in pins['models'].items():
+        for name, spec in models.items():
             directory = ROOT/spec['directory']
             if missing[name]:
                 if name == 'bge_tokenizer':

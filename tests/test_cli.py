@@ -19,7 +19,7 @@ from medlens.api_service import JobService
 
 QUESTION = 'Does fictional intervention A reduce outcome B?'
 OPTIONS = {'limit': 10, 'top_k': 3, 'generate': True,
-           'answer_style': 'draft', 'pubmed_query': None}
+           'answer_style': 'source-findings', 'pubmed_query': None}
 
 
 def complete(request, *, answer_status=None):
@@ -257,7 +257,7 @@ class CLISessionTests(unittest.TestCase):
 
 class CLIStartupTests(unittest.TestCase):
     def test_invalid_flags_and_overlapping_roots_do_not_create_service(self):
-        for args in [['--limit', '0'], ['--top-k', '11'], ['--pubmed-query', ''],
+        for args in [['--answer-style', 'draft'], ['--answer-style', 'source-findings'], ['--limit', '0'], ['--top-k', '11'], ['--pubmed-query', ''],
                      ['--question', 'Does?'], ['--storage-dir', '/tmp/cache', '--cache', '/tmp/cache']]:
             with self.subTest(args=args), patch.object(cli, 'JobService') as create, \
                  redirect_stderr(io.StringIO()):
@@ -270,7 +270,7 @@ class CLIStartupTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary, patch.object(cli, 'make_local_runner') as runner, \
              patch.object(cli, 'JobService') as create, patch.object(cli, 'run_session', return_value=0) as session:
             self.assertEqual(cli.main(['--root', temporary, '--limit', '8', '--top-k', '2',
-                                       '--search-only', '--answer-style', 'source-findings',
+                                       '--search-only',
                                        '--pubmed-query', 'fictional[Title]']), 0)
             root = Path(temporary).resolve()
             runner.assert_called_once_with(root, root / '.cache/embeddings/bge-input-v1')

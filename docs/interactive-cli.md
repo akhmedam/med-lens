@@ -1,50 +1,69 @@
 # Interactive CLI
 
-The primary MedLens interface is a plain-text terminal session: enter an English biomedical question, watch stage messages, then read the answer, citations and ranked articles. It runs the existing live PubMed → BGE → Qwen3.5-4B/MLX pipeline on macOS/Apple Silicon. No separate HTTP server, FastAPI installation or new CLI dependency is needed.
+The primary MedLens interface is a plain-text terminal session: enter an English
+biomedical question, watch stage messages, then read source findings, citations
+and ranked articles. It runs the [supported MVP](mvp.md) on macOS/Apple Silicon
+without an HTTP server, FastAPI installation or extra CLI dependency.
 
 ## Start
 
-Use the prepared project environment and model assets from [setup](../README.md#setup). Refresh the editable package to install the console entry point:
+Use [README setup](../README.md#setup), then run:
 
 ```sh
-.venv/bin/python -m pip install --no-deps -e .
 .venv/bin/medlens
 ```
 
-From a checkout, `.venv/bin/python scripts/medlens_cli.py` is equivalent. Help and an idle session do not load models. Search requires the existing local BGE and Qwen assets; missing dependencies or assets produce a visible setup failure.
+From a checkout, `.venv/bin/python scripts/medlens_cli.py` is equivalent. Help and
+an idle session do not load models. Accepted research jobs require the prepared
+BGE/Qwen assets; missing dependencies or assets produce an explicit setup error.
 
-The interface is Russian; questions must be in English. The existing planner does not classify language or topic and does not translate inputs. Source text, answer text and quotations remain in their original language. A session keeps the same search settings for each question. Each accepted question performs a fresh bounded PubMed search and can reuse unchanged passage vectors.
+The interface is Russian; supported questions are English biomedical research
+questions. Language and topic are not classified or translated. Source text and
+quotations remain in their original language. Each question searches PubMed
+anew and can reuse unchanged passage vectors.
 
 ```text
 Вопрос> How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?
 ```
 
-The CLI prints the request ID, progress when the stage changes, the execution and answer statuses, visible claims with citations, applicability cautions and ranked articles with PubMed links. It returns to `Вопрос>` after the job actually finishes, including model cleanup. A rejected input or a recoverable search failure allows another question.
+The CLI prints the request ID, stage changes, execution and answer statuses,
+source-findings cards with citations/cautions, and ranked PubMed articles. It
+returns to `Вопрос>` only after the job and cleanup finish. Rejected input or a
+recoverable job failure allows another question.
 
 ## Commands
 
 | Command | Action |
 | --- | --- |
 | `/help` | Show the short command reference. |
-| `/evidence` | Show all selected source fragments from the latest completed job. |
-| `/export [PATH]` | Export that job as `.html` or `.json`; omit the path for a public HTML report in its job directory. |
+| `/evidence` | Show all selected fragments from the latest completed job. |
+| `/export [PATH]` | Export that job as public `.html` or `.json`; omit the path for HTML in its job directory. |
 | `/quit` | Exit while idle; `/exit` is an alias. |
 
-Blank lines are ignored. Commands needing a result explain when no job has completed yet. The latest result remains available for evidence display and export after an invalid question.
+Blank lines are ignored. Commands needing a result explain when none exists.
+An invalid question does not erase the last result available for evidence/export.
 
 ## Search settings
 
-Run `medlens --help` for all options. Defaults match the API: up to **100** PubMed candidates, **top-10** Dense-ranked articles, generation enabled, and the existing **`draft`** answer mode. `source-findings` remains an explicit experimental option.
+Defaults are up to 100 PubMed candidates, top-10 Dense-ranked articles and
+source-findings generation. There is no public answer-style/model/backend
+switch. The model selects exact quotations; it does not write factual synthesis.
 
 ```sh
-.venv/bin/medlens --limit 30 --top-k 5 --answer-style source-findings
+.venv/bin/medlens --limit 30 --top-k 5
 .venv/bin/medlens --search-only
 .venv/bin/medlens --question 'How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?' --limit 10
 ```
 
-`--question` processes one question and exits instead of opening the interactive session. `--limit` accepts 1–300 and `--top-k` 1–10. `--search-only` returns articles and evidence without Qwen generation. `--pubmed-query 'EXPRESSION'` supplies an exact PubMed candidate-search expression for the session; the original question still drives ranking and answers.
+`--question` processes one question and exits. `--limit` accepts 1–300 and
+`--top-k` 1–10. `--search-only` returns articles/evidence without Qwen inference.
+`--pubmed-query 'EXPRESSION'` submits that exact candidate-search expression for
+the session; the original question still drives ranking and findings.
 
-`--root` selects the project and prepared assets. `--storage-dir` selects job storage (default `ROOT/results/cli-requests`); `--cache` selects the embedding cache (default `ROOT/.cache/embeddings/bge-input-v1`). Storage and cache must be disjoint directories. The CLI creates one local job service for the session, without a queue or an HTTP server.
+`--root` selects the project/resources. `--storage-dir` selects job storage
+(default `ROOT/results/cli-requests`); `--cache` selects the embedding cache
+(default `ROOT/.cache/embeddings/bge-input-v1`). They must be disjoint. Settings
+remain fixed within the session; one service runs one accepted job at a time.
 
 ## Export and local artifacts
 
@@ -54,21 +73,40 @@ Run `medlens --help` for all options. Defaults match the API: up to **100** PubM
 Вопрос> /export /tmp/medlens-result.json
 ```
 
-The default export is `results/cli-requests/REQUEST_ID/report-public.html`. HTML contains the displayed result and all selected evidence; JSON contains the public job envelope, including structured citations, source spans, statuses and timings. HTML is standalone and requires no neighbouring files. Choose an existing destination directory and quote paths containing spaces. Existing files are never overwritten.
+The default export is `results/cli-requests/REQUEST_ID/report-public.html`. HTML
+contains the displayed result and all selected evidence; it is standalone. JSON
+contains the public envelope, including source spans/versions, statuses and
+timings. Choose an existing directory and quote paths containing spaces.
+Existing files are never overwritten.
 
-Exports use the same public result as the API. They do not copy the private diagnostic `run/report.html`, raw model prompts/calls, runtime paths or raw exception details. Private pipeline artifacts remain in the job's `run/` directory. `job.json` preserves the public result independently of the terminal session. Terminal control characters are escaped for display; stored source quotations are not rewritten.
+Exports use the same public projection as the API. They do not copy private
+`run/report.html`, model prompts/calls, runtime paths or raw exceptions. Private
+run artifacts stay in the job directory. `job.json` preserves the public result.
+Terminal controls are escaped for display; stored quotations are not rewritten.
 
 ## Completion and exit
 
-`Ctrl+D` at the prompt and `/quit` exit with code 0. `Ctrl+C` exits with code 130. During an active request, `Ctrl+C` requests exit **after** the accepted job finishes and releases its runtime; it does not cancel the job. Further `Ctrl+C` signals are ignored during that shutdown wait. There is no hard-cancellation or automatic-resumption feature.
+Ctrl+D at the prompt and `/quit` exit 0. Ctrl+C exits 130. During a request it
+waits for that accepted job and runtime cleanup; it does not cancel the job.
+Repeated Ctrl+C is ignored during this wait. Hard cancellation and automatic
+resumption after abrupt termination are outside this MVP.
 
-For `--question`, a successful job exits 0, invalid input or answer-validation failure exits 2, a failed job exits 1, and interrupted execution exits 130. Insufficient evidence or a partial answer can be a successful job: read the separately displayed answer status. If cleanup or storage becomes uncertain, the CLI stops accepting questions and exits rather than starting another job.
+For `--question`, a successful job exits 0, invalid input or answer-validation
+failure exits 2, other job failure exits 1, and interruption exits 130. Partial
+findings and insufficient evidence can be successful executions: read answer
+status separately. Uncertain cleanup/storage stops admission instead of
+starting another job.
 
-This interface preserves the existing model, generation policy and [answer-quality limitations](biomedical-quality-improvement.md). `independent_validation` remains false. Exact quotations and successful execution do not establish scientific support, completeness or clinical validity.
+Nonempty source-findings displays remain `partial`. Exact quotations do not
+prove support for the requested comparison or completeness. Independent semantic
+and clinical validation remain absent; the [known limits](biomedical-quality-improvement.md)
+and human-reference gates are unchanged.
 
-## Validation
+## Historical CLI integration evidence
 
-The [integration record](experiments/interactive-cli.json) binds the implementation
+The original CLI record predates the unified source-findings-only policy.
+Its test counts and smoke requests describe that feature snapshot, not current
+final acceptance. The [integration record](experiments/interactive-cli.json) binds the implementation
 and local smoke artifacts. The full suite passed **535 tests with 9 optional
 native skips (544 total)**, including **23 new CLI tests**. These cover the input
 loop, recoverable failures, exit codes, stage-complete versus actual cleanup,

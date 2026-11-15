@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 from medlens.api_contract import SearchRequest
+from medlens.mvp import POLICY_ID, policy_snapshot
 from medlens.api_service import JobService, ServiceBusy, ServiceUnavailable, UnknownRequest
 
 
@@ -104,6 +105,43 @@ class JobServiceTests(unittest.TestCase):
         changed = restored.get(first["request_id"])
         changed["request"]["question"] = "Mutated client copy"
         self.assertEqual(restored.get(first["request_id"]), expected)
+
+    def test_admission_records_policy_and_client_mutation_cannot_change_it(self):
+        started, release = Event(), Event()
+        def runner(request, output, progress):
+            started.set()
+            if not release.wait(5):raise TimeoutError('test policy was not released')
+            return complete(request)
+        service = self.service(runner)
+        self.addCleanup(release.set)
+        submitted = service.submit(self.request)
+        self.assertTrue(started.wait(2))
+        self.assertEqual(submitted['mvp_policy'], policy_snapshot())
+        submitted['mvp_policy']['answer']['style'] = 'draft'
+        current = service.get(submitted['request_id'])
+        self.assertEqual(current['mvp_policy']['id'], POLICY_ID)
+        self.assertEqual(current['mvp_policy']['answer']['style'], 'source-findings')
+        current['mvp_policy']['source']['candidate_limit']['max'] = 999
+        release.set()
+        self.finish(service)
+        expected = service.get(submitted['request_id'])
+        self.assertEqual(expected['mvp_policy'], policy_snapshot())
+        service.close()
+        restored = self.service(runner, root=service.storage_root)
+        self.assertEqual(restored.get(submitted['request_id']), expected)
+
+    def test_legacy_records_remain_readable_without_new_policy_attribution(self):
+        service = self.service(lambda request, output, progress: complete(request))
+        request_id = 'b' * 32
+        directory = service.storage_root / request_id
+        directory.mkdir()
+        archived = {'schema_version': 1, 'request_id': request_id, 'status': 'succeeded',
+            'request': {'question': 'Symptoms?', 'answer_style': 'draft'},
+            'result': {'answer': {'status': 'partial', 'claims': []}}}
+        (directory / 'job.json').write_text(json.dumps(archived))
+        self.assertEqual(service.get(request_id), archived)
+        self.assertNotIn('mvp_policy', service.get(request_id))
+        self.assertEqual(json.loads((directory / 'job.json').read_text()), archived)
 
     def test_reported_upstream_failure_allows_retry_without_leaking_error_path(self):
         calls = []

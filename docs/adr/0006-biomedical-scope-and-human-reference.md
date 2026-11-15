@@ -1,5 +1,7 @@
 # Broaden biomedical requests and prepare an independent human reference
 
+Current application policy: [ADR 0007](0007-unified-mvp-policy.md) supersedes the draft/review answer format below with source-findings only. Model choice, historical measurements and independent human-reference requirements retain their original scope.
+
 Status: accepted for development on 2026-11-11. Functionality and source integrity
 can be checked now; cross-topic retrieval and answer quality await the owner's
 independently completed and explicitly finalized manual references.

@@ -33,7 +33,7 @@ class RecoveryToolTests(unittest.TestCase):
             (root/'configs/model-assets.json').write_text(json.dumps(pins))
             with patch.object(tool, 'ROOT', root), patch('huggingface_hub.snapshot_download') as download:
                 with self.assertRaisesRegex(ValueError, 'checksum conflict'):
-                    tool.main(['--download', '--output', str(root/'result.json')])
+                    tool.main(['--profile', 'research', '--download', '--output', str(root/'result.json')])
                 download.assert_not_called()
             self.assertEqual(payload.read_bytes(), b'keep this')
 
