@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "kind": "medlens-human-confirmation-plan",
+  "dataset_id": "human-confirmation-v1",
+  "split": "test",
+  "purpose": "prospective independent manual-human confirmation; not model tuning",
+  "created_on": "2026-11-15",
+  "question_author": "assistant",
+  "label_author": "project owner; MANUAL HUMAN ANNOTATION",
+  "status": "frozen-before-source-acquisition-and-human-annotation",
+  "language": "en",
+  "question_count": 20,
+  "candidate_limit": 100,
+  "annotation_depth_per_method": 10,
+  "pool_methods": [
+    "pubmed-best-match",
+    "dense"
+  ],
+  "pool_policy": "Deterministic blinded union of the first ten PubMed and ten Dense articles from the same complete snapshot. Retain all questions including empty or sparse results; never replace cases by yield.",
+  "query_override": null,
+  "model_answers_generated": false,
+  "acceptance": {
+    "selected_by": "project owner on 2026-11-15 before new source acquisition or human judgments",
+    "usefulness": {
+      "minimum_fraction": 0.5,
+      "numerator": "manual useful=yes for actual future frozen full-run output",
+      "denominator": "all 20 predeclared questions; no exclusion of error, timeout, empty or unknown cases",
+      "minimum_confirmed_useful_queries": 10
+    },
+    "unnecessary_abstention": {
+      "maximum_fraction": 0.5,
+      "numerator": "actual insufficient_evidence output when manual answerable=yes for its exact source pool",
+      "denominator": "all questions with manual answerable=yes for the exact source pool",
+      "denominator_confirmed_by_owner": true,
+      "zero_denominator": "not_established; never an automatic pass"
+    },
+    "latency": {
+      "maximum_each_request_seconds": 60.0,
+      "aggregate": "maximum, not median or percentile",
+      "start": "question submission/Enter or HTTP POST start, before validation and admission",
+      "end": "full public result persisted and displayed/received, with confirmed runtime cleanup",
+      "includes": [
+        "validation",
+        "network",
+        "transport retries/backoff",
+        "parsing",
+        "passages",
+        "cache lookup or new embeddings",
+        "model/tokenizer loading",
+        "generation",
+        "persistence",
+        "rendering",
+        "cleanup"
+      ],
+      "scope": "all accepted application settings, including allowed candidate/top_k bounds",
+      "implementation_status": "acceptance requirement; existing JobService does not yet enforce hard cancellation",
+      "resource_download_before_request": "separate installation task; never part of warm request claims"
+    },
+    "unknowns": "Preserve unknown and pending separately. Unknowns are never positive/negative labels. If unknowns can change a threshold result, the gate is not_established. Report conservative bounds and coverage.",
+    "critical_scope_errors": "Existing release blocker remains: explicit wrong population/system, intervention/comparator or outcome must not be accepted. The 50% usefulness threshold does not authorize wrong findings.",
+    "technical_errors": "Do not count errors/timeouts as appropriate abstentions, and do not drop them from the fixed question denominator. Technical and latency gates remain separate."
+  },
+  "annotation_policy": {
+    "manual_human_only": true,
+    "assistant_supplies_labels": false,
+    "assistant_supplies_rationales": false,
+    "article_relevance": {
+      "2": "Directly addresses the main target and all explicit restrictions; a null result can be relevant.",
+      "1": "Useful partial evidence that does not directly establish the whole requested target.",
+      "0": "No useful evidence for the question, or a materially different target.",
+      "unknown": "The available title/abstract does not permit a confident judgment."
+    },
+    "query_answerability": "Independent manual yes/no/unknown for sufficient evidence in the supplied frozen pool. yes must cite supporting pooled PMIDs. An article grade alone never supplies this judgment.",
+    "answerability_scope": "Only the reviewed frozen pool, not all PubMed or proof that no literature exists.",
+    "source_round": "All article and answerability fields begin pending; no Qwen answers or suggested grades.",
+    "output_round": "After future candidate freeze and one actual full live run, owner separately labels usefulness, abstention appropriateness and support/population/comparison/outcome/qualifier axes on the actual outputs."
+  },
+  "independence": {
+    "repairs_use_only": [
+      "previous pilot/development data",
+      "already consumed original heldout-v1"
+    ],
+    "new_labels_reserved": true,
+    "before_candidate_freeze": "Validate source bindings, checksums and completeness only. Do not expose semantic grade values, supporting-PMID choices or rationales to tuning agents.",
+    "after_any_tuning_on_new_cases_or_labels": "Reclassify these as development; require another untouched confirmation set.",
+    "future_live_sources": "Record exact question/PMID/title/abstract/text-version identities. Reuse old article judgments only by explicit identity-mapping receipt. New/changed items get blank manual delta; changed source-pool membership/text requires manual answerability reconfirmation before quality scoring.",
+    "timing_and_quality": "Primary confirmation is the actual future full live request. Frozen-source replays may be diagnostics only; never add old acquisition time to a replay and call it end-to-end."
+  },
+  "question_selection": {
+    "basis": "Prospective stratified specialty/intent coverage, not search yield or model output.",
+    "proposal_sha256": "86a217fe3994116572323bff65fd6318e232f1957bd44ac9e1fa1558a0720b28",
+    "coverage": {
+      "questions": 20,
+      "specialties": {
+        "cardiology": 2,
+        "pulmonology": 2,
+        "neurology": 2,
+        "gastroenterology": 2,
+        "rheumatology": 2,
+        "oncology": 2,
+        "infectious-diseases": 2,
+        "nephrology": 2,
+        "obstetrics": 2,
+        "endocrinology": 2
+      },
+      "question_types": {
+        "prevention": 4,
+        "diagnosis": 4,
+        "treatment": 4,
+        "mechanism": 4,
+        "prognosis": 4
+      }
+    },
+    "nonoverlap_check": {
+      "previous_questions_inspected": 28,
+      "previous_sets": [
+        "pilot-v1",
+        "consumed heldout-v1",
+        "biomedical-dev-v1"
+      ],
+      "exact_duplicate_questions": 0,
+      "duplicate_existing_group_ids": 0,
+      "semantic_review": "No new question paraphrases a prior question or reuses its intervention/outcome comparison group. Shared broad specialties are intentional; cardiac and diabetes questions target different diseases, mechanisms or endpoints.",
+      "not_claimed": [
+        "Disease-disjointness",
+        "Publication-disjointness",
+        "Random clinical population sampling",
+        "Independent expert question design"
+      ]
+    },
+    "not_claimed": [
+      "independent expert question design",
+      "disease-disjointness",
+      "publication-disjointness",
+      "clinical validity"
+    ]
+  },
+  "cases": [
+    {
+      "query_id": "hc01",
+      "group_id": "colchicine-coronary-events",
+      "specialty": "cardiology",
+      "question_type": "prevention",
+      "question": "Does low-dose colchicine compared with placebo reduce cardiovascular events in adults with coronary artery disease?",
+      "relevance_intent": "Evidence on cardiovascular events in adults with coronary artery disease comparing low-dose colchicine with placebo. Preserve the source event definition and coronary-disease setting. Biomarker changes alone or another treatment comparison do not directly establish the requested clinical contrast. A null event finding can be relevant."
+    },
+    {
+      "query_id": "hc02",
+      "group_id": "troponin-myocardial-infarction-accuracy",
+      "specialty": "cardiology",
+      "question_type": "diagnosis",
+      "question": "What is the diagnostic accuracy of high-sensitivity cardiac troponin for myocardial infarction in adults using adjudicated diagnosis as the reference?",
+      "relevance_intent": "Diagnostic-accuracy evidence for high-sensitivity cardiac troponin in adults, with adjudicated myocardial-infarction diagnosis as the reference. Preserve assay, testing strategy and timing when reported. Prognostic associations after an established infarction or another reference target do not directly answer the diagnostic question."
+    },
+    {
+      "query_id": "hc03",
+      "group_id": "tiotropium-copd-exacerbations",
+      "specialty": "pulmonology",
+      "question_type": "treatment",
+      "question": "In adults with COPD, does tiotropium compared with placebo reduce exacerbations over one year?",
+      "relevance_intent": "Evidence on COPD exacerbations over one year in adults comparing tiotropium with placebo. Preserve regimen, background therapy, exacerbation definition and follow-up. Lung-function changes alone, another active comparator or a different follow-up do not directly establish the complete requested outcome. Null findings remain relevant."
+    },
+    {
+      "query_id": "hc04",
+      "group_id": "cigarette-smoke-airway-cilia-mechanism",
+      "specialty": "pulmonology",
+      "question_type": "mechanism",
+      "question": "How does cigarette smoke affect ciliary function in airway epithelial cells?",
+      "relevance_intent": "Mechanistic evidence connecting cigarette-smoke exposure to ciliary function in airway epithelial cells. Human, animal and cell-model work can be relevant when its actual experimental system is explicit. Preserve exposure and functional endpoint; observational smoking prevalence or non-ciliary inflammatory outcomes alone do not establish the requested mechanism. No adult-only scope or clinical benefit is imposed."
+    },
+    {
+      "query_id": "hc05",
+      "group_id": "levetiracetam-focal-seizure-frequency",
+      "specialty": "neurology",
+      "question_type": "treatment",
+      "question": "Does adjunctive levetiracetam compared with placebo reduce seizure frequency in adults with focal epilepsy?",
+      "relevance_intent": "Evidence on seizure frequency in adults with focal epilepsy comparing adjunctive levetiracetam with adjunctive placebo. Background antiseizure treatment and add-on status are part of the contrast. Pediatric-only findings, monotherapy comparisons or quality-of-life outcomes alone do not directly answer the full request. Preserve null findings and reported limitations."
+    },
+    {
+      "query_id": "hc06",
+      "group_id": "hyposmia-incident-parkinson-disease",
+      "specialty": "neurology",
+      "question_type": "prognosis",
+      "question": "Is hyposmia associated with future Parkinson disease in adults without Parkinson disease at baseline?",
+      "relevance_intent": "Longitudinal evidence on hyposmia and later Parkinson disease in adults free of Parkinson disease at baseline. Preserve follow-up, olfactory assessment and any cohort restrictions. Cross-sectional symptom prevalence in existing Parkinson disease or treatment response does not directly establish this requested incident-disease association. Association is not causation."
+    },
+    {
+      "query_id": "hc07",
+      "group_id": "fecal-calprotectin-inflammatory-bowel-disease-accuracy",
+      "specialty": "gastroenterology",
+      "question_type": "diagnosis",
+      "question": "What is the diagnostic accuracy of fecal calprotectin for inflammatory bowel disease in adults using colonoscopy with biopsy as the reference?",
+      "relevance_intent": "Diagnostic-accuracy evidence for fecal calprotectin identifying inflammatory bowel disease in adults, using colonoscopy with biopsy as the reference. Preserve thresholds and clinical setting. Monitoring established disease activity, pediatric-only evidence or another diagnostic target does not directly answer the full question."
+    },
+    {
+      "query_id": "hc08",
+      "group_id": "bismuth-quadruple-clarithromycin-triple-hpylori",
+      "specialty": "gastroenterology",
+      "question_type": "treatment",
+      "question": "In adults with Helicobacter pylori infection, how does bismuth quadruple therapy compare with clarithromycin triple therapy for eradication?",
+      "relevance_intent": "Evidence on Helicobacter pylori eradication in adults directly comparing bismuth quadruple therapy with clarithromycin triple therapy. Preserve regimen components, duration, prior-treatment status and resistance setting. Separate comparisons against other regimens or symptoms without eradication outcomes do not directly establish the requested contrast; do not infer equivalence from nonsignificance."
+    },
+    {
+      "query_id": "hc09",
+      "group_id": "methotrexate-rheumatoid-arthritis-function",
+      "specialty": "rheumatology",
+      "question_type": "treatment",
+      "question": "Does methotrexate compared with placebo improve physical function in adults with rheumatoid arthritis after six months?",
+      "relevance_intent": "Evidence on physical function after six months in adults with rheumatoid arthritis comparing methotrexate with placebo. Preserve background treatment, dose and functional instrument. Disease biomarkers alone, another active comparator or different follow-up may provide partial context but do not directly establish the complete requested effect. Null findings remain relevant."
+    },
+    {
+      "query_id": "hc10",
+      "group_id": "neutrophil-extracellular-traps-lupus-nephritis",
+      "specialty": "rheumatology",
+      "question_type": "mechanism",
+      "question": "How do neutrophil extracellular traps contribute to kidney injury in lupus nephritis?",
+      "relevance_intent": "Mechanistic evidence connecting neutrophil extracellular traps to kidney injury in lupus nephritis. Human, animal and cell-model evidence can be relevant with explicit experimental scope. Preserve the kidney-injury target and any distinction between observed association and tested mechanism. General systemic inflammation alone does not directly establish the requested renal mechanism or clinical treatment benefit."
+    },
+    {
+      "query_id": "hc11",
+      "group_id": "prostate-mri-clinically-significant-cancer-accuracy",
+      "specialty": "oncology",
+      "question_type": "diagnosis",
+      "question": "What is the diagnostic accuracy of multiparametric MRI for clinically significant prostate cancer using biopsy as the reference?",
+      "relevance_intent": "Diagnostic-accuracy evidence for multiparametric MRI identifying clinically significant prostate cancer, with biopsy as the reference. Preserve the source definition of clinical significance, biopsy strategy and diagnostic setting. Detection of any prostate cancer, screening mortality or staging alone does not directly answer the complete diagnostic target. No unasked age cutoff is added."
+    },
+    {
+      "query_id": "hc12",
+      "group_id": "neutrophil-lymphocyte-ratio-nsclc-survival",
+      "specialty": "oncology",
+      "question_type": "prognosis",
+      "question": "Is a high pretreatment neutrophil-to-lymphocyte ratio associated with overall survival in adults with non-small-cell lung cancer?",
+      "relevance_intent": "Prognostic evidence connecting pretreatment neutrophil-to-lymphocyte ratio with overall survival in adults with non-small-cell lung cancer. Preserve threshold, stage, treatment setting and adjustment qualifiers. Progression-free survival alone, post-treatment changes or another malignancy do not directly establish the full requested association. An association is not a causal or treatment-selection claim."
+    },
+    {
+      "query_id": "hc13",
+      "group_id": "tenofovir-emtricitabine-hiv-preexposure-prevention",
+      "specialty": "infectious-diseases",
+      "question_type": "prevention",
+      "question": "Does tenofovir-emtricitabine pre-exposure prophylaxis compared with placebo prevent HIV infection in adults at increased risk?",
+      "relevance_intent": "Evidence on incident HIV infection in adults at increased risk comparing tenofovir-emtricitabine pre-exposure prophylaxis with placebo. Preserve dosing schedule, adherence and population qualifiers. HIV treatment after infection, a different prophylactic regimen or laboratory endpoints alone do not directly establish the requested prevention contrast. Null findings remain relevant."
+    },
+    {
+      "query_id": "hc14",
+      "group_id": "pseudomonas-biofilm-antibiotic-tolerance-mechanism",
+      "specialty": "infectious-diseases",
+      "question_type": "mechanism",
+      "question": "How does biofilm formation contribute to antibiotic tolerance in Pseudomonas aeruginosa?",
+      "relevance_intent": "Mechanistic evidence connecting Pseudomonas aeruginosa biofilm formation with antibiotic tolerance. Preserve the experimental model, antibiotic and distinction between tolerance and inherited resistance. Work on another organism, unrelated virulence traits or clinical infection outcomes without the requested mechanism does not directly answer the full question. No human-only restriction is imposed."
+    },
+    {
+      "query_id": "hc15",
+      "group_id": "albuminuria-ckd-kidney-failure-progression",
+      "specialty": "nephrology",
+      "question_type": "prognosis",
+      "question": "Is albuminuria associated with progression to kidney failure in adults with chronic kidney disease?",
+      "relevance_intent": "Longitudinal evidence on albuminuria and progression to kidney failure in adults with chronic kidney disease. Preserve baseline kidney function, albuminuria definition, follow-up and confounding adjustment. Cross-sectional prevalence, cardiovascular outcomes alone or intervention-induced biomarker change does not directly establish this requested progression association. Do not infer causation."
+    },
+    {
+      "query_id": "hc16",
+      "group_id": "citrate-heparin-lock-hemodialysis-infection-prevention",
+      "specialty": "nephrology",
+      "question_type": "prevention",
+      "question": "Do citrate catheter locks reduce bloodstream infections compared with heparin locks in adults receiving hemodialysis?",
+      "relevance_intent": "Evidence on bloodstream-infection prevention in adults receiving hemodialysis comparing citrate catheter locks with heparin locks. Preserve citrate concentration, co-interventions and infection definition. Catheter patency alone, another access type or a different lock regimen does not directly establish the complete requested contrast. Null infection findings can be directly relevant."
+    },
+    {
+      "query_id": "hc17",
+      "group_id": "aspirin-preeclampsia-prevention",
+      "specialty": "obstetrics",
+      "question_type": "prevention",
+      "question": "Does low-dose aspirin compared with placebo prevent preeclampsia in pregnancies at increased risk?",
+      "relevance_intent": "Evidence on preventing preeclampsia in pregnancies at increased risk comparing low-dose aspirin with placebo. Preserve risk definition, dose, gestational start and outcome subtype. Treatment of established preeclampsia or another maternal/fetal endpoint alone does not directly establish this prevention contrast. No unasked maternal age cutoff is added; null findings remain relevant."
+    },
+    {
+      "query_id": "hc18",
+      "group_id": "sflt1-plgf-preeclampsia-accuracy",
+      "specialty": "obstetrics",
+      "question_type": "diagnosis",
+      "question": "What is the diagnostic accuracy of the sFlt-1/PlGF ratio for preeclampsia using clinical diagnosis as the reference?",
+      "relevance_intent": "Diagnostic-accuracy evidence for the sFlt-1/PlGF ratio identifying preeclampsia against a clinical diagnosis reference. Preserve thresholds, gestational setting and whether the target is current diagnosis or a stated future interval. General biomarker associations, another pregnancy outcome or long-term prognosis alone do not directly answer the complete diagnostic request. No adult-only restriction is added."
+    },
+    {
+      "query_id": "hc19",
+      "group_id": "islet-autoantibodies-type1-diabetes-progression",
+      "specialty": "endocrinology",
+      "question_type": "prognosis",
+      "question": "Do islet autoantibodies predict progression to type 1 diabetes in children?",
+      "relevance_intent": "Longitudinal/prognostic evidence on islet autoantibodies and progression to type 1 diabetes in children. Preserve the autoantibody profile, baseline risk state and follow-up. Adult-only evidence, cross-sectional autoantibody prevalence after diagnosis or type 2 diabetes mechanisms does not directly answer the requested childhood progression question. Prediction does not imply causation."
+    },
+    {
+      "query_id": "hc20",
+      "group_id": "aldosterone-cardiac-fibrosis-mechanism",
+      "specialty": "endocrinology",
+      "question_type": "mechanism",
+      "question": "How does excess aldosterone promote cardiac fibrosis?",
+      "relevance_intent": "Mechanistic evidence connecting excess aldosterone to cardiac fibrosis. Human, animal and cell-model findings can be relevant when actual experimental scope and necessary co-factors are preserved. Blood-pressure associations or non-cardiac fibrosis alone do not directly establish the requested mechanism. No adult-only or human-only restriction, causal certainty from association, or clinical treatment benefit is assumed."
+    }
+  ]
+}

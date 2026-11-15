@@ -30,6 +30,14 @@ human references remain release conditions, as documented in the
 AI annotations have separate provenance; neither is silently transferred to new
 questions or source versions.
 
+For the next independent round, the owner requires **at least 50% useful
+selections across all twenty queries**, **at most 50% unnecessary abstentions
+among human-confirmed answerable queries**, and **at most 60 seconds for each
+complete request**. The [human-confirmation protocol](docs/human-confirmation.md)
+records the new blank source-reference form and the later actual-output review.
+The sixty-second deadline is an acceptance requirement; the current service does
+not yet enforce that hard budget.
+
 ## Setup
 
 Use Python 3.11 on macOS/Apple Silicon. The main environment and isolated MLX

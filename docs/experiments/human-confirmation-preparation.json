@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "kind": "human-confirmation-reference-preparation",
+  "date": "2026-11-15",
+  "status": "ready-for-owner-manual-human-source-annotation",
+  "base_commit": "5edb9c24ff11060411a44e3e54e2c054f8ee1044",
+  "protocol": "docs/human-confirmation.md",
+  "plan": {
+    "path": "benchmarks/human-confirmation-v1/plan.json",
+    "sha256": "b830b3e9afd4d376f78f1eb9c7c90820782fa25cb6beed32115529bd17af6dbd",
+    "question_count": 20,
+    "split": "test",
+    "specialties": 10,
+    "question_types": 5
+  },
+  "criteria": {
+    "useful_selections": {
+      "denominator": "all_20_planned_queries",
+      "minimum_count": 10,
+      "minimum_rate": 0.5
+    },
+    "unnecessary_abstentions": {
+      "denominator": "human_confirmed_answerable_questions",
+      "maximum_rate": 0.5,
+      "zero_denominator": "not_established"
+    },
+    "complete_request": {
+      "maximum_seconds": 60,
+      "scope": "submission through final result delivery and actual cleanup; every accepted request",
+      "hard_deadline_implemented": false,
+      "latency_acceptance_evaluated": false
+    },
+    "critical_scope_and_source_integrity_gates": "remain_required"
+  },
+  "source_preparation": {
+    "directory": "results/human-confirmation-v1/sources-20261115-v1",
+    "preparation_sha256": "ffbf5c1c1b46940a3444186e38b8d582ae95d3cb609022f6ff41f230ed7b3f8f",
+    "planned_and_retained_queries": 20,
+    "candidate_limit": 100,
+    "top_k": 10,
+    "candidate_article_records": 683,
+    "pooled_article_cards": 208,
+    "pool": "deduplicated union of PubMed Best Match top 10 and Dense top 10 per query; blind deterministic display order",
+    "empty_queries_retained": [
+      "hc02",
+      "hc07",
+      "hc11",
+      "hc18"
+    ],
+    "qwen_load_count": 0,
+    "answers_generated": 0,
+    "human_labels_generated": 0,
+    "quality_scores_computed": false
+  },
+  "manual_source_package": {
+    "directory": "results/human-confirmation-v1/manual-source-reference-20261115-v2",
+    "package_id": "04bb255f1a93cae6451f4f3df7b400e501b5c698f16349032c8d2c7e0f88fa32",
+    "package_sha256": "a49ab1d2d2cdc0a3232cd7f4eb302a2387aa06e204392145b20c5fc87d2c6d5d",
+    "manifest_id": "43ebcf9f3561d653384d5c903c19440f2d5b93fe80137c7108a1675479ba68c6",
+    "manifest_sha256": "a4c6eb2fae3be1fa41aa35700f25b219a6db42fdc41f2df880b63c29c0c72ad1",
+    "html_sha256": "b123d10530e217a3adfdf68275564db452fe36356b2e83989252516a9c0be8cf",
+    "html_bytes": 1824621,
+    "portable_filename": "MedLens-human-confirmation-v1.html",
+    "all_article_and_query_decisions_initially_pending": true,
+    "annotation_origin_required": "MANUAL HUMAN ANNOTATION by project owner; no assistant prefill",
+    "original_export_preservation": "byte-exact read-only source plus SHA256 and structural validation receipt",
+    "historical_v1_build": "local prereview artifact only, not delivered and not annotated"
+  },
+  "validation": {
+    "source_tests": {
+      "passed": 8
+    },
+    "full_suite": {
+      "total": 584,
+      "passed": 574,
+      "skipped": 10,
+      "skip_reason": "9 existing optional native checks and 1 Node-CLI-dependent check"
+    },
+    "annotation_tests": {
+      "total": 15,
+      "passed": 14,
+      "skipped": 1
+    },
+    "exact_embedded_node_runner": "passed separately on fictional fixtures, including 4 integer and 5 calendar regressions",
+    "independent_review": "three P2 issues repaired and rechecked; no remaining blockers reported",
+    "source_query_bindings_and_tamper_probes": "passed",
+    "package_verify": "passed for final V2",
+    "pip_check": "passed",
+    "wheel": {
+      "wheel": "med_lens-0.0.1-py3-none-any.whl",
+      "wheel_sha256": "83fe4444eb962a0f2f5bcbe79ebb8d76346e4ac507202395b657af618a67ae46",
+      "included_current_bytes": {
+        "medlens/evaluation/confirmation_annotation.html": true,
+        "medlens/evaluation/confirmation_annotation.py": true
+      },
+      "status": "passed"
+    },
+    "visual_qa": {
+      "status": "passed",
+      "method": "CUA screenshot and accessibility-state inspection",
+      "date": "2026-11-15",
+      "package_id": "04bb255f1a93cae6451f4f3df7b400e501b5c698f16349032c8d2c7e0f88fa32",
+      "observed_article_progress": "0 / 208",
+      "observed_question_progress": "0 / 20",
+      "real_human_decisions_entered": false,
+      "real_human_export_created": false,
+      "notes": "Russian instructions, blank decisions and portable JSON controls visible; no form edits performed."
+    },
+    "local_evidence_directory": "results/human-confirmation-v1/tooling-validation",
+    "evidence_sha256": {
+      "source-acquisition.log": "51991cad6c5791b692d488f75fa63349e5c331517b16cd53defb9a2e31bbd1e6",
+      "source-tests.log": "50f6e7592673bd6d6327010f6b3f1b69885aec9283b213b4a30bab5094a4ad43",
+      "full-tests-final.log": "7a124632e3d53767424eb05185d3a3ba614226ff3a6666296f5cb0a7622cd0ac",
+      "package-build-final.log": "c968cf1cf08d3921c3708013b444d21d73ecce0aaf4a3ef0351fac1232141f5e",
+      "annotation-implementation-receipt-v3.json": "0beb1d6643ead68d68d8e53cf331f82dcca260f44d1ad82388b72ff70b65a8fd",
+      "ui-exact-node-test-receipt-v3.json": "a104a0bd48cbd50b40bccd95caa2a46e9267839ba7ae2071a81692fd66f108ff",
+      "review-v3-ui-receipt.json": "81eecc4d8102190943df742d7ce50fc802b8de758f25654fc9df24da5239908b",
+      "review-v3-python-receipt.json": "0badd3b6e32f9e034d9de86248ffef6e62eb798e772213eace0a2bce908fc0c8",
+      "wheel-build-final.log": "fbb9c710e903e0706401ec45485d8abe24ab03c2ebf585930a1520d1f065e81c",
+      "wheel-final-receipt.json": "069b5142bb4f34286c842bb5c45d12bbcfa5b636486441d42f1b4000ac554992",
+      "visual-qa-receipt.json": "04c22a931c9d07c5bc909d33caa7b9f8c58d9ae4732fba4938a2c00959d3dbf8"
+    }
+  },
+  "remaining_work": [
+    "Owner completes source relevance and question answerability, then exports explicitly finalized manual-human JSON.",
+    "Preserve and structurally validate the original human export without exposing new semantic values for tuning before candidate freeze.",
+    "Repair runtime and selection on old development/consumed material; enforce and test the complete 60-second request budget across accepted settings.",
+    "Freeze one candidate, perform one complete live confirmation pass, reconcile changed source versions and obtain blank human deltas.",
+    "Owner separately reviews actual live outputs before computing the predeclared usefulness and unnecessary-abstention metrics."
+  ],
+  "git_content_policy": "Code, frozen question plan, documentation and this compact record only; raw sources, vectors, HTML and human exports remain local/ignored."
+}
