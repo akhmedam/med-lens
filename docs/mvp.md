@@ -68,6 +68,22 @@ during work requests exit after that job and cleanup, rather than hard
 cancellation. Public reports exclude raw prompts, runtime paths and diagnostic
 exceptions; private run artifacts remain local.
 
+## Acceptance for the next confirmation
+
+The owner-defined gates in the [human-confirmation protocol](human-confirmation.md)
+are at least **10 useful selections out of all 20 planned queries**, unnecessary
+abstentions at most **50% of human-confirmed answerable queries**, and **60 seconds
+maximum for every full request**, including network, model loading, delivery and
+cleanup. A zero answerability denominator is not an automatic pass. Unknowns
+remain distinct, and the existing critical scope-error blocker is unchanged.
+
+The new source-reference form is blank and contains no Qwen answers. Human
+judgments stay quarantined until the future candidate is frozen. That candidate
+then receives one full live pass; changed source items require a manual delta
+reference and changed reviewed pools require answerability reconfirmation before
+quality scoring. The current service does not enforce a hard sixty-second
+cancellation budget; implementing and validating that requirement remains work.
+
 ## Research and remaining work
 
 `scripts/ask_live.py` and `scripts/ask.py` remain research/replay tools with
