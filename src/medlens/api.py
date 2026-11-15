@@ -14,6 +14,8 @@ from starlette.exceptions import HTTPException
 from .api_contract import RequestValidationError, SearchRequest
 from .api_service import JobService, ServiceBusy, ServiceUnavailable, UnknownRequest
 from .pubmed_query import MAX_OVERRIDE_CHARS, MAX_QUESTION_CHARS
+from .mvp import (ANSWER_STYLE, DEFAULT_CANDIDATE_LIMIT, DEFAULT_TOP_K,
+                  MIN_CANDIDATE_LIMIT, MAX_CANDIDATE_LIMIT, MIN_TOP_K, MAX_TOP_K)
 
 MAX_BODY_BYTES = 256 * 1024
 
@@ -24,10 +26,19 @@ class SearchBody(BaseModel):
         description="English biomedical research question, preserved verbatim.")
     pubmed_query: str | None = Field(default=None, min_length=1, max_length=MAX_OVERRIDE_CHARS,
         description="Optional exact PubMed expression; no implicit topic filter.")
-    limit: int = Field(default=100, ge=1, le=300)
-    top_k: int = Field(default=10, ge=1, le=10)
+    limit: int = Field(default=DEFAULT_CANDIDATE_LIMIT, ge=MIN_CANDIDATE_LIMIT, le=MAX_CANDIDATE_LIMIT)
+    top_k: int = Field(default=DEFAULT_TOP_K, ge=MIN_TOP_K, le=MAX_TOP_K)
     generate: bool = True
-    answer_style: Literal["draft", "source-findings"] = "draft"
+    answer_style: Literal["source-findings"] = ANSWER_STYLE
+
+
+class StoredSearchBody(SearchBody):
+    """Read-only request metadata, including jobs accepted before this MVP policy.
+
+    Incoming requests use SearchBody exclusively; this model cannot enable a
+    historical answer mode on submission or relabel an old job as the new policy.
+    """
+    answer_style: Literal["draft", "source-findings"] | None = None
 
 
 class JobError(BaseModel):
@@ -45,7 +56,9 @@ class JobResponse(BaseModel):
     started_at: str | None = None
     updated_at: str
     finished_at: str | None = None
-    request: SearchBody
+    request: StoredSearchBody
+    mvp_policy: dict | None = Field(default=None,
+        description="Frozen application policy for this job; null for jobs predating policy records.")
     result: dict | None = None
     error: JobError | None = None
     links: dict[str, str]

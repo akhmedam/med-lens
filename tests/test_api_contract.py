@@ -83,7 +83,7 @@ class SearchRequestTests(unittest.TestCase):
         question = '  Does agent A reduce symptoms after two days?  '
         request = SearchRequest.from_payload({'question': question})
         self.assertEqual(asdict(request), {'question': question, 'pubmed_query': None,
-            'limit': 100, 'top_k': 10, 'generate': True, 'answer_style': 'draft'})
+            'limit': 100, 'top_k': 10, 'generate': True, 'answer_style': 'source-findings'})
         with self.assertRaises(FrozenInstanceError):request.question = 'changed'
 
     def test_exact_pubmed_override_and_parameter_boundaries(self):
@@ -115,9 +115,14 @@ class SearchRequestTests(unittest.TestCase):
         for value in (0, 1, 'true', None):
             with self.subTest(value=value), self.assertRaises(RequestValidationError):
                 SearchRequest.from_payload({'question': 'Symptoms?', 'generate': value})
-        for value in (None, True, 'synthesis', '', 4):
+        for value in (None, True, 'draft', 'synthesis', '', 4):
             with self.subTest(value=value), self.assertRaises(RequestValidationError):
                 SearchRequest.from_payload({'question': 'Symptoms?', 'answer_style': value})
+
+    def test_draft_cannot_bypass_the_fixed_mvp_style_in_search_only_mode(self):
+        for generate in (True, False):
+            with self.subTest(generate=generate), self.assertRaisesRegex(RequestValidationError, 'research-only'):
+                SearchRequest('Symptoms?', generate=generate, answer_style='draft')
 
     def test_real_planner_limits_controls_and_empty_scaffold_are_reused(self):
         SearchRequest('a' * 8000, pubmed_query='b' * 4000)

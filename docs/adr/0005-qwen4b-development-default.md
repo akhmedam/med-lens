@@ -1,5 +1,7 @@
 # Use Qwen3.5-4B as the development answer default
 
+Current application policy: [ADR 0007](0007-unified-mvp-policy.md) supersedes the draft/review answer format below with source-findings only. Model choice, historical measurements and independent human-reference requirements retain their original scope.
+
 Status: selected by the user on 2026-11-10 for development. This supersedes the
 9B model/default choice in [ADR 0003](0003-primary-pipeline.md) and the 9B-only
 profile in [ADR 0004](0004-native-mlx-runtime.md). Their Dense/source-selection

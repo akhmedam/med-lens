@@ -17,6 +17,7 @@ from threading import RLock
 from uuid import uuid4
 
 from .api_contract import SearchRequest, public_report
+from .mvp import policy_snapshot
 
 
 class UnknownRequest(LookupError):
@@ -141,7 +142,7 @@ class JobService:
             request_id = uuid4().hex
             self._active_id = request_id
             created = _now()
-            job = {"schema_version": 1, "request_id": request_id, "status": "queued",
+            job = {"schema_version": 1, "mvp_policy": policy_snapshot(), "request_id": request_id, "status": "queued",
                 "stage": "queued", "created_at": created, "started_at": None,
                 "updated_at": created, "finished_at": None, "request": asdict(request),
                 "result": None, "error": None}

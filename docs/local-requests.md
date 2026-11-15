@@ -1,90 +1,76 @@
-# Local search-to-answer requests
+# Offline research and replay requests
 
-For a fresh PubMed search on each question, use the primary
-[live request command](live-search.md). This page documents prepared-collection
-requests for offline replay and controlled experiments.
-
-`scripts/ask.py` runs a fresh English question against one verified local
-collection. It saves a human-readable `report.html` and a full `run.json` in a
-new directory. No pilot relevance labels or saved rankings enter this path.
-The primary workflow uses Dense followed by native Qwen3.5-4B generation and
-same-model support review: pass `--generate` and omit `--rerank`. The
-[development-default decision](adr/0005-qwen4b-development-default.md) supersedes
-the earlier 9B default while preserving the retrieval/source architecture.
+The supported application is the live [MVP CLI/API](mvp.md). This page documents
+`scripts/ask.py`, a research wrapper for verified local dataset/window/embedding
+artifacts. It does not search PubMed or expand its supplied candidate set.
+Existing saved source collections remain useful for fixed-source experiments;
+they are not an alternative freshness policy in the public application.
 
 ## Run
 
-From the project root, with the existing virtual environment and cached models:
+From the prepared checkout, choose a new output directory:
 
 ```sh
 .venv/bin/python scripts/ask.py data/parsed/recovery-20261106/p06 \
   --windows data/windows/recovery-20261106/p06 \
   --embeddings data/embeddings/recovery-20261106/p06 \
-  --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --generate --output-dir results/requests/gad-answer-example
-open results/requests/gad-answer-example/report.html
+  --query 'Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?' \
+  --generate --answer-style source-findings --output-dir results/requests/local-findings-NEW
 ```
 
-The CLI without `--generate` is a diagnostic search/excerpt mode; generation
-remains a required part of the primary product workflow.
-`--generate` enables experimental answer drafts; `--rerank` enables optional
-Qwen reranking of the dense results. These flags work independently. `--top-k`
-accepts one to ten articles and defaults to ten. `--device cpu` changes BGE only;
-Qwen generation and reranking require Apple GPU execution. The default is the
-[isolated native MLX 4B profile](native-mlx.md). Pass `--answer-model 9b` for native
-9B or `--answer-model 9b --engine transformers` for the original MPS comparison.
-Preparation of the default profile does not require 9B weights.
+The source-findings format selects exact study-context/finding quotations with
+applicability cautions. It does not generate a factual synthesis or run the
+prose-support reviewer. Nonempty findings remain `partial`, and semantic support
+and independent validation remain unverified.
 
-Search covers only the supplied dataset. The frozen pilot's topic collections
-each contain at most thirty papers, selected by earlier PubMed queries. A new
-question does not expand that candidate set. The report displays collection size
-and scope; similarity scores are not probabilities of relevance. No cosine
-threshold or off-topic detector is implemented. The same 4000-token evidence
-budget and six-fragment selection policy apply to every question; their
-outcome-section preference was developed for treatment-efficacy questions.
+To study the distinct prose draft/review path, pass `--generate --answer-style
+draft` explicitly. Its 4B compact policy uses `cited-answer-v8` and six named
+`claim-support-v4` fields under `axes-first-v2`. Exact citations and logical
+review consistency do not establish factual support. Historical explicit 9B
+comparisons retain their legacy policy. These choices are research options, not
+public CLI/API alternatives.
 
-## Request lifecycle
+Without `--generate`, this wrapper runs diagnostic search/excerpt selection.
+`--rerank` independently enables research Qwen reranking; it is absent from the
+MVP. `--top-k` accepts 1–10 and defaults to ten. `--device cpu` changes BGE only.
+`--answer-model 9b` and `--answer-model 9b --engine transformers` select explicit
+historical comparisons. They are not automatic fallbacks and are not required
+for native 4B setup.
 
-1. Validate the dataset, windows and embedding artifacts, then encode the new
-   question with BGE once. Rank articles by maximum-window cosine similarity.
-2. Release the request's BGE instance before loading Qwen. Pack dense evidence
-   before optional reranking so a model failure still leaves source passages.
-3. If requested and at least two hits exist, load Qwen once and rerank. Invalid
-   permutations preserve the dense order. Repack evidence when the order changes.
-4. If requested, use that same instance to generate and review a cited draft.
-   Empty contexts abstain without a model call. Otherwise the generator and
-   strict source/semantic gates remain active. The default compact policy uses
-   `cited-answer-v7` and six named `claim-support-v4` review fields with
-   `axes-first-v1`. Logical review consistency and exact citations do not establish
-   factual support. Explicit 9B comparisons retain the legacy v6 policy.
+Search covers only the supplied dataset. A new question does not acquire new
+papers. Similarity scores are not relevance probabilities. The artifact loader
+verifies actual source versions, ordered mappings, normalized vectors and exact
+spans before packing evidence. Saved catalogs keep their recorded identities;
+older catalog boundaries must not be relabeled as the complete-source-sentence
+policy without rebuilding and verifying the context.
 
-The default mode loads BGE and the cached Qwen tokenizer, but no Qwen weights.
-Retrieval/tokenizer-only operation can run with `HF_HUB_OFFLINE=1`. Native MLX
-uses the prepared local artifact. The explicit Transformers comparison may need
-network access for its Metal-kernel publisher/version check even though its
-model weights load from the local cache.
+## Lifecycle and results
 
-Every completed stage checkpoints both files using atomic replacement. A run
-owns a new directory and cannot overwrite an existing request. If model loading
-or inference fails, completed search and context data remain in the report.
-The JSON records the failing stage and error. A forced process kill can leave a
-`running` checkpoint; it must not be interpreted as a completed run.
+The wrapper validates artifacts and encodes the question once, ranks articles
+by maximum-window cosine similarity, and releases BGE before Qwen. Exact
+source-findings and research prose modes have distinct contexts/contracts.
+A Qwen instance is shared only across requested model stages within that job.
+Empty evidence needs no model call. Invalid output is withheld; completed search
+and evidence remain available after a model-stage failure.
 
-Execution status and answer status are separate. `complete` means the pipeline
-finished, even if a draft failed validation. Exit codes are:
+The wrapper saves private diagnostic `report.html` and `run.json`, checkpointed
+with atomic replacement. Their raw model/diagnostic contents are different from
+the public CLI/API projection. Do not substitute those files for the public
+export intended for sharing. Existing output directories are refused. An abrupt
+kill can leave a running checkpoint; it is not a completed execution.
+
+Execution and answer status are separate. Research-wrapper exit codes are:
 
 | Code | Meaning |
 | --- | --- |
-| 0 | Completed search; any requested answer passed its format gates or abstained |
-| 1 | Setup, artifact, model or inference error |
-| 2 | CLI argument error, or a completed run whose draft failed validation; inspect `run.json` to distinguish |
-| 130 | Interrupted request with its last completed stages retained |
+| 0 | Completed execution, including explicit insufficient evidence |
+| 1 | Setup, artifact, source, model or inference failure |
+| 2 | Invalid arguments or an answer-validation failure; inspect the saved report |
+| 130 | Interrupted execution with prior checkpoints retained |
 
-Existing output directories are rejected before any inference. The HTML uses
-escaped text and code-generated PubMed links, with no scripts or remote assets.
-Search results, selected excerpts and model claims have separate sections.
-Visible generated claims are labeled research drafts requiring independent
-review. A format failure suppresses the answer while keeping the search useful.
+The shared corpus and licensed PMC subset remain research artifacts. The
+[historical observations](#historical-9b-validation) below retain their original
+models, source pools and measured costs; they are not final MVP validation.
 
 ## Historical 9B validation
 
@@ -125,7 +111,8 @@ The [shared local corpus](shared-corpus.md) now supports the same CLI with its
 transition at 277 unique articles; no new-paper fetching occurs during a request.
 A license-gated PMC full-text experiment is documented in [pmc-fulltext.md](pmc-fulltext.md).
 Abstract retrieval remains the primary workflow until full-text relevance and
-answer support receive independent assessment. A served API also remains open work.
+answer support receive independent assessment. A served API was open work at
+that time; the current [local API](local-api.md) is implemented separately.
 
 ## Historical 9B Air recovery
 

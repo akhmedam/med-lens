@@ -13,6 +13,7 @@ from unittest.mock import patch
 
 from medlens.api_service import JobService, ServiceBusy, ServiceUnavailable, UnknownRequest
 from medlens.api_server import main
+from medlens.mvp import ANSWER_STYLE, policy_snapshot
 
 HAS_HTTP = all(importlib.util.find_spec(name) is not None for name in ("fastapi", "httpx"))
 if HAS_HTTP:
@@ -36,7 +37,8 @@ class FakeService:
         self.calls.append(request)
         job = {"schema_version": 1, "request_id": "a" * 32, "status": "queued", "stage": "queued",
             "created_at": "2026-11-13T00:00:00+00:00", "updated_at": "2026-11-13T00:00:00+00:00",
-            "started_at": None, "finished_at": None, "request": asdict(request), "result": None, "error": None}
+            "started_at": None, "finished_at": None, "request": asdict(request), "result": None, "error": None,
+            "mvp_policy": policy_snapshot()}
         self.jobs[job["request_id"]] = job
         return deepcopy(job)
 
@@ -66,13 +68,14 @@ class HTTPTests(unittest.TestCase):
             self.assertIsNone(job["result"])
             self.assertEqual(service.calls[0].question, " Does agent A reduce pain? ")
             self.assertEqual(job["request"]["limit"], 100)
-            self.assertEqual(job["request"]["answer_style"], "draft")
+            self.assertEqual(job["request"]["answer_style"], ANSWER_STYLE)
+            self.assertEqual(job["mvp_policy"], policy_snapshot())
             self.assertTrue(job["request"]["generate"])
             self.assertEqual(response.headers["location"], job["links"]["self"])
             self.assertEqual(client.get(job["links"]["self"]).json(), job)
         self.assertEqual(service.closed, 1)
 
-    def test_experimental_mode_and_search_only_are_explicit(self):
+    def test_fixed_mode_and_search_only_are_explicit(self):
         service = FakeService()
         with TestClient(create_app(service)) as client:
             r = client.post("/v1/requests", json={"question": "Agent X effects?", "generate": False,
@@ -87,7 +90,8 @@ class HTTPTests(unittest.TestCase):
         invalid = [{}, {"question": " "}, {"question": "X\nY"}, {"question": 1},
             {"question": "X", "limit": True}, {"question": "X", "limit": 301},
             {"question": "X", "top_k": "2"}, {"question": "X", "generate": 1},
-            {"question": "X", "answer_style": "other"}, {"question": "X", "output_dir": "/tmp/private"},
+            {"question": "X", "answer_style": "other"}, {"question": "X", "answer_style": "draft"},
+            {"question": "X", "answer_style": "draft", "generate": False}, {"question": "X", "output_dir": "/tmp/private"},
             {"question": "X", "pubmed_query": ""}, {"question": "X" * 8001}]
         with TestClient(create_app(service)) as client:
             for payload in invalid:
@@ -97,6 +101,43 @@ class HTTPTests(unittest.TestCase):
                     self.assertEqual(r.json()["error"]["code"], "invalid_request")
                     self.assertNotIn("input", r.json()["error"])
         self.assertEqual(service.calls, [])
+
+    def test_legacy_draft_job_is_readable_without_policy_relabeling(self):
+        request_id = 'c' * 32
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archived = {'schema_version': 1, 'request_id': request_id, 'status': 'succeeded',
+                'stage': 'complete', 'created_at': '2026-11-13T00:00:00+00:00',
+                'started_at': '2026-11-13T00:00:00+00:00', 'updated_at': '2026-11-13T00:00:01+00:00',
+                'finished_at': '2026-11-13T00:00:01+00:00',
+                'request': {'question': 'Symptoms?', 'pubmed_query': None, 'limit': 100,
+                    'top_k': 10, 'generate': True, 'answer_style': 'draft'},
+                'result': {'answer': {'status': 'partial', 'claims': []}}, 'error': None}
+            job_directory = root / request_id
+            job_directory.mkdir()
+            path = job_directory / 'job.json'
+            import json
+            path.write_text(json.dumps(archived))
+            before = path.read_bytes()
+            service = JobService(root, lambda *args: self.fail('Legacy reads must not run the pipeline'))
+            with TestClient(create_app(service)) as client:
+                response = client.get('/v1/requests/' + request_id)
+                self.assertEqual(response.status_code, 200)
+                value = response.json()
+                self.assertIsNone(value['mvp_policy'])
+                self.assertEqual(value['request']['answer_style'], 'draft')
+                # A still older record without a style must not inherit today's policy.
+                archived['request'].pop('answer_style')
+                path.write_text(json.dumps(archived))
+                missing_style = client.get('/v1/requests/' + request_id)
+                self.assertEqual(missing_style.status_code, 200)
+                self.assertIsNone(missing_style.json()['request']['answer_style'])
+                self.assertIsNone(missing_style.json()['mvp_policy'])
+                path.write_bytes(before)
+                rejected = client.post('/v1/requests', json={'question': 'Symptoms?', 'answer_style': 'draft'})
+                self.assertEqual(rejected.status_code, 422)
+            self.assertEqual(path.read_bytes(), before)
+            self.assertEqual(service.health()['status'], 'closed')
 
     def test_duplicate_nonfinite_and_non_utf8_json_rejected(self):
         service = FakeService()
@@ -159,7 +200,11 @@ class HTTPTests(unittest.TestCase):
             body = schema["paths"]["/v1/requests"]["post"]["requestBody"]["content"]["application/json"]["schema"]
             self.assertFalse(body["additionalProperties"])
             self.assertEqual(body["required"], ["question"])
-            self.assertEqual(body["properties"]["answer_style"]["default"], "draft")
+            self.assertEqual(body["properties"]["answer_style"]["default"], ANSWER_STYLE)
+            self.assertEqual(body["properties"]["answer_style"]["const"], ANSWER_STYLE)
+            self.assertEqual(body["properties"]["limit"]["default"], policy_snapshot()['source']['candidate_limit']['default'])
+            self.assertEqual(body["properties"]["top_k"]["default"], policy_snapshot()['retrieval']['top_k']['default'])
+            self.assertIn('mvp_policy', schema['components']['schemas']['JobResponse']['properties'])
             self.assertNotIn("model_dir", body["properties"])
             self.assertEqual(schema["components"]["schemas"]["JobResponse"]["properties"]["status"]["enum"],
                 ["queued", "running", "succeeded", "failed", "interrupted"])

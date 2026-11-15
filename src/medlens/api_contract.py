@@ -11,6 +11,8 @@ import re
 from typing import Optional
 
 from .pubmed_query import plan_query
+from .mvp import (ANSWER_STYLE, DEFAULT_CANDIDATE_LIMIT, DEFAULT_TOP_K,
+                  MIN_CANDIDATE_LIMIT, MAX_CANDIDATE_LIMIT, MIN_TOP_K, MAX_TOP_K)
 
 
 class RequestValidationError(ValueError):
@@ -21,20 +23,20 @@ class RequestValidationError(ValueError):
 class SearchRequest:
     question: str
     pubmed_query: Optional[str] = None
-    limit: int = 100
-    top_k: int = 10
+    limit: int = DEFAULT_CANDIDATE_LIMIT
+    top_k: int = DEFAULT_TOP_K
     generate: bool = True
-    answer_style: str = 'draft'
+    answer_style: str = ANSWER_STYLE
 
     def __post_init__(self):
-        if type(self.limit) is not int or not 1 <= self.limit <= 300:
-            raise RequestValidationError('limit must be an integer between 1 and 300')
-        if type(self.top_k) is not int or not 1 <= self.top_k <= 10:
-            raise RequestValidationError('top_k must be an integer between 1 and 10')
+        if type(self.limit) is not int or not MIN_CANDIDATE_LIMIT <= self.limit <= MAX_CANDIDATE_LIMIT:
+            raise RequestValidationError(f'limit must be an integer between {MIN_CANDIDATE_LIMIT} and {MAX_CANDIDATE_LIMIT}')
+        if type(self.top_k) is not int or not MIN_TOP_K <= self.top_k <= MAX_TOP_K:
+            raise RequestValidationError(f'top_k must be an integer between {MIN_TOP_K} and {MAX_TOP_K}')
         if type(self.generate) is not bool:
             raise RequestValidationError('generate must be a boolean')
-        if not isinstance(self.answer_style, str) or self.answer_style not in {'draft', 'source-findings'}:
-            raise RequestValidationError('answer_style must be draft or source-findings')
+        if not isinstance(self.answer_style, str) or self.answer_style != ANSWER_STYLE:
+            raise RequestValidationError(f'answer_style must be {ANSWER_STYLE} for the MVP; draft is research-only')
         try:
             # Reuse the real limits and lexical validation. Do not replace the
             # caller's question with the transformed PubMed candidate query.

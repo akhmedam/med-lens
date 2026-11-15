@@ -1,5 +1,11 @@
 # Native MLX inference on Apple Silicon
 
+> Current application policy: [source-findings-only MVP](mvp.md), selected in
+> [ADR 0007](adr/0007-unified-mvp-policy.md). The pinned 4B asset/runtime setup
+> below still applies. Prose draft/review contracts, legacy model comparisons and
+> their measurements are research/history; they are not public answer-format
+> choices in `medlens` or the local API.
+
 The live and local request CLIs default to the pinned **Qwen3.5-4B community MLX
 artifact**, selected by the user for development. They produce research drafts
 that require human review. The [model decision](adr/0005-qwen4b-development-default.md)
@@ -15,7 +21,7 @@ model substitution.
 ## Prepare the default 4B profile
 
 From the checkout, after creating the main Python 3.11 environment and installing
-`requirements-macos-arm64-day19.lock`:
+`requirements-mvp-macos-arm64.lock` (see [MVP setup](../README.md#setup)):
 
 ```sh
 .venv/bin/python -m venv .cache/venvs/mlx

@@ -1,5 +1,12 @@
 # Scope and corpus
 
+> Historical initial scope and evaluation target. The depression/anxiety
+> restriction and initial ranking/interface options are superseded by
+> [ADR 0006](0006-biomedical-scope-and-human-reference.md) and the current
+> [MVP policy in ADR 0007](0007-unified-mvp-policy.md). The original decision is
+> retained below; its planned annotation counts are not a completed-reference
+> claim. See the [supported application](../mvp.md) for current operation.
+
 Status: accepted
 
 ## Context
