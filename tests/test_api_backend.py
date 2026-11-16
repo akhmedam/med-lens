@@ -56,7 +56,7 @@ class BackendTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout.strip(), "lazy")
         with patch.object(api_backend, "_load_pipeline") as load:
-            api_backend.make_local_runner(self.root, self.cache)
+            api_backend.make_inline_runner(self.root, self.cache)
         load.assert_not_called()
 
     def test_parameters_assets_callbacks_and_default_model_are_forwarded(self):
@@ -87,7 +87,7 @@ class BackendTests(unittest.TestCase):
         self.deps.run_live_question.side_effect = live
         with patch.object(api_backend, "_load_pipeline", return_value=self.deps), \
              patch.object(api_backend, "_release_mps", release):
-            result = api_backend.make_local_runner(self.root, self.cache)(request, output, progress)
+            result = api_backend.make_inline_runner(self.root, self.cache)(request, output, progress)
         self.assertEqual(result, {"status": "complete"})
         self.deps.runtime_factory.assert_called_once_with("mlx", model="4b", root=self.root)
         self.deps.PubMedClient.assert_called_once_with()
@@ -113,7 +113,7 @@ class BackendTests(unittest.TestCase):
             runtime.close()
             return {"status": "complete", "runtime_closed": True, "runtime_load_count": 1}
         self.deps.run_live_question.side_effect = live
-        runner = api_backend.make_local_runner(self.root, self.cache)
+        runner = api_backend.make_inline_runner(self.root, self.cache)
         with patch.object(api_backend, "_load_pipeline", return_value=self.deps):
             runner(Request(), self.root / "first" / "run")
             runner(Request(), self.root / "second" / "run")
@@ -139,7 +139,7 @@ class BackendTests(unittest.TestCase):
             return {'status': 'complete', 'stage': 'complete', 'runtime_load_count': 0,
                 'answer': {'status': 'not_requested', 'claims': []}}
         self.deps.run_live_question.side_effect = live
-        runner = api_backend.make_local_runner(self.root, self.cache)
+        runner = api_backend.make_inline_runner(self.root, self.cache)
         self.deps.PubMedClient.assert_not_called()
         with patch.object(api_backend, '_load_pipeline', return_value=self.deps):
             first = runner(Request(generate=False), self.root / 'first' / 'run')
@@ -161,7 +161,7 @@ class BackendTests(unittest.TestCase):
         link = self.root / "dangling"
         link.symlink_to(self.root / "missing-target", target_is_directory=True)
         with patch.object(api_backend, "_load_pipeline") as load:
-            runner = api_backend.make_local_runner(self.root, self.cache)
+            runner = api_backend.make_inline_runner(self.root, self.cache)
             for path in (output, link):
                 with self.subTest(path=path.name), self.assertRaises(FileExistsError):
                     runner(Request(), path)
@@ -174,7 +174,7 @@ class BackendTests(unittest.TestCase):
         progress = Mock()
         output = self.root / "job" / "run"
         with patch.object(api_backend, "_load_pipeline", return_value=self.deps):
-            result = api_backend.make_local_runner(self.root, self.cache)(Request(), output, progress)
+            result = api_backend.make_inline_runner(self.root, self.cache)(Request(), output, progress)
         self.assertEqual((result["status"], result["stage"], result["runtime_load_count"]), ("failed", "setup", 0))
         self.assertEqual(result["error"], {"type": "FileNotFoundError", "message": "fixture missing BGE manifest", "stage": "setup"})
         self.assertEqual(json.loads((output / "run.json").read_text()), result)
@@ -186,7 +186,7 @@ class BackendTests(unittest.TestCase):
 
     def test_missing_dependency_is_a_setup_failure_and_artifact_io_is_optional(self):
         with patch.object(api_backend, "_load_pipeline", side_effect=ImportError("fixture dependency unavailable")):
-            runner = api_backend.make_local_runner(self.root, self.cache)
+            runner = api_backend.make_inline_runner(self.root, self.cache)
             output = self.root / "import-failure" / "run"
             result = runner(Request(), output)
             self.assertEqual(result["error"]["type"], "ImportError")
@@ -205,7 +205,7 @@ class BackendTests(unittest.TestCase):
         self.deps.run_live_question.return_value = report
         with patch.object(api_backend, "_load_pipeline", return_value=self.deps), \
              patch.object(api_backend, "_persist_setup_report") as persist:
-            result = api_backend.make_local_runner(self.root, self.cache)(Request(), self.root / "run")
+            result = api_backend.make_inline_runner(self.root, self.cache)(Request(), self.root / "run")
         self.assertIs(result, report)
         persist.assert_not_called()
 
@@ -219,7 +219,7 @@ class BackendTests(unittest.TestCase):
         with patch.object(api_backend, "_load_pipeline", return_value=self.deps), \
              patch.object(api_backend, "_persist_setup_report") as persist:
             with self.assertRaisesRegex(RuntimeError, "unexpected live failure"):
-                api_backend.make_local_runner(self.root, self.cache)(Request(), output)
+                api_backend.make_inline_runner(self.root, self.cache)(Request(), output)
         persist.assert_not_called()
         self.assertEqual((output / "run.json").read_text(), "partial live checkpoint")
 
@@ -245,7 +245,7 @@ class BackendTests(unittest.TestCase):
         with patch.object(api_backend, "_load_pipeline", return_value=deps), \
              patch.object(api_backend, "_release_mps", release), \
              patch.object(live, "sample_memory", side_effect=lambda stage: {"stage": stage, "process_peak_rss_bytes": 0}):
-            result = api_backend.make_local_runner(self.root, self.cache)(
+            result = api_backend.make_inline_runner(self.root, self.cache)(
                 Request(question=QUESTION, generate=False), output, progress)
         self.assertEqual(result['status'], 'complete')
         self.assertTrue(result['live']['fresh_search_complete'])
@@ -262,7 +262,7 @@ class BackendTests(unittest.TestCase):
 
     def test_huggingface_environment_matches_cli_and_is_set_only_at_job_start(self):
         with patch.dict(os.environ, {"HF_HOME": "/fixture/hf", "HF_HUB_DISABLE_IMPLICIT_TOKEN": "0"}):
-            runner = api_backend.make_local_runner(self.root, self.cache)
+            runner = api_backend.make_inline_runner(self.root, self.cache)
             self.assertEqual(os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN"], "0")
             with patch.object(api_backend, "_load_pipeline", return_value=self.deps):
                 runner(Request(), self.root / "first")
@@ -271,7 +271,7 @@ class BackendTests(unittest.TestCase):
         with patch.dict(os.environ, {}, clear=False):
             os.environ.pop("HF_HOME", None)
             with patch.object(api_backend, "_load_pipeline", return_value=self.deps):
-                api_backend.make_local_runner(self.root, self.cache)(Request(), self.root / "second")
+                api_backend.make_inline_runner(self.root, self.cache)(Request(), self.root / "second")
             self.assertEqual(os.environ["HF_HOME"], str(self.root / ".cache/huggingface"))
 
 

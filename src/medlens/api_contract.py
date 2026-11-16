@@ -325,5 +325,11 @@ def public_report(report):
     _texts(report, result, ('request_id', 'stage', 'answer_style', 'created_at', 'finished_at'), metadata=True)
     _texts(report, result, ('question',))
     _numbers(report, result, ('request_seconds',), nonnegative=True)
-    _booleans(report, result, ('generate', 'runtime_closed', 'worker_reaped'))
+    _booleans(report, result, ('generate', 'runtime_closed', 'worker_reaped', 'deadline_exceeded'))
+    native = _mapping(report.get('native_worker_cleanup'))
+    if native:
+        result['native_worker_cleanup'] = {}
+        _booleans(native, result['native_worker_cleanup'],
+            ('confirmed', 'worker_reaped', 'group_absent', 'forced'))
+        _numbers(native, result['native_worker_cleanup'], ('cleanup_seconds',), nonnegative=True)
     return result

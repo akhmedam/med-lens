@@ -4,6 +4,8 @@ The loopback API exposes the [supported MVP](mvp.md): fresh PubMed titles and
 abstracts → BGE/MPS Dense ranking → Qwen3.5-4B/MLX source-findings cards. It uses
 the same policy as the terminal CLI. Submission returns an ID immediately;
 clients poll progress and the structured result. One job may run at a time.
+The application policy is `medlens-mvp-source-findings-v2`, with selector
+`source-findings-task-scoped-v5-h4a-task-aware-specific-comparison`.
 
 ## Start
 
@@ -69,6 +71,8 @@ submitted unchanged; no condition or disease filter is appended.
 
 Invalid parameters return `422 invalid_request`, malformed JSON `400`, unsupported
 content type `415`, and an oversized body `413`. These failures allocate no job.
+An HTTP body that exceeds its ingress budget returns `408 request_timeout`
+before admission.
 `409` includes `Retry-After`; retry explicitly after the active job ends. A
 stopping or unavailable service rejects new work with `503`.
 
@@ -83,6 +87,11 @@ Job `status` tracks execution. `result.status` preserves pipeline status, while
 contain a `partial` quotation display, an insufficient-evidence answer or a
 search-only result. A validation failure produces a failed job with
 `answer_validation_failed`; available articles/evidence remain in `result`.
+
+An admitted job exceeding the shared deadline fails with `search_timeout`. Its
+answer status is `not_completed`, with no completed findings. This failure is
+distinct from a completed `insufficient_evidence` selection and is never counted
+as an evidence abstention. Available partial artifacts remain diagnostic output.
 
 Qwen selects exact source quotations rather than writing factual synthesis.
 Cards retain study context, findings, source titles, citations and applicability
@@ -101,23 +110,33 @@ be disjoint.
 
 ## Lifetime and shutdown
 
-Admission is reserved before scheduling. The lane covers source acquisition,
-embedding work, generation and cleanup. A pipeline `complete` checkpoint can
-precede cleanup; the job stays running until its runner returns. Health/status
-remain available during computation.
+The request clock starts at HTTP ingress, before body validation and admission.
+The 60-second policy allocates 55 seconds to work, three to cleanup and two to
+terminal delivery. The supervisor owns a fresh process group per accepted job,
+including the pipeline and its native MLX descendant. At the work deadline it
+terminates the group and confirms reaping before releasing the admission lane.
+A pipeline `complete` checkpoint can precede cleanup; health and status remain
+available while the parent supervises the job.
 
-Each job creates a fresh runtime factory. Empty/search-only cases need no Qwen
-load. One lazy PubMed client preserves the 2.5 requests/second limiter across
-sequential jobs; it is not an IP-wide coordinator. Unchanged passage vectors use
-the immutable cache. Completed result payloads leave memory and are read from
-disk on demand.
+Empty/search-only jobs need no Qwen load. Each worker has its own PubMed client
+and request limiter; the parent also spaces sequential workers. This is not an
+IP-wide coordinator. Unchanged passage vectors persist in the immutable disk
+cache, while BGE/Qwen process memory ends with the request. Completed public
+result payloads are read from disk on demand.
+
+The public envelope records `timing.terminal_after_cleanup_seconds` and cleanup
+confirmation. A separate `delivery_observation` records a completed terminal ASGI
+body send; it does not establish remote client receipt or polling delay. Measure
+those at the client for complete-request acceptance. See
+[request reliability](request-reliability.md) for timing boundaries and limits.
 
 Closing an HTTP connection does not cancel an accepted job. Ctrl+C stops
 admission and waits for the current job and runtime cleanup. Uncertain cleanup
 or storage failure makes the service unavailable. Completed jobs remain readable
 after restart; abrupt termination does not resume unfinished jobs automatically.
-Hard cancellation and global coordination between separate application processes
-are outside this MVP.
+There is no manual cancel endpoint or global admission coordination between
+separate application processes. Automatic deadline termination remains active
+while the service drains accepted work.
 
 ## Historical API integration evidence
 

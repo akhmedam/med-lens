@@ -85,7 +85,7 @@ def _exit_code(job):
 
 
 def run_session(service, options, *, question=None, read=None, output=None,
-                poll_interval=0.25):
+                poll_interval=0.25, submission_started=None):
     """Own a single service until idle exit or graceful drain after Ctrl+C.
 
     The injectable input/output boundary keeps tests independent of models/network.
@@ -143,6 +143,8 @@ def run_session(service, options, *, question=None, read=None, output=None,
                         say('Неизвестная команда. /help — справка.')
                     continue
                 question = line
+            submitted_at = (submission_started if one_shot and submission_started is not None
+                            else time.monotonic())
             try:
                 request = SearchRequest.from_payload({'question': question, **options})
             except RequestValidationError as exc:
@@ -151,7 +153,9 @@ def run_session(service, options, *, question=None, read=None, output=None,
                     return 2
                 continue
             try:
-                job = service.submit(request)
+                submit_started = getattr(service, 'submit_started', None)
+                job = (submit_started(request, submitted_at) if callable(submit_started)
+                       else service.submit(request))
             except ServiceBusy:
                 say('Сервис занят другим запросом. Завершите его перед новым запуском.')
                 return 1
@@ -159,7 +163,7 @@ def run_session(service, options, *, question=None, read=None, output=None,
                 say('Сервис недоступен. Проверьте локальные артефакты и перезапустите CLI.')
                 return 1
             say('Запрос: ' + safe_text(job['request_id']))
-            started = time.monotonic()
+            started = submitted_at
             previous = None
             while True:
                 try:
@@ -176,6 +180,12 @@ def run_session(service, options, *, question=None, read=None, output=None,
                 time.sleep(poll_interval)
             last_job = job
             say(render_result(job))
+            observe = getattr(service, 'observe_delivery', None)
+            if callable(observe):
+                try:
+                    observe(job['request_id'], submitted_at, scope='cli-output-flushed')
+                except OSError:
+                    say('Не удалось сохранить наблюдение времени выдачи результата.')
             if one_shot:
                 return _exit_code(job)
             if not service.health()['accepting_requests']:
@@ -192,6 +202,7 @@ def run_session(service, options, *, question=None, read=None, output=None,
 
 
 def main(argv=None):
+    invocation_started = time.monotonic()
     parser = argparse.ArgumentParser(description='Поиск MedLens и подборка цитат на macOS/Apple Silicon.')
     parser.add_argument('--question', help='Один вопрос на английском; затем выход вместо диалога')
     parser.add_argument('--limit', type=int, default=DEFAULT_CANDIDATE_LIMIT, help='Кандидатов PubMed: 1–300 (100)')
@@ -224,7 +235,8 @@ def main(argv=None):
     except OSError:
         parser.error('Не удалось создать хранилище запросов. Проверьте --root и --storage-dir.')
     try:
-        return run_session(service, options, question=args.question)
+        return run_session(service, options, question=args.question,
+                           submission_started=invocation_started if args.question is not None else None)
     except BrokenPipeError:
         return 1
 

@@ -3,9 +3,12 @@
 import hashlib
 import json
 import os
+import signal
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
+import time
 from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
@@ -130,7 +133,95 @@ class MlxFixture(unittest.TestCase):
         return {"messages": messages, "input_tokens": len(self.ids), "prompt_sha256": _digest(messages)}
 
 
+class MlxCleanupRaceTests(unittest.TestCase):
+    def runtime_with_process(self, process):
+        runtime = object.__new__(MlxRuntime)
+        runtime._closed = False
+        runtime._cleanup_confirmed = False
+        runtime._owns_process_group = True
+        runtime._process = process
+        runtime._stderr = Mock()
+        runtime._lock = __import__('threading').RLock()
+        def finish_mock():
+            # A mock PID must never escape patched signal calls via __del__.
+            runtime._closed = True
+            runtime._cleanup_confirmed = True
+        self.addCleanup(finish_mock)
+        return runtime
+
+    def test_permission_error_after_eof_is_resolved_only_by_actual_reap(self):
+        process = Mock(pid=12345, stdin=Mock(), stdout=Mock())
+        process.poll.return_value = None
+        process.wait.return_value = 0
+        runtime = self.runtime_with_process(process)
+        with patch.object(runtime_module.os, 'killpg', side_effect=PermissionError('Darwin exit race')):
+            runtime._shutdown()
+        process.wait.assert_any_call(timeout=.05)
+        process.stdin.close.assert_called_once_with()
+        process.stdout.close.assert_called_once_with()
+        runtime._stderr.close.assert_called_once_with()
+        self.assertTrue(runtime._closed)
+        self.assertTrue(runtime._cleanup_confirmed)
+
+    def test_permission_error_for_live_worker_remains_uncertain_and_closes_fds(self):
+        process = Mock(pid=12345, stdin=Mock(), stdout=Mock())
+        process.poll.return_value = None
+        process.wait.side_effect = subprocess.TimeoutExpired('fixture-native', .05)
+        runtime = self.runtime_with_process(process)
+        with patch.object(runtime_module.os, 'killpg', side_effect=PermissionError('denied')):
+            with self.assertRaises(PermissionError):
+                runtime._shutdown()
+        process.stdin.close.assert_called_once_with()
+        process.stdout.close.assert_called_once_with()
+        runtime._stderr.close.assert_called_once_with()
+
+    def test_close_retries_unknown_cleanup_and_only_succeeds_after_actual_reap(self):
+        process = Mock(pid=12345, stdin=Mock(), stdout=Mock())
+        process.poll.return_value = None
+        process.wait.side_effect = subprocess.TimeoutExpired('fixture-native', .05)
+        runtime = self.runtime_with_process(process)
+        with patch.object(runtime_module.os, 'killpg', side_effect=PermissionError('denied')):
+            with self.assertRaises(PermissionError):
+                runtime._shutdown()
+            self.assertTrue(runtime._closed)
+            self.assertFalse(runtime._cleanup_confirmed)
+            # The pipeline's finally-close must not turn the same live failure
+            # into runtime_closed=True merely because generation was disabled.
+            with self.assertRaises(PermissionError):
+                runtime.close()
+            self.assertFalse(runtime._cleanup_confirmed)
+        process.poll.return_value = 0
+        process.wait.side_effect = None
+        process.wait.return_value = 0
+        runtime.close()
+        self.assertTrue(runtime._cleanup_confirmed)
+        calls = process.wait.call_count
+        runtime.close()
+        self.assertEqual(process.wait.call_count, calls)
+
+
 class MlxProtocolTests(MlxFixture):
+    def test_application_mlx_worker_inherits_owned_request_group_and_is_reaped(self):
+        with patch.dict(os.environ, {"MEDLENS_REQUEST_PROCESS_GROUP": str(os.getpgrp()),
+                "MEDLENS_REQUEST_WORK_DEADLINE": str(time.monotonic() + 5)}):
+            runtime = self.runtime()
+        self.assertFalse(runtime._owns_process_group)
+        self.assertEqual(os.getpgid(runtime._process.pid), os.getpgrp())
+        runtime.close()
+        self.assertIsNotNone(runtime._process.returncode)
+        self.assertEqual(os.getpgrp(), os.getpgid(os.getpid()))
+
+    def test_application_load_uses_remaining_request_budget(self):
+        self.mode({"behavior": "load_timeout"})
+        started = time.monotonic()
+        with patch.dict(os.environ, {"MEDLENS_REQUEST_PROCESS_GROUP": str(os.getpgrp()),
+                "MEDLENS_REQUEST_WORK_DEADLINE": str(started + .15)}):
+            with self.assertRaises(TimeoutError):
+                self.runtime(load_timeout=180)
+        self.assertLess(time.monotonic() - started, 2)
+        pid = int((self.model / 'worker.pid').read_text())
+        with self.assertRaises(ProcessLookupError):os.kill(pid, 0)
+
     def test_model_profile_metadata_and_generation_cache_identity(self):
         runtime = self.runtime()
         self.assertEqual(runtime.answer_policy, 'legacy-v6')

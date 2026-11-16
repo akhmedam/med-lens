@@ -52,7 +52,7 @@ def run_question(index, question, *, encoder_factory, tokenizer, runtime_factory
     for name in ("generation/source_scope.py", "generation/source_findings.py"):
         path = Path(__file__).parent / name
         implementation[name] = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
-    context_config = (ContextConfig(selection_mode="results-methods", max_articles=3)
+    context_config = (ContextConfig(selection_mode="results-methods", max_articles=1)
         if answer_style == "source-findings" else None)
     identity = {"question": question, "dataset_id": index.dataset.manifest["dataset_id"],
         "window_artifact_id": index.window_manifest["artifact_id"],

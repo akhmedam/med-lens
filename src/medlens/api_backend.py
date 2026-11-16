@@ -59,7 +59,7 @@ def _persist_setup_report(output, report):
         report["artifact_error"] = _artifact_error(exc)
 
 
-def make_local_runner(root, cache_root):
+def make_inline_runner(root, cache_root):
     """Return a per-job adapter without importing ML code or loading assets.
 
     Each call creates a new native runtime factory. The existing live pipeline
@@ -110,3 +110,9 @@ def make_local_runner(root, cache_root):
             progress=progress, release_accelerator=_release_mps)
 
     return run
+
+
+def make_local_runner(root, cache_root):
+    """Create the shipping supervisor; all tensor/model imports stay in its child."""
+    from .request_worker import IsolatedRunner
+    return IsolatedRunner(root, cache_root)

@@ -13,6 +13,8 @@ and measurements; they do not select the current application policy.
 | Candidates and display | Default 100 candidates and top-10 articles; request limits 1–300 and 1–10 |
 | Ranking | Pinned BGE-base-en-v1.5 on MPS; maximum-window cosine similarity per article |
 | Answer format | Source-findings cards: exact study-context and finding quotations |
+| Application / selector policy | `medlens-mvp-source-findings-v2` / `source-findings-task-scoped-v5-h4a-task-aware-specific-comparison` |
+| Request budget | 55 s work + 3 s cleanup + 2 s delivery reserve, starting before validation/admission |
 | Generator | Pinned Qwen3.5-4B four-bit artifact in the isolated MLX runtime |
 | Reranking and fallback | No additional reranker; no automatic model/backend or stale-source fallback |
 | Verification | Exact quotation/source binding; no independent semantic or clinical verification |
@@ -54,35 +56,78 @@ Unchanged passage inputs reuse verified cached BGE vectors. New or changed
 inputs are encoded. Requests retain source snapshots and exact text versions;
 an upstream failure is not replaced with an older successful collection.
 
-Qwen selects source quotations rather than writing a factual synthesis. Cards
-retain source titles, study context, findings, citations and applicability
+Qwen selects source quotations rather than writing a factual synthesis. One
+bounded call selects exact sentence IDs and an applicability decision for the
+first Dense-ranked article, using at most two fragments; ranked display still
+retains top-10. The local measured candidate also requires recognized primary-null
+findings and applies bounded postselection endpoint checks. These vetoes preserve
+uncertainty and do not certify clinical support. Program checks exclude recognized
+scope mismatches and objective- or
+procedure-only findings; they do not establish positive scientific support.
+Cards retain source titles, study context, findings, citations and applicability
 cautions. A nonempty answer remains `partial`: exact quotation identity does
 not certify support for the question or completeness. `independent_validation`
 and semantic-support verification remain false. Empty evidence and scope
 exclusions produce an explicit insufficient-evidence result; malformed output
 is withheld. Execution status and answer status are separate.
 
-One process runs one accepted job at a time. BGE and Qwen phases are sequential.
-The runtime is released before the next terminal question is accepted. Ctrl+C
-during work requests exit after that job and cleanup, rather than hard
-cancellation. Public reports exclude raw prompts, runtime paths and diagnostic
-exceptions; private run artifacts remain local.
+One application instance accepts one job at a time. Each request runs in a fresh
+process group, with sequential BGE and Qwen phases. Work stops at the shared
+55-second boundary; up to three seconds remain for process termination/reaping
+and two for terminal delivery. Admission waits for confirmed cleanup and stops
+if cleanup is uncertain. Ctrl+C requests exit after the active job and cleanup;
+the request deadline still applies. Public reports exclude raw prompts, runtime
+paths and diagnostic exceptions; private run artifacts remain local.
 
-## Acceptance for the next confirmation
+A deadline failure has execution status `failed` and answer status
+`not_completed`. It is not `insufficient_evidence` and cannot count as a
+scientifically appropriate abstention. The enforced work/cleanup boundaries do
+not establish a client-latency SLA: HTTP polling, response receipt and CLI output
+are measured explicitly. See [request reliability](request-reliability.md).
 
-The owner-defined gates in the [human-confirmation protocol](human-confirmation.md)
-are at least **10 useful selections out of all 20 planned queries**, unnecessary
-abstentions at most **50% of human-confirmed answerable queries**, and **60 seconds
-maximum for every full request**, including network, model loading, delivery and
-cleanup. A zero answerability denominator is not an automatic pass. Unknowns
-remain distinct, and the existing critical scope-error blocker is unchanged.
+## Quality objective and separate acceptance requirements
 
-The new source-reference form is blank and contains no Qwen answers. Human
-judgments stay quarantined until the future candidate is frozen. That candidate
-then receives one full live pass; changed source items require a manual delta
-reference and changed reviewed pools require answerability reconfirmation before
-quality scoring. The current service does not enforce a hard sixty-second
-cancellation budget; implementing and validating that requirement remains work.
+Under the [2026-11-16 quality-policy amendment](usefulness-research.md#acceptance-criteria),
+the quality objective is **the best measured quality among the sequentially tested
+justified hypotheses**. Report useful-selection counts and denominators, explicit
+unknowns, null effects, regressions and failures. There is **no minimum useful
+percentage or count for MVP readiness**; this change does not establish readiness.
+
+Separate requirements remain unnecessary abstentions at most **50% of
+reference-confirmed answerable queries** and **60 seconds maximum for every full
+request**, including network, model loading, delivery and cleanup. A zero
+answerability denominator is not an automatic pass. Unknowns remain distinct;
+the source-quality facets and existing critical scope-error blocker are unchanged.
+The [human-confirmation record](human-confirmation.md) labels its original useful
+floor as historical. Frozen plans, results and reviews are not rewritten.
+
+The original human source-reference form remains blank and preserved. A separate
+prior AI-origin reference contains 208 article/query judgments. Those judgments
+do not automatically cover newly fetched text versions. The owner has also
+delegated the later actual-output review to AI; neither source nor output
+judgments are represented as human-authored or independently human-validated.
+
+The candidate must be frozen before its live confirmation pass. Reconcile changed
+source items against the reference before reviewing actual outputs, and reassess
+answerability when the reviewed source pool changes. Preserve the true AI
+provenance of any updated reference and output review. Request isolation now
+enforces the shared budget described above; actual complete-request observations
+and failure counts remain separate acceptance evidence. Engineering checks do
+not infer semantic grades.
+
+The [actual AI confirmation](request-quality-validation.md) is now complete.
+Its overall gate failed; timing and cleanup passed. The preserved source-only
+reference and separate actual-output review keep uncertainty and acquisition
+failures explicit. This result does not approve release.
+
+The subsequent [sequential usefulness study and new twenty-query AI diagnostic](usefulness-research.md)
+retained H6 as the best measured development compromise. New source-only
+answerability was frozen before output review. Useful selections were 6/20
+(1 unknown); unnecessary abstentions were 5/16 (31.25%, bounds 31.25–35.29%).
+All twenty full CLI requests and cleanup checks passed, with maximum 41.44 s.
+Four confirmed comparison/outcome errors and two uncertain scope cases keep
+release unaccepted. Code was not tuned on these new outputs; the next behavior
+change would need a separately unused confirmation round.
 
 ## Research and remaining work
 
@@ -96,8 +141,11 @@ Windows/Linux, CUDA, CPU-only Qwen, other model/backend profiles, PMC full text,
 a larger measured Medium corpus, ANN infrastructure and a web interface are
 outside this MVP. Their existing experiments remain available as research.
 
-Known selection omissions, uncertain source applicability and unreliable
-semantic-relation judgments remain limitations. The tuned development AI
+Known selection omissions, false abstentions, uncertain source applicability and
+unreliable semantic-relation judgments remain limitations. Exact citations do
+not resolve missing adult eligibility, broader study populations, inconsistent
+source descriptions or whether a placebo arm represents withdrawal of an
+existing regimen. The tuned development AI
 assessment is not an independent human reference. Final source-bound quality
 assessment, disclosed reference coverage and unresolved defects remain release
 conditions; changing the interface does not satisfy them. Clean model setup

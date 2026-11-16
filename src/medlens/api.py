@@ -1,7 +1,9 @@
 """Local HTTP transport for the bounded research-job service."""
 
 from contextlib import asynccontextmanager
+import asyncio
 import json
+import time
 from pathlib import Path
 from typing import Literal
 
@@ -13,6 +15,7 @@ from starlette.exceptions import HTTPException
 
 from .api_contract import RequestValidationError, SearchRequest
 from .api_service import JobService, ServiceBusy, ServiceUnavailable, UnknownRequest
+from .request_deadline import REQUEST_TIMEOUT_SECONDS, REQUEST_DELIVERY_RESERVE_SECONDS
 from .pubmed_query import MAX_OVERRIDE_CHARS, MAX_QUESTION_CHARS
 from .mvp import (ANSWER_STYLE, DEFAULT_CANDIDATE_LIMIT, DEFAULT_TOP_K,
                   MIN_CANDIDATE_LIMIT, MAX_CANDIDATE_LIMIT, MIN_TOP_K, MAX_TOP_K)
@@ -61,6 +64,7 @@ class JobResponse(BaseModel):
         description="Frozen application policy for this job; null for jobs predating policy records.")
     result: dict | None = None
     error: JobError | None = None
+    timing: dict | None = None
     links: dict[str, str]
 
 
@@ -129,6 +133,32 @@ def _links(job):
     return {**job, "links": {"self": "/v1/requests/" + job["request_id"]}}
 
 
+class _RequestTimingMiddleware:
+    """Observe server ingress and completed terminal ASGI writes, without polling claims."""
+
+    def __init__(self, app, service):
+        self.app, self.service = app, service
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            return await self.app(scope, receive, send)
+        state = scope.setdefault("state", {})
+        state["medlens_submission_started"] = time.monotonic()
+        async def observed_send(message):
+            await send(message)
+            request_id = state.get("medlens_terminal_delivery_id")
+            observe = getattr(self.service, "observe_delivery", None)
+            if (request_id and callable(observe) and message["type"] == "http.response.body"
+                    and not message.get("more_body", False)):
+                try:
+                    await run_in_threadpool(observe, request_id, scope="http-asgi-body-sent")
+                except (OSError, ValueError, UnknownRequest):
+                    # A response already sent cannot be changed into a second
+                    # response merely because its timing journal is unavailable.
+                    pass
+        await self.app(scope, receive, observed_send)
+
+
 def create_app(service=None, *, root=None, storage_root=None, cache_root=None):
     """Create one process-local service; health and submission do not load models."""
     if service is None:
@@ -152,6 +182,7 @@ def create_app(service=None, *, root=None, storage_root=None, cache_root=None):
         description="Bounded live PubMed research. Answers retain their experimental verification status.",
         lifespan=lifespan, docs_url=None, redoc_url=None)
     app.state.job_service = service
+    app.add_middleware(_RequestTimingMiddleware, service=service)
 
     @app.exception_handler(HTTPException)
     async def protocol_error(request, exc):
@@ -173,11 +204,21 @@ def create_app(service=None, *, root=None, storage_root=None, cache_root=None):
             413: {"description": "Body exceeds 256 KiB"}, 415: {"description": "Expected JSON"},
             422: {"description": "Invalid parameters"}, 503: {"description": "Service is stopping or unavailable"}})
     async def submit(request: Request, response: Response):
-        parsed, failure = await _request_body(request)
+        submitted_at = request.state.medlens_submission_started
+        try:
+            # A slow/incomplete body cannot consume an unbounded pre-admission
+            # interval and then reset the accepted request's work budget.
+            async with asyncio.timeout(max(0.0, submitted_at + REQUEST_TIMEOUT_SECONDS
+                    - REQUEST_DELIVERY_RESERVE_SECONDS - time.monotonic())):
+                parsed, failure = await _request_body(request)
+        except TimeoutError:
+            return _error(408, "request_timeout", "The request body time budget was exceeded.")
         if failure is not None:
             return failure
         try:
-            job = await run_in_threadpool(service.submit, parsed)
+            submit_started = getattr(service, "submit_started", None)
+            job = (await run_in_threadpool(submit_started, parsed, submitted_at)
+                if callable(submit_started) else await run_in_threadpool(service.submit, parsed))
         except ServiceBusy:
             return _error(409, "service_busy", "One research request is already active.", headers={"Retry-After": "1"})
         except ServiceUnavailable:
@@ -189,7 +230,7 @@ def create_app(service=None, *, root=None, storage_root=None, cache_root=None):
         return _links(job)
 
     @app.get("/v1/requests/{request_id}", response_model=JobResponse)
-    async def get_request(request_id: str, response: Response):
+    async def get_request(request_id: str, response: Response, request: Request):
         try:
             value = await run_in_threadpool(service.get, request_id)
         except UnknownRequest:
@@ -197,6 +238,8 @@ def create_app(service=None, *, root=None, storage_root=None, cache_root=None):
         except OSError:
             return _error(503, "storage_unavailable", "The stored request is unavailable.")
         response.headers["Cache-Control"] = "no-store"
+        if value["status"] in {"succeeded", "failed", "interrupted"}:
+            request.state.medlens_terminal_delivery_id = request_id
         return _links(value)
 
     return app

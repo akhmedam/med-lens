@@ -1,5 +1,40 @@
 # Prospective human confirmation
 
+## Policy amendment — 2026-11-16
+
+The owner explicitly removed the useful-selection readiness floor in the
+[quality-policy amendment](usefulness-research.md#acceptance-criteria).
+The current objective is **the best measured quality among the variants tested
+through sequential evaluation of the justified hypotheses**. Report useful
+counts and denominators, explicit unknowns, unnecessary abstentions, critical
+mismatches, null effects, regressions and operational failures. There is **no
+minimum useful percentage or count for MVP readiness**.
+
+Only the useful floor changed. The separate ceiling of **50% unnecessary
+abstentions among reference-confirmed answerable queries** and the **60-second
+maximum for every complete request** remain in force. The five source-quality
+facets and their rubrics, source-integrity requirements and critical scope-error
+blockers are unchanged. Unknown judgments are not promoted to passes, and this
+amendment does not itself establish release readiness. See the current
+[MVP contract](mvp.md) for the implemented request-budget policy.
+
+The [later source-first AI diagnostic](usefulness-research.md)
+used twenty new queries after the candidate was frozen. Its source-only
+reference contains 16 sufficient, 3 insufficient and 1 uncertain pool and was
+frozen before generated outputs were reviewed. The separate actual-output
+review retained 6 useful and 1 uncertain selection, with 4 confirmed scope errors;
+false abstention and full-request time passed, but semantic release checks failed.
+Both reviews are AI-origin, not human or clinical validation.
+
+## Historical frozen human-confirmation-v1 protocol
+
+**Everything below preserves the original protocol and its then-current
+implementation statements. Its 50% useful / ten-of-twenty rule and the original
+sample-rate acceptance wording are historical, not the current MVP useful
+readiness rule.** Frozen plans, source packages, results and reviews retain their
+original bytes and decisions. The source-quality and card-support rubrics below
+remain applicable; their definitions are not changed by this amendment.
+
 This is a new **test/confirmation** round, separate from the six biomedical
 development cases and the twelve already observed held-out questions. Its
 purpose is independent manual human assessment of the selected application,

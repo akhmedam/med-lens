@@ -21,7 +21,13 @@ _PREDICATES = re.compile(
     r'increas(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|affect(?:s|ed|ing)?|'
     r'influenc(?:e|es|ed|ing)|associat(?:e|es|ed|ing)|contribut(?:e|es|ed|ing)|using)'
     r'(?![\w/+\-\u2010-\u2015\u2212])', re.I)
-_REFERENCE_ROLE = re.compile(r'(?<!\w)as\s+(?:(?:the|a)\s+)?(?:reference|gold)\s+standard(?!\w)', re.I)
+# The short form is a role marker only at a clause end; a following noun
+# (e.g. 'reference protein') is retained. Named tests and identifier punctuation
+# are never removed, and the original question still drives ranking/review.
+_REFERENCE_ROLE = re.compile(
+    r'(?<![\w/+\-\u2010-\u2015\u2212])as\s+(?:(?:the|a)\s+)?'
+    r'(?:(?:reference|gold)\s+standard|reference(?=\s*(?:[?.,;:]|$)))'
+    r'(?![\w/+\-\u2010-\u2015\u2212])', re.I)
 _QUOTED = re.compile(r'"(?:[^"\\]|\\.)*"')
 _NEGATED = re.compile(r'\b(?:not|never|no|without)\s+$', re.I)
 # Only a simple terminal outcome-assessment phrase is removable. Other time
@@ -92,7 +98,7 @@ def _candidate_query(question):
                 continue
             if rule != "reference-role-scaffold" and text.isupper():
                 continue  # Preserve acronym-like tokens, not a biomedical entity claim.
-            if rule == "generic-predicate-scaffold" and _NEGATED.search(question[:start]):
+            if rule in {"generic-predicate-scaffold", "reference-role-scaffold"} and _NEGATED.search(question[:start]):
                 continue
             if any(start < right and end > left for left, right, _ in removals):
                 continue

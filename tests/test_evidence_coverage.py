@@ -57,7 +57,7 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual([s['pmid'] for s in candidate['sources']], ['1', '1', '2', '2', '3', '3'])
         self.assertEqual([s['section'] for s in candidate['sources']], ['RESULTS', 'METHODS'] * 3)
         self.assertEqual([s['window_cosine'] for s in candidate['sources']], [.61, .20] * 3)
-        self.assertEqual(candidate['selection_policy'], 'article-results-methods-complete-source-sentences-v4')
+        self.assertEqual(candidate['selection_policy'], 'article-results-methods-complete-source-sentences-v5')
         dataset, manifest, windows, _ = data
         verify_context_sources(candidate, SimpleNamespace(dataset=dataset, window_manifest=manifest,
             windows=windows, articles={a['pmid']: a for a in dataset.articles}))

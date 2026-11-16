@@ -63,6 +63,9 @@ def download_snapshot(
             "bytes": len(response.body),
             "sha256": hashlib.sha256(response.body).hexdigest(),
         })
+        diagnostics = getattr(response, "transport_diagnostics", ())
+        if diagnostics:
+            manifest["responses"][-1]["transport_diagnostics"] = list(diagnostics)
         _write_manifest(output, manifest)
 
     try:
@@ -83,6 +86,9 @@ def download_snapshot(
     except Exception as exc:
         manifest.update(status="failed", finished_at=_now(),
                         error={"type": type(exc).__name__, "message": str(exc)})
+        diagnostics = getattr(exc, "transport_diagnostics", ())
+        if diagnostics:
+            manifest["error"]["transport_diagnostics"] = list(diagnostics)
         _write_manifest(output, manifest)
         raise
 

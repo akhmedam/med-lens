@@ -1,5 +1,5 @@
 import unittest
-from medlens.generation.source_scope import check_source_scope
+from medlens.generation.source_scope import check_source_scope, question_contract, check_selected_findings, procedural_only_sentence
 
 
 def check(question, title, *text, quotes=()):
@@ -52,7 +52,7 @@ class ScopeGuardTests(unittest.TestCase):
 
     def test_api_validation_and_policy_are_explicit(self):
         result = check('Does AX17 reduce pain?', 'Trial')
-        self.assertEqual(result['policy_version'], 'source-scope-veto-v1')
+        self.assertEqual(result['policy_version'], 'source-scope-veto-v4')
         for args in [(None, 'Trial', []), (' ', 'Trial', []), ('Question', None, []),
                      ('Question', 'Trial', 'text'), ('Question', 'Trial', [{'text': 3}]),
                      ('Question', 'Trial', [{'text': 'a', 'index': True}]),
@@ -166,6 +166,98 @@ class ScopeGuardTests(unittest.TestCase):
         for row in [*r['blocks'], *r['cautions']]:
             for proof in [*row['source_proofs'], *([row['question_proof']] if 'question_proof' in row else [])]:
                 self.assertEqual(fields[proof['field']][proof['char_start']:proof['char_end']], proof['text'])
+
+    def test_question_contract_contains_exact_targets_not_inferred_entities(self):
+        question = 'Does agent Z reduce pain compared with placebo in adults with Quartz syndrome?'
+        contract = question_contract(question)
+        self.assertEqual(contract['outcome']['text'], 'pain')
+        self.assertEqual(contract['comparison']['text'], 'placebo')
+        self.assertEqual(contract['population']['text'], 'adults with Quartz syndrome')
+        self.assertEqual(contract['intervention']['text'], 'agent Z')
+        for span in contract.values():
+            self.assertEqual(question[span['char_start']:span['char_end']], span['text'])
+        self.assertEqual(question_contract('Explain an unfamiliar mechanism'), {})
+        q='What is diagnostic accuracy in adults using RX42 as the reference standard?'
+        self.assertEqual(question_contract(q)['population']['text'],'adults')
+        q='In adults with Quartz syndrome, how does A compare with B for pain reduction?'
+        self.assertEqual(question_contract(q)['population']['text'],'adults with Quartz syndrome')
+        self.assertEqual(question_contract(q)['comparison']['text'],'B')
+
+    def test_continuation_phase_and_protocol_dropout_are_not_stopping_comparator(self):
+        question = 'Does continuation treatment reduce relapse compared with discontinuation in adults?'
+        r = check(question, 'Predictors during continuation treatment',
+                  'Patients entered continuation after acute treatment with one or two agents.',
+                  'Twenty patients relapsed and ten discontinued the protocol prematurely.')
+        self.assertIn('requested_stopping_comparison_not_established', codes(r))
+        for source in ('Patients were randomly assigned to continue treatment or discontinue treatment.',
+                       'Patients stabilized on AX17 were randomized to continue AX17 or placebo.',
+                       'Adults who remitted during open-label AX17 were randomized to AX17 or placebo.'):
+            self.assertNotIn('requested_stopping_comparison_not_established', codes(check(question, 'Trial', source)))
+        for source in ('During maintenance patients were assigned to medication versus placebo.',
+                       'After remission with a different modality, participants were randomized to start AX17 or placebo.'):
+            self.assertIn('requested_stopping_comparison_not_established',codes(check(question,'Trial',source)))
+        r = check('What predicts relapse during continuation treatment?', 'Predictors',
+                  'Older age was associated with relapse during continuation.')
+        self.assertNotIn('requested_stopping_comparison_not_established', codes(r))
+
+    def test_prevention_eligibility_is_distinct_from_established_condition_treatment(self):
+        question = 'Does agent Z reduce symptoms in adults with Quartz syndrome?'
+        source = 'Adults without Quartz syndrome were assigned to prevention treatment to reduce incidence.'
+        self.assertIn('prevention_population_for_established_condition', codes(check(question, 'Prevention trial', source)))
+        self.assertNotIn('prevention_population_for_established_condition', codes(check(
+            'Does agent Z prevent Quartz syndrome in adults at risk?', 'Prevention trial', source)))
+        # A different exclusion is not evidence that the requested disease is absent.
+        self.assertNotIn('prevention_population_for_established_condition', codes(check(
+            question, 'Treatment trial', 'Adults without renal impairment received treatment to prevent complications.')))
+        self.assertNotIn('prevention_population_for_established_condition', codes(check(
+            question, 'Mixed review', source, 'A separate trial treated adults diagnosed with Quartz syndrome.')))
+
+    def test_mixed_treatment_prevention_review_is_caution_not_a_blanket_veto(self):
+        question='Does therapy reduce symptoms in women with postpartum Quartz syndrome?'
+        r=check(question,'Treatment review',
+                'Studies included treatment or prevention starting during pregnancy or after giving birth.',
+                'Results reported the number of included studies.')
+        self.assertNotIn('prevention_population_for_established_condition',codes(r))
+        self.assertIn('mixed_treatment_prevention_review',codes(r,'cautions'))
+        self.assertFalse(r['positive_validation_performed'])
+
+    def test_intervention_phase_not_later_outcome_time_supplies_population(self):
+        question = 'Does therapy reduce symptoms in women with postpartum Quartz syndrome?'
+        r = check(question, 'Antenatal intervention review',
+                  'Prenatal treatment in pregnant women was evaluated to prevent later incidence.')
+        self.assertIn('prevention_population_for_established_condition', codes(r))
+
+    def test_objectives_and_procedures_are_not_findings_but_unnumbered_results_remain(self):
+        for sentence in ('The aim of this study was to assess accuracy in adults.',
+                         'Sensitivity and specificity were calculated against RX42 as gold standard.',
+                         'We measured whether agent Z reduced pain.',
+                         'We hypothesized that the inhibitor would prevent cell death.'):
+            self.assertTrue(procedural_only_sentence(sentence),sentence)
+        for sentence in ('The inhibitor did not prevent cell death.',
+                         'Marker K was associated with increased pain.',
+                         'Exposure induced similar cell death in both groups.',
+                         'Pain was assessed and was lower in the active group.',
+                         'Women reported improved emotional well-being.',
+                         'We aimed to study pain; results showed no difference between groups.'):
+            self.assertFalse(procedural_only_sentence(sentence),sentence)
+        quotes=['The aim of the study was to assess accuracy.',
+                'Sensitivity and specificity were calculated against RX42 as gold standard.']
+        r=check_selected_findings('What is accuracy using RX42?', 'Trial',
+            [{'index':0,'text':' '.join(quotes)}], quotes)
+        self.assertIn('selected_findings_are_purpose_or_procedure',codes(r))
+        self.assertEqual(len(r['blocks'][0]['source_proofs']),2)
+
+    def test_selected_correlation_is_not_treatment_effect_but_null_result_is_retained(self):
+        question = 'Does agent Z reduce painful symptoms?'
+        quote = 'Change in marker K was not correlated with change in painful symptoms.'
+        r = check_selected_findings(question, 'Trial', [{'index': 0, 'text': quote}], [quote])
+        self.assertIn('selected_outcome_is_change_association', codes(r))
+        null = 'Painful symptoms were not reduced by agent Z compared with placebo.'
+        r = check_selected_findings(question, 'Trial', [{'index': 0, 'text': null}], [null])
+        self.assertFalse(r['blocks'])
+        r = check_selected_findings('Are changes in marker K correlated with painful symptoms?',
+                                   'Trial', [{'index': 0, 'text': quote}], [quote])
+        self.assertFalse(r['blocks'])
 
     def test_unrecognized_language_never_claims_positive_validation(self):
         r = check('Explain an unfamiliar relation', 'Unfamiliar title', 'A complex relation exists.')
