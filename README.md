@@ -11,7 +11,9 @@ See the [MVP contract](docs/mvp.md) and [policy decision](docs/adr/0007-unified-
 ## Status
 
 The CLI and optional local HTTP API use the same pinned model, source-findings
-format and bounded search policy. Defaults are 100 PubMed candidates and ten
+format and bounded search policy (`medlens-mvp-source-findings-v2`). The selector
+is `source-findings-task-scoped-v5-candidate1`: one bounded model call chooses
+exact source sentences and their applicability. Defaults are 100 PubMed candidates and ten
 ranked articles. Every question performs a fresh source search; unchanged
 passage inputs reuse cached vectors. There is no additional reranker or
 model/backend fallback.
@@ -22,21 +24,30 @@ results do not prove relevance or exhaustive PubMed coverage.
 
 Exact source quotations are checked, but their scientific support and answer
 completeness are not independently verified. Nonempty source-findings results
-remain `partial`. Known selection/semantic limitations and missing independent
-human references remain release conditions, as documented in the
+remain `partial`. Known selection/semantic limitations constrain readiness, as documented in the
 [development assessment](docs/biomedical-quality.md),
 [source-findings assessment](docs/biomedical-quality-improvement.md) and
 [development plan](docs/development-plan.md) and [final validation](docs/final-validation.md). Historical human labels and later
 AI annotations have separate provenance; neither is silently transferred to new
 questions or source versions.
 
-For the next independent round, the owner requires **at least 50% useful
+The owner-defined confirmation requires **at least 50% useful
 selections across all twenty queries**, **at most 50% unnecessary abstentions
-among human-confirmed answerable queries**, and **at most 60 seconds for each
+among reference-confirmed answerable queries**, and **at most 60 seconds for each
 complete request**. The [human-confirmation protocol](docs/human-confirmation.md)
 records the new blank source-reference form and the later actual-output review.
-The sixty-second deadline is an acceptance requirement; the current service does
-not yet enforce that hard budget.
+The application now enforces a shared request budget: 55 seconds for work,
+three for confirmed process cleanup and two reserved for terminal delivery.
+A timeout is a failed, incomplete request, not an evidence abstention. Each
+accepted request owns a fresh process group; the next job waits for cleanup.
+Actual client receipt, polling and output remain part of measured acceptance.
+See [request isolation and limits](docs/request-reliability.md).
+
+The [2026-11-16 actual-output validation](docs/request-quality-validation.md)
+**failed acceptance**: one confirmed useful selection and four uncertain ones
+out of twenty; eight fresh-retrieval transport failures. All twenty timings and
+cleanup checks passed. The semantic review is explicitly AI-origin; no independent
+human or clinical validation is claimed.
 
 ## Setup
 

@@ -153,9 +153,20 @@ class MlxRuntime:
         self._process = None
         self._stderr = None
         self._closed = False
+        self._cleanup_confirmed = False
         self._buffer = bytearray()
         self._nonce = secrets.token_hex(24)
         self._request_number = 0
+        # The application supervisor owns a process group spanning BGE + MLX.
+        # Standalone research runtimes retain their independent session contract.
+        group = os.environ.get("MEDLENS_REQUEST_PROCESS_GROUP")
+        self._owns_process_group = group != str(os.getpgrp())
+        self._request_work_deadline = None
+        if not self._owns_process_group:
+            deadline = float(os.environ["MEDLENS_REQUEST_WORK_DEADLINE"])
+            if not math.isfinite(deadline):
+                raise ValueError("Invalid request work deadline")
+            self._request_work_deadline = deadline
         if not _seconds(timeout) or timeout == 0 or not _seconds(load_timeout) or load_timeout == 0:
             raise ValueError("MLX timeouts must be positive finite seconds")
         if type(verify_weights) is not bool:
@@ -187,7 +198,7 @@ class MlxRuntime:
                 "--model-dir", str(model_dir.resolve()), "--nonce", self._nonce,
                 "--root", str(root), "--model", model, "--artifact-id", manifest["artifact_id"]],
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self._stderr,
-                bufsize=0, start_new_session=True)
+                bufsize=0, start_new_session=self._owns_process_group)
             os.set_blocking(self._process.stdout.fileno(), False)
             os.set_blocking(self._process.stdin.fileno(), False)
             ready = self._read(time.monotonic() + load_timeout)
@@ -235,6 +246,8 @@ class MlxRuntime:
             raise
 
     def _read(self, deadline):
+        if self._request_work_deadline is not None:
+            deadline = min(deadline, self._request_work_deadline)
         while True:
             newline = self._buffer.find(b"\n")
             if newline >= 0:
@@ -258,6 +271,8 @@ class MlxRuntime:
             self._buffer.extend(chunk)
 
     def _write(self, value, deadline):
+        if self._request_work_deadline is not None:
+            deadline = min(deadline, self._request_work_deadline)
         payload = (_canonical(value) + "\n").encode()
         if len(payload) > MAX_LINE_BYTES:
             raise RuntimeError("Oversized MLX request")
@@ -376,34 +391,58 @@ class MlxRuntime:
                 self._shutdown()
                 raise
 
-    def _shutdown(self):
-        self._closed = True
-        process = self._process
-        if process is not None:
-            if process.poll() is None:
-                try:
-                    os.killpg(process.pid, signal.SIGTERM)
-                except ProcessLookupError:
-                    pass
-                try:
-                    process.wait(timeout=1)
-                except subprocess.TimeoutExpired:
-                    try:
-                        os.killpg(process.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
-                    process.wait(timeout=5)
+    def _signal_or_reap(self, process, signum):
+        """An exiting Darwin process group can transiently report EPERM.
+
+        Only an actual wait/reap resolves that race. If our direct child remains
+        alive, preserve the permission error as uncertain cleanup.
+        """
+        try:
+            if self._owns_process_group:
+                os.killpg(process.pid, signum)
             else:
-                process.wait()
-            for stream in (process.stdin, process.stdout):
-                if stream is not None:
-                    stream.close()
-        if self._stderr is not None:
-            self._stderr.close()
+                process.send_signal(signum)
+        except ProcessLookupError:
+            pass
+        except PermissionError:
+            try:
+                process.wait(timeout=0.05)
+            except subprocess.TimeoutExpired:
+                raise PermissionError("Native worker cleanup could not be confirmed") from None
+
+    def _shutdown(self):
+        # Closed forbids generation; only a successful signal/wait/FD cleanup
+        # confirms release. A prior failure must not make close() a no-op.
+        self._closed = True
+        self._cleanup_confirmed = False
+        process = self._process
+        try:
+            if process is not None:
+                if process.poll() is None:
+                    self._signal_or_reap(process, signal.SIGTERM)
+                    try:
+                        process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self._signal_or_reap(process, signal.SIGKILL)
+                        process.wait(timeout=5)
+                else:
+                    process.wait()
+        finally:
+            # Even an uncertain signal/reap outcome must close protocol/log FDs;
+            # it must not hide the original EOF error with an avoidable leak.
+            if process is not None:
+                for stream in (process.stdin, process.stdout):
+                    if stream is not None:
+                        stream.close()
+            if self._stderr is not None:
+                self._stderr.close()
+        self._cleanup_confirmed = True
 
     def close(self):
         with self._lock:
             if self._closed:
+                if not self._cleanup_confirmed:
+                    self._shutdown()
                 return
             try:
                 deadline = time.monotonic() + 0.3

@@ -7,6 +7,7 @@ import importlib.util
 from io import StringIO
 from pathlib import Path
 import tempfile
+import time
 from threading import Event, Thread
 import unittest
 from unittest.mock import patch
@@ -58,6 +59,35 @@ class FakeService:
 
 @unittest.skipUnless(HAS_HTTP, "Install API and HTTP-test extras for transport checks")
 class HTTPTests(unittest.TestCase):
+    def test_ingress_origin_precedes_body_validation_and_terminal_send_is_observed(self):
+        from medlens import api as api_module
+        seen = []
+        def runner(request, output, progress):
+            return {"status":"complete", "stage":"complete", "runtime_load_count":0,
+                "question":request.question, "answer":{"status":"insufficient_evidence","claims":[]}}
+        with tempfile.TemporaryDirectory() as directory:
+            service = JobService(directory, runner)
+            parse = api_module._request_body
+            async def slow_body(request):
+                import asyncio
+                await asyncio.sleep(.03)
+                seen.append(request.state.medlens_submission_started)
+                return await parse(request)
+            with patch.object(api_module, '_request_body', side_effect=slow_body):
+                with TestClient(create_app(service)) as client:
+                    response = client.post('/v1/requests', json={'question':'Agent X effects?'})
+                    service._future.result(timeout=3)
+                    terminal = client.get(response.headers['location'])
+                    self.assertEqual(terminal.status_code, 200)
+                    request_id = terminal.json()['request_id']
+                    timing = service.get(request_id)['timing']
+                    self.assertGreaterEqual(timing['terminal_after_cleanup_seconds'], .03)
+                    observation = timing['delivery_observation']
+                    self.assertEqual(observation['scope'], 'http-asgi-body-sent')
+                    self.assertGreaterEqual(observation['seconds'], timing['terminal_after_cleanup_seconds'])
+                    self.assertTrue(timing['cleanup_confirmed'])
+        self.assertEqual(len(seen), 1)
+
     def test_accepts_async_job_with_unchanged_question_and_explicit_defaults(self):
         service = FakeService()
         with TestClient(create_app(service)) as client:

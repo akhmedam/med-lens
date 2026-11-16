@@ -20,7 +20,9 @@ BGE/Qwen assets; missing dependencies or assets produce an explicit setup error.
 The interface is Russian; supported questions are English biomedical research
 questions. Language and topic are not classified or translated. Source text and
 quotations remain in their original language. Each question searches PubMed
-anew and can reuse unchanged passage vectors.
+anew and can reuse unchanged passage vectors. The shared application policy is
+`medlens-mvp-source-findings-v2`; exact quotations are selected by
+`source-findings-task-scoped-v5-candidate1` in one bounded model call.
 
 ```text
 Вопрос> How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?
@@ -88,14 +90,25 @@ Terminal controls are escaped for display; stored quotations are not rewritten.
 
 Ctrl+D at the prompt and `/quit` exit 0. Ctrl+C exits 130. During a request it
 waits for that accepted job and runtime cleanup; it does not cancel the job.
-Repeated Ctrl+C is ignored during this wait. Hard cancellation and automatic
-resumption after abrupt termination are outside this MVP.
+Repeated Ctrl+C is ignored during this wait. The automatic request deadline
+continues to apply; Ctrl+C is not a separate immediate-cancel command. Automatic
+resumption after abrupt termination is outside this MVP.
+
+For interactive input, the request budget begins before validation/admission
+after the question is entered; time spent typing is excluded. A one-shot request
+starts its clock at CLI invocation. The shared 60-second policy reserves
+55 seconds for work, three for terminating/reaping the request process group
+and two for delivery. The CLI records delivery after printing/flushing the
+terminal result. Slow terminal output still needs an observed full-request
+measurement; work-budget enforcement alone is not a latency pass.
 
 For `--question`, a successful job exits 0, invalid input or answer-validation
 failure exits 2, other job failure exits 1, and interruption exits 130. Partial
 findings and insufficient evidence can be successful executions: read answer
 status separately. Uncertain cleanup/storage stops admission instead of
-starting another job.
+starting another job. A deadline failure exits 1 in one-shot mode and reports
+`search_timeout` / `not_completed`; it is not a successful insufficient-evidence
+answer. See [request reliability](request-reliability.md).
 
 Nonempty source-findings displays remain `partial`. Exact quotations do not
 prove support for the requested comparison or completeness. Independent semantic

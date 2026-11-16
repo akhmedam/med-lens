@@ -38,6 +38,28 @@ class EvidenceTests(unittest.TestCase):
             scores if scores is not None else [.9, .8, .7] * 3,
             CharacterTokenizer(), {"revision": "test"}, config=config)
 
+    def test_coverage_prefers_actual_regimen_over_high_scoring_endpoint_methods(self):
+        from test_source_findings import make
+        from medlens.generation.context import digest
+        sections=[('RESULTS','Relapse was lower with continued treatment.'),
+                  ('INTERVENTIONS','Adults in remission were randomized to continued drug treatment or placebo.'),
+                  ('MAIN OUTCOME MEASURE','Relapse was compared among treatment groups.')]
+        ctx,articles=make([sections])
+        article=articles['1']
+        for section in article['abstract']['sections'][1:]:section['nlm_category']='METHODS'
+        provenance=article['provenance'];windows=[]
+        for section in article['abstract']['sections']:
+            text=section['text'];index=section['index']
+            windows.append({'pmid':'1','window_id':str(index),'text_version_id':'v1','title':article['title'],
+                'kind':'abstract','section_index':index,'section_label':section['label'],
+                'source_path':section['source_path'],'char_start':0,'char_end':len(text),'text':text,'provenance':provenance})
+        manifest={'dataset_id':'fixture','articles_sha256':digest([article])}
+        dataset=SimpleNamespace(manifest=manifest,articles=[article])
+        result=build_context(dataset,{**manifest,'artifact_id':'windows'},windows,['1'],[.8,.1,.99],
+                             CharacterTokenizer(),{},config=ContextConfig(selection_mode='results-methods'))
+        self.assertEqual([source['section']for source in result['sources']],['RESULTS','INTERVENTIONS'])
+        self.assertEqual(len(result['sources']),2)
+
     def test_diversity_then_second_nonoverlapping_window(self):
         r = self.build()
         self.assertEqual([s["pmid"] for s in r["sources"]], ["2", "1", "2", "1"])

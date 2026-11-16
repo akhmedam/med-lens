@@ -1,0 +1,516 @@
+{
+  "schema_version": 1,
+  "kind": "request-reliability-and-fixed20-ai-validation",
+  "date": "2026-11-16",
+  "status": "acceptance-failed",
+  "branch": "fix/request-deadline-and-source-quality",
+  "base_commit": "d5eb0ee68a8d69673c6ffddb1a18d48982fbadcc",
+  "candidate": {
+    "manifest_id": "a870a964853396ee16b2163e06b5e3dbd357e5ff97985b539f9298bc447f054c",
+    "manifest_sha256": "d2fabf93bd516fd3b0f2a7b6f904fdc4a41e943f4c6ca8efa4a5dd34ffdcea06",
+    "application_policy": {
+      "id": "medlens-mvp-source-findings-v2",
+      "request_deadline": {
+        "seconds": 60.0,
+        "cleanup_reserve_seconds": 3.0,
+        "delivery_reserve_seconds": 2.0,
+        "origin": "transport-ingress-before-validation-and-admission",
+        "enforcement": "owned-request-process-group-termination-and-reap",
+        "timeout_is_abstention": false,
+        "client_delivery": "measured-separately-including-polling-and-output"
+      },
+      "source": {
+        "database": "PubMed",
+        "fresh_search": true,
+        "text": "title-and-abstract",
+        "candidate_limit": {
+          "default": 100,
+          "min": 1,
+          "max": 300
+        }
+      },
+      "retrieval": {
+        "method": "dense-cosine-max-window",
+        "device": "mps",
+        "top_k": {
+          "default": 10,
+          "min": 1,
+          "max": 10
+        }
+      },
+      "answer": {
+        "style": "source-findings",
+        "model_profile": "4b",
+        "engine": "mlx",
+        "independent_validation": false
+      }
+    },
+    "selector": {
+      "PROMPT_VERSION": "source-findings-task-scoped-v5-candidate1",
+      "ANSWER_POLICY": "source-findings-task-scoped-v5-candidate1",
+      "MAX_FINDINGS": 3,
+      "MAX_QUOTE_CHARS": 532,
+      "MAX_QUOTES_PER_FINDING": 3,
+      "SELECTION_CAP": 768,
+      "system_prompt_sha256": "2e61247296a5fe41d27ad2a3af362127850cc63f021d8924c5320070e46b4dd6"
+    },
+    "source_file_count": 86
+  },
+  "judgments_origin": "ai",
+  "human_authored": false,
+  "independent_human_validation": false,
+  "clinical_validation": false,
+  "prefreeze_exposure": {
+    "kind": "candidate-prefreeze-exposure-declaration",
+    "manifest_id": "a870a964853396ee16b2163e06b5e3dbd357e5ff97985b539f9298bc447f054c",
+    "historical_operator_exposure": "The assistant previously prepared AI source-only labels for this twenty-question plan; the hash is not evidence of operator blindness or independence.",
+    "development_inputs": "Six consumed biomedical development cases bm01-bm06 and already observed former-test cases h01,h04,h05.",
+    "confirmation_cases_used_to_tune_this_change": false,
+    "new_confirmation_semantic_inputs_parsed_by_freeze": false,
+    "ai_labels_are_human_annotation": false,
+    "independent_human_validation": false,
+    "clinical_validation": false,
+    "next_steps": "One actual live pass; reconcile exact fresh sources and freeze source-only delta judgments before exposing the generated outputs for separate AI review."
+  },
+  "checks": {
+    "main_suite": {
+      "total": 651,
+      "passed": 640,
+      "skipped": 11,
+      "log_sha256": "47afb0788f8a571f40e3e211523738911c354aab1a2516774e875891912bee4d"
+    },
+    "native_selected_suite": {
+      "passed": 111,
+      "overlaps_main_suite": true,
+      "log_sha256": "034e5fc7d592ddd1bf622aed4d5e6c473a0a36d1501bc831d31920a24b430477"
+    },
+    "pip_check": "passed",
+    "wheel": {
+      "sha256": "e501de886f2fab92ec4c369976820bf914cf51df06ea9cce179c51f03973cbec",
+      "source_files_byte_verified": 75
+    }
+  },
+  "stress": {
+    "kind": "old-development-only",
+    "summary_sha256": "3f06595b4050b35d2c785529c4f58bf689ba0a8aaa0751393c9ed2b7d09cd6bc",
+    "planned": 29,
+    "observed": 29,
+    "operational_successes": 29,
+    "gates": {
+      "all_planned_rows_completed": true,
+      "all_observed_wall_within_60": true,
+      "all_observed_cleanup_confirmed": true,
+      "positive_api_fresh_source_observed": true,
+      "empty_api_probe_passed": true,
+      "scientific_usefulness_assessed": false,
+      "universal_deadline_or_leak_guarantee_established": false
+    },
+    "max_wall_seconds": 49.34324724999897,
+    "same_api_parent_rss": {
+      "planned_requests": 20,
+      "observed_rows": 20,
+      "idle_parent_current_rss_bytes": [
+        54902784,
+        55230464,
+        55721984,
+        55754752,
+        55836672,
+        56360960,
+        56655872,
+        56737792,
+        56770560,
+        56803328,
+        56967168,
+        57016320,
+        57065472,
+        57065472,
+        57065472,
+        57098240,
+        57131008,
+        57147392,
+        57294848,
+        57294848
+      ],
+      "first_to_last_delta_bytes": 2392064,
+      "scope": "same pinned real API server process, external current RSS after idle; 20 observations do not establish leak freedom",
+      "leak_freedom_established": false
+    },
+    "rss_access_denied_rows": 26,
+    "rss_peak_is_upper_bound": false,
+    "boundary_limit300_actual_articles": 66,
+    "first_driver_attempt": "live-stress-v1 retained: eight CLI successes, API startup invocation error; complete v2 re-run retained"
+  },
+  "additional_actual300_probe": {
+    "posthoc_development_probe": true,
+    "summary_sha256": "736956b448ce0b078e22f43337c74f485e343662c1e4047ca6f5044c4a507216",
+    "actual_300_sources_observed": true,
+    "full_wall_seconds": 23.75661887500064,
+    "job_status": "succeeded",
+    "answer_status": "insufficient_evidence",
+    "runtime_load_count": 1,
+    "native_cleanup_confirmed": true,
+    "source_unchanged": true,
+    "scientific_usefulness_assessed": false
+  },
+  "source_reconciliation": {
+    "reconciliation_id": "744a59d0c1045370a61c75f76dbea01c3d55ab3bcdec6f0e2fba2c45c0eaa6d0",
+    "source_reference_id": "195a123e4907ddca397e32951d34695d76d3d0b70a19d4c6b58640962488181f",
+    "mapped_articles": 127,
+    "new_articles": 3,
+    "changed_pools": 11,
+    "unavailable_actual_pools": 8,
+    "answerability_counts": {
+      "yes": 7,
+      "no": 3,
+      "unknown": 10
+    },
+    "source_only_reference_frozen_before_output_review": true
+  },
+  "confirmation": {
+    "live_summary_sha256": "79af9de94c5832d7938b07fca4b81a301fd4007d9a79ec6c1006beb0ec2f6aff",
+    "report_sha256": "c2ec02b8a043a2c1ce462b34f70057c36a0cd8c8343953d5cde58ebd5baa510e",
+    "review_sha256": "59ba8f20ccda04d9aea7b2037559b4c268cfae8b286dc83efd13cfd8d096dae3",
+    "planned": 20,
+    "attempted": 20,
+    "attempts_per_query": 1,
+    "operational_successes": 12,
+    "transport_failures": 8,
+    "semantic_abstentions": 6,
+    "nonempty_selections": 6,
+    "displayed_cards": 14,
+    "all_wall_within_60": true,
+    "max_wall_seconds": 44.67243695899924,
+    "all_cleanup_confirmed": true,
+    "quality": {
+      "useful": {
+        "yes": 1,
+        "unknown": 4,
+        "denominator": 20,
+        "rate": 0.05,
+        "bounds": [
+          0.05,
+          0.25
+        ],
+        "gate": "fail"
+      },
+      "false_abstention": {
+        "confirmed_count": 3,
+        "answerable_yes": 7,
+        "answerable_unknown": 10,
+        "rate": 0.42857142857142855,
+        "bounds": [
+          0.17647058823529413,
+          0.42857142857142855
+        ],
+        "zero_denominator_possible": false,
+        "gate": "pass"
+      },
+      "critical_scope": {
+        "yes": 0,
+        "unknown": 4,
+        "gate": "not_established"
+      }
+    },
+    "gates": {
+      "useful": "fail",
+      "false_abstention": "pass",
+      "critical_scope": "not_established",
+      "timing": "pass",
+      "displayed_card_support": "fail",
+      "source_integrity": "not_established",
+      "native_cleanup": "pass",
+      "operational": "fail"
+    },
+    "overall_ai_gate": "fail",
+    "cases": [
+      {
+        "query_id": "hc01",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 17.402415792001193,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference independently found sufficient actual sources, so this is an unnecessary abstention."
+      },
+      {
+        "query_id": "hc02",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 3.386531374999322,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "no",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference found insufficient actual sources, so this is an appropriate abstention within the acquired pool."
+      },
+      {
+        "query_id": "hc03",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 1,
+        "full_wall_seconds": 22.22654862499985,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "unknown",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "rationale": "AI-review полных доступных title/abstract и фактической выдачи; не human/clinical validation. Годовой tiotropium–placebo результат непосредственно относится к обострениям COPD, но adult-scope не установлен. Поэтому useful_selection и critical_scope_mismatch остаются unknown; подтверждённой подмены core-facet нет. Frozen answerable=unknown сохранено; partial-ответ не является abstention."
+      },
+      {
+        "query_id": "hc04",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 22.985920082999655,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference independently found sufficient actual sources, so this is an unnecessary abstention."
+      },
+      {
+        "query_id": "hc05",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 2,
+        "full_wall_seconds": 18.156280875000448,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "rationale": "AI-review полных доступных title/abstract и фактической выдачи; не human/clinical validation. Frozen answerable=yes сохранено. Useful_selection=no: первая карточка сохраняет маркировку «Exploratory analyses» и точные цитаты, но скрывает primary-null P=0.067 этой статьи. Это потеря важной оговорки, не ложное утверждение о значимом первичном анализе. Показанные null-результаты другой статьи не восполняют эту потерю. Во второй статье adult-scope неизвестен; подтверждённого core-mismatch нет, поэтому critical_scope_mismatch=unknown. Partial-ответ не является abstention."
+      },
+      {
+        "query_id": "hc06",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 2,
+        "full_wall_seconds": 26.31645804100117,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "unknown",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "rationale": "AI-origin source-bound review, не human/clinical validation. Обе фактические карточки сообщают поддержанные источниками наблюдения о худшем обонянии и последующем PD в семейных когортах, исходно без PD, за 5 лет. Однако возраст/взрослая eligibility отсутствуют в обоих полных abstracts: core population неизвестна, а не подтверждена показанной caution. Поэтому useful_selection и critical_scope_mismatch остаются unknown; подтверждённого неправильного core scope не установлено. Answerable строго сохранено как frozen unknown. Показана непустая partial-подборка, поэтому unnecessary_abstention=no."
+      },
+      {
+        "query_id": "hc07",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 3.39803049999864,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "no",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference found insufficient actual sources, so this is an appropriate abstention within the acquired pool."
+      },
+      {
+        "query_id": "hc08",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 3,
+        "full_wall_seconds": 44.67243695899924,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "unknown",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "rationale": "AI-origin source-bound review, не human/clinical validation. C1 даёт применимое взрослое наблюдательное сравнение эрадикации с сохранённым retrospective/adjusted контекстом. C2/C3 сохраняют фактические составы, продолжительность и статистический характер показанных сравнений; пропуск не запрошенных деталей не считаю автоматическим mismatch. Но взрослый возраст C2/C3 не установлен полными abstracts. Наличие хорошей C1 не превращает неизвестные оси других показанных карточек в yes: useful_selection=unknown. Подтверждённой подмены core intervention/outcome не выявлено, но core population неизвестна, поэтому critical_scope_mismatch=unknown. Answerable сохранено как frozen yes. Ответ непустой, поэтому unnecessary_abstention=no."
+      },
+      {
+        "query_id": "hc09",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 5.24712158300099,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc10",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 5.251412249999703,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc11",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 4.986565125000197,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc12",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 4.9859324999997625,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc13",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 4.987411416999748,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc14",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 4.976449792000494,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc15",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 4.976690875000713,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc16",
+        "job_status": "failed",
+        "answer_status": "not_completed",
+        "displayed_cards": 0,
+        "full_wall_seconds": 5.4788685829989845,
+        "operational_pass": false,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "unknown",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI reports fresh PubMed acquisition failure and displays no answer cards. This is an operational failure, not a scientific abstention; actual-pool answerability is unavailable/unknown."
+      },
+      {
+        "query_id": "hc17",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 3,
+        "full_wall_seconds": 30.36541354200017,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "Полезная частичная подборка по исходному профилактическому вопросу: представлены снижение преждевременной преэклампсии при 150 мг с 11–14-й недели, нулевой результат 60 мг с 13–26-й недели в определённых группах высокого риска и метааналитический результат отдельно для высокого риска. Карточки не подменяют профилактику лечением установленного заболевания, сохраняют аспирин–плацебо и исход преэклампсии; данные низкого риска в третьей карточке явно отделены от высокого риска. Это не исчерпывающая оценка эффективности или клиническая рекомендация; научная оценка выполнена ИИ, не независимым человеком."
+      },
+      {
+        "query_id": "hc18",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 2.8650432909998926,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "no",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference found insufficient actual sources, so this is an appropriate abstention within the acquired pool."
+      },
+      {
+        "query_id": "hc19",
+        "job_status": "succeeded",
+        "answer_status": "partial",
+        "displayed_cards": 3,
+        "full_wall_seconds": 23.978906290998566,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "unknown",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "rationale": "В подборке есть непосредственно полезная качественная прогностическая находка о детях с множественными островковыми аутоантителами и более медленном прогрессировании при поздней сероконверсии/меньших уровнях антител; источник для подросткового наблюдения также применим. Все три исследования относятся к продольному прогнозу, а не к поперечному различению уже диагностированного диабета. Однако во второй карточке приведены 5-летние diabetes-free survival 40/62/88% для TR1/TR2/TR3 без определения профилей этих траекторий и без отбора IAb-положительных участников с повторными визитами. Не утверждаю, что эти цифры ошибочны или что популяция явно другая, но не могу подтвердить сохранение необходимых ограничений их применения по фактически отображённой карточке. Поэтому полезность всей подборки остаётся unknown при сохранённой достаточности источников yes. Это оценка ИИ, не независимая человеческая или клиническая валидация."
+      },
+      {
+        "query_id": "hc20",
+        "job_status": "succeeded",
+        "answer_status": "insufficient_evidence",
+        "displayed_cards": 0,
+        "full_wall_seconds": 22.434457040999405,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "frozen_source_answerability": "yes",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "rationale": "The actual CLI displays a completed insufficient-evidence refusal with no selected answer cards. The source-only reference independently found sufficient actual sources, so this is an unnecessary abstention."
+      }
+    ]
+  },
+  "local_artifacts": "results/request-quality-fixes-20261116",
+  "remaining_limits": [
+    "Eight actual ESearch transport failures exhausted three attempts; the underlying transport cause was not retained, so no particular HTTP status or NCBI outage is established.",
+    "Three diagnostic queries returned zero candidates; this does not establish the absence of relevant biomedical evidence.",
+    "Three source-answerable queries were refused; four selections have unresolved applicability/qualifier uncertainty.",
+    "One displayed card omitted its study primary-null result while retaining a positive exploratory analysis. Exact sentence identity remains intact.",
+    "The consumed confirmation must not be reused as an untouched test if its outputs guide later tuning."
+  ]
+}

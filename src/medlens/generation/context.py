@@ -94,7 +94,7 @@ def coverage_role(article, window):
             "data synthesis", "synthesis of results"}:
         return "results"
     if category == "methods" or label in {
-            "methods", "materials and methods", "patients and methods", "design",
+            "method", "methods", "materials and methods", "patients and methods", "design",
             "participants", "study population", "patient population", "interventions",
             "design setting and participants", "design, setting, and participants",
             "selection criteria", "eligibility criteria", "included studies",
@@ -114,10 +114,17 @@ def companion_priority(article, window):
     role = coverage_role(article, window)
     if role == "methods":
         label = normalized_label(source_section(article, window).get("label"))
+        # A Methods category also contains endpoints and analysis. Prefer the
+        # actual cohort/regimen; an endpoint list does not establish eligibility.
+        setup = {"method", "methods", "materials and methods", "patients and methods",
+            "patients", "participants", "study population", "patient population",
+            "interventions", "selection criteria", "eligibility criteria",
+            "design setting and participants", "design, setting, and participants"}
         boilerplate = {"search methods", "search strategy", "data sources", "data extraction",
             "data collection and analysis", "statistical analysis", "risk of bias",
-            "synthesis methods", "study selection and data extraction"}
-        return 1 if label in boilerplate else 0
+            "synthesis methods", "study selection and data extraction", "main outcome measure",
+            "main outcome measures", "outcomes", "outcome measures", "primary outcome"}
+        return 0 if label in setup else 3 if label in boilerplate else 1
     return {"results": 2, "unstructured": 3, "conclusions": 4, "other": 5}[role]
 
 
@@ -138,7 +145,7 @@ def token_budget_reason(sources, tokenizer, config, *, indexed):
     return None
 
 
-COVERAGE_POLICY = "article-results-methods-complete-source-sentences-v4"
+COVERAGE_POLICY = "article-results-methods-complete-source-sentences-v5"
 SENTENCE_POLICY = "source-section-sentence-spans-v1"
 SENTENCE_FIELDS = ("quote_sentence_policy", "source_section_sha256", "source_section_length",
                    "quote_sentence_spans")
