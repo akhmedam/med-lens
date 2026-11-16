@@ -94,8 +94,10 @@ class Guards(unittest.TestCase):
   idx,plans,checks=plan_data(ctx,arts,'In adults, what happened?');self.assertFalse(plans[0]['scope_required'])
   qid=plans[0]['eligible_quote_ids'][-1];rt=fixtures.FakeRuntime([select(scope=None,findings=[qid])])
   out=c.generate_source_findings_answer('In adults, what happened?',ctx,rt,source_articles=arts)
-  self.assertEqual(out['status'],'partial');self.assertIn('population_unclear',out['limitations'])
-  self.assertEqual(out['claims'][0]['scope_cautions'][0]['code'],'adult_eligibility_not_explicit')
+  self.assertEqual(out['status'],'insufficient_evidence');self.assertIn('population_unclear',out['limitations'])
+  self.assertEqual(out['claims'],[])
+  self.assertEqual(out['draft']['claims'][0]['scope_cautions'][0]['code'],'adult_eligibility_not_explicit')
+  self.assertEqual(out['card_admission']['excluded_cards'][0]['reason_code'],'adult_eligibility_not_explicit')
 
  def test_explicit_scope_veto_only_demotes_and_can_abstain_before_model(self):
   title='Agent A as add-on to dose-adjusted B versus B in a trial'

@@ -5,7 +5,7 @@ abstracts → BGE/MPS Dense ranking → Qwen3.5-4B/MLX source-findings cards. It
 the same policy as the terminal CLI. Submission returns an ID immediately;
 clients poll progress and the structured result. One job may run at a time.
 The application policy is `medlens-mvp-source-findings-v2`, with selector
-`source-findings-task-scoped-v5-candidate1`.
+`source-findings-task-scoped-v5-h4a-task-aware-specific-comparison`.
 
 ## Start
 

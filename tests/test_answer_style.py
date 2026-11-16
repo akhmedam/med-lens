@@ -73,7 +73,7 @@ class AnswerStyleTests(unittest.TestCase):
         self.assertEqual([limit for _, limit in instance.calls], [768, 512])
         instance.close.assert_called_once_with()
 
-    def test_experimental_style_packs_three_articles_and_passes_actual_bound_articles(self):
+    def test_experimental_style_packs_one_article_and_passes_actual_bound_articles(self):
         index = structured_index(); instance = runtime(); module = guarded_module()
         with patch.dict(sys.modules, {MODULE: module}):
             report = run_question(index, 'Question?', encoder_factory=Encoder,
@@ -83,8 +83,9 @@ class AnswerStyleTests(unittest.TestCase):
         self.assertEqual(report['answer_style'], 'source-findings')
         self.assertEqual(report['context']['selection_policy'], COVERAGE_POLICY)
         self.assertEqual(report['context']['article_ranking'], ['1', '2', '3', '4'])
-        self.assertLessEqual(len(report['context']['sources']), 6)
-        self.assertEqual(set(s['pmid'] for s in report['context']['sources']), {'1', '2', '3'})
+        self.assertLessEqual(len(report['context']['sources']), 2)
+        self.assertEqual(set(s['pmid'] for s in report['context']['sources']), {'1'})
+        self.assertTrue(all(s['article_rank'] == 1 for s in report['context']['sources']))
         self.assertTrue(all(n <= 2 for n in Counter(s['pmid'] for s in report['context']['sources']).values()))
         call = module.generate_source_findings_answer.call_args
         self.assertIs(call.kwargs['source_articles'], index.articles)
@@ -93,7 +94,7 @@ class AnswerStyleTests(unittest.TestCase):
         self.assertIn('generation/source_scope.py', report['implementation_sha256'])
         self.assertIn('generation/source_findings.py', report['implementation_sha256'])
 
-    def test_rerank_repack_uses_the_same_coverage_config(self):
+    def test_rerank_repack_uses_the_same_one_article_coverage_config(self):
         index = structured_index(); instance = runtime([['D4', 'D3', 'D2', 'D1']]); module = guarded_module()
         with patch.dict(sys.modules, {MODULE: module}), patch('medlens.pipeline.build_context', wraps=build_context) as pack:
             report = run_question(index, 'Question?', encoder_factory=Encoder, tokenizer=Tokenizer(),
@@ -102,8 +103,12 @@ class AnswerStyleTests(unittest.TestCase):
         self.assertEqual(pack.call_count, 2)
         self.assertIs(pack.call_args_list[0].kwargs['config'], pack.call_args_list[1].kwargs['config'])
         self.assertEqual(pack.call_args.kwargs['config'].selection_mode, 'results-methods')
+        self.assertEqual(pack.call_args.kwargs['config'].max_articles, 1)
         self.assertEqual(report['context']['article_ranking'], ['4', '3', '2', '1'])
-        self.assertEqual(set(s['pmid'] for s in report['context']['sources']), {'4', '3', '2'})
+        self.assertLessEqual(len(report['context']['sources']), 2)
+        self.assertEqual(set(s['pmid'] for s in report['context']['sources']), {'4'})
+        self.assertTrue(all(s['article_rank'] == 1 for s in report['context']['sources']))
+        self.assertIs(module.generate_source_findings_answer.call_args.kwargs['source_articles'], index.articles)
         self.assertEqual([limit for _, limit in instance.calls], [128])
 
     def test_empty_context_abstains_without_qwen_factory(self):

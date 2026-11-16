@@ -13,7 +13,7 @@ and measurements; they do not select the current application policy.
 | Candidates and display | Default 100 candidates and top-10 articles; request limits 1–300 and 1–10 |
 | Ranking | Pinned BGE-base-en-v1.5 on MPS; maximum-window cosine similarity per article |
 | Answer format | Source-findings cards: exact study-context and finding quotations |
-| Application / selector policy | `medlens-mvp-source-findings-v2` / `source-findings-task-scoped-v5-candidate1` |
+| Application / selector policy | `medlens-mvp-source-findings-v2` / `source-findings-task-scoped-v5-h4a-task-aware-specific-comparison` |
 | Request budget | 55 s work + 3 s cleanup + 2 s delivery reserve, starting before validation/admission |
 | Generator | Pinned Qwen3.5-4B four-bit artifact in the isolated MLX runtime |
 | Reranking and fallback | No additional reranker; no automatic model/backend or stale-source fallback |
@@ -57,8 +57,12 @@ inputs are encoded. Requests retain source snapshots and exact text versions;
 an upstream failure is not replaced with an older successful collection.
 
 Qwen selects source quotations rather than writing a factual synthesis. One
-bounded call selects exact sentence IDs and one applicability decision per
-article. Program checks exclude recognized scope mismatches and objective- or
+bounded call selects exact sentence IDs and an applicability decision for the
+first Dense-ranked article, using at most two fragments; ranked display still
+retains top-10. The local measured candidate also requires recognized primary-null
+findings and applies bounded postselection endpoint checks. These vetoes preserve
+uncertainty and do not certify clinical support. Program checks exclude recognized
+scope mismatches and objective- or
 procedure-only findings; they do not establish positive scientific support.
 Cards retain source titles, study context, findings, citations and applicability
 cautions. A nonempty answer remains `partial`: exact quotation identity does
@@ -81,14 +85,21 @@ scientifically appropriate abstention. The enforced work/cleanup boundaries do
 not establish a client-latency SLA: HTTP polling, response receipt and CLI output
 are measured explicitly. See [request reliability](request-reliability.md).
 
-## Acceptance for the next confirmation
+## Quality objective and separate acceptance requirements
 
-The owner-defined gates in the [human-confirmation protocol](human-confirmation.md)
-are at least **10 useful selections out of all 20 planned queries**, unnecessary
-abstentions at most **50% of reference-confirmed answerable queries**, and **60 seconds
-maximum for every full request**, including network, model loading, delivery and
-cleanup. A zero answerability denominator is not an automatic pass. Unknowns
-remain distinct, and the existing critical scope-error blocker is unchanged.
+Under the [2026-11-16 quality-policy amendment](usefulness-research.md#acceptance-criteria),
+the quality objective is **the best measured quality among the sequentially tested
+justified hypotheses**. Report useful-selection counts and denominators, explicit
+unknowns, null effects, regressions and failures. There is **no minimum useful
+percentage or count for MVP readiness**; this change does not establish readiness.
+
+Separate requirements remain unnecessary abstentions at most **50% of
+reference-confirmed answerable queries** and **60 seconds maximum for every full
+request**, including network, model loading, delivery and cleanup. A zero
+answerability denominator is not an automatic pass. Unknowns remain distinct;
+the source-quality facets and existing critical scope-error blocker are unchanged.
+The [human-confirmation record](human-confirmation.md) labels its original useful
+floor as historical. Frozen plans, results and reviews are not rewritten.
 
 The original human source-reference form remains blank and preserved. A separate
 prior AI-origin reference contains 208 article/query judgments. Those judgments
@@ -108,6 +119,15 @@ The [actual AI confirmation](request-quality-validation.md) is now complete.
 Its overall gate failed; timing and cleanup passed. The preserved source-only
 reference and separate actual-output review keep uncertainty and acquisition
 failures explicit. This result does not approve release.
+
+The subsequent [sequential usefulness study and new twenty-query AI diagnostic](usefulness-research.md)
+retained H6 as the best measured development compromise. New source-only
+answerability was frozen before output review. Useful selections were 6/20
+(1 unknown); unnecessary abstentions were 5/16 (31.25%, bounds 31.25–35.29%).
+All twenty full CLI requests and cleanup checks passed, with maximum 41.44 s.
+Four confirmed comparison/outcome errors and two uncertain scope cases keep
+release unaccepted. Code was not tuned on these new outputs; the next behavior
+change would need a separately unused confirmation round.
 
 ## Research and remaining work
 

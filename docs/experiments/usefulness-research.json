@@ -1,0 +1,1744 @@
+{
+  "schema_version": 1,
+  "kind": "sequential-usefulness-research-and-source-first-ai-confirmation",
+  "date": "2026-11-16",
+  "status": "release-not-accepted",
+  "judgments_origin": "ai",
+  "human_authored": false,
+  "independent_human_validation": false,
+  "clinical_validation": false,
+  "historical_manual_human_labels_modified": false,
+  "evaluation_git_head": "bb311bf318a906adeb7a4ece2b75fb01b2424c94",
+  "selected_development_variant": "H6",
+  "global_optimum_established": false,
+  "acceptance": {
+    "useful_fraction_min": null,
+    "useful_objective": "best-observed-quality-among-tested-justified-variants",
+    "false_abstention_fraction_max": 0.5,
+    "false_abstention_denominator": "source-confirmed-answerable-queries",
+    "full_request_wall_max_seconds": 60,
+    "source_support_and_critical_scope_requirements": "unchanged"
+  },
+  "development": [
+    {
+      "variant": "H0",
+      "cohort": "consumed-development-old-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "013f3cc9f3558c919fd49d1663e2db17824c4455dad852fc061c6c3694d50427",
+      "variant_manifest_id": "fed555e6c77e48bbfd6f825916b8dc1119b48c77d22a23bea2f91bcd4011030f",
+      "native_replays": 16,
+      "operational_passes": 16,
+      "structural_empty_cases": 4,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 16,
+        "median": 20.563216395499694,
+        "p95_linear": 28.721547947500767,
+        "max": 29.671719666999707,
+        "all_seconds": {
+          "hc01": 19.246643791997485,
+          "hc02": null,
+          "hc03": 23.017628749999858,
+          "hc04": 21.11030112499793,
+          "hc05": 17.129058916998474,
+          "hc06": 20.83411383299972,
+          "hc07": null,
+          "hc08": 21.088456333000067,
+          "hc09": 15.001240333000169,
+          "hc10": 16.990337582999928,
+          "hc11": null,
+          "hc12": 17.003352625000844,
+          "hc13": 19.470829582998704,
+          "hc14": 16.384799374998693,
+          "hc15": 21.273522832998424,
+          "hc16": 20.29231895799967,
+          "hc17": 28.40482404100112,
+          "hc18": null,
+          "hc19": 29.671719666999707,
+          "hc20": 26.43179749999763
+        }
+      },
+      "progress_decision": null,
+      "quality": {
+        "useful": {
+          "yes": 2,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.1,
+          "bounds": [
+            0.1,
+            0.4
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 5,
+          "answerable_yes": 12,
+          "answerable_unknown": 2,
+          "rate": 0.4166666666666667,
+          "bounds": [
+            0.35714285714285715,
+            0.4166666666666667
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 1,
+          "unknown": 6,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "a8d77bf146ed49fb0cbae9eb8a8a72e01f861c3a41deb09a37e7f8f17b67c1ae",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "B1",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "9eaf6caa21e23ee91dd1197e6cee7c8d39cc8de2e703de62d8585762442ba6f6",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 23.505692332999388,
+        "p95_linear": 33.378852031248606,
+        "max": 33.88983150000058,
+        "all_seconds": {
+          "hc01": 17.960213416998158,
+          "hc02": 23.2400759580014,
+          "hc03": 22.09254874999897,
+          "hc04": 20.818494874998578,
+          "hc05": 17.825451250002516,
+          "hc06": 20.820995165999193,
+          "hc07": 23.223506333997648,
+          "hc08": 22.47370779099947,
+          "hc09": 18.233086707998154,
+          "hc10": 31.949630957999034,
+          "hc11": 26.714578499999334,
+          "hc12": 23.668624291000015,
+          "hc13": 27.20204366699909,
+          "hc14": 23.34276037499876,
+          "hc15": 26.842587416998867,
+          "hc16": 25.46082029200261,
+          "hc17": 33.88983150000058,
+          "hc18": 32.39024995900036,
+          "hc19": 32.55649945799814,
+          "hc20": 33.3519583749985
+        }
+      },
+      "progress_decision": null,
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.3888888888888889,
+            0.4666666666666667
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 2,
+          "unknown": 6,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "36fcace689de5dd431fd57eaa9866f8c4a16c3f21e39d38c735741b81e3b62e1",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2d",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "7322818d052f4dd01c002ff3d71dbd5cdb29eae9a808df2cd7fe068c532a70cc",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 27.275899250502334,
+        "p95_linear": 39.01649563749943,
+        "max": 39.13265712499924,
+        "all_seconds": {
+          "hc01": 18.899370167000598,
+          "hc02": 25.24918691700077,
+          "hc03": 22.20188454199888,
+          "hc04": 22.271262875001412,
+          "hc05": 21.599960458002897,
+          "hc06": 31.196605667002586,
+          "hc07": 39.01038187499944,
+          "hc08": 31.379561375000776,
+          "hc09": 21.5171863329997,
+          "hc10": 30.397917667,
+          "hc11": 27.125364417002856,
+          "hc12": 25.784467292000045,
+          "hc13": 22.475873583000066,
+          "hc14": 25.64448091700251,
+          "hc15": 30.587331041999278,
+          "hc16": 27.426434084001812,
+          "hc17": 31.3249701249988,
+          "hc18": 39.13265712499924,
+          "hc19": 38.76988870800051,
+          "hc20": 34.60859295800037
+        }
+      },
+      "progress_decision": null,
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.3888888888888889,
+            0.4666666666666667
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 1,
+          "unknown": 6,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "6ed1fdf70f5e575fe1e7ffd50233e209c1649fa0da3d9942d54f969659b2ec9f",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2e",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "9b075676339d40961af203a89f3e4fa7bc021d7f3586a490a605cef81c7db159",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 29.842330916499122,
+        "p95_linear": 49.40580761040037,
+        "max": 55.2617355830007,
+        "all_seconds": {
+          "hc01": 17.93465075000131,
+          "hc02": 24.149422792001133,
+          "hc03": 23.121001999999862,
+          "hc04": 22.162370375001046,
+          "hc05": 18.617669333001686,
+          "hc06": 55.2617355830007,
+          "hc07": 49.09760087500035,
+          "hc08": 37.373749667000084,
+          "hc09": 31.111340125000424,
+          "hc10": 29.391617000001133,
+          "hc11": 30.245631707999564,
+          "hc12": 30.293377625002904,
+          "hc13": 21.60723683300239,
+          "hc14": 27.479531917000713,
+          "hc15": 29.43903012499868,
+          "hc16": 24.99061458399956,
+          "hc17": 38.12262433399883,
+          "hc18": 34.027275125001324,
+          "hc19": 41.42878833299983,
+          "hc20": 44.328431083002215
+        }
+      },
+      "progress_decision": null,
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4117647058823529,
+            0.5
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 6,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "0b4147e773a3ac4b40a9831f3320d2b5359fc664ea8c03b070118e1148399193",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2a",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "2ee5bca4361c1170100dbc93f4d5999569e4b3ca0870361c81558e9f887864d8",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 26.32576031250028,
+        "p95_linear": 36.80467818270027,
+        "max": 50.29601800000091,
+        "all_seconds": {
+          "hc01": 25.56503199999861,
+          "hc02": 29.594297957999515,
+          "hc03": 50.29601800000091,
+          "hc04": 34.45304933400257,
+          "hc05": 23.553366250002,
+          "hc06": 25.4150594169987,
+          "hc07": 28.688818916001765,
+          "hc08": 34.91652966699985,
+          "hc09": 21.02324299999964,
+          "hc10": 23.541487667000183,
+          "hc11": 24.485448209001333,
+          "hc12": 26.61476733300151,
+          "hc13": 19.20446124999944,
+          "hc14": 23.151007832999312,
+          "hc15": 26.036753291999048,
+          "hc16": 24.043861582998943,
+          "hc17": 35.2379672499992,
+          "hc18": 35.62562529099887,
+          "hc19": 36.09460766600023,
+          "hc20": 34.234135999999125
+        }
+      },
+      "progress_decision": "rejected-and-rolled-back: no useful gain, one additional confirmed unnecessary abstention",
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 8,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.5333333333333333,
+          "bounds": [
+            0.47058823529411764,
+            0.5625
+          ],
+          "zero_denominator_possible": false,
+          "gate": "not_established"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 5,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "9466a7d63535f865aaae6838d84c57c5c0c4040c14689538a0aedd84b1abf8f7",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2b",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "96940c6b7bbafbab9de513136121ed340be0c52bff9b4f8e5a14fd0b8bff0a46",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 27.11113833300078,
+        "p95_linear": 38.34723206694763,
+        "max": 58.05917204100115,
+        "all_seconds": {
+          "hc01": 16.724096042002202,
+          "hc02": 22.483628416997817,
+          "hc03": 21.749052250001114,
+          "hc04": 22.655131542000163,
+          "hc05": 58.05917204100115,
+          "hc06": 31.751657332999457,
+          "hc07": 34.35398412500217,
+          "hc08": 34.27834679199805,
+          "hc09": 26.87502929100083,
+          "hc10": 25.68898604200149,
+          "hc11": 24.751085874999262,
+          "hc12": 25.34982258400123,
+          "hc13": 25.921287249999295,
+          "hc14": 26.41299649999928,
+          "hc15": 28.058093207997445,
+          "hc16": 27.347247375000734,
+          "hc17": 36.61578749999899,
+          "hc18": 37.30976154199743,
+          "hc19": 32.83046458299941,
+          "hc20": 33.1171865000033
+        }
+      },
+      "progress_decision": "no observed output/quality change; eligibility consistency retained for next packing hypothesis",
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4117647058823529,
+            0.5
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 6,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "cc1e3d045287400803df029be8ebaa5f74ce2f703c3af3678ea1047ee10b1673",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2c",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "27bf2f6c56b2aa53cc13e6b969ea7f3516f3409d176304b53629067620c14bac",
+      "native_replays": 20,
+      "operational_passes": 18,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 32.621146708001106,
+        "p95_linear": 44.38759814375192,
+        "max": 84.14853274999768,
+        "all_seconds": {
+          "hc01": 23.550506207997387,
+          "hc02": 23.296881709000445,
+          "hc03": 23.30915054200159,
+          "hc04": 84.14853274999768,
+          "hc05": 40.766171125000255,
+          "hc06": 34.04108879100022,
+          "hc07": 33.108239542001684,
+          "hc08": 34.24024649999774,
+          "hc09": 24.045047875002638,
+          "hc10": 33.06864466600018,
+          "hc11": 42.294917375002115,
+          "hc12": 28.284674458001973,
+          "hc13": 26.84198595899943,
+          "hc14": 35.09940704199835,
+          "hc15": 36.447360000001936,
+          "hc16": 30.123178207999445,
+          "hc17": 32.17364875000203,
+          "hc18": 33.52745175000018,
+          "hc19": 30.070446542002173,
+          "hc20": 27.735627834001207
+        }
+      },
+      "progress_decision": "rejected-and-rolled-back: useful3→2, confirmedcritical0→6; reduced refusals did not mean useful answers",
+      "quality": {
+        "useful": {
+          "yes": 2,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.1,
+          "bounds": [
+            0.1,
+            0.4
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 1,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.06666666666666667,
+          "bounds": [
+            0.058823529411764705,
+            0.125
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 6,
+          "unknown": 7,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "eb0269f54cdf306915979263c27d603bed1130c6d8cc02192a2fe18b29cfd6b6",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H2g",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "e1a60d33782921ed736ae725633b1f71b4f0b05d3f665595f710fac0b0aa9373",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "fail",
+      "timing": {
+        "count": 20,
+        "median": 26.032898395998927,
+        "p95_linear": 36.776121640200294,
+        "max": 38.0992779579974,
+        "all_seconds": {
+          "hc01": 17.897157666000567,
+          "hc02": 23.800878458001534,
+          "hc03": 23.00058212499789,
+          "hc04": 21.167993750001187,
+          "hc05": 18.493791040997166,
+          "hc06": 21.620728624999174,
+          "hc07": 29.415484290999302,
+          "hc08": 36.70648183400044,
+          "hc09": 23.431591708002088,
+          "hc10": 26.74529262500073,
+          "hc11": 26.490804458997445,
+          "hc12": 25.57499233300041,
+          "hc13": 19.914030457999615,
+          "hc14": 23.577580125001987,
+          "hc15": 28.69131500000003,
+          "hc16": 29.35317070900055,
+          "hc17": 35.916027125000255,
+          "hc18": 32.19719554100084,
+          "hc19": 33.3205997499972,
+          "hc20": 38.0992779579974
+        }
+      },
+      "progress_decision": "exact same20scientific outputs; retain unique finding-pair grammar as contract protection, not measured useful gain",
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4117647058823529,
+            0.5
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 6,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "b65643e79e13f96b420fb22d9810aa15c65d4b430f216902d886ce771b20bd8f",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H3a",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "becc1b728f7a43e2e2fe09a462213d71950af5cd7e319feaa020b49286801bc5",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 30.637891104001028,
+        "p95_linear": 42.49968211700052,
+        "max": 42.96825679200265,
+        "all_seconds": {
+          "hc01": 17.600258958002087,
+          "hc02": 24.37810787499984,
+          "hc03": 25.305617750000238,
+          "hc04": 29.871441291001247,
+          "hc05": 31.53457233300287,
+          "hc06": 42.47502029200041,
+          "hc07": 37.6880826250017,
+          "hc08": 35.14934179099873,
+          "hc09": 23.705698541998572,
+          "hc10": 36.17016087499724,
+          "hc11": 28.934078833000967,
+          "hc12": 31.40434091700081,
+          "hc13": 24.824856582999928,
+          "hc14": 25.734459166000306,
+          "hc15": 25.65517241699854,
+          "hc16": 22.44175583299875,
+          "hc17": 36.64317349999692,
+          "hc18": 33.05491716599863,
+          "hc19": 39.83032154200191,
+          "hc20": 42.96825679200265
+        }
+      },
+      "progress_decision": "rejected original prompt serialization:2useful/2critical; empty obligation metadata perturbed unrelated model prompts",
+      "quality": {
+        "useful": {
+          "yes": 2,
+          "unknown": 8,
+          "denominator": 20,
+          "rate": 0.1,
+          "bounds": [
+            0.1,
+            0.5
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 5,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.3333333333333333,
+          "bounds": [
+            0.29411764705882354,
+            0.375
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 2,
+          "unknown": 8,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "b4bd92fd7a67cfdea6314d7bda66a4ad2cc9d37666e36dd82d7d291cc500fe0e",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H3a2",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "d7a34daf791a79da54cf87e1d7c333dfa5efd97e2ce92ffe46bb135ade046a21",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 29.580741249999846,
+        "p95_linear": 40.390034912502415,
+        "max": 41.583328249998885,
+        "all_seconds": {
+          "hc01": 18.050853625001764,
+          "hc02": 24.113165957998717,
+          "hc03": 25.344549041998107,
+          "hc04": 33.85168070800137,
+          "hc05": 41.583328249998885,
+          "hc06": 39.41100316699885,
+          "hc07": 40.3272300000026,
+          "hc08": 40.13159304199871,
+          "hc09": 31.87630150000041,
+          "hc10": 28.483667832999345,
+          "hc11": 33.0173715000019,
+          "hc12": 27.462459375001345,
+          "hc13": 19.956764999998995,
+          "hc14": 28.81801941699814,
+          "hc15": 30.343463083001552,
+          "hc16": 22.601925291000953,
+          "hc17": 33.244386583999585,
+          "hc18": 34.048104542001965,
+          "hc19": 24.079050790998735,
+          "hc20": 21.332199624997884
+        }
+      },
+      "progress_decision": "corrective input stability:19questions equalH2g, matchedquestion equalH3a; primary-null omission suppressed, refusal remains",
+      "quality": {
+        "useful": {
+          "yes": 3,
+          "unknown": 6,
+          "denominator": 20,
+          "rate": 0.15,
+          "bounds": [
+            0.15,
+            0.45
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 8,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.5333333333333333,
+          "bounds": [
+            0.47058823529411764,
+            0.5625
+          ],
+          "zero_denominator_possible": false,
+          "gate": "not_established"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 5,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "3206738df323913b9dc74c10d9c5d5ab5179dc05781aa3f7f103edb281ed01b5",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H3b",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "counterfactual rematerialization of inherited native responses under exact model inputs",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "native_replays": 0,
+      "inherited_native_generations": 20,
+      "operational_passes": null,
+      "timing": null,
+      "progress_decision": "4useful vs3; uncertainty reduced; unnecessary-refusal tradeoff9/15 requires next prompt trial; no fresh model execution claimed",
+      "quality": {
+        "useful": {
+          "yes": 4,
+          "unknown": 2,
+          "denominator": 20,
+          "rate": 0.2,
+          "bounds": [
+            0.2,
+            0.3
+          ],
+          "criterion": "maximize-measured-quality-after-all-planned-hypotheses",
+          "minimum_acceptance_fraction": null
+        },
+        "false_abstention": {
+          "confirmed_count": 9,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.6,
+          "bounds": [
+            0.6,
+            0.6666666666666666
+          ],
+          "zero_denominator_possible": false,
+          "gate": "fail",
+          "comparison_fraction_max": 0.5,
+          "criterion_status": "separate-previous-50pct-comparison-not-explicitly-cancelled"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 1,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "0126729dc54d5eccfb072f4f7c0ac36c609fdb508f3af8d5f38ff73f3f7842b6",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H4a",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "8cc9c16188366243f8d1eb06078bc0acc71e0a68f2f50f2ac9dd3e825256831c",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 21.693934478998926,
+        "p95_linear": 24.61212607884736,
+        "max": 24.894330625000293,
+        "all_seconds": {
+          "hc01": 17.514397082999494,
+          "hc02": 23.28411899999992,
+          "hc03": 22.746751874998154,
+          "hc04": 21.671352957997442,
+          "hc05": 18.65094091699939,
+          "hc06": 20.702294375001657,
+          "hc07": 24.597273207997205,
+          "hc08": 22.392706165999698,
+          "hc09": 17.813169332999678,
+          "hc10": 20.11762954200094,
+          "hc11": 24.894330625000293,
+          "hc12": 20.737388792000274,
+          "hc13": 15.775670541999716,
+          "hc14": 17.282382207999035,
+          "hc15": 23.92611562499951,
+          "hc16": 19.522208792001038,
+          "hc17": 22.417396000000736,
+          "hc18": 21.71651600000041,
+          "hc19": 23.18349062500056,
+          "hc20": 23.516863541997736
+        }
+      },
+      "progress_decision": "not selected standalone: confirmed endpoint substitutions despite useful selections; later corrective variants evaluated separately",
+      "quality": {
+        "useful": {
+          "yes": 4,
+          "unknown": 3,
+          "denominator": 20,
+          "rate": 0.2,
+          "bounds": [
+            0.2,
+            0.35
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 6,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4,
+          "bounds": [
+            0.4,
+            0.5
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 2,
+          "unknown": 2,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "fd16a5f35a953f0fc6be928603a7ddaab53b0def6dffae2b6bf9ad8b66531a4f",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H4b",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "01a2587a2c6fdbe6b9292214029feb0ac352613b28415174faeb99ed51d053d3",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 12.966269125001418,
+        "p95_linear": 14.038848744351707,
+        "max": 14.07649554100135,
+        "all_seconds": {
+          "hc01": 13.823397125001065,
+          "hc02": 14.036867334001727,
+          "hc03": 12.953428042001178,
+          "hc04": 10.981686833998538,
+          "hc05": 13.355464209002093,
+          "hc06": 12.099108333000913,
+          "hc07": 12.784454999997251,
+          "hc08": 12.871239374999277,
+          "hc09": 4.897526624998136,
+          "hc10": 12.9851168339992,
+          "hc11": 14.027714542000467,
+          "hc12": 5.443255791000411,
+          "hc13": 5.090301291002106,
+          "hc14": 12.69839304099878,
+          "hc15": 13.885264207998262,
+          "hc16": 5.317181749996962,
+          "hc17": 13.565258667000307,
+          "hc18": 12.979110208001657,
+          "hc19": 13.076064417000453,
+          "hc20": 14.07649554100135
+        }
+      },
+      "progress_decision": "not selected standalone: confirmed endpoint substitutions despite useful selections; later corrective variants evaluated separately",
+      "quality": {
+        "useful": {
+          "yes": 6,
+          "unknown": 2,
+          "denominator": 20,
+          "rate": 0.3,
+          "bounds": [
+            0.3,
+            0.4
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 5,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.3333333333333333,
+          "bounds": [
+            0.3333333333333333,
+            0.4444444444444444
+          ],
+          "zero_denominator_possible": false,
+          "gate": "pass"
+        },
+        "critical_scope": {
+          "yes": 2,
+          "unknown": 2,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "c83b23e047acef5242a24654d87e5a71190586cb0c3fbe6d8d8d689afb6268aa",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H4c",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "9097481dcab123990aedcba5a34d99aa02f3ac7c7103eddfe08b7f64fbe0c0a5",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 19.361008916999708,
+        "p95_linear": 23.085128244048065,
+        "max": 23.810756333001336,
+        "all_seconds": {
+          "hc01": 18.289102416998503,
+          "hc02": 23.810756333001336,
+          "hc03": 23.046937291997892,
+          "hc04": 21.10207166699911,
+          "hc05": 18.003022000000783,
+          "hc06": 20.09717720899789,
+          "hc07": 22.1976304589989,
+          "hc08": 21.978712042000552,
+          "hc09": 15.365382332998706,
+          "hc10": 17.86714208400008,
+          "hc11": 18.624840625001525,
+          "hc12": 17.496192374997918,
+          "hc13": 14.409009500002867,
+          "hc14": 15.43889395899896,
+          "hc15": 18.126259250002477,
+          "hc16": 16.30603216599775,
+          "hc17": 22.6526030419991,
+          "hc18": 20.789659666999796,
+          "hc19": 22.84764300000097,
+          "hc20": 21.920562167000753
+        }
+      },
+      "progress_decision": "not selected standalone: one confirmed endpoint substitution remains; H5 has no useful-count improvement over H4c",
+      "quality": {
+        "useful": {
+          "yes": 6,
+          "unknown": 1,
+          "denominator": 20,
+          "rate": 0.3,
+          "bounds": [
+            0.3,
+            0.35
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4666666666666667,
+            0.5555555555555556
+          ],
+          "zero_denominator_possible": false,
+          "gate": "not_established"
+        },
+        "critical_scope": {
+          "yes": 1,
+          "unknown": 1,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "7f75bdac8f21e851356a02406479c76e4344014be5df54a68932f084917812e5",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H5",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "a1d62f122fcff6985e3000daefff61076e65eaa674e676918d913f41e262f756",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 13.823304666500917,
+        "p95_linear": 20.083958795798573,
+        "max": 20.89302954100276,
+        "all_seconds": {
+          "hc01": 5.102957125000103,
+          "hc02": 12.949005249996844,
+          "hc03": 4.927388290998351,
+          "hc04": 19.001215042000695,
+          "hc05": 13.317429041999276,
+          "hc06": 4.765680500000599,
+          "hc07": 15.686606334002136,
+          "hc08": 12.726544249999279,
+          "hc09": 4.864864624996699,
+          "hc10": 16.224312540998653,
+          "hc11": 17.028764083002898,
+          "hc12": 4.8281572080013575,
+          "hc13": 4.808751625001605,
+          "hc14": 14.329180291002558,
+          "hc15": 16.256047333001334,
+          "hc16": 5.27931612500106,
+          "hc17": 19.710956040999008,
+          "hc18": 18.91873212500286,
+          "hc19": 20.89302954100276,
+          "hc20": 20.04137612499835
+        }
+      },
+      "progress_decision": "not selected standalone: one confirmed endpoint substitution remains; H5 has no useful-count improvement over H4c",
+      "quality": {
+        "useful": {
+          "yes": 6,
+          "unknown": 1,
+          "denominator": 20,
+          "rate": 0.3,
+          "bounds": [
+            0.3,
+            0.35
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4666666666666667,
+            0.5555555555555556
+          ],
+          "zero_denominator_possible": false,
+          "gate": "not_established"
+        },
+        "critical_scope": {
+          "yes": 1,
+          "unknown": 1,
+          "gate": "fail"
+        }
+      },
+      "score_sha256": "d6865781def85cefc6bebbc12e43eb9b87831b2871c0a429498774c0825023fb",
+      "live_latency_SLA_established": false
+    },
+    {
+      "variant": "H6",
+      "cohort": "consumed-development-updated-source-pools",
+      "method": "actual-serial-frozen-source-replay",
+      "cases_manifest_id": "d246cdb0c3d39cdbee1157b2766b83c4be996fe8870a72c15519861cb3892106",
+      "variant_manifest_id": "76e75a99c196c6943c339d5e61668f0741ba8afeb01f30c9005d3e1e7a4caa02",
+      "native_replays": 20,
+      "operational_passes": 20,
+      "structural_empty_cases": 0,
+      "displayed_card_support_gate": "not_established",
+      "timing": {
+        "count": 20,
+        "median": 12.640894854499493,
+        "p95_linear": 13.389738474998012,
+        "max": 13.531140749997576,
+        "all_seconds": {
+          "hc01": 12.862977124997997,
+          "hc02": 13.382296249998035,
+          "hc03": 12.828275957999722,
+          "hc04": 10.87201987500157,
+          "hc05": 13.240440749999834,
+          "hc06": 11.99083837499711,
+          "hc07": 12.588967792002222,
+          "hc08": 12.681243084000016,
+          "hc09": 5.369173333001527,
+          "hc10": 12.876135667000199,
+          "hc11": 12.83167904199945,
+          "hc12": 4.736052250002103,
+          "hc13": 4.791767875001824,
+          "hc14": 11.86290983300205,
+          "hc15": 12.732857250000961,
+          "hc16": 4.704071000000113,
+          "hc17": 12.813894041999447,
+          "hc18": 12.166766124999413,
+          "hc19": 12.60054662499897,
+          "hc20": 13.531140749997576
+        }
+      },
+      "progress_decision": "same6useful, confirmedcritical2to0, falseabstention5to7; uncertainty remains, choose for new diagnostic not release pass",
+      "quality": {
+        "useful": {
+          "yes": 6,
+          "unknown": 2,
+          "denominator": 20,
+          "rate": 0.3,
+          "bounds": [
+            0.3,
+            0.4
+          ]
+        },
+        "false_abstention": {
+          "confirmed_count": 7,
+          "answerable_yes": 15,
+          "answerable_unknown": 3,
+          "rate": 0.4666666666666667,
+          "bounds": [
+            0.4666666666666667,
+            0.5555555555555556
+          ],
+          "zero_denominator_possible": false,
+          "gate": "not_established"
+        },
+        "critical_scope": {
+          "yes": 0,
+          "unknown": 2,
+          "gate": "not_established"
+        }
+      },
+      "score_sha256": "449ab021a2c2355d99c077aa6eb89fbdbf596303665aba074c949d2a3465057f",
+      "live_latency_SLA_established": false
+    }
+  ],
+  "confirmation": {
+    "not_paired_with_development": true,
+    "attempts_per_query": 1,
+    "candidate_frozen_before_new_questions_semantically_read": true,
+    "source_reference_frozen_before_output_review": true,
+    "candidate_manifest_id": "00500b2ecc81a0210ca6d5feb2a61954a94addc4690f4fb0dd52452c8a228bbe",
+    "source_reference_id": "d799976553277f071f235a8a3cb807b3acb08929d097abe3ce345e2fdc224caf",
+    "quality": {
+      "useful": {
+        "yes": 6,
+        "unknown": 1,
+        "denominator": 20,
+        "rate": 0.3,
+        "bounds": [
+          0.3,
+          0.35
+        ],
+        "criterion": "maximize-measured-quality-after-all-planned-hypotheses",
+        "minimum_acceptance_fraction": null
+      },
+      "false_abstention": {
+        "confirmed_count": 5,
+        "answerable_yes": 16,
+        "answerable_unknown": 1,
+        "rate": 0.3125,
+        "bounds": [
+          0.3125,
+          0.35294117647058826
+        ],
+        "zero_denominator_possible": false,
+        "gate": "pass",
+        "comparison_fraction_max": 0.5,
+        "maximum_fraction": 0.5,
+        "maximum_inclusive": true,
+        "user_decision": {
+          "kind": "explicit-user-quality-requirement",
+          "criterion": "unnecessary-semantic-abstention-fraction",
+          "maximum_fraction": 0.5,
+          "maximum_inclusive": true,
+          "origin": "explicit-user-confirmation",
+          "definition": "unnecessary semantic abstentions / source-reconfirmed answerable queries; exact unknown bounds; A=0 not established"
+        },
+        "criterion_status": "explicit-user-confirmed-maximum-50pct"
+      },
+      "critical_scope": {
+        "yes": 4,
+        "unknown": 2,
+        "gate": "fail"
+      }
+    },
+    "gates": {
+      "false_abstention": "pass",
+      "critical_scope": "fail",
+      "timing": "pass",
+      "displayed_card_support": "fail",
+      "source_integrity": "pass",
+      "native_cleanup": "pass",
+      "operational": "pass"
+    },
+    "remaining_check_result": "fail",
+    "full_wall_summary": {
+      "count": 20,
+      "median": 20.996844645998863,
+      "p95_linear": 38.4053410378483,
+      "max": 41.44489683400025,
+      "all_seconds": {
+        "v2c01": 28.84373058300116,
+        "v2c02": 17.923932458001218,
+        "v2c03": 15.614030417000322,
+        "v2c04": 20.815459999997984,
+        "v2c05": 21.876298540999414,
+        "v2c06": 18.212681291999615,
+        "v2c07": 15.845342791999428,
+        "v2c08": 18.987482999997155,
+        "v2c09": 4.639465749998635,
+        "v2c10": 31.59180216599998,
+        "v2c11": 19.164494124997873,
+        "v2c12": 18.887740542002575,
+        "v2c13": 38.2453644169982,
+        "v2c14": 33.16178020799998,
+        "v2c15": 26.4731535840001,
+        "v2c16": 21.17822929199974,
+        "v2c17": 41.44489683400025,
+        "v2c18": 27.11866362499859,
+        "v2c19": 37.389942249999876,
+        "v2c20": 7.964714666999498
+      }
+    },
+    "source_answerability_counts": {
+      "yes": 16,
+      "no": 3,
+      "unknown": 1
+    },
+    "queries": [
+      {
+        "query_id": "v2c01",
+        "case_record_sha256": "36a440b8f525a2792163be992d0689ffc00d8b5cb0049aa9c82f1d1364901754",
+        "source_pool_sha256": "4a3ffcd4cb7560a86a964c1c2ac6c17a53e3e6fc801db7b66de924427622bcef",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "question": "In adults with non-valvular atrial fibrillation, how does apixaban compare with warfarin for preventing stroke or systemic embolism?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 28.84373058300116,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c02",
+        "case_record_sha256": "5a4a0724246314081ea519f9083c70291118bea23fdf70a5da2ca6e1b7092b43",
+        "source_pool_sha256": "16dbda2cfd7c3bd664d15bba7d84b63b39b9af9c7e9f0f06702be8d143f5fef7",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "Does as-needed budesonide-formoterol compared with as-needed albuterol reduce severe exacerbations in adults with mild asthma?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 17.923932458001218,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "31112386",
+            "text_version_ids": [
+              "pubmed:31112386:2d6a4a24308d8a9695aa086179e262bd6d7ad6cd3db5e6c1cf13da9ca302ac1e"
+            ],
+            "claim_sha256": "7636a0a818421b49efd0c93d820eee2e2896e303ab7abceb75965b13a8eabc58",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "PMID 31112386 Novel START: полностью прочитаны четыре primary sections, OtherAbstract отсутствуют. Цитаты точные. Сохранены 52 недели, randomized open-label parallel-group design, явно взрослые с mild asthma и в title as-needed budesonide-formoterol; полный METHODS подтверждает запрошенный as-needed albuterol comparator. Именно severe exacerbations составили 9 versus 23, RR 0.40 (95% CI 0.18–0.86). Отдельные 9 versus 21/RR 0.44 (CI 0.20–0.96) относятся к budesonide maintenance, не смешаны с albuterol. Средняя inhaled budesonide exposure 107±109 versus 222±113 μg/day показана как средняя доза, а не prescribing regimen. Невыбранные strengths200/6 и albuterol100 не добавляются к displayed text. Primary annualized total-exacerbation outcome не выдан за severe endpoint; его null versus maintenance не противоречит отдельно показанным severe counts и не превращается в универсальный вывод по всем outcomes. Это применимая частичная finding, не клиническая рекомендация."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c03",
+        "case_record_sha256": "1112c994817fc172c9f61e77551286a7e90e288e211900e10190a70b34d2f86a",
+        "source_pool_sha256": "17bce477baf14939c7a7294c464863264bb99bc7d2ef3eee59dbfa9f0c0bfcbb",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "yes",
+        "unnecessary_abstention": "no",
+        "question": "In adults with iron-deficiency anemia, how does alternate-day oral iron compare with daily oral iron for hemoglobin recovery?",
+        "source_answerability": "no",
+        "full_wall_seconds": 15.614030417000322,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "40819648",
+            "text_version_ids": [
+              "pubmed:40819648:771b3acef3e81331fe56b7482a09e58b12cac89749b85f08a638484f943fea58"
+            ],
+            "claim_sha256": "e19b398bd33fc97340b0e2ff2827d5d80c9f072aa6a4533d8573043da8c0d271",
+            "factual_support": "yes",
+            "population_system": "unknown",
+            "intervention_comparison": "no",
+            "outcome_target": "unknown",
+            "qualifiers_preserved": "no",
+            "rationale": "PMID 40819648 FORTE: полностью прочитаны все шесть primary sections, OtherAbstract отсутствуют. Setup donors18–80 с ferritin≤30μg/L и четыре low-haemoglobin OR процитированы точно. Но полный FINDINGS явно задаёт DAILY PLACEBO как reference для всех этих OR; это не прямой alternate-day versus daily iron effect. Нельзя сравнить0.78/0.80 или0.75/0.77 как оценку запрошенного контраста. В карточке не сохранены material reference-group оговорка и56-day low-Hb endpoint/formulation context. Low-ferritin donor eligibility не устанавливает baseline iron-deficiency ANEMIA или выделенную IDA recovery population: population unknown, не утверждаю, что доноры все неанемичны. Endpoint presence of low Hb at56days не устанавливает здесь Hb-change/recovery из подтверждённой анемии; outcome facet unknown. Подтверждён другой comparator, что достаточно для critical mismatch; точные цитаты не устанавливают прямую применимость."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c04",
+        "case_record_sha256": "74a94df9376a76dab130a88467a20ce5c25b4e3c078ae7ca966789b6b99cf121",
+        "source_pool_sha256": "109a93c62435f89f2df9e3a91518ce6f55191f8428173934571c73c3cd297065",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "question": "How does topical tacrolimus compare with topical corticosteroids for eczema severity in adults with atopic dermatitis?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 20.815459999997984,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c05",
+        "case_record_sha256": "29fd3635edca9a8e892a8e0f2ae63c2538e252ab8ed0b84bab10755249ac4aa0",
+        "source_pool_sha256": "1944f03807ab756ab90848c2e7e380b960f78fa16deac0a0042ca7286cc3ab99",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "yes",
+        "unnecessary_abstention": "no",
+        "question": "Does intravenous tranexamic acid compared with placebo reduce death from bleeding in women with postpartum hemorrhage?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 21.876298540999414,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "28456509",
+            "text_version_ids": [
+              "pubmed:28456509:8a897888f6d7b7443484a9ee115770dc5aac0f731eae7cc3f9948eb06ee1dd05"
+            ],
+            "claim_sha256": "32e9f35b925d59ec940d23d6cf193ed52971af43f625bf83917059c616faa426",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "no",
+            "qualifiers_preserved": "no",
+            "rationale": "PMID 28456509 WOMAN: полностью прочитаны все пять primary sections; OtherAbstract отсутствуют. Обе цитаты точны: женщины≥16 с clinical postpartum haemorrhage после vaginal/caesarean birth и adverse events, включая thromboembolic, did not differ significantly между TXA иplacebo. Не добавляю незаданный adult≥18 cutoff. Полный METHODS подтверждает1g IV TXA versus matching placebo plus usual care, но выбранный текст не содержит regimen/dose или bleeding mortality result. Запрошен death due to bleeding, а фактически выбрана только safety-null находка. Полный FINDINGS содержит невыбранный bleeding-death RR0.81(CI0.65–1.00), ≤3h RR0.69(CI0.52–0.91), а также null composite/hysterectomy findings. Их не приписываю карточке и не дополняю ими отсутствующий ответ. Safety non-significance не доказывает отсутствие adverse effects и не является mortality benefit/null. Важный для вопроса endpoint/dose/time контекст не сохранён."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c06",
+        "case_record_sha256": "7626229997036c805c470b0d9d2e609a37bb7e5d505b30ddee912a6a0c6b167a",
+        "source_pool_sha256": "c2147cbca343aabe423d8dbf1809d0b0f26fdc06cb2118cf5848599942a02889",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "unknown",
+        "question": "What is the diagnostic accuracy of D-dimer for pulmonary embolism in adults with suspected pulmonary embolism, using CT pulmonary angiography as the reference?",
+        "source_answerability": "unknown",
+        "full_wall_seconds": 18.212681291999615,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c07",
+        "case_record_sha256": "eee107bd4316466218f48413214269bec371e29e04ac3574527878ffc7bc7094",
+        "source_pool_sha256": "41468af0a39a2ba16f1107132d68068153b700a31450248d7387476c0e30e881",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "How accurate is IgA tissue transglutaminase antibody testing for celiac disease in adults compared with duodenal biopsy?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 15.845342791999428,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "40927833",
+            "text_version_ids": [
+              "pubmed:40927833:61ee46e570677668b416278bf5b2dd079a75d575c37592e070a17810c8c71d5a"
+            ],
+            "claim_sha256": "69d91481024525e0dc84b8114649dd5f53f11c79b9590cc262722859c2cc8034",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "PMID40927833: полностью прочитаны все6primary разделов,Other0. Карточка сохраняет взрослую≥18 biopsy-evaluated выборку с raisedIgAanti-tTG, high-titer>10×ULN и оба PPV/95%CI для Marsh≥2/3. Это применимые conditional PPV, а не невыбранные sensitivity/NPV для всейскрининговойпопуляции. Обе фактические цитаты дословно поддержаны; source reference duodenalhistology соответствует вопросу. Отсутствие других accuracyметрик не является недостатком полноты обязательногоэталона."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c08",
+        "case_record_sha256": "a7bb9791d00bdc0729bbf21ef2edf706699da17bf2a75aa9d66087deabcc07d2",
+        "source_pool_sha256": "950fcb1d3e88f7fd0fff14f680b7c31bcf160690f0cbca9c3577968a9e36204c",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "What is the diagnostic accuracy of rapid SARS-CoV-2 antigen tests compared with RT-PCR in symptomatic adults?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 18.987482999997155,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "33983971",
+            "text_version_ids": [
+              "pubmed:33983971:5ba7e0e57f057055864a859399c66754ec7f30962496b290067e8cdf7dc76cbc"
+            ],
+            "claim_sha256": "cb6fb00f38afc6ebdcbd778a16b044efc1c004f26d1cfd570508b9c213751249",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "PMID33983971: прочитаны все4primary раздела,Other0. Methods явно adults для обоихpart1/part2 и symptomaticMHS cohort, BDVeritor против qRT-PCR. Карточка сохраняет assay/reference/symptomaticsetting, раздельныеpart1n352/prevalence/specificity/sensitivity сCI и part2n123sensitivity сCI, ≤7days/Ct<30условия; не смешивает их в однууниверсальнуюточность или specificitypart2. Adulteligibility установлена fullsource, хотя отдельное предложение о ней невыбрано. Утверждение не добавляет эффект лечения/другихassays."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c09",
+        "case_record_sha256": "5226e3de7b264cf627a816e2af35b86384fafde4187cfa01f0d11c210132bf81",
+        "source_pool_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "How accurate is optical coherence tomography for diagnosing glaucoma compared with a specialist clinical eye examination?",
+        "source_answerability": "no",
+        "full_wall_seconds": 4.639465749998635,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c10",
+        "case_record_sha256": "a69d6db7729291a46d1f836e4d3a3a7c2e96db79008388c52f8b3c55054e2bbd",
+        "source_pool_sha256": "309b02532f87c3b605ffc1a318750219722be7f202b0c5e73f62d916299865bd",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "question": "In children with suspected appendicitis, how accurate is ultrasound when histopathology or clinical follow-up is used to establish the diagnosis?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 31.59180216599998,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "38625002",
+            "text_version_ids": [
+              "pubmed:38625002:d5cdeadac658e2b43d9833f19a9966cad0d14b4496fad3afcfe22d6746047cc4"
+            ],
+            "claim_sha256": "f3492376b1146d6b18cd2041db8089e3dee2ca5f603c978a05d49a7b3d191b16",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "unknown",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "no",
+            "rationale": "PMID38625002: весь единственныйunstructuredprimaryabstract прочитан,Other0. Обе цитаты о92%accuracy приdiameter≥6.5mm и комбинации<6mm/no-free-fluid дословно поддержаны; title даёт children/suspectedappendicitis. Но actualcohort ограничена <14years и ultrasound-visualizedappendix (411из550suspectedcases); карточка не сохраняет ключевое исключение nonvisualizedappendix и подаёт92%без этой selection-bound оговорки. Полная аннотация вообще не сообщает histopathology/clinicalfollowupreference, требуемый вопросом. Поэтому соответствие reference не установлено (unknown, не доказан другойreference), а существенноеограничение выборки потеряно. Полезность не подтверждена, criticalscope остаётся unknown; это не фактическаягаллюцинация и не утверждение о клинической ложности исходных92%."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c11",
+        "case_record_sha256": "e1e0f45fff944f07e27e0419d1c24c826fd3a8bac8c9a1e7caa3cd08bb9103e4",
+        "source_pool_sha256": "7427ed31c2d10e1f949a6a2091759f25c6071b18263436606414d638b0795b10",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "question": "Is low serum 25-hydroxyvitamin D associated with future hip fractures in older adults?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 19.164494124997873,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c12",
+        "case_record_sha256": "2d77e89c0cc75e930c165f38439b567ac3f1b57f067612c91985a3c25b243df6",
+        "source_pool_sha256": "cdc6c2d52ad536008680d9869bef6a3ab383f0b0d1201248b589e0469b715918",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "question": "Is elevated lipoprotein(a) associated with future ischemic stroke in adults?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 18.887740542002575,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c13",
+        "case_record_sha256": "fac3964ef43466da6baad28041194276a0b8fff47d4146de78619267beef3564",
+        "source_pool_sha256": "0de87102e061e9e59add1d2feafe3eb52f5b275cd50b7105fabaae0599162032",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "yes",
+        "question": "Is higher admission blood lactate associated with mortality in adults with sepsis?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 38.2453644169982,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      },
+      {
+        "query_id": "v2c14",
+        "case_record_sha256": "990b9f58174dff7762a368e11a812017efe231e4607800ce2846352774f995c3",
+        "source_pool_sha256": "69463361fbdf3bc6003d23c7d84080110de42b83db3f367e1ee7de9ef9491ec4",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "yes",
+        "unnecessary_abstention": "no",
+        "question": "Is obesity associated with developing knee osteoarthritis in adults?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 33.16178020799998,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "35412005",
+            "text_version_ids": [
+              "pubmed:35412005:640054c317990c8f0c370d56163ebfed411449c28522405ac0646efffd74344f"
+            ],
+            "claim_sha256": "fa0f0ef1bb7215b64292ff50b2a9f0aff214015cdc9c213d3eac11dd1d005805",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "no",
+            "qualifiers_preserved": "yes",
+            "rationale": "Дословно поддержаны cohort/registry comparison, RR для KR for OA и4.7/8.4/17.3 для obese females55–64 versus normal weight. Популяция, BMI-контраст и KR-qualifier верны. Undergoing KR — подтверждённо другой исход, чем developing knee OA; эти RR нельзя интерпретировать как incidence OA. Factual support/population/comparison/qualifiers=yes; outcome_target=no."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c15",
+        "case_record_sha256": "c28edeb7403645ec7e8a5b94140b7adbf36ab186e6d9cd86a3feb2c3a19a7afc",
+        "source_pool_sha256": "c3d3b450f0a9c7616506772b07e84e3b858317b7f099f3e68ddde719468e8463",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "In adults with acute myeloid leukemia in remission, is measurable residual disease associated with subsequent relapse?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 26.4731535840001,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "37534515",
+            "text_version_ids": [
+              "pubmed:37534515:3ee18580de224c8b57e007615626b3f6db4f0f59db72ef26ede93062af6d4802"
+            ],
+            "claim_sha256": "3618fa42d3a4be8b1ccdce1702e756499335f8ca7e98256162a203ad34b3a46f",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "Цитата дословна. Full source явно задаёт adult first-remission population и DS-positive/negative contrast; quoted relapse68%vs13%, HR8.8/CI и5лет правильны. DS qualifier сохранён: другой flow-cytometry assay в том же source имеет иные/маргинальные связи, но ему DS-эффект не приписан. Survival — дополнительный поддержанный исход; запрошенный subsequent relapse присутствует явно. Scope/outcome substitution нет."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c16",
+        "case_record_sha256": "132080a1f3c08e7d8f23db8809da4c27289751cafec56f6074edb686181bc25a",
+        "source_pool_sha256": "df3ee1687fa6e3f040d0fa7024d2bba5efcbace108d06ae4ff01f0f80d18806f",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "How does insulin signaling through AKT regulate FOXO1 activity and glucose production in hepatocytes?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 21.17822929199974,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "25963408",
+            "text_version_ids": [
+              "pubmed:25963408:98f1c2fb2c3996c09ee06f8a3d8bfa6567c7bd17e60855aa4c70879794153244"
+            ],
+            "claim_sha256": "bd3b6e3a26252d13b7858dfeed8080fbe41c22ccd674f3c6fa63e41da930f8b9",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "Обе цитаты дословны в полном primary abstract. Первая формулирует hepatocyte Akt–Foxo1–HGP механизм; вторая сохраняет liver-specific Foxo1-deletion rescue и despite lack of autonomous liver insulin signalling. Тем самым не утверждается безусловная необходимость hepatic IR–Akt–Foxo1. Система, insulin/Foxo1 contrast, HGP outcome и ключевое условие поддержаны. Нет human-only экстраполяции или выдуманной molecular детали."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c17",
+        "case_record_sha256": "3317a59380a53344d0429c1049196141b36f1662b5531571b2d20c61caba39a8",
+        "source_pool_sha256": "30eb6599e3f239e9405a1ae264cd5663376a156420b58b33ff942fa94c24ca66",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "yes",
+        "unnecessary_abstention": "no",
+        "question": "How does lysosomal autophagy influence alpha-synuclein accumulation in dopaminergic neurons?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 41.44489683400025,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "20844148",
+            "text_version_ids": [
+              "pubmed:20844148:dab905a4966567be56766bab1e9d1a4b1a03808166056501a06bf5fdfd7bdc11"
+            ],
+            "claim_sha256": "b9960c7fa33e9a7b7ac09727a48821a1a88feb1cf4d3adc71503ba5e7620c591",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "no",
+            "qualifiers_preserved": "yes",
+            "rationale": "Точные две цитаты PMID20844148 действительно сообщают уменьшение lysosomes, нарушение clearance и накопление AP в MPTP mouse model и dopaminergic neurons; модель и направление этих результатов сохранены. Но полный primary abstract однозначно определяет AP как autophagosomes: \"sequestration of cytosolic components into autophagosomes (AP)\". Выбранные результаты относятся к накоплению/удалению автoфагосом и нейродегенерации, не к измеренному накоплению alpha-synuclein. Упоминание α-synuclein среди macroautophagy cargo в background не превращает AP в α-synuclein и не устанавливает alpha-synuclein-specific accumulation result. Это подтверждённая подмена запрошенного molecular outcome, а не требование клинического RCT, человеческой модели, конкретного гена или всей механистической цепочки."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c18",
+        "case_record_sha256": "5d4760a81fb28539d9f21e2b93c82edca8b684aaa7ff45fb7ecc104d791e5de9",
+        "source_pool_sha256": "f95853a0faf8c85dde4dded6897fcfeec952c717f8b79364479dc2e1223ba790",
+        "useful_selection": "yes",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "How does hypoxia-inducible factor 1-alpha regulate VEGF-mediated angiogenesis in tumors?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 27.11866362499859,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "15542432",
+            "text_version_ids": [
+              "pubmed:15542432:5342d311ce8dfdf2e6818480f3e83c3c3200d9975540be4af03903f4d637eea3"
+            ],
+            "claim_sha256": "f1e8a027b653b59c2fabafeb0acb88bfd6cc237b59407708af0d496c6bb0c217",
+            "factual_support": "yes",
+            "population_system": "yes",
+            "intervention_comparison": "yes",
+            "outcome_target": "yes",
+            "qualifiers_preserved": "yes",
+            "rationale": "PMID15542432 прямо удаляет HIF-1alpha в endothelial cells; full abstract сообщает подавление EC proliferation/chemotaxis и роста сосудов solid tumors. Выбранные предложения точно связывают HIF-1alpha-null EC с decreased VEGF expression и потерей VEGFR-2 autocrine response и затем прямо называют HIF-1alpha-driven VEGF-mediated EC autocrine loop необходимым компонентом solid tumor angiogenesis. Это непосредственный механистический ответ на запрошенную HIF-1alpha–VEGF–tumor angiogenesis связь. \"These phenomena\" имеет явный antecedent в прочитанном source context, а второе предложение в самой карточке формулирует tumor-angiogenesis связь; отсутствие полного перечисления EC endpoints не считается ошибкой полноты. Endothelial/null-cell context сохранён; не добавляю человеческий clinical effect, вид организма или детали phosphorylation, которых источник не заявляет."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c19",
+        "case_record_sha256": "acf5cb3d6ba0f9444ce0e26b37a8ae2a594880c70897b4235a0f55085123597e",
+        "source_pool_sha256": "98c16ae4c7cf3b4fe9fe59c35a0c9b5b6bd06d66d36b8e5fef676fbe5f22b1be",
+        "useful_selection": "unknown",
+        "critical_scope_mismatch": "unknown",
+        "unnecessary_abstention": "no",
+        "question": "How does complement C5a contribute to inflammatory lung injury?",
+        "source_answerability": "yes",
+        "full_wall_seconds": 37.389942249999876,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "partial",
+        "cards": [
+          {
+            "pmid": "17621257",
+            "text_version_ids": [
+              "pubmed:17621257:619b374a46b0abac6941f9f6a3458382a10edcd37f88f7cc15d19ae72e27effe"
+            ],
+            "claim_sha256": "5fe7b5eaf334a70d21e39a5ea917c36a82acc5952d74546b3e668d39c509cd5a",
+            "factual_support": "unknown",
+            "population_system": "yes",
+            "intervention_comparison": "unknown",
+            "outcome_target": "unknown",
+            "qualifiers_preserved": "unknown",
+            "rationale": "Оба извлечённых предложения буквально присутствуют в PMID17621257, а full primary abstract действительно описывает C5a/anti-C5a в экспериментальной bilateral lung injury после blast-wave blunt chest trauma; требование human-only не вводится. Однако join удалил промежуточное предложение \"Moreover, factor H, a complement regulatory protein, was increased systemically and locally after injury.\" Затем \"Anti-C5a treatment immediately after trauma ameliorated these peaks\" в карточке следует непосредственно за systemic complement/C5a-dependent chemotactic plasma activity. Нельзя однозначно установить, какие именно peaks относится к neutralization effect в отображённой паре: исходный factor-H antecedent отсутствует, а связь с конкретным pulmonary inflammatory endpoint не показана выбранными предложениями. Full source содержит BAL leukocyte/neutrophil/cytokine данные, но они не добавляются к фактическому displayed claim. Это не штраф за отсутствие всех звеньев механизма; неопределён именно сохранённый референт и смысл intervention/result после склейки. Подтверждённого иного органа/популяции/исхода нет, поэтому critical mismatch остаётся unknown, а не yes."
+          }
+        ]
+      },
+      {
+        "query_id": "v2c20",
+        "case_record_sha256": "1db296664372cad7d5ee37e20280613e5aa39695f208f866cde409c5c68baf0f",
+        "source_pool_sha256": "a1c60f0388676282ca9db1c87ee3c1390d5482d31d68e2980721cff356b1b477",
+        "useful_selection": "no",
+        "critical_scope_mismatch": "no",
+        "unnecessary_abstention": "no",
+        "question": "How do disease-causing CFTR mutations alter chloride transport in airway epithelial cells?",
+        "source_answerability": "no",
+        "full_wall_seconds": 7.964714666999498,
+        "operational_pass": true,
+        "native_cleanup_confirmed": true,
+        "answer_status": "insufficient_evidence",
+        "cards": []
+      }
+    ]
+  },
+  "checks": {
+    "main_suite": {
+      "total": 764,
+      "passed": 748,
+      "skipped": 16
+    },
+    "previously_skipped_native_grammar_passed": 11,
+    "previously_skipped_process_observation_passed": 4,
+    "distinct_passed": 763,
+    "remaining_optional_skipped": 1,
+    "remaining_optional_skip_reason": "Node.js UI probe; Node executable absent",
+    "wheel_sha256": "6a0cdef702be95e21f48a95bbd15b8d628a76d64b30b4c0e1a912e4c8c89e493",
+    "wheel_package_files": 75,
+    "wheel_files_match_source": true,
+    "fresh_wheel_install_cli_api_help_imports_html_resources": "pass"
+  },
+  "case_specific_postmortem": {
+    "query_id": "v2c05",
+    "pmid": "28456509",
+    "correct_result_sentence_characters": 379,
+    "quote_character_cap": 532,
+    "correct_result_present_in_generator_payload": false,
+    "permitted_finding_quote_ids": [
+      "E1.Q1"
+    ],
+    "finding_window_characters": 229,
+    "methods_window_characters": 1517,
+    "quote_cap_omissions": [],
+    "diagnosis": "Window selection lost the mortality result, and the model misclassified the available safety result. Not a global model-only cause.",
+    "sha256": "58fcf48838940d26f7591ac9f243301509052c2003b16deed6b0e7ab7a6d5ae0"
+  },
+  "local_artifacts": {
+    "directory": "results/usefulness-ablation-20261116-v1",
+    "tracked_in_git": false,
+    "contains": "frozen sources, raw outputs/reviews, verified research archive, code snapshot/diff and Git bundle",
+    "self_contained_model_or_corpus_bundle": false
+  },
+  "original_artifact_sha256": {
+    "measurements": "467808d2146155ef14951d4641efe797702b30f1508c1c6bbe9504096c10c71e",
+    "confirmation_report": "ba27733886c64988b401e699ab8b24bbf87f03e8419a1a085897e732f8fd330c",
+    "actual_output_review": "4cf415b164cae8af6279d7763fd2f491e8dde5992cbceb1ce56ebc613576d27d",
+    "source_reference": "fc7e9f04cdd523c52114991b30056b81278e9141947025e073f5bf94ea852507",
+    "candidate_manifest": "6ba24490dd44a6c70a76bcd221010d83550227f1a9208e7f9ed70a3b5d59b5d2",
+    "source_freeze_receipt": "b5147f33c0b1f51e20fc3488675771ba28f4fa162435d86fdaa17fbf76eefe5e"
+  }
+}

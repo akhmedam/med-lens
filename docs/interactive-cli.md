@@ -22,7 +22,7 @@ questions. Language and topic are not classified or translated. Source text and
 quotations remain in their original language. Each question searches PubMed
 anew and can reuse unchanged passage vectors. The shared application policy is
 `medlens-mvp-source-findings-v2`; exact quotations are selected by
-`source-findings-task-scoped-v5-candidate1` in one bounded model call.
+`source-findings-task-scoped-v5-h4a-task-aware-specific-comparison` in one bounded model call.
 
 ```text
 Вопрос> How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?

@@ -12,9 +12,10 @@ See the [MVP contract](docs/mvp.md) and [policy decision](docs/adr/0007-unified-
 
 The CLI and optional local HTTP API use the same pinned model, source-findings
 format and bounded search policy (`medlens-mvp-source-findings-v2`). The selector
-is `source-findings-task-scoped-v5-candidate1`: one bounded model call chooses
-exact source sentences and their applicability. Defaults are 100 PubMed candidates and ten
-ranked articles. Every question performs a fresh source search; unchanged
+is `source-findings-task-scoped-v5-h4a-task-aware-specific-comparison`: one bounded model call chooses
+exact source sentences and their applicability from the first Dense-ranked article,
+using at most two fragments. Defaults are 100 PubMed candidates and ten
+ranked articles; ranking/display still keep ten. Every question performs a fresh source search; unchanged
 passage inputs reuse cached vectors. There is no additional reranker or
 model/backend fallback.
 
@@ -31,11 +32,18 @@ remain `partial`. Known selection/semantic limitations constrain readiness, as d
 AI annotations have separate provenance; neither is silently transferred to new
 questions or source versions.
 
-The owner-defined confirmation requires **at least 50% useful
-selections across all twenty queries**, **at most 50% unnecessary abstentions
-among reference-confirmed answerable queries**, and **at most 60 seconds for each
-complete request**. The [human-confirmation protocol](docs/human-confirmation.md)
-records the new blank source-reference form and the later actual-output review.
+The [2026-11-16 quality-policy amendment](docs/usefulness-research.md#acceptance-criteria)
+sets the objective to **the best measured quality among the variants tested through
+sequential evaluation of the justified hypotheses**. Report useful-selection
+counts, explicit unknowns and denominators, including failures and regressions.
+There is **no minimum useful-selection percentage or count for MVP readiness**.
+
+The separate requirements remain **at most 50% unnecessary abstentions among
+reference-confirmed answerable queries** and **at most 60 seconds for each complete
+request**. Source-quality facets and critical scope-error blockers are unchanged.
+The [human-confirmation record](docs/human-confirmation.md) preserves the earlier
+protocol; frozen plans, results and reviews retain their original criteria and
+decisions. Removing the useful floor does not establish release readiness.
 The application now enforces a shared request budget: 55 seconds for work,
 three for confirmed process cleanup and two reserved for terminal delivery.
 A timeout is a failed, incomplete request, not an evidence abstention. Each
@@ -48,6 +56,15 @@ The [2026-11-16 actual-output validation](docs/request-quality-validation.md)
 out of twenty; eight fresh-retrieval transport failures. All twenty timings and
 cleanup checks passed. The semantic review is explicitly AI-origin; no independent
 human or clinical validation is claimed.
+
+The subsequent [local usefulness study](docs/usefulness-research.md)
+selected a one-article H6 development candidate and froze it before twenty new
+live questions. Its separate AI review found **6 useful, 1 uncertain selection
+out of 20** and **4 confirmed comparison/outcome errors**. Unnecessary abstentions
+were **5/16 (31.25%)**, with uncertainty bounds 31.25–35.29%; all twenty complete
+requests finished within 60 seconds (maximum **41.44 s**, median **21.00 s**).
+The remaining semantic checks failed, so this local candidate does not approve
+release. These results do not rewrite the earlier failed round.
 
 ## Setup
 
