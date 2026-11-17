@@ -15,11 +15,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if not 1 <= args.port <= 65535:
         parser.error("port must be between 1 and 65535")
-    try:
-        import uvicorn
-        from .api import create_app
-    except ImportError:
-        parser.error("Install the API dependencies: python -m pip install -e '.[api]'")
+    import uvicorn
+    from .api import create_app
     try:
         app = create_app(root=args.root, storage_root=args.storage_dir, cache_root=args.cache)
     except (ValueError, OSError) as exc:

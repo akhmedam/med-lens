@@ -91,7 +91,7 @@ On the full 30-article pool:
 
 The broad common subset with completely judged top tens contains only p03
 and p07. It is too small to settle the entire depth curve. The earlier
-[Day 17 comparison](medcpt-evaluation.md) retains its eight-query common subset
+[MedCPT comparison](medcpt-evaluation.md) retains its eight-query common subset
 for the original full-pool methods. No labels or held-out questions changed.
 
 | Isolated worker | Constructor seconds | Process peak RSS, GiB | Sampled MPS tensor max, GiB | Sampled MPS driver max, GiB |
@@ -140,7 +140,7 @@ of retrieval plus generation or a Medium collection.
 
 ## Reproduction
 
-Install the existing embedding/reranking extras and prepare the same local pilot
+Install the main runtime lock and prepare the same local pilot
 snapshots, windows, vectors and pinned BGE/MedCPT assets described in
 [Dense retrieval](dense-retrieval.md) and [MedCPT ranking](medcpt-ranking.md).
 Run from the checkout, choosing unused output paths:

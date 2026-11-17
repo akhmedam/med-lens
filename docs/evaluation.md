@@ -10,7 +10,8 @@ verified parsed dataset for each query. It makes no network calls. Different
 queries may point to different candidate datasets; results are averaged by query.
 
 ```sh
-python -m pip install -e '.[retrieval]'
+python -m pip install -r requirements-macos-arm64.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python scripts/evaluate_retrieval.py data/evaluation/queries.jsonl \
   --qrels data/evaluation/qrels.jsonl --split pilot \
   --output results/evaluation/pilot-001.json
@@ -106,7 +107,7 @@ Repeated evaluation of the same saved inputs has the same ID and scores; timing
 observations may differ. BM25 timings exclude loading and verification. Memory
 and end-to-end latency benchmarks are not part of this runner yet.
 
-The [Day 5 check](experiments/retrieval-evaluation.json) records two separate runs:
+The [Retrieval evaluation check](experiments/retrieval-evaluation.json) records two separate runs:
 fictional records with synthetic labels to exercise graded metrics, and our
 30-paper dataset with no labels to verify that quality remains undefined. The
 synthetic scores say nothing about biomedical retrieval quality.

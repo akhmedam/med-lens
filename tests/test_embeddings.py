@@ -15,13 +15,9 @@ from medlens.retrieval.windows import build_windows
 from test_evaluation import synthetic_inputs
 from test_windows import Tokenizer
 
-try:
-    import torch
-except ImportError:
-    torch = None
+import torch
 
 
-@unittest.skipIf(torch is None, "Install the embeddings extra for tensor tests")
 class TensorTests(unittest.TestCase):
     def test_cls_pooling_not_mean_or_pooler_and_unit_normalization(self):
         hidden = torch.tensor([[[3.,4.],[100.,100.]]])

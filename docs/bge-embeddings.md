@@ -6,7 +6,8 @@ selected CPU. The checkpoint revision matches the tokenizer:
 cosine retrieval, article-level aggregation, and ranking evaluation come next.
 
 ```sh
-python -m pip install -e '.[embeddings]'
+python -m pip install -r requirements-macos-arm64.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python scripts/embed_windows.py model --output .cache/models/bge-base-en-v1.5
 python scripts/embed_windows.py build data/windows/pilot-v1-002/p01 \
   --model .cache/models/bge-base-en-v1.5 \

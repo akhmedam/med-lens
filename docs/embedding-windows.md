@@ -5,7 +5,8 @@ embeddings or change retrieval rankings. Only tokenizer assets are downloaded;
 model weights and embedding inference belong to the next stage.
 
 ```sh
-python -m pip install -e '.[tokenization]'
+python -m pip install -r requirements-macos-arm64.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python scripts/prepare_windows.py tokenizer \
   --output .cache/tokenizers/bge-base-en-v1.5
 python scripts/prepare_windows.py build data/parsed/pilot-v1/p01 \

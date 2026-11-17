@@ -1,0 +1,16 @@
+# Development tools and offline tests; install alongside the project runtime.
+# Native grammar fixtures use outlines-core on CPU without downloading models.
+anyio==4.15.1
+build==1.3.0
+certifi==2026.7.22
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.20
+outlines-core==0.2.14
+packaging==26.3
+pyproject-hooks==1.3.3
+ruff==0.14.5
+setuptools==83.0.0
+typing-extensions==4.16.0
+wheel==0.48.0

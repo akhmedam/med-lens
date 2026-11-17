@@ -5,7 +5,8 @@ an exact NumPy dot product of unit vectors, followed by article aggregation. No
 ANN service is needed for the current 30-candidate pools.
 
 ```sh
-python -m pip install -e '.[retrieval,embeddings]'
+python -m pip install -r requirements-macos-arm64.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python scripts/dense_search.py data/parsed/pilot-v1/p10 \
   --windows data/windows/pilot-v1-002/p10 \
   --embeddings data/embeddings/pilot-v1/p10 \

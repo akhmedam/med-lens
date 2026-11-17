@@ -1,5 +1,4 @@
 """Bounded JSON grammar and fail-closed decoding without models or GPU imports."""
-import importlib.util
 import json
 from types import SimpleNamespace
 import unittest
@@ -10,8 +9,6 @@ import numpy as np
 from medlens.generation.contracts import draft_contract, review_contract
 from medlens.inference.structured import (Constraint, ConstraintCache, byte_decoder,
     check_schema_budget, prepare_schema, required_order_regex, require_finite)
-
-HAS_CORE = importlib.util.find_spec('outlines_core') is not None
 
 
 def tokenizer_fixture():
@@ -56,7 +53,6 @@ class SchemaBudgetTests(unittest.TestCase):
             with self.assertRaises(FloatingPointError):require_finite(np,np.array([[1.,2.],row]))
 
 
-@unittest.skipUnless(HAS_CORE,'outlines-core is installed in the isolated MLX environment')
 class StructuredCoreTests(unittest.TestCase):
     def constraint(self,schema):
         return Constraint(schema,tokenizer_fixture(),vocab_size=288,eos=(256,257),whitespace_pattern='')

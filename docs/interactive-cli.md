@@ -7,7 +7,7 @@ without an HTTP server, FastAPI installation or extra CLI dependency.
 
 ## Start
 
-Use [README setup](../README.md#setup), then run:
+Use [README installation](../README.md#installation), then run:
 
 ```sh
 .venv/bin/medlens

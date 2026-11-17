@@ -1,5 +1,4 @@
 """Canonical finite finding pairs preserve sets and prevent duplicate IDs."""
-import importlib.util
 import itertools
 import json
 import re
@@ -11,8 +10,6 @@ from medlens.generation import source_findings as s
 from medlens.inference.structured import prepare_schema,required_order_regex,Constraint,byte_decoder,check_schema_budget
 from test_source_findings import make,plan_data,select
 from test_answers import FakeRuntime
-
-HAS_CORE=importlib.util.find_spec('outlines_core')is not None
 
 def regex(schema):
  parent=ModuleType('outlines_core');child=ModuleType('outlines_core.json_schema')
@@ -67,7 +64,6 @@ class UniqueFindingSchema(unittest.TestCase):
   self.assertLess(len(dumps(schema).encode()),32768)
   self.assertNotIn('uniqueItems',dumps(schema))
 
-@unittest.skipUnless(HAS_CORE,'native outlines-core dependency absent')
 class NativeUniqueFindingSchema(unittest.TestCase):
  def test_token_dfa_rejects_repeats_and_accepts_unique_pairs(self):
   ctx,arts=fixture();idx,plans,checks=plan_data(ctx,arts);p=plans[0]

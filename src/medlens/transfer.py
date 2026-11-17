@@ -149,7 +149,7 @@ def checkout_hashes(root):
     names = subprocess.check_output(['git', 'ls-files', '-z'], cwd=root).decode().split('\0')
     return {name: sha_file(root / name) for name in names if name and
         (name.startswith(('src/', 'scripts/', 'benchmarks/', 'configs/')) or name in
-         ('pyproject.toml', 'requirements-macos-arm64.lock', 'requirements-macos-arm64-day19.lock'))}
+         ('pyproject.toml', 'requirements-macos-arm64.lock', 'requirements-handoff-macos-arm64.lock'))}
 
 
 def pack(root, output, *, part_bytes=2 * 1024**3):

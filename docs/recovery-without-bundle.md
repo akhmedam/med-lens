@@ -1,8 +1,8 @@
-# Recovery without the Day 19 bundle
+# Recovery without the transfer bundle
 
 > Historical recovery/replay workflow for the lost pilot and original research
 > assets. It does not select the current application or require those assets for
-> MVP operation. Use [README setup](../README.md#setup) and the
+> MVP operation. Use [README installation](../README.md#installation) and the
 > [supported MVP](mvp.md) for BGE plus native Qwen4B. The explicit research asset
 > profile below includes the old 9B, MedCPT and Metal-kernel payloads.
 
@@ -13,16 +13,21 @@ Never substitute rebuilt data into historical qrels or claim reproduced metrics.
 
 ## Environment and assets
 
-On macOS arm64, from the checkout with Python 3.11:
+On macOS arm64, from the current checkout with Python 3.11:
 
 ```sh
 python3.11 -m venv .venv
-.venv/bin/python -m pip install -r requirements-macos-arm64-day19.lock
-.venv/bin/python -m pip install --no-deps -e .
+.venv/bin/python -m pip install -r requirements-macos-arm64.lock
+.venv/bin/python -m pip install -r requirements-dev.lock
+.venv/bin/python -m pip install --no-deps --no-build-isolation -e .
 .venv/bin/python -m pip check
 .venv/bin/python scripts/prepare_models.py --profile research --download \
   --output results/recovery/setup-assets.json
 ```
+
+Use the current main and development locks with current source code. The
+recorded handoff lock is historical evidence; restore its original environment
+only with the matching recorded checkout, as described in the [handoff guide](handoff.md).
 
 The asset manifest pins SHA-256 and sizes for BGE, its saved tokenizer, MedCPT,
 Qwen and the original version-1 Metal kernel build. Conflicting existing payloads
@@ -65,14 +70,17 @@ dependencies, not inference or scientific answer quality.
 
 ## Use the recovered collection
 
-The 2026-11-06 rebuilt collection already present on the recovery machine uses:
+The 2026-11-06 rebuilt collection already present on the recovery machine uses
+the original research backend explicitly, so current application defaults cannot
+change the intended 9B draft experiment:
 
 ```sh
 .venv/bin/python scripts/ask.py data/parsed/recovery-20261106/p06 \
   --windows data/windows/recovery-20261106/p06 \
   --embeddings data/embeddings/recovery-20261106/p06 \
   --query "Does cognitive behavioral therapy reduce anxiety symptoms in adults with generalized anxiety disorder?" \
-  --generate --output-dir results/requests/recovered-gad-NEW
+  --generate --engine transformers --answer-model 9b --answer-style draft \
+  --output-dir results/requests/recovered-gad-NEW
 open results/requests/recovered-gad-NEW/report.html
 ```
 

@@ -1,4 +1,4 @@
-# Day 20: generation format reliability
+# Generation format reliability
 
 Status: offline implementation was prepared on 2026-11-06; runtime recovery and
 a new-corpus developmental baseline followed on 2026-11-07. The historical raw
@@ -51,7 +51,7 @@ Run the full offline suite and dependency check:
 .venv/bin/python -m pip check
 ```
 
-The [offline check record](experiments/day20-format-offline.json) reports **218 passing
+The [offline check record](experiments/generation-format-offline.json) reports **218 passing
 tests** and a successful `pip check` on the Air.
 
 The tests exercise request-specific contracts, unchanged token budgets, the new
@@ -110,9 +110,9 @@ no paired delta because contexts/profile/judgment policy differ. The
 [Air audit](experiments/air-recovery.json) records 247 passing unit tests, exact
 source checks and offline replay of all twelve cases using twenty cached calls.
 This establishes a new baseline, not independent semantic validation. Long-output
-compliance, a controlled prompt comparison on fixed new contexts and Day 21
-semantic checks remain open.
+compliance, a controlled prompt comparison on fixed new contexts and
+semantic-support checks remain open.
 
-[Day 21 diagnostics](day21-semantic-reliability.md) have since measured semantic
+[Semantic support diagnostics](semantic-support-diagnostics.md) have since measured semantic
 errors on the frozen recovery drafts. The expanded review candidate was not
 promoted; further semantic work is required before release.

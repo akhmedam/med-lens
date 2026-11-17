@@ -40,7 +40,8 @@ with the cached assets.
 ## Run
 
 ```sh
-python -m pip install -e '.[reranking]'
+python -m pip install -r requirements-macos-arm64.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python scripts/probe_medcpt.py --download \
   --output results/preflight/medcpt-example.json \
   --summary results/preflight/medcpt-example-summary.json
@@ -119,7 +120,7 @@ that rankings cannot change for near-tied scores.
 
 The [article-ranking stage](medcpt-ranking.md) now implements the Dense → MedCPT
 and direct MedCPT modes with maximum-window aggregation. The current
-`ask.py --rerank` still calls Qwen. The [Day 17 evaluation](medcpt-evaluation.md)
+`ask.py --rerank` still calls Qwen. The [MedCPT evaluation](medcpt-evaluation.md)
 now compares relevance on an expanded judgment pool; neither MedCPT mode improves
 the pilot primary metric over Dense.
 Day 18 measures actual candidate-pool workloads. The runtime batch size can be

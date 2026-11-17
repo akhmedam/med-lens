@@ -33,7 +33,7 @@ trusted sentence catalog. Request-specific JSON
 Schema contracts enumerate the available quote IDs and review claim IDs. They
 are prompt instructions, not grammar-constrained decoding; the strict parsers
 remain authoritative. The Day 13 parser accepted up to four claims. The tighter
-limit does not establish improved model compliance; see [Day 20 status](day20-format-reliability.md).
+limit does not establish improved model compliance; see [Generation format reliability](generation-format-reliability.md).
 Every claim needs one to three exact catalog quotations. Unknown IDs, changed
 source spans, duplicate JSON keys, invented citation fields,
 model-written PMID/URL references and malformed or truncated output are rejected.
@@ -179,9 +179,9 @@ contradiction/abstention coverage and testing near the full 4000-token evidence
 budget remain necessary before treating this as a final answering system.
 
 
-## Day 21 semantic diagnostics
+## Semantic support diagnostics
 
-The [Day 21 experiment](day21-semantic-reliability.md) compares review protocols
+The [Semantic support experiment](semantic-support-diagnostics.md) compares review protocols
 on unchanged development drafts and controlled synthetic contrasts. The expanded
 v5 candidate did not meet promotion requirements: it introduced unsupported
 acceptances and lost a supported control. The primary CLI preserves v4. Research

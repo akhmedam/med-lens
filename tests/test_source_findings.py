@@ -1,6 +1,6 @@
 """Fictional scope/identity/closed-schema checks without any model inference."""
 from copy import deepcopy
-import importlib.util,json
+import json
 from pathlib import Path
 from types import SimpleNamespace
 import unittest,sys
@@ -9,7 +9,6 @@ from medlens.generation.context import ContextConfig,build_context,digest,COVERA
 from medlens.generation.quotes import quote_catalog
 from medlens.inference.structured import Constraint,byte_decoder,prepare_schema
 from medlens.generation import source_findings as c
-HAS_CORE=importlib.util.find_spec('outlines_core')is not None
 
 
 def make(abstracts,title='Fictional study',coverage=True):
@@ -268,7 +267,6 @@ class Guards(unittest.TestCase):
    out=c.generate_source_findings_answer(question,ctx,fixtures.FakeRuntime([raw]),source_articles=arts)
    self.assertEqual(out['status'],status)
 
-@unittest.skipUnless(HAS_CORE,'native outlines-core dependency absent')
 class Native(unittest.TestCase):
  def make(self,ctx,arts,blocked_first=False):
   idx,plans,checks=plan_data(ctx,arts)

@@ -21,7 +21,7 @@ model substitution.
 ## Prepare the default 4B profile
 
 From the checkout, after creating the main Python 3.11 environment and installing
-`requirements-mvp-macos-arm64.lock` (see [MVP setup](../README.md#setup)):
+`requirements-macos-arm64.lock` (see [installation](../README.md#installation)):
 
 ```sh
 .venv/bin/python -m venv .cache/venvs/mlx

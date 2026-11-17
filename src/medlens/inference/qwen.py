@@ -20,7 +20,7 @@ class QwenRuntime:
         from transformers import AutoTokenizer, MetalConfig, Qwen3_5ForCausalLM
         if not torch.backends.mps.is_available() or os.environ.get("PYTORCH_ENABLE_MPS_FALLBACK") == "1":
             raise RuntimeError("MPS is required without implicit CPU fallback")
-        # Same narrowly scoped compatibility fix as the verified Day 1 runtime.
+        # Preserve the compatibility fix verified for the original runtime.
         from huggingface_hub.utils import get_session
         def trim_user_agent(request):
             value = request.headers.get("user-agent")
