@@ -1,0 +1,8 @@
+include CONTRIBUTING.md
+include .ruff.toml
+include requirements-*.lock
+recursive-include configs *.json
+recursive-include scripts *.py
+recursive-include docs *.md *.json
+recursive-include benchmarks *.md *.json *.jsonl *.sha256
+global-exclude __pycache__ *.py[cod] .DS_Store

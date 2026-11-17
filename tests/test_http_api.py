@@ -3,7 +3,6 @@
 from contextlib import redirect_stderr, redirect_stdout
 from copy import deepcopy
 from dataclasses import asdict
-import importlib.util
 from io import StringIO
 from pathlib import Path
 import tempfile
@@ -16,10 +15,8 @@ from medlens.api_service import JobService, ServiceBusy, ServiceUnavailable, Unk
 from medlens.api_server import main
 from medlens.mvp import ANSWER_STYLE, policy_snapshot
 
-HAS_HTTP = all(importlib.util.find_spec(name) is not None for name in ("fastapi", "httpx"))
-if HAS_HTTP:
-    from fastapi.testclient import TestClient
-    from medlens.api import MAX_BODY_BYTES, create_app
+from fastapi.testclient import TestClient
+from medlens.api import MAX_BODY_BYTES, create_app
 
 
 class FakeService:
@@ -57,7 +54,6 @@ class FakeService:
         self.closed += 1
 
 
-@unittest.skipUnless(HAS_HTTP, "Install API and HTTP-test extras for transport checks")
 class HTTPTests(unittest.TestCase):
     def test_ingress_origin_precedes_body_validation_and_terminal_send_is_observed(self):
         from medlens import api as api_module

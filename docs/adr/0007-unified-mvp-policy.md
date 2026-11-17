@@ -43,8 +43,9 @@ Invalid output is withheld, and applicability cautions remain visible.
 ## Consequences
 
 - The CLI, API, default asset setup and current guides describe one policy.
-  The main environment uses `requirements-mvp-macos-arm64.lock`; the isolated
-  MLX lock remains separate. Optional HTTP dependencies use `requirements-api.lock`.
+  The main environment uses `requirements-macos-arm64.lock`; the isolated
+  MLX lock remains separate and required for generation. The main lock includes
+  HTTP and research dependencies; development tools use `requirements-dev.lock`.
 - Default asset preparation verifies/downloads BGE and its tokenizer only;
   Qwen4B preparation is separate. Historical 9B, MedCPT and Metal-kernel assets
   require the explicit research asset profile and are not MVP prerequisites.

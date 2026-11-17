@@ -10,10 +10,7 @@ import unittest
 
 from medlens.reranking.medcpt import (ASSETS,MODEL_ID,REVISION,MedCPTScorer,
     PairBudgetError,prepare_pair,score_encoded,verify_assets)
-try:
-    import torch
-except ImportError:
-    torch=None
+import torch
 
 
 class Tokenizer:
@@ -72,7 +69,6 @@ class PairTests(unittest.TestCase):
                 with self.subTest(change=change),self.assertRaises(ValueError):verify_assets(root)
 
 
-@unittest.skipIf(torch is None,'Install the reranking extra for tensor tests')
 class ScoringTests(unittest.TestCase):
     def scorer(self):
         class Model:

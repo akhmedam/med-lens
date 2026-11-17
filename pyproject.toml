@@ -6,23 +6,31 @@ build-backend = "setuptools.build_meta"
 name = "med-lens"
 version = "0.0.1"
 description = "Biomedical literature search and exact source findings over PubMed."
+readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
-
-[project.optional-dependencies]
-mvp = ["torch==2.14.1", "transformers==5.20.1", "numpy==2.4.6", "psutil==7.2.2"]
-api = ["fastapi==0.162.5", "uvicorn==0.54.0"]
-test-api = ["httpx==0.28.1"]
-reranking = ["torch==2.14.1", "transformers==5.20.1"]
-embeddings = ["torch==2.14.1", "transformers==5.20.1", "numpy==2.4.6"]
-tokenization = ["transformers==5.20.1"]
-retrieval = ["bm25s==0.3.14", "numpy==2.4.6"]
-inference = [
+dependencies = [
+    "accelerate==1.15.0",
+    "bm25s==0.3.14",
+    "fastapi==0.162.5",
+    "huggingface-hub==2.2.0",
+    "kernels==0.17.2",
+    "numpy==2.4.6",
+    "psutil==7.2.2",
+    "pydantic==2.14.1",
+    "starlette==1.10.0",
     "torch==2.14.1",
     "transformers==5.20.1",
-    "accelerate==1.15.0",
-    "kernels==0.17.2",
-    "psutil==7.2.2",
+    "uvicorn==0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "build==1.3.0",
+    "httpx==0.28.1",
+    "outlines-core==0.2.14",
+    "ruff==0.14.5",
+    "setuptools==83.0.0",
+    "wheel==0.48.0",
 ]
 
 [project.scripts]

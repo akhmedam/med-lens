@@ -164,7 +164,7 @@ citations and 28 quote-catalog entries matched their sources; replay of both
 saved model calls reproduced the result without inference. This single smoke
 does not independently assess the claims or establish a success rate.
 
-The [semantic error record](day21-semantic-reliability.md) still applies. A larger
+The [semantic error record](semantic-support-diagnostics.md) still applies. A larger
 candidate pool may change retrieved evidence and generated drafts; neither valid
 format nor exact quotations establish support. Independent relevance judgments
 and answer assessment and a larger measured Medium corpus remain future work.

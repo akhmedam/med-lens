@@ -134,7 +134,7 @@ The separate ten-question recovered baseline yielded nine visible drafts and
 one output-limit failure; both controls abstained. These are single developmental
 runs, not an independent answer-quality evaluation.
 
-The 9B comparison retains baseline review v4. [Historical semantic-review measurements](day21-semantic-reliability.md)
+The 9B comparison retains baseline review v4. [Historical semantic-review measurements](semantic-support-diagnostics.md)
 found material support errors in both that v4 prompt and an experimental seven-axis
 v5 reviewer; v5 regressed on controls and remains an explicit legacy research
 selection in `generate_answers.py` or `generate_answer`. The default 4B uses the

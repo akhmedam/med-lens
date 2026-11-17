@@ -25,7 +25,7 @@ def main():
     try:
         if sys.version_info[:2] != (3, 11):
             raise ValueError('Use Python 3.11 for the recorded environment')
-        lock = ROOT/'requirements-macos-arm64-day19.lock'
+        lock = ROOT/'requirements-macos-arm64.lock'
         report['package_mismatches'] = []
         for line in lock.read_text().splitlines():
             if not line or line.startswith('#'): continue

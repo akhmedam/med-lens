@@ -82,7 +82,7 @@ was 1.09 GiB across sequential BGE/MedCPT stages; it is not a device memory peak
 All shared-window scores between the two modes agree within absolute tolerance
 1e-4; maximum observed drift was 0.00001336. Batch padding can cause small
 floating-point differences, so this is not bitwise identity or a guarantee for
-near-tied ordering. The [Day 17 evaluation](medcpt-evaluation.md) adds new judgments and compares
+near-tied ordering. The [MedCPT evaluation](medcpt-evaluation.md) adds new judgments and compares
 quality. No quality improvement is claimed by this preparation report.
 The corresponding full local artifact is
 `results/ranking/pilot-v1-medcpt-002.json`; raw reports stay outside Git.
@@ -121,7 +121,7 @@ builder currently expects cosine scores; integration must explicitly support the
 new score kind rather than clamping logits or labeling them cosine similarity.
 
 Maximum pooling can favor an article with many windows; the
-[Day 17 case analysis](medcpt-evaluation.md#source-based-error-analysis) inspects
+[MedCPT case analysis](medcpt-evaluation.md#source-based-error-analysis) inspects
 selected-window and scope errors without claiming a causal max-pooling ablation. Ranking relevance also does not establish claim entailment.
 The twelve [held-out questions](../benchmarks/heldout-v1/README.md), their protocol
 and the active pilot qrels v2 remain unchanged and unscored here.

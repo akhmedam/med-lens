@@ -34,7 +34,7 @@ The smoke test measures compatibility and cost, not biomedical answer quality.
 Keep model revision, package versions, prompt, output, and memory measurement
 scope in its report. Do not label a sampled memory maximum a true device peak.
 
-The [Day 1 report](../experiments/runtime-smoke.md) records the successful run,
+The [Initial runtime report](../experiments/runtime-smoke.md) records the successful run,
 two invalid reranking outputs, and the HTTP header workaround. The
 [reranking pilot](../qwen-reranking-baseline.md) now measures real abstract inputs,
 latency and ranking quality. The [answer pilot](../cited-answers.md) uses the same

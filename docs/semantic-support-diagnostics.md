@@ -1,4 +1,4 @@
-# Day 21: semantic support diagnostics
+# Semantic support diagnostics
 
 The fixed development experiment did **not** justify promoting the seven-axis
 review candidate. The production pipeline preserves `claim-support-v4`;
@@ -7,7 +7,7 @@ and neither protocol is independent clinical validation.
 
 ## Source inspection
 
-The [inspection record](experiments/day21-source-inspection.json) covers all 22
+The [inspection record](experiments/semantic-source-inspection.json) covers all 22
 visible claims from the recovery pilot. It binds the exact raw-report hash and
 separates explicit textual/answer-scope mismatches, missing source scope, and
 claims for which this inspection identified no specific issue. These are AI
@@ -58,7 +58,7 @@ contradictions and citation laundering. No source is a real clinical study.
 Labels and focus tags are omitted from model prompts. Fixtures and prompt hashes
 were fixed before inference; no post-result prompt tuning was performed.
 
-The [paired result](experiments/day21-semantic-challenges.json) records:
+The [paired result](experiments/semantic-review-challenges.json) records:
 
 | Protocol | Supported controls retained | Unsupported claims accepted | Invalid review groups |
 | --- | ---: | ---: | ---: |
@@ -78,7 +78,7 @@ accepted unsupported controls or lose supported controls merely to add axes.
 
 ## Frozen real drafts
 
-The [review-only comparison](experiments/day21-semantic-comparison.json) uses the
+The [review-only comparison](experiments/semantic-review-comparison.json) uses the
 same questions, context/profile identities, model/packages, draft prompt hashes,
 raw draft texts and token budgets as Day 20. Cached drafts are reused; only review
 calls are fresh. The previously overlong p06 draft remains a format failure and
@@ -103,7 +103,7 @@ this is not an independently measured correctness rate.
 
 The final default-policy audit reproduced all original twelve v4 outcomes,
 claims, reviews and rendered answers from twenty cached calls, with 29 citations
-checked against sources. The [check record](experiments/day21-semantic-checks.json)
+checked against sources. The [check record](experiments/semantic-review-checks.json)
 reports 260 passing unit tests, dependency checks, protocol-cache separation,
 all mandatory axes, input overflow without source truncation and unchanged
 production defaults.
@@ -162,6 +162,6 @@ Reserve work should test focused per-claim evidence extraction and separate the
 instruction/axis/context changes on fixed development cases, then obtain
 independent human assessment. Do not tune on `benchmarks/heldout-v1`. The original
 Day 13 raw data remain unavailable, so this experiment uses the rebuilt pilot.
-Day 21 delivers checks and an explicit error record; release semantic conditions
+This experiment delivers checks and an explicit error record; release semantic conditions
 remain unmet. Corpus work on Day 22 can proceed without treating these findings
 as clinical readiness.

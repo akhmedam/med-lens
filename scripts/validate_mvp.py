@@ -104,7 +104,7 @@ def source_hashes(root):
     paths = sorted(p for p in (root / 'src/medlens').rglob('*.py') if '__pycache__' not in p.parts)
     paths += [root / name for name in ('pyproject.toml', 'scripts/validate_mvp.py',
         'docs/final-validation-protocol.md', 'scripts/prepare_models.py',
-        'requirements-mvp-macos-arm64.lock', 'requirements-api.lock',
+        'requirements-macos-arm64.lock',
         'requirements-mlx-macos-arm64.lock', 'configs/model-assets.json', 'configs/mlx-assets.json')]
     return {str(p.relative_to(root)): file_sha(p) for p in paths}
 

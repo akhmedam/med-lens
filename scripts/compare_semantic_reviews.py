@@ -61,7 +61,7 @@ def main(argv=None):
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('baseline',type=Path);p.add_argument('candidate',type=Path)
     p.add_argument('--requests',type=Path,required=True);p.add_argument('--collections',type=Path,required=True)
-    p.add_argument('--inspection',type=Path,default=ROOT/'docs/experiments/day21-source-inspection.json')
+    p.add_argument('--inspection',type=Path,default=ROOT/'docs/experiments/semantic-source-inspection.json')
     p.add_argument('--candidate-ref',help='Full commit SHA containing the recorded candidate implementation')
     p.add_argument('--output',type=Path,required=True);args=p.parse_args(argv)
     if args.output.exists():p.error('Choose a fresh output path')

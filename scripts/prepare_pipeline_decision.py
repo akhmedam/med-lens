@@ -48,7 +48,7 @@ def main():
         'pilot_questions': len(cases), 'status_counts': dict(Counter(r['status'] for r in cases)),
         'questions_with_visible_claims': sum(r['claim_count'] > 0 for r in cases),
         'visible_claim_count': sum(r['claim_count'] for r in cases),
-        'scope': 'Day 13 Dense+Qwen-reranked contexts; no matched answer-quality comparison of the four retrieval options.',
+        'scope': 'Original Dense+Qwen-reranked answer-pilot contexts; no matched answer-quality comparison of the four retrieval options.',
         'draft_and_review_only_median_seconds': statistics.median(sum(s['seconds'] for s in r['stages']) for r in cases),
         'known_semantic_issue': sources['requests']['known_semantic_issue'],
         'target_air_inference_tested': False,

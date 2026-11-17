@@ -2,14 +2,14 @@
 
 The [supported MVP](mvp.md) performs a fresh bounded PubMed title/abstract search
 for each English biomedical research question. The primary command is `medlens`;
-no prepared local collection is required. The optional local API uses the same
+no prepared local collection is required. The local API uses the same
 acquisition and source-findings policy.
 
 ```sh
 .venv/bin/medlens --question 'How does NLRP3 inflammasome activation contribute to pancreatic beta-cell dysfunction in type 2 diabetes?' --limit 100
 ```
 
-Use [README setup](../README.md#setup) for the main BGE environment and isolated
+Use [README installation](../README.md#installation) for the main BGE environment and isolated
 native Qwen4B runtime. Neither original 9B weights nor a historical source bundle
 is required. The default is 100 fresh candidates and ten Dense-ranked articles;
 request bounds remain 1–300 and 1–10. These are bounded runtime settings, not a

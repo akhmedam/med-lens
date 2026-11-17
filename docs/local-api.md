@@ -9,11 +9,9 @@ The application policy is `medlens-mvp-source-findings-v2`, with selector
 
 ## Start
 
-Use [README setup](../README.md#setup), then install the optional HTTP lock:
+Use [README installation](../README.md#installation), then start the API:
 
 ```sh
-.venv/bin/python -m pip install -r requirements-api.lock
-.venv/bin/python -m pip install --no-deps --no-build-isolation -e .
 .venv/bin/medlens-api
 ```
 

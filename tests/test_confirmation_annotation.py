@@ -289,8 +289,9 @@ class ConfirmationAnnotationTests(unittest.TestCase):
         self.assertEqual(set(receipt['coverage']['articles']), {'total','completed','pending'})
         with self.assertRaises(BiomedicalAnnotationError): freeze_export(packet, original, self.root / 'reference')
 
-    @unittest.skipUnless(shutil.which('node'), 'Node.js optional UI logic probe')
     def test_browser_logic_blank_export_hash_and_import_validation_match_python(self):
+        node = shutil.which('node')
+        self.assertIsNotNone(node, 'Install Node.js 22 or newer to run the offline browser logic tests')
         _, _, packet = self.packet()
         template = (packet.directory / 'implementation/confirmation_annotation.html')
         runner = self.root / 'probe.js'
@@ -324,7 +325,7 @@ vm.runInContext('blank()',ctx);const hash=await vm.runInContext('hash(payload())
 console.log(JSON.stringify({value,hash,strict_integer_regressions:4,invalid_calendar_regressions:5}));
 })().catch(error=>{console.error(error);process.exitCode=1;});
 """)
-        run = subprocess.run([shutil.which('node'), str(runner), str(packet.directory / 'package.json'), str(template)], capture_output=True, text=True, timeout=15)
+        run = subprocess.run([node, str(runner), str(packet.directory / 'package.json'), str(template)], capture_output=True, text=True, timeout=15)
         self.assertEqual(run.returncode, 0, run.stderr)
         output = json.loads(run.stdout)
         self.assertEqual(output['hash'], digest(output['value']))

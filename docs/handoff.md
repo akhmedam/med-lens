@@ -3,7 +3,7 @@
 > Historical Day 19 transfer procedure, retained with its original bundle hashes,
 > commands and measurements. It is not the current setup or model selection.
 > The described archive was subsequently lost; see [recovery history](recovery-without-bundle.md).
-> For a new installation use [README setup](../README.md#setup), the
+> For a new installation use [README installation](../README.md#installation), the
 > [supported MVP](mvp.md) and [interactive CLI](interactive-cli.md). Native 4B on
 > the Air and the CLI/API have since been exercised; the historical 9B/future-work
 > statements below describe the original handoff snapshot.
@@ -46,7 +46,7 @@ Public PubMed/model access does not require copying a token.
 The prepared bundle is 20,281,989,120 bytes (18.89 GiB): ten parts, 341 regular
 files and 26 internal symlinks. Its manifest SHA-256 is
 `a449b51fc711c4bfc51c9842e83e32d5cf94c6e2c2512aa00393fbdf96cf2c90`.
-The [verification record](experiments/handoff-day19.json) pins every part and
+The [verification record](experiments/handoff-verification.json) pins every part and
 records a clean-clone install, 200 passing tests, exact frozen-evaluation replay
 and an offline search returning ten articles/six excerpts without Qwen weights.
 These checks ran on the source M3 Pro, not the target Air. Later documentation
@@ -56,8 +56,12 @@ sidecar carries the raw checks/reports; restore does not need to install it.
 
 ## Restore on the Air
 
-Run these commands from the new clone. Substitute the flash drive's actual path
-for `/Volumes/FLASH/medlens-day19`; the bundle may also be copied to local disk.
+Restore this historical bundle from its recorded `source_commit`, not the current
+application checkout. The current repository consolidates dependencies and stores
+the old lock as `requirements-handoff-macos-arm64.lock`; the recorded checkout
+retains the original filename used below. Do not rename entries or rewrite hashes
+in the bundle manifest to accommodate current code. Substitute the flash drive's
+actual path for `/Volumes/FLASH/medlens-day19`; the bundle may also be copied to local disk.
 Python's standard library handles restore before dependencies are installed.
 Internet is needed for Python/packages and may be needed for Metal publisher
 checks even with the model weights restored.
@@ -65,6 +69,7 @@ checks even with the model weights restored.
 ```sh
 git clone https://github.com/akhmedam/med-lens.git
 cd med-lens
+git checkout 0eae69be852130ccc9bfc222d75d96fc79699cb8
 python3.11 scripts/transfer_project.py verify /Volumes/FLASH/medlens-day19
 python3.11 scripts/transfer_project.py restore /Volumes/FLASH/medlens-day19
 python3.11 -m venv .venv
@@ -75,7 +80,7 @@ export HF_HOME="$PWD/.cache/huggingface"
 .venv/bin/python -m unittest discover -s tests
 ```
 
-Use Python 3.11 and the Day 19 lock; the older Day 1 lock lacks `bm25s`. The
+Use Python 3.11 and the recorded handoff lock; the initial lock lacks `bm25s`. The
 virtual environment must be newly created on this machine. The source Python was
 3.11.15 on macOS 26.7.1. A different macOS/Python patch version is not automatically
 an exact binary reproduction; record it in the preflight report.

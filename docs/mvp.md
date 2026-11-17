@@ -21,7 +21,7 @@ and measurements; they do not select the current application policy.
 
 ## Run
 
-Follow [README setup](../README.md#setup), then start the session:
+Follow [README installation](../README.md#installation), then start the session:
 
 ```sh
 .venv/bin/medlens

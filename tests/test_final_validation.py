@@ -25,6 +25,15 @@ class FinalValidationTests(unittest.TestCase):
         self.root = Path(temporary.name).resolve()
         self.output = self.root / 'out'
 
+    def test_real_checkout_source_fingerprint_covers_installed_runtime_locks(self):
+        root = SCRIPT.parents[1]
+        hashes = validation.source_hashes(root)
+        for name in ('requirements-macos-arm64.lock', 'requirements-mlx-macos-arm64.lock'):
+            with self.subTest(lock=name):
+                self.assertEqual(hashes[name], hashlib.sha256((root / name).read_bytes()).hexdigest())
+        self.assertNotIn('requirements-mvp-macos-arm64.lock', hashes)
+        self.assertNotIn('requirements-api.lock', hashes)
+
     def test_freeze_never_deserializes_question_text(self):
         selector = {'SELECTOR_SYSTEM': 'fictional fixed prompt', 'PROMPT_VERSION': 'v2',
             'ANSWER_POLICY': 'v2', 'SELECTION_CAP': 512, 'MAX_FINDINGS': 3,
