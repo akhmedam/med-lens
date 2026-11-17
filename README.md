@@ -43,7 +43,7 @@ Enter a question in English. Use `/help`, `/evidence`, `/export [PATH]` and `/qu
 For a single question:
 
 ```sh
-.venv/bin/medlens --question 'Does exercise reduce depressive symptoms in adults?'
+.venv/bin/medlens --question 'What are the top 5 lifestyle factors for mental health?'
 ```
 
 Start the local API with `.venv/bin/medlens-api`.
