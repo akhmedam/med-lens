@@ -39,11 +39,11 @@ their hashes. See [model setup](docs/native-mlx.md) for details and recovery.
 .venv/bin/medlens
 ```
 
-Enter a question in English. Use `/help`, `/evidence`, `/export [PATH]` and `/quit`.
-For a single question:
+Enter a research question or topic in English. Use `/help`, `/evidence`,
+`/export [PATH]` and `/quit`. To run a single search:
 
 ```sh
-.venv/bin/medlens --question 'What are the top 5 lifestyle factors for mental health?'
+.venv/bin/medlens --limit 10 --question 'Exercise for depression and depressive symptoms in older adults'
 ```
 
 Start the local API with `.venv/bin/medlens-api`.
